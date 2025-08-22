@@ -1,0 +1,610 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}Display Mode Settings{% endblock %}
+
+{% block content %}
+<div class="mobile-container space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">Display Modes & Appearance</h1>
+        <p class="text-gray-600">Customize each display mode with independent backgrounds, borders, fonts, and settings. Each mode can have its own unique look and feel.</p>
+    </div>
+
+    <!-- Default Mode Selection -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">💾 Default Mode</h2>
+        <p class="text-gray-600 mb-4">Select which mode should be used after power cycles or restarts:</p>
+        
+        <div class="space-y-3">
+            <div id="default-mode-options" class="space-y-2">
+                <!-- Default mode options will be loaded here -->
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <button id="save-default-mode" class="mobile-button bg-green-600 text-white py-3 px-6 rounded-lg touch-feedback hover:bg-green-700">
+                💾 Save Default Mode
+            </button>
+        </div>
+    </div>
+
+    <!-- Mode Selection -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">🎛️ Mode Settings</h2>
+        <p class="text-gray-600 mb-4">Select a mode to customize its appearance and settings:</p>
+        
+        <div id="mode-selection" class="grid grid-cols-1 gap-3">
+            <!-- Mode buttons will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Mode Customization Panel -->
+    <div id="mode-customization" class="bg-white rounded-xl shadow-sm p-6 hidden">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900">
+                <span id="current-mode-name">Mode Settings</span>
+            </h2>
+            <button id="reset-mode-btn" class="mobile-button bg-gray-500 text-white py-2 px-4 rounded-lg touch-feedback hover:bg-gray-600">
+                🔄 Reset to Defaults
+            </button>
+        </div>
+        
+        <div class="space-y-6">
+            <!-- Background Selection -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">🖼️ Background</h3>
+                <div id="mode-backgrounds" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <!-- Background options will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Border Selection -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">🖼️ Border</h3>
+                <div id="mode-borders" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <!-- Border options will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Font Settings -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">🔤 Font Settings</h3>
+                
+                <div class="space-y-4">
+                    <!-- Font Family -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+                        <select id="mode-font-family" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <!-- Font options will be loaded here -->
+                        </select>
+                    </div>
+
+                    <!-- Verse Font Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Verse Font Size</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" id="mode-verse-size" min="40" max="120" class="flex-1">
+                            <span id="mode-verse-size-value" class="text-sm font-medium text-gray-700 w-12 text-center">80</span>
+                        </div>
+                    </div>
+
+                    <!-- Reference Font Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Reference Font Size</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" id="mode-reference-size" min="40" max="120" class="flex-1">
+                            <span id="mode-reference-size-value" class="text-sm font-medium text-gray-700 w-12 text-center">84</span>
+                        </div>
+                    </div>
+
+                    <!-- Title Font Size -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Title Font Size</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" id="mode-title-size" min="30" max="80" class="flex-1">
+                            <span id="mode-title-size-value" class="text-sm font-medium text-gray-700 w-12 text-center">48</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Settings -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">📺 Display Settings</h3>
+                
+                <div class="space-y-4">
+                    <!-- Display Scale -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Display Scale</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" id="mode-display-scale" min="0.5" max="1.5" step="0.1" class="flex-1">
+                            <span id="mode-display-scale-value" class="text-sm font-medium text-gray-700 w-12 text-center">1.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Translation Settings -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Primary Translation</label>
+                        <select id="mode-primary-translation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <!-- Translation options will be loaded here -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Translation (for parallel mode)</label>
+                        <select id="mode-secondary-translation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <!-- Translation options will be loaded here -->
+                        </select>
+                    </div>
+
+                    <!-- Parallel Mode -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-700">Parallel Mode</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="mode-parallel-mode" class="sr-only">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="pt-4 border-t border-gray-200">
+                <button id="save-mode-settings" class="w-full mobile-button bg-blue-600 text-white py-3 px-6 rounded-lg touch-feedback hover:bg-blue-700">
+                    💾 Save Mode Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Panel -->
+    <div id="mode-preview" class="bg-white rounded-xl shadow-sm p-6 hidden">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">👁️ Preview</h3>
+        <div class="bg-gray-100 rounded-lg p-4">
+            <button id="generate-preview" class="w-full mobile-button bg-green-600 text-white py-3 px-6 rounded-lg touch-feedback hover:bg-green-700">
+                🔍 Generate Preview
+            </button>
+            <div id="preview-container" class="mt-4 hidden">
+                <img id="preview-image" src="" alt="Mode Preview" class="w-full border rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables
+let currentEditingMode = null;
+let modesData = {};
+let defaultMode = 'time';
+let availableBackgrounds = [];
+let availableBorders = [];
+let availableFonts = [];
+let translations = [];
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    loadDisplayModes();
+    loadBackgroundsAndBorders();
+    loadFonts();
+    loadTranslations();
+});
+
+// Load display modes data
+function loadDisplayModes() {
+    fetch('/api/display-modes')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                modesData = data.data.modes;
+                defaultMode = data.data.default_mode;
+                renderDefaultModeOptions();
+                renderModeSelection();
+            }
+        })
+        .catch(error => {
+            console.error('Error loading display modes:', error);
+            showNotification('Failed to load display modes', 'error');
+        });
+}
+
+// Load backgrounds and borders
+function loadBackgroundsAndBorders() {
+    Promise.all([
+        fetch('/api/enhanced-layering/backgrounds').then(r => r.json()),
+        fetch('/api/enhanced-layering/borders').then(r => r.json())
+    ]).then(([bgData, borderData]) => {
+        if (bgData.success) availableBackgrounds = bgData.data.backgrounds || [];
+        if (borderData.success) availableBorders = borderData.data.borders || [];
+    }).catch(console.error);
+}
+
+// Load fonts
+function loadFonts() {
+    fetch('/api/fonts')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                availableFonts = data.data.fonts || [];
+            }
+        })
+        .catch(console.error);
+}
+
+// Load translations
+function loadTranslations() {
+    fetch('/api/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.available_translations) {
+                translations = data.data.available_translations;
+            }
+        })
+        .catch(console.error);
+}
+
+// Render default mode options
+function renderDefaultModeOptions() {
+    const container = document.getElementById('default-mode-options');
+    container.innerHTML = '';
+    
+    Object.keys(modesData).forEach(mode => {
+        const modeInfo = modesData[mode];
+        const isDefault = mode === defaultMode;
+        
+        const option = document.createElement('label');
+        option.className = `flex items-center p-3 border rounded-lg cursor-pointer ${isDefault ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}`;
+        option.innerHTML = `
+            <input type="radio" name="default-mode" value="${mode}" ${isDefault ? 'checked' : ''} class="sr-only">
+            <div class="flex-1">
+                <div class="font-medium text-gray-900">${modeInfo.name}</div>
+                <div class="text-sm text-gray-600">${modeInfo.description}</div>
+            </div>
+            ${isDefault ? '<div class="text-blue-600">✓</div>' : ''}
+        `;
+        
+        option.addEventListener('click', function() {
+            // Update UI
+            document.querySelectorAll('[name="default-mode"]').forEach(radio => {
+                radio.checked = false;
+                radio.closest('label').className = 'flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-gray-400';
+            });
+            
+            const radio = option.querySelector('input[type="radio"]');
+            radio.checked = true;
+            option.className = 'flex items-center p-3 border border-blue-500 bg-blue-50 rounded-lg cursor-pointer';
+            
+            defaultMode = mode;
+        });
+        
+        container.appendChild(option);
+    });
+}
+
+// Render mode selection buttons
+function renderModeSelection() {
+    const container = document.getElementById('mode-selection');
+    container.innerHTML = '';
+    
+    Object.keys(modesData).forEach(mode => {
+        const modeInfo = modesData[mode];
+        
+        const button = document.createElement('button');
+        button.className = 'mobile-button text-left p-4 border border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 touch-feedback';
+        button.innerHTML = `
+            <div class="font-medium text-gray-900">${modeInfo.name}</div>
+            <div class="text-sm text-gray-600 mt-1">${modeInfo.description}</div>
+        `;
+        
+        button.addEventListener('click', function() {
+            editMode(mode);
+        });
+        
+        container.appendChild(button);
+    });
+}
+
+// Edit mode settings
+function editMode(mode) {
+    currentEditingMode = mode;
+    const modeInfo = modesData[mode];
+    
+    // Update UI
+    document.getElementById('current-mode-name').textContent = `${modeInfo.name} Settings`;
+    document.getElementById('mode-customization').classList.remove('hidden');
+    document.getElementById('mode-preview').classList.remove('hidden');
+    
+    // Load current mode settings
+    loadModeSettings(mode);
+    
+    // Scroll to customization panel
+    document.getElementById('mode-customization').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Load settings for a specific mode
+function loadModeSettings(mode) {
+    fetch(`/api/display-modes/${mode}/settings`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const settings = data.data.settings;
+                populateModeSettings(settings);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading mode settings:', error);
+            showNotification('Failed to load mode settings', 'error');
+        });
+}
+
+// Populate mode settings in UI
+function populateModeSettings(settings) {
+    // Render backgrounds
+    renderModeBackgrounds(settings.background_index || 0);
+    
+    // Render borders  
+    renderModeBorders(settings.border_index || 0);
+    
+    // Populate font settings
+    populateFontSelect(settings.font_name || 'default');
+    populateTranslationSelects(settings.primary_translation || 'kjv', settings.secondary_translation || 'nlt');
+    
+    // Set sliders
+    setSliderValue('mode-verse-size', settings.verse_font_size || 80);
+    setSliderValue('mode-reference-size', settings.reference_font_size || 84);
+    setSliderValue('mode-title-size', settings.title_font_size || 48);
+    setSliderValue('mode-display-scale', settings.display_scale || 1.0);
+    
+    // Set parallel mode
+    document.getElementById('mode-parallel-mode').checked = settings.parallel_mode || false;
+}
+
+// Render mode backgrounds
+function renderModeBackgrounds(selectedIndex) {
+    const container = document.getElementById('mode-backgrounds');
+    container.innerHTML = '';
+    
+    availableBackgrounds.forEach((bg, index) => {
+        const button = document.createElement('button');
+        button.className = `mobile-button border-2 rounded-lg p-2 touch-feedback ${index === selectedIndex ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`;
+        button.innerHTML = `
+            <img src="${bg.thumbnail}" alt="${bg.name}" class="w-full h-16 object-cover rounded mb-2" onerror="this.src='/static/thumbnails/placeholder.png'">
+            <div class="text-xs text-center">${bg.name}</div>
+        `;
+        
+        button.addEventListener('click', function() {
+            selectModeBackground(index);
+        });
+        
+        container.appendChild(button);
+    });
+}
+
+// Render mode borders
+function renderModeBorders(selectedIndex) {
+    const container = document.getElementById('mode-borders');
+    container.innerHTML = '';
+    
+    availableBorders.forEach((border, index) => {
+        const button = document.createElement('button');
+        button.className = `mobile-button border-2 rounded-lg p-2 touch-feedback ${index === selectedIndex ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`;
+        button.innerHTML = `
+            <img src="${border.thumbnail}" alt="${border.name}" class="w-full h-16 object-cover rounded mb-2" onerror="this.src='/static/thumbnails/placeholder.png'">
+            <div class="text-xs text-center">${border.name}</div>
+        `;
+        
+        button.addEventListener('click', function() {
+            selectModeBorder(index);
+        });
+        
+        container.appendChild(button);
+    });
+}
+
+// Select background for mode
+function selectModeBackground(index) {
+    document.querySelectorAll('#mode-backgrounds button').forEach((btn, i) => {
+        btn.className = `mobile-button border-2 rounded-lg p-2 touch-feedback ${i === index ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`;
+    });
+}
+
+// Select border for mode
+function selectModeBorder(index) {
+    document.querySelectorAll('#mode-borders button').forEach((btn, i) => {
+        btn.className = `mobile-button border-2 rounded-lg p-2 touch-feedback ${i === index ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`;
+    });
+}
+
+// Populate font select
+function populateFontSelect(selectedFont) {
+    const select = document.getElementById('mode-font-family');
+    select.innerHTML = '';
+    
+    availableFonts.forEach(font => {
+        const option = document.createElement('option');
+        option.value = font.name;
+        option.textContent = font.display_name || font.name;
+        option.selected = font.name === selectedFont;
+        select.appendChild(option);
+    });
+}
+
+// Populate translation selects
+function populateTranslationSelects(primaryTranslation, secondaryTranslation) {
+    const primarySelect = document.getElementById('mode-primary-translation');
+    const secondarySelect = document.getElementById('mode-secondary-translation');
+    
+    [primarySelect, secondarySelect].forEach((select, index) => {
+        select.innerHTML = '';
+        const selectedValue = index === 0 ? primaryTranslation : secondaryTranslation;
+        
+        translations.forEach(translation => {
+            const option = document.createElement('option');
+            option.value = translation.code;
+            option.textContent = translation.name;
+            option.selected = translation.code === selectedValue;
+            select.appendChild(option);
+        });
+    });
+}
+
+// Set slider value and update display
+function setSliderValue(sliderId, value) {
+    const slider = document.getElementById(sliderId);
+    const valueDisplay = document.getElementById(sliderId + '-value');
+    
+    slider.value = value;
+    valueDisplay.textContent = value;
+    
+    slider.addEventListener('input', function() {
+        valueDisplay.textContent = this.value;
+    });
+}
+
+// Save default mode
+document.getElementById('save-default-mode').addEventListener('click', function() {
+    const selectedMode = document.querySelector('[name="default-mode"]:checked')?.value;
+    
+    if (!selectedMode) {
+        showNotification('Please select a default mode', 'error');
+        return;
+    }
+    
+    fetch('/api/display-modes/default', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode: selectedMode })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Default mode saved successfully', 'success');
+            defaultMode = selectedMode;
+        } else {
+            showNotification(data.error || 'Failed to save default mode', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving default mode:', error);
+        showNotification('Network error', 'error');
+    });
+});
+
+// Save mode settings
+document.getElementById('save-mode-settings').addEventListener('click', function() {
+    if (!currentEditingMode) return;
+    
+    const settings = collectModeSettings();
+    
+    fetch(`/api/display-modes/${currentEditingMode}/settings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ settings })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(`${currentEditingMode} mode settings saved`, 'success');
+        } else {
+            showNotification(data.error || 'Failed to save settings', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving mode settings:', error);
+        showNotification('Network error', 'error');
+    });
+});
+
+// Collect mode settings from UI
+function collectModeSettings() {
+    const selectedBgIndex = Array.from(document.querySelectorAll('#mode-backgrounds button')).findIndex(btn => btn.className.includes('border-blue-500'));
+    const selectedBorderIndex = Array.from(document.querySelectorAll('#mode-borders button')).findIndex(btn => btn.className.includes('border-blue-500'));
+    
+    return {
+        background_index: selectedBgIndex >= 0 ? selectedBgIndex : 0,
+        border_index: selectedBorderIndex >= 0 ? selectedBorderIndex : 0,
+        font_name: document.getElementById('mode-font-family').value,
+        verse_font_size: parseInt(document.getElementById('mode-verse-size').value),
+        reference_font_size: parseInt(document.getElementById('mode-reference-size').value),
+        title_font_size: parseInt(document.getElementById('mode-title-size').value),
+        display_scale: parseFloat(document.getElementById('mode-display-scale').value),
+        primary_translation: document.getElementById('mode-primary-translation').value,
+        secondary_translation: document.getElementById('mode-secondary-translation').value,
+        parallel_mode: document.getElementById('mode-parallel-mode').checked
+    };
+}
+
+// Reset mode to defaults
+document.getElementById('reset-mode-btn').addEventListener('click', function() {
+    if (!currentEditingMode) return;
+    
+    if (confirm(`Reset ${modesData[currentEditingMode].name} to default settings?`)) {
+        fetch(`/api/display-modes/${currentEditingMode}/reset`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Mode reset to defaults', 'success');
+                loadModeSettings(currentEditingMode);
+            } else {
+                showNotification(data.error || 'Failed to reset mode', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error resetting mode:', error);
+            showNotification('Network error', 'error');
+        });
+    }
+});
+
+// Generate preview
+document.getElementById('generate-preview').addEventListener('click', function() {
+    if (!currentEditingMode) return;
+    
+    const settings = collectModeSettings();
+    
+    // Temporarily apply settings and generate preview
+    fetch('/api/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            display_mode: currentEditingMode,
+            ...settings
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('preview-image');
+            
+            previewImage.src = data.preview_url + '?t=' + Date.now();
+            previewContainer.classList.remove('hidden');
+        } else {
+            showNotification(data.error || 'Failed to generate preview', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error generating preview:', error);
+        showNotification('Network error', 'error');
+    });
+});
+
+// Notification function
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 p-4 rounded-lg text-white z-50 ${
+        type === 'success' ? 'bg-green-500' : 
+        type === 'error' ? 'bg-red-500' : 
+        'bg-blue-500'
+    }`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,770 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}Settings - Bible Clock Mobile{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Display Settings -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Display Settings</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Translation</label>
+                <select id="translation-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateTranslation()">
+                    <option value="kjv">King James Version (KJV)</option>
+                    <option value="amp">Amplified Bible (AMP)</option>
+                    <option value="nlt">New Living Translation (NLT)</option>
+                    <option value="esv">English Standard Version (ESV)</option>
+                    <option value="msg">The Message (MSG)</option>
+                    <option value="nasb">New American Standard Bible (NASB)</option>
+                    <option value="cev">Contemporary English Version (CEV)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
+                <select id="time-format-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateTimeFormat()">
+                    <option value="12">12-Hour (1:30 PM)</option>
+                    <option value="24">24-Hour (13:30)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Devotional Settings -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Devotional Settings</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Rotation Interval</label>
+                <select id="devotional-interval-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" onchange="updateDevotionalInterval()">
+                    <option value="5">5 Minutes</option>
+                    <option value="10">10 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="60">60 Minutes</option>
+                </select>
+            </div>
+            
+            <div class="bg-purple-50 p-4 rounded-lg">
+                <div class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-purple-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-medium text-purple-800">Devotional Info</h4>
+                        <p class="text-sm text-purple-700 mt-1">Devotional content rotates automatically. Pages cycle every 15 seconds within each devotional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parallel Translation -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Parallel Translation</h2>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-lg font-medium text-gray-800">Enable Parallel Mode</div>
+                    <div class="text-sm text-gray-500">Show two translations side by side</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="parallel-toggle" class="sr-only peer" onchange="toggleParallel()">
+                    <div class="w-14 h-8 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            
+            <div id="secondary-translation-select-container" class="hidden">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Translation</label>
+                <select id="secondary-translation-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateSecondaryTranslation()">
+                    <option value="amp">Amplified Bible (AMP)</option>
+                    <option value="kjv">King James Version (KJV)</option>
+                    <option value="nlt">New Living Translation (NLT)</option>
+                    <option value="esv">English Standard Version (ESV)</option>
+                    <option value="msg">The Message (MSG)</option>
+                    <option value="nasb">New American Standard Bible (NASB)</option>
+                    <option value="cev">Contemporary English Version (CEV)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weather Settings -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Weather Settings</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Temperature Unit</label>
+                <select id="temperature-unit-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" onchange="updateWeatherSetting('temperature_unit', this.value)">
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="C">Celsius (°C)</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location Detection</label>
+                <div class="space-y-3">
+                    <label class="flex items-center">
+                        <input type="radio" name="location-mode-mobile" value="auto" class="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300" onchange="toggleLocationModeMobile('auto')" checked>
+                        <span class="ml-3 text-sm text-gray-700">Auto-detect location (IP-based)</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="location-mode-mobile" value="custom" class="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300" onchange="toggleLocationModeMobile('custom')">
+                        <span class="ml-3 text-sm text-gray-700">Custom location</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Custom Location Settings -->
+            <div id="custom-location-settings-mobile" class="hidden space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <input type="text" id="custom-city-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" placeholder="e.g., New York" onchange="updateCustomLocationMobile()">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <input type="text" id="custom-country-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" placeholder="e.g., United States" onchange="updateCustomLocationMobile()">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                        <input type="number" step="0.000001" id="custom-latitude-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" placeholder="40.7128" onchange="updateCustomLocationMobile()">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                        <input type="number" step="0.000001" id="custom-longitude-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" placeholder="-74.0060" onchange="updateCustomLocationMobile()">
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500">Enter either city/country or latitude/longitude coordinates</p>
+            </div>
+
+            <!-- Second Location Settings -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <div class="text-sm font-medium text-gray-700">Show Second Location</div>
+                        <div class="text-xs text-gray-500">Display weather for a second location</div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="enable-second-location-mobile" class="sr-only peer" onchange="toggleSecondLocationMobile()" checked>
+                        <div class="w-14 h-8 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-sky-600"></div>
+                    </label>
+                </div>
+                
+                <div id="second-location-settings-mobile" class="space-y-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Location Name</label>
+                        <input type="text" id="second-location-name-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" value="Jerusalem, Israel" onchange="updateSecondLocationMobile()">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                            <input type="number" step="0.000001" id="second-latitude-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" value="31.7683" onchange="updateSecondLocationMobile()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                            <input type="number" step="0.000001" id="second-longitude-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" value="35.2137" onchange="updateSecondLocationMobile()">
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500">Default: Jerusalem, Israel. Change to any location worldwide.</p>
+                </div>
+            </div>
+
+            <!-- Weather Refresh Interval -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Weather Refresh Interval</label>
+                <select id="weather-refresh-mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500" onchange="updateWeatherSetting('weather_refresh_minutes', this.value)">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="120">2 hours</option>
+                </select>
+            </div>
+            
+            <div class="bg-sky-50 p-4 rounded-lg">
+                <div class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-sky-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-medium text-sky-800">Weather Info</h4>
+                        <p class="text-sm text-sky-700 mt-1">Weather data is fetched automatically and cached for efficient display. Includes Forecast with Moon Phase.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Error Log -->
+    <div class="mobile-card bg-white p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Daily Error Log</h2>
+            <button onclick="refreshErrorLogMobile()" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm touch-feedback hover:bg-blue-600">
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Refresh
+            </button>
+        </div>
+        
+        <!-- Error Statistics Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-lg font-semibold text-red-600" id="total-errors-mobile">0</div>
+                <div class="text-xs text-gray-600">Total Errors</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-lg font-semibold text-orange-600" id="services-with-errors-mobile">0</div>
+                <div class="text-xs text-gray-600">Services</div>
+            </div>
+        </div>
+        
+        <!-- Most Problematic Service -->
+        <div class="mb-4">
+            <div class="text-sm text-gray-600">Most Problematic Service:</div>
+            <div class="text-base font-medium" id="most-problematic-service-mobile">None</div>
+        </div>
+        
+        <!-- Recent Errors -->
+        <div class="space-y-2">
+            <div class="flex justify-between items-center">
+                <h3 class="text-sm font-medium text-gray-700">Recent Errors</h3>
+                <button onclick="clearErrorLogMobile()" class="bg-red-500 text-white px-2 py-1 rounded text-xs touch-feedback hover:bg-red-600">
+                    Clear
+                </button>
+            </div>
+            <div id="error-list-mobile" class="space-y-2 max-h-48 overflow-y-auto">
+                <div class="text-center text-gray-500 text-sm py-4">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Controls -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">System Controls</h2>
+        <div class="space-y-3">
+            <button onclick="restartService()" class="w-full mobile-button bg-yellow-500 text-white py-3 px-4 rounded-lg touch-feedback hover:bg-yellow-600 flex items-center justify-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>Restart Service</span>
+            </button>
+            
+            <button onclick="clearCache()" class="w-full mobile-button bg-red-500 text-white py-3 px-4 rounded-lg touch-feedback hover:bg-red-600 flex items-center justify-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                <span>Clear Cache</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="status-message" class="hidden mobile-card p-4 rounded-lg">
+        <div id="status-text" class="font-medium"></div>
+    </div>
+</div>
+
+<script>
+function updateTranslation() {
+    const translation = document.getElementById('translation-select').value;
+    showStatus(`Setting translation to ${translation.toUpperCase()}...`, 'info');
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ translation: translation })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Translation set to ${translation.toUpperCase()}`, 'success');
+        } else {
+            showStatus(`Failed to set translation: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function updateTimeFormat() {
+    const format = document.getElementById('time-format-select').value;
+    showStatus(`Setting time format to ${format}-hour...`, 'info');
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ time_format: format })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Time format set to ${format}-hour`, 'success');
+        } else {
+            showStatus(`Failed to set time format: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function updateDevotionalInterval() {
+    const interval = document.getElementById('devotional-interval-select').value;
+    showStatus(`Setting devotional interval to ${interval} minutes...`, 'info');
+    
+    fetch('/api/devotional/interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ interval: parseInt(interval) })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Devotional interval set to ${interval} minutes`, 'success');
+        } else {
+            showStatus(`Failed to set interval: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function toggleParallel() {
+    const toggle = document.getElementById('parallel-toggle');
+    const container = document.getElementById('secondary-translation-select-container');
+    const enabled = toggle.checked;
+    
+    if (enabled) {
+        container.classList.remove('hidden');
+    } else {
+        container.classList.add('hidden');
+    }
+    
+    showStatus(`${enabled ? 'Enabling' : 'Disabling'} parallel mode...`, 'info');
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ parallel_mode: enabled })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Parallel mode ${enabled ? 'enabled' : 'disabled'}`, 'success');
+        } else {
+            showStatus(`Failed to toggle parallel mode: ${data.error}`, 'error');
+            toggle.checked = !enabled;
+            if (!enabled) {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+        toggle.checked = !enabled;
+    });
+}
+
+function updateSecondaryTranslation() {
+    const translation = document.getElementById('secondary-translation-select').value;
+    showStatus(`Setting secondary translation to ${translation.toUpperCase()}...`, 'info');
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ secondary_translation: translation })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Secondary translation set to ${translation.toUpperCase()}`, 'success');
+        } else {
+            showStatus(`Failed to set secondary translation: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function restartService() {
+    if (confirm('Are you sure you want to restart the Bible Clock service?')) {
+        showStatus('Restarting service...', 'info');
+        
+        fetch('/api/restart', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showStatus('Service restart initiated', 'success');
+            } else {
+                showStatus(`Failed to restart: ${data.error}`, 'error');
+            }
+        })
+        .catch(error => {
+            showStatus(`Error: ${error.message}`, 'error');
+        });
+    }
+}
+
+function clearCache() {
+    if (confirm('Are you sure you want to clear all cached data?')) {
+        showStatus('Clearing cache...', 'info');
+        
+        fetch('/api/clear-cache', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showStatus('Cache cleared successfully', 'success');
+            } else {
+                showStatus(`Failed to clear cache: ${data.error}`, 'error');
+            }
+        })
+        .catch(error => {
+            showStatus(`Error: ${error.message}`, 'error');
+        });
+    }
+}
+
+function showStatus(message, type) {
+    const statusDiv = document.getElementById('status-message');
+    const statusText = document.getElementById('status-text');
+    
+    statusText.textContent = message;
+    statusDiv.classList.remove('hidden', 'bg-blue-100', 'bg-green-100', 'bg-red-100', 'text-blue-800', 'text-green-800', 'text-red-800');
+    
+    if (type === 'success') {
+        statusDiv.classList.add('bg-green-100', 'text-green-800');
+    } else if (type === 'error') {
+        statusDiv.classList.add('bg-red-100', 'text-red-800');
+    } else {
+        statusDiv.classList.add('bg-blue-100', 'text-blue-800');
+    }
+    
+    statusDiv.classList.remove('hidden');
+    
+    setTimeout(() => {
+        statusDiv.classList.add('hidden');
+    }, 5000);
+}
+
+// Weather Settings Functions for Mobile
+async function updateWeatherSetting(key, value) {
+    try {
+        const updateData = {};
+        updateData[key] = value;
+        
+        const response = await fetch('/api/weather/settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showStatus('Weather settings updated successfully', 'success');
+        } else {
+            showStatus('Failed to update weather settings: ' + result.error, 'error');
+        }
+    } catch (error) {
+        console.error('Error updating weather setting:', error);
+        showStatus('Error updating weather settings', 'error');
+    }
+}
+
+async function updateCustomLocationMobile() {
+    const city = document.getElementById('custom-city-mobile').value;
+    const country = document.getElementById('custom-country-mobile').value;
+    const latitude = parseFloat(document.getElementById('custom-latitude-mobile').value);
+    const longitude = parseFloat(document.getElementById('custom-longitude-mobile').value);
+    
+    // Validate required fields
+    if ((!city || !country) && (!latitude || !longitude)) {
+        showStatus('Please enter either city/country or latitude/longitude', 'error');
+        return;
+    }
+    
+    const customLocation = {
+        enabled: true,
+        city: city,
+        country: country,
+        latitude: latitude || null,
+        longitude: longitude || null
+    };
+    
+    await updateWeatherSetting('custom_location', customLocation);
+    await updateWeatherSetting('auto_location', false);
+}
+
+function toggleSecondLocationMobile() {
+    const enabled = document.getElementById('enable-second-location-mobile').checked;
+    const settings = document.getElementById('second-location-settings-mobile');
+    
+    if (enabled) {
+        settings.classList.remove('hidden');
+    } else {
+        settings.classList.add('hidden');
+    }
+    
+    // Update the enabled status in weather settings
+    fetch('/api/weather/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const currentSecondLocation = data.data.second_location || {};
+                currentSecondLocation.enabled = enabled;
+                updateWeatherSetting('second_location', currentSecondLocation);
+            }
+        })
+        .catch(console.error);
+}
+
+async function updateSecondLocationMobile() {
+    const name = document.getElementById('second-location-name-mobile').value;
+    const latitude = parseFloat(document.getElementById('second-latitude-mobile').value);
+    const longitude = parseFloat(document.getElementById('second-longitude-mobile').value);
+    
+    if (!name || !latitude || !longitude) {
+        showStatus('Please fill in all second location fields', 'error');
+        return;
+    }
+    
+    const secondLocation = {
+        enabled: true,
+        name: name,
+        latitude: latitude,
+        longitude: longitude
+    };
+    
+    await updateWeatherSetting('second_location', secondLocation);
+}
+
+function toggleLocationModeMobile(mode) {
+    const customSettings = document.getElementById('custom-location-settings-mobile');
+    
+    if (mode === 'custom') {
+        customSettings.classList.remove('hidden');
+        updateWeatherSetting('auto_location', false);
+    } else {
+        customSettings.classList.add('hidden');
+        updateWeatherSetting('auto_location', true);
+        // Disable custom location
+        updateWeatherSetting('custom_location', { enabled: false });
+    }
+}
+
+// Mobile Error Log Functions
+function loadErrorLogMobile() {
+    fetch('/api/error-log')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateErrorLogDisplayMobile(data.data);
+            } else {
+                console.error('Failed to load error log');
+            }
+        })
+        .catch(error => console.error('Network error loading error log:', error));
+}
+
+function updateErrorLogDisplayMobile(errorData) {
+    // Update statistics
+    document.getElementById('total-errors-mobile').textContent = errorData.total_errors || 0;
+    document.getElementById('services-with-errors-mobile').textContent = errorData.services_with_errors || 0;
+    document.getElementById('most-problematic-service-mobile').textContent = errorData.most_problematic_service || 'None';
+    
+    // Update error list
+    const errorList = document.getElementById('error-list-mobile');
+    if (errorData.recent_errors && errorData.recent_errors.length > 0) {
+        errorList.innerHTML = '';
+        errorData.recent_errors.slice(-5).reverse().forEach(error => { // Show last 5 errors
+            const errorItem = document.createElement('div');
+            errorItem.className = 'bg-gray-50 rounded-lg p-3';
+            
+            const timestamp = new Date(error.timestamp).toLocaleTimeString();
+            const errorType = error.error_type || error.level || 'Unknown';
+            const service = error.service || 'Unknown';
+            const message = error.message || 'No message';
+            
+            errorItem.innerHTML = `
+                <div class="flex justify-between items-start mb-1">
+                    <span class="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded">${errorType}</span>
+                    <span class="text-xs text-gray-500">${timestamp}</span>
+                </div>
+                <div class="text-sm font-medium text-gray-800 mb-1">${service}</div>
+                <div class="text-xs text-gray-600">${message}</div>
+            `;
+            errorList.appendChild(errorItem);
+        });
+    } else {
+        errorList.innerHTML = '<div class="text-center text-gray-500 text-sm py-4">No errors today 🎉</div>';
+    }
+}
+
+function refreshErrorLogMobile() {
+    const refreshButton = document.querySelector('button[onclick="refreshErrorLogMobile()"]');
+    const originalText = refreshButton.innerHTML;
+    refreshButton.innerHTML = '<svg class="w-4 h-4 inline mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" class="opacity-75"></path></svg>Refreshing...';
+    
+    loadErrorLogMobile();
+    
+    setTimeout(() => {
+        refreshButton.innerHTML = originalText;
+    }, 1000);
+}
+
+function clearErrorLogMobile() {
+    if (confirm('Clear all error logs? This cannot be undone.')) {
+        fetch('/api/error-log', {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showStatusMessage('Error log cleared successfully', 'success');
+                loadErrorLogMobile();
+            } else {
+                showStatusMessage('Failed to clear error log', 'error');
+            }
+        })
+        .catch(error => {
+            showStatusMessage('Network error clearing error log', 'error');
+        });
+    }
+}
+
+// Load current settings
+document.addEventListener('DOMContentLoaded', function() {
+    loadErrorLogMobile();
+    fetch('/api/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const settings = data.data;
+                
+                // Set translation
+                if (settings.translation) {
+                    document.getElementById('translation-select').value = settings.translation;
+                }
+                
+                // Set time format
+                if (settings.time_format) {
+                    document.getElementById('time-format-select').value = settings.time_format;
+                }
+                
+                // Set devotional interval
+                if (settings.devotional_interval) {
+                    document.getElementById('devotional-interval-select').value = settings.devotional_interval.toString();
+                }
+                
+                // Set parallel mode
+                if (settings.parallel_mode !== undefined) {
+                    const toggle = document.getElementById('parallel-toggle');
+                    toggle.checked = settings.parallel_mode;
+                    const container = document.getElementById('secondary-translation-select-container');
+                    if (settings.parallel_mode) {
+                        container.classList.remove('hidden');
+                    }
+                }
+                
+                // Set secondary translation
+                if (settings.secondary_translation) {
+                    document.getElementById('secondary-translation-select').value = settings.secondary_translation;
+                }
+            }
+        })
+        .catch(console.error);
+    
+    // Load weather settings
+    fetch('/api/weather/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const weatherSettings = data.data;
+                
+                // Set temperature unit
+                if (weatherSettings.temperature_unit) {
+                    document.getElementById('temperature-unit-mobile').value = weatherSettings.temperature_unit;
+                }
+                
+                // Set location mode
+                const customLocation = weatherSettings.custom_location || {};
+                const isCustomEnabled = customLocation.enabled || false;
+                
+                const autoRadio = document.querySelector('input[name="location-mode-mobile"][value="auto"]');
+                const customRadio = document.querySelector('input[name="location-mode-mobile"][value="custom"]');
+                
+                if (autoRadio && customRadio) {
+                    autoRadio.checked = !isCustomEnabled;
+                    customRadio.checked = isCustomEnabled;
+                    toggleLocationModeMobile(isCustomEnabled ? 'custom' : 'auto');
+                }
+                
+                // Set custom location fields
+                if (isCustomEnabled) {
+                    const cityField = document.getElementById('custom-city-mobile');
+                    const countryField = document.getElementById('custom-country-mobile');
+                    const latField = document.getElementById('custom-latitude-mobile');
+                    const lonField = document.getElementById('custom-longitude-mobile');
+                    
+                    if (cityField) cityField.value = customLocation.city || '';
+                    if (countryField) countryField.value = customLocation.country || '';
+                    if (latField) latField.value = customLocation.latitude || '';
+                    if (lonField) lonField.value = customLocation.longitude || '';
+                }
+                
+                // Set second location settings
+                const secondLocation = weatherSettings.second_location || {};
+                const secondEnabled = secondLocation.enabled !== false;
+                
+                const enableSecondCheckbox = document.getElementById('enable-second-location-mobile');
+                if (enableSecondCheckbox) {
+                    enableSecondCheckbox.checked = secondEnabled;
+                    toggleSecondLocationMobile();
+                }
+                
+                if (secondEnabled) {
+                    const nameField = document.getElementById('second-location-name-mobile');
+                    const latField = document.getElementById('second-latitude-mobile');
+                    const lonField = document.getElementById('second-longitude-mobile');
+                    
+                    if (nameField) nameField.value = secondLocation.name || 'Jerusalem, Israel';
+                    if (latField) latField.value = secondLocation.latitude || 31.7683;
+                    if (lonField) lonField.value = secondLocation.longitude || 35.2137;
+                }
+                
+                // Set weather refresh interval
+                const refreshField = document.getElementById('weather-refresh-mobile');
+                if (refreshField) {
+                    refreshField.value = weatherSettings.weather_refresh_minutes || 30;
+                }
+            }
+        })
+        .catch(console.error);
+});
+</script>
+{% endblock %}

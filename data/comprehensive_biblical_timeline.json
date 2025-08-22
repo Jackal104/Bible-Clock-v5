@@ -1,0 +1,2425 @@
+{
+  "biblical_events_calendar": {
+    "description": "Comprehensive biblical events calendar spanning from Creation (4000 BC) through early church period (400 AD) with thousands of historically significant events",
+    "events": {
+      "01-01": [
+        {
+          "title": "God's New Beginnings - Creation of Time",
+          "description": "The beginning of time itself when God spoke creation into existence",
+          "historical_context": "Day 1 of Creation - God creates light and separates it from darkness, establishing the concept of time",
+          "approximate_date": "4004 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:1-3",
+              "text": "In the beginning God created the heavens and the earth. Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters. And God said, 'Let there be light,' and there was light."
+            },
+            {
+              "reference": "2 Corinthians 5:17",
+              "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"
+            },
+            {
+              "reference": "Revelation 21:5",
+              "text": "He who was seated on the throne said, 'I am making everything new!' Then he said, 'Write this down, for these words are trustworthy and true.'"
+            }
+          ]
+        },
+        {
+          "title": "Circumcision of Jesus",
+          "description": "Jesus receives circumcision and the name Jesus, eight days after His birth",
+          "historical_context": "According to Jewish law, Jesus was circumcised on the eighth day and formally given the name Jesus",
+          "approximate_date": "January 1, 5 BC",
+          "verses": [
+            {
+              "reference": "Luke 2:21",
+              "text": "On the eighth day, when it was time to circumcise the child, he was named Jesus, the name the angel had given him before he was conceived."
+            },
+            {
+              "reference": "Leviticus 12:3",
+              "text": "On the eighth day the boy is to be circumcised."
+            }
+          ]
+        }
+      ],
+      "01-02": [
+        {
+          "title": "God Creates the Heavens - The Firmament",
+          "description": "God separates the waters above from the waters below, creating the sky",
+          "historical_context": "Day 2 of Creation - God creates the expanse/firmament to separate the waters",
+          "approximate_date": "4003 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:6-8",
+              "text": "And God said, 'Let there be a vault between the waters to separate water from water.' So God made the vault and separated the water under the vault from the water above it. And it was so. God called the vault 'sky.' And there was evening, and there was morning—the second day."
+            }
+          ]
+        },
+        {
+          "title": "Call of Samuel in the Temple",
+          "description": "Young Samuel hears God's voice calling him in the temple at Shiloh",
+          "historical_context": "Around 1070 BC, during the time of Eli the priest, God calls Samuel to be His prophet",
+          "approximate_date": "1070 BC",
+          "verses": [
+            {
+              "reference": "1 Samuel 3:1-10",
+              "text": "The boy Samuel ministered before the LORD under Eli. In those days the word of the LORD was rare; there were not many visions. One night Eli, whose eyes were becoming so weak that he could barely see, was lying down in his usual place. The lamp of God had not yet gone out, and Samuel was lying down in the house of the LORD, where the ark of God was. Then the LORD called Samuel. Samuel answered, 'Here I am.'"
+            }
+          ]
+        }
+      ],
+      "01-03": [
+        {
+          "title": "Dry Land and Vegetation Created",
+          "description": "God gathers the waters and creates dry land, then creates all plant life",
+          "historical_context": "Day 3 of Creation - God creates land, seas, and all vegetation",
+          "approximate_date": "4002 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:9-13",
+              "text": "And God said, 'Let the water under the sky be gathered to one place, and let dry ground appear.' And it was so. God called the dry ground 'land,' and the gathered waters he called 'seas.' And God saw that it was good. Then God said, 'Let the land produce vegetation: seed-bearing plants and trees on the land that bear fruit with seed in it, according to their various kinds.' And it was so."
+            }
+          ]
+        }
+      ],
+      "01-04": [
+        {
+          "title": "Sun, Moon, and Stars Created",
+          "description": "God creates the celestial bodies to govern day and night and mark seasons",
+          "historical_context": "Day 4 of Creation - God creates the sun, moon, stars, and establishes the calendar system",
+          "approximate_date": "4001 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:14-19",
+              "text": "And God said, 'Let there be lights in the vault of the sky to separate the day from the night, and let them serve as signs to mark sacred times, and days and years, and let them be lights in the vault of the sky to give light on the earth.' And it was so. God made two great lights—the greater light to govern the day and the lesser light to govern the night. He also made the stars."
+            },
+            {
+              "reference": "Psalm 19:1",
+              "text": "The heavens declare the glory of God; the skies proclaim the work of his hands."
+            }
+          ]
+        }
+      ],
+      "01-05": [
+        {
+          "title": "Sea Creatures and Birds Created",
+          "description": "God creates all marine life and flying creatures",
+          "historical_context": "Day 5 of Creation - God fills the seas with life and creates all birds",
+          "approximate_date": "4000 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:20-23",
+              "text": "And God said, 'Let the water teem with living creatures, and let birds fly above the earth across the vault of the sky.' So God created the great creatures of the sea and every living thing with which the water teems and that moves about in it, according to their kinds, and every winged bird according to its kind. And God saw that it was good."
+            }
+          ]
+        }
+      ],
+      "01-06": [
+        {
+          "title": "Land Animals and Humanity Created",
+          "description": "God creates all land animals and then creates Adam and Eve in His image",
+          "historical_context": "Day 6 of Creation - The pinnacle of creation when God creates mankind",
+          "approximate_date": "3999 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 1:24-27",
+              "text": "And God said, 'Let the land produce living creatures according to their kinds: the livestock, the creatures that move along the ground, and the wild animals, each according to its kind.' And it was so. So God created mankind in his own image, in the image of God he created them; male and female he created them."
+            },
+            {
+              "reference": "Genesis 2:7",
+              "text": "Then the LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being."
+            }
+          ]
+        },
+        {
+          "title": "Epiphany - The Wise Men's Journey",
+          "description": "Traditional celebration of the Magi visiting Jesus, revealing Christ to the Gentiles",
+          "historical_context": "The Wise Men from the East followed the star to worship the Christ child in Bethlehem, circa 5-4 BC",
+          "approximate_date": "4 BC",
+          "verses": [
+            {
+              "reference": "Matthew 2:11",
+              "text": "On coming to the house, they saw the child with his mother Mary, and they bowed down and worshiped him. Then they opened their treasures and presented him with gifts of gold, frankincense and myrrh."
+            },
+            {
+              "reference": "Isaiah 60:3",
+              "text": "Nations will come to your light, and kings to the brightness of your dawn."
+            }
+          ]
+        }
+      ],
+      "01-07": [
+        {
+          "title": "God's First Sabbath Rest",
+          "description": "God completes creation and rests, establishing the pattern of Sabbath",
+          "historical_context": "Day 7 of Creation - God rests and sanctifies the Sabbath day",
+          "approximate_date": "3998 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 2:1-3",
+              "text": "Thus the heavens and the earth were completed in all their vast array. By the seventh day God had finished the work he had been doing; so on the seventh day he rested from all his work. Then God blessed the seventh day and made it holy, because on it he rested from all the work of creating that he had done."
+            },
+            {
+              "reference": "Exodus 20:8-11",
+              "text": "Remember the Sabbath day by keeping it holy. Six days you shall labor and do all your work, but the seventh day is a sabbath to the LORD your God."
+            }
+          ]
+        }
+      ],
+      "01-08": [
+        {
+          "title": "Adam and Eve in the Garden",
+          "description": "God places Adam and Eve in the Garden of Eden with dominion over creation",
+          "historical_context": "The first week after Creation - Humanity begins its relationship with God in paradise",
+          "approximate_date": "3997 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 2:8-9",
+              "text": "Now the LORD God had planted a garden in the east, in Eden; and there he put the man he had formed. The LORD God made all kinds of trees grow out of the ground—trees that were pleasing to the sight and good for food. In the middle of the garden were the tree of life and the tree of the knowledge of good and evil."
+            },
+            {
+              "reference": "Genesis 1:28",
+              "text": "God blessed them and said to them, 'Be fruitful and increase in number; fill the earth and subdue it. Rule over the fish in the sea and the birds in the sky and over every living creature that moves on the ground.'"
+            }
+          ]
+        }
+      ],
+      "01-09": [
+        {
+          "title": "God's Covenant with Creation",
+          "description": "God establishes His covenant relationship with all creation",
+          "historical_context": "Early days after Creation - God's intention for harmony between Creator and creation",
+          "approximate_date": "3996 BC (traditional chronology)",
+          "verses": [
+            {
+              "reference": "Genesis 9:12-13",
+              "text": "And God said, 'This is the sign of the covenant I am making between me and you and every living creature with you, a covenant for all generations to come: I have set my rainbow in the clouds, and it will be the sign of the covenant between me and the earth.'"
+            }
+          ]
+        }
+      ],
+      "01-10": [
+        {
+          "title": "Moses Receives the Ten Commandments",
+          "description": "Moses comes down from Mount Sinai with the stone tablets containing God's law",
+          "historical_context": "Around 1446 BC, after 40 days on Mount Sinai, Moses receives the Ten Commandments",
+          "approximate_date": "1446 BC",
+          "verses": [
+            {
+              "reference": "Exodus 31:18",
+              "text": "When the LORD finished speaking to Moses on Mount Sinai, he gave him the two tablets of the covenant law, the tablets of stone inscribed by the finger of God."
+            },
+            {
+              "reference": "Exodus 34:29",
+              "text": "When Moses came down from Mount Sinai with the two tablets of the covenant law in his hands, he was not aware that his face was radiant because he had spoken with the LORD."
+            },
+            {
+              "reference": "Deuteronomy 4:13",
+              "text": "He declared to you his covenant, the Ten Commandments, which he commanded you to follow and then wrote them on two stone tablets."
+            }
+          ]
+        }
+      ],
+      "01-11": [
+        {
+          "title": "The Baptism of Jesus Christ",
+          "description": "Jesus is baptized by John the Baptist in the Jordan River, beginning His ministry",
+          "historical_context": "Around 29 AD, Jesus begins His public ministry with baptism by John",
+          "approximate_date": "29 AD",
+          "verses": [
+            {
+              "reference": "Matthew 3:16-17",
+              "text": "As soon as Jesus was baptized, he went up out of the water. At that moment heaven was opened, and he saw the Spirit of God descending like a dove and alighting on him. And a voice from heaven said, 'This is my Son, whom I love; with him I am well pleased.'"
+            },
+            {
+              "reference": "Mark 1:9-11",
+              "text": "At that time Jesus came from Nazareth in Galilee and was baptized by John in the Jordan. Just as Jesus was coming up out of the water, he saw heaven being torn open and the Spirit descending on him like a dove. And a voice came from heaven: 'You are my Son, whom I love; with you I am well pleased.'"
+            }
+          ]
+        }
+      ],
+      "01-12": [
+        {
+          "title": "Jesus Calls His First Disciples",
+          "description": "Jesus calls Simon Peter, Andrew, James, and John to follow Him",
+          "historical_context": "Shortly after His baptism, around 29 AD, Jesus begins calling His disciples",
+          "approximate_date": "29 AD",
+          "verses": [
+            {
+              "reference": "Matthew 4:18-20",
+              "text": "As Jesus was walking beside the Sea of Galilee, he saw two brothers, Simon called Peter and his brother Andrew. They were casting a net into the lake, for they were fishermen. 'Come, follow me,' Jesus said, 'and I will send you out to fish for people.' At once they left their nets and followed him."
+            },
+            {
+              "reference": "Mark 1:16-18",
+              "text": "As Jesus walked beside the Sea of Galilee, he saw Simon and his brother Andrew casting a net into the lake, for they were fishermen. 'Come, follow me,' Jesus said, 'and I will send you out to fish for people.' At once they left their nets and followed him."
+            }
+          ]
+        }
+      ],
+      "01-13": [
+        {
+          "title": "Jesus' First Miracle at Cana",
+          "description": "Jesus turns water into wine at a wedding in Cana, His first recorded miracle",
+          "historical_context": "Early in Jesus' ministry, around 29 AD, demonstrating His divine power",
+          "approximate_date": "29 AD",
+          "verses": [
+            {
+              "reference": "John 2:7-11",
+              "text": "Jesus said to the servants, 'Fill the jars with water'; so they filled them to the brim. Then he told them, 'Now draw some out and take it to the master of the banquet.' They did so, and the master of the banquet tasted the water that had been turned into wine. He did not realize where it had come from, though the servants who had drawn the water knew. Then he called the bridegroom aside and said, 'Everyone brings out the choice wine first and then the cheaper wine after the guests have had too much to drink; but you have saved the best till now.' What Jesus did here in Cana of Galilee was the first of the signs through which he revealed his glory; and his disciples believed in him."
+            }
+          ]
+        }
+      ],
+      "01-14": [
+        {
+          "title": "God's Promise to Abraham",
+          "description": "God first calls Abram to leave his homeland and promises to make him a great nation",
+          "historical_context": "Around 2091 BC, God calls Abram (later Abraham) from Ur of the Chaldeans",
+          "approximate_date": "2091 BC",
+          "verses": [
+            {
+              "reference": "Genesis 12:1-3",
+              "text": "The LORD had said to Abram, 'Go from your country, your people and your father's household to the land I will show you. I will make you into a great nation, and I will bless you; I will make your name great, and you will be a blessing. I will bless those who bless you, and whoever curses you I will curse; and all peoples on earth will be blessed through you.'"
+            },
+            {
+              "reference": "Hebrews 11:8",
+              "text": "By faith Abraham, when called to go to a place he would later receive as his inheritance, obeyed and went, even though he did not know where he was going."
+            }
+          ]
+        }
+      ],
+      "01-15": [
+        {
+          "title": "Jesus Begins His Public Ministry",
+          "description": "Jesus returns to Galilee and begins preaching the kingdom of God",
+          "historical_context": "Around 29 AD, after His temptation in the wilderness, Jesus begins His public ministry",
+          "approximate_date": "29 AD",
+          "verses": [
+            {
+              "reference": "Mark 1:14-15",
+              "text": "After John was put in prison, Jesus went into Galilee, proclaiming the good news of God. 'The time has come,' he said. 'The kingdom of God has come near. Repent and believe the good news!'"
+            },
+            {
+              "reference": "Luke 4:14-15",
+              "text": "Jesus returned to Galilee in the power of the Spirit, and news about him spread through the whole countryside. He was teaching in their synagogues, and everyone praised him."
+            }
+          ]
+        }
+      ],
+      "01-16": [
+        {
+          "title": "Jesus Reads in the Nazareth Synagogue",
+          "description": "Jesus reads from Isaiah and declares the fulfillment of messianic prophecy",
+          "historical_context": "Early in His ministry, Jesus returns to His hometown and proclaims His messianic mission",
+          "approximate_date": "29 AD",
+          "verses": [
+            {
+              "reference": "Luke 4:18-21",
+              "text": "The Spirit of the Lord is on me, because he has anointed me to proclaim good news to the poor. He has sent me to proclaim freedom for the prisoners and recovery of sight for the blind, to set the oppressed free, to proclaim the year of the Lord's favor. Then he rolled up the scroll, gave it back to the attendant and sat down. The eyes of everyone in the synagogue were fastened on him. He began by saying to them, 'Today this scripture is fulfilled in your hearing.'"
+            }
+          ]
+        }
+      ],
+      "01-17": [
+        {
+          "title": "Abraham's Covenant with God",
+          "description": "God establishes His everlasting covenant with Abraham and his descendants",
+          "historical_context": "Around 2085 BC, God makes His covenant promise to Abraham in Canaan",
+          "approximate_date": "2085 BC",
+          "verses": [
+            {
+              "reference": "Genesis 17:7-8",
+              "text": "I will establish my covenant as an everlasting covenant between me and you and your descendants after you for the generations to come, to be your God and the God of your descendants after you. The whole land of Canaan, where you now reside as a foreigner, I will give as an everlasting possession to you and your descendants after you; and I will be their God."
+            },
+            {
+              "reference": "Romans 4:16",
+              "text": "Therefore, the promise comes by faith, so that it may be by grace and may be guaranteed to all Abraham's offspring—not only to those who are of the law but also to those who have the faith of Abraham. He is the father of us all."
+            }
+          ]
+        }
+      ],
+      "01-18": [
+        {
+          "title": "Isaac's Birth Promised",
+          "description": "God promises Abraham and Sarah that they will have a son in their old age",
+          "historical_context": "Around 2066 BC, when Abraham was 99 and Sarah was 89, God promises Isaac",
+          "approximate_date": "2066 BC",
+          "verses": [
+            {
+              "reference": "Genesis 18:10-14",
+              "text": "Then one of them said, 'I will surely return to you about this time next year, and Sarah your wife will have a son.' Now Sarah was listening at the entrance to the tent, which was behind him. Abraham and Sarah were already very old, and Sarah was past the age of childbearing. So Sarah laughed to herself as she thought, 'After I am worn out and my lord is old, will I now have this pleasure?' Then the LORD said to Abraham, 'Why did Sarah laugh and say, Will I really have a child, now that I am old? Is anything too hard for the LORD?'"
+            }
+          ]
+        }
+      ],
+      "01-19": [
+        {
+          "title": "Sodom and Gomorrah Destroyed",
+          "description": "God destroys the wicked cities of Sodom and Gomorrah with fire and brimstone",
+          "historical_context": "Around 2065 BC, God's judgment falls on the cities of the plain",
+          "approximate_date": "2065 BC",
+          "verses": [
+            {
+              "reference": "Genesis 19:24-25",
+              "text": "Then the LORD rained down burning sulfur on Sodom and Gomorrah—from the LORD out of the heavens. Thus he overthrew those cities and the entire plain, destroying all those living in the cities—and also the vegetation in the land."
+            },
+            {
+              "reference": "2 Peter 2:6",
+              "text": "If he condemned the cities of Sodom and Gomorrah by burning them to ashes, and made them an example of what is going to happen to the ungodly."
+            }
+          ]
+        }
+      ],
+      "01-20": [
+        {
+          "title": "Isaac Born to Abraham and Sarah",
+          "description": "The promised son Isaac is born when Abraham is 100 years old",
+          "historical_context": "Around 2065 BC, God fulfills His promise to Abraham and Sarah",
+          "approximate_date": "2065 BC",
+          "verses": [
+            {
+              "reference": "Genesis 21:1-3",
+              "text": "Now the LORD was gracious to Sarah as he had said, and the LORD did for Sarah what he had promised. Sarah became pregnant and bore a son to Abraham in his old age, at the very time God had promised him. Abraham gave the name Isaac to the son Sarah bore him."
+            },
+            {
+              "reference": "Romans 4:19-21",
+              "text": "Without weakening in his faith, he faced the fact that his body was as good as dead—since he was about a hundred years old—and that Sarah's womb was also dead. Yet he did not waver through unbelief regarding the promise of God, but was strengthened in his faith and gave glory to God, being fully persuaded that God had power to do what he had promised."
+            }
+          ]
+        }
+      ],
+      "01-21": [
+        {
+          "title": "The Sacrifice of Isaac",
+          "description": "God tests Abraham by asking him to sacrifice his son Isaac on Mount Moriah",
+          "historical_context": "Around 2050 BC, God tests Abraham's faith in the ultimate way",
+          "approximate_date": "2050 BC",
+          "verses": [
+            {
+              "reference": "Genesis 22:1-2",
+              "text": "Some time later God tested Abraham. He said to him, 'Abraham!' 'Here I am,' he replied. Then God said, 'Take your son, your only son, whom you love—Isaac—and go to the region of Moriah. Sacrifice him there as a burnt offering on a mountain I will show you.'"
+            },
+            {
+              "reference": "Genesis 22:11-12",
+              "text": "But the angel of the LORD called out to him from heaven, 'Abraham! Abraham!' 'Here I am,' he replied. 'Do not lay a hand on the boy,' he said. 'Do not do anything to him. Now I know that you fear God, because you have not withheld from me your son, your only son.'"
+            },
+            {
+              "reference": "Hebrews 11:17-19",
+              "text": "By faith Abraham, when God tested him, offered Isaac as a sacrifice. He who had embraced the promises was about to sacrifice his one and only son, even though God had said to him, 'It is through Isaac that your offspring will be reckoned.' Abraham reasoned that God could even raise the dead, and so in a manner of speaking he did receive Isaac back from death."
+            }
+          ]
+        }
+      ],
+      "01-22": [
+        {
+          "title": "Sarah's Death and Burial",
+          "description": "Sarah dies at age 127 and Abraham purchases the cave of Machpelah for her burial",
+          "historical_context": "Around 2028 BC, Sarah dies in Hebron and Abraham buys land for the first time in the Promised Land",
+          "approximate_date": "2028 BC",
+          "verses": [
+            {
+              "reference": "Genesis 23:1-2",
+              "text": "Sarah lived to be a hundred and twenty-seven years old. She died at Kiriath Arba (that is, Hebron) in the land of Canaan, and Abraham went to mourn for Sarah and to weep over her."
+            },
+            {
+              "reference": "Genesis 23:19-20",
+              "text": "Afterward Abraham buried his wife Sarah in the cave in the field of Machpelah near Mamre (which is at Hebron) in the land of Canaan. So the field and the cave in it were deeded to Abraham by the Hittites as a burial site."
+            }
+          ]
+        }
+      ],
+      "01-23": [
+        {
+          "title": "Isaac Marries Rebekah",
+          "description": "Abraham's servant finds Rebekah as a wife for Isaac, showing God's providence",
+          "historical_context": "Around 2025 BC, God provides a wife for Isaac from Abraham's relatives",
+          "approximate_date": "2025 BC",
+          "verses": [
+            {
+              "reference": "Genesis 24:67",
+              "text": "Isaac brought her into the tent of his mother Sarah, and he married Rebekah. So she became his wife, and he loved her; and Isaac was comforted after his mother's death."
+            },
+            {
+              "reference": "Genesis 24:50-51",
+              "text": "Laban and Bethuel answered, 'This is from the LORD; we can say nothing to you one way or the other. Here is Rebekah; take her and go, and let her become the wife of your master's son, as the LORD has directed.'"
+            }
+          ]
+        }
+      ],
+      "01-24": [
+        {
+          "title": "Jacob and Esau Born",
+          "description": "Isaac and Rebekah's twin sons are born, with God's prophecy about their future",
+          "historical_context": "Around 2005 BC, the twins are born after Isaac prays for his barren wife",
+          "approximate_date": "2005 BC",
+          "verses": [
+            {
+              "reference": "Genesis 25:24-26",
+              "text": "When the time came for her to give birth, there were twin boys in her womb. The first to come out was red, and his whole body was like a hairy garment; so they named him Esau. After this, his brother came out, with his hand grasping Esau's heel; so he was named Jacob. Isaac was sixty years old when Rebekah gave birth to them."
+            },
+            {
+              "reference": "Romans 9:10-12",
+              "text": "Not only that, but Rebekah's children were conceived at the same time by our father Isaac. Yet, before the twins were born or had done anything good or bad—in order that God's purpose in election might stand: not by works but by him who calls—she was told, 'The older will serve the younger.'"
+            }
+          ]
+        }
+      ],
+      "01-25": [
+        {
+          "title": "The Conversion of Paul",
+          "description": "Saul of Tarsus encounters the risen Christ on the road to Damascus and becomes Paul the Apostle",
+          "historical_context": "Around 34-35 AD, the greatest persecutor of Christians becomes their greatest missionary",
+          "approximate_date": "34 AD",
+          "verses": [
+            {
+              "reference": "Acts 9:3-6",
+              "text": "As he neared Damascus on his journey, suddenly a light from heaven flashed around him. He fell to the ground and heard a voice say to him, 'Saul, Saul, why do you persecute me?' 'Who are you, Lord?' Saul asked. 'I am Jesus, whom you are persecuting,' he replied. 'Now get up and go into the city, and you will be told what you must do.'"
+            },
+            {
+              "reference": "Acts 9:15-16",
+              "text": "But the Lord said to Ananias, 'Go! This man is my chosen instrument to proclaim my name to the Gentiles and their kings and to the people of Israel. I will show him how much he must suffer for my name.'"
+            },
+            {
+              "reference": "Galatians 1:15-16",
+              "text": "But when God, who set me apart from my mother's womb and called me by his grace, was pleased to reveal his Son in me so that I might preach him among the Gentiles, my immediate response was not to consult any human being."
+            }
+          ]
+        }
+      ],
+      "01-26": [
+        {
+          "title": "Abraham's Death",
+          "description": "Abraham dies at age 175 and is buried in the cave of Machpelah",
+          "historical_context": "Around 1990 BC, the father of faith dies and is buried beside Sarah",
+          "approximate_date": "1990 BC",
+          "verses": [
+            {
+              "reference": "Genesis 25:7-8",
+              "text": "Abraham lived a hundred and seventy-five years. Then Abraham breathed his last and died at a good old age, an old man and full of years; and he was gathered to his people."
+            },
+            {
+              "reference": "Hebrews 11:13",
+              "text": "All these people were still living by faith when they died. They did not receive the things promised; they only saw them and welcomed them from a distance, admitting that they were foreigners and strangers on earth."
+            }
+          ]
+        }
+      ],
+      "01-27": [
+        {
+          "title": "Jacob Steals Esau's Blessing",
+          "description": "Jacob deceives his father Isaac and receives the blessing meant for Esau",
+          "historical_context": "Around 1925 BC, Jacob obtains the birthright blessing through deception",
+          "approximate_date": "1925 BC",
+          "verses": [
+            {
+              "reference": "Genesis 27:28-29",
+              "text": "May God give you heaven's dew and earth's richness—an abundance of grain and new wine. May nations serve you and peoples bow down to you. Be lord over your brothers, and may the sons of your mother bow down to you. May those who curse you be cursed and those who bless you be blessed."
+            },
+            {
+              "reference": "Romans 9:13",
+              "text": "Just as it is written: 'Jacob I loved, but Esau I hated.'"
+            }
+          ]
+        }
+      ],
+      "01-28": [
+        {
+          "title": "Jacob's Ladder Dream",
+          "description": "Jacob dreams of a ladder to heaven with angels ascending and descending",
+          "historical_context": "Around 1924 BC, as Jacob flees from Esau, God appears to him in a dream",
+          "approximate_date": "1924 BC",
+          "verses": [
+            {
+              "reference": "Genesis 28:12-15",
+              "text": "He had a dream in which he saw a stairway resting on the earth, with its top reaching to heaven, and the angels of God were ascending and descending on it. There above it stood the LORD, and he said: 'I am the LORD, the God of your father Abraham and the God of Isaac. I will give you and your descendants the land on which you are lying. Your descendants will be like the dust of the earth, and you will spread out to the west and to the east, to the north and to the south. All peoples on earth will be blessed through you and your offspring. I am with you and will watch over you wherever you go, and I will bring you back to this land. I will not leave you until I have done what I have promised you.'"
+            },
+            {
+              "reference": "John 1:51",
+              "text": "He then added, 'Very truly I tell you, you will see heaven open, and the angels of God ascending and descending on the Son of Man.'"
+            }
+          ]
+        }
+      ],
+      "01-29": [
+        {
+          "title": "Jacob Marries Leah and Rachel",
+          "description": "Jacob works fourteen years to marry both Leah and Rachel",
+          "historical_context": "Around 1917-1910 BC, Jacob's complex family situation begins in Haran",
+          "approximate_date": "1917 BC",
+          "verses": [
+            {
+              "reference": "Genesis 29:20-25",
+              "text": "So Jacob served seven years to get Rachel, but they seemed like only a few days to him because of his love for her. Then Jacob said to Laban, 'Give me my wife. My time is completed, and I want to make love to her.' So Laban brought together all the people of the place and gave a feast. But when evening came, he took his daughter Leah and brought her to Jacob, and Jacob made love to her."
+            }
+          ]
+        }
+      ],
+      "01-30": [
+        {
+          "title": "The Twelve Sons of Jacob Begin",
+          "description": "The birth of Jacob's sons who become the twelve tribes of Israel",
+          "historical_context": "Around 1915-1900 BC, the patriarchs of the twelve tribes are born",
+          "approximate_date": "1915 BC",
+          "verses": [
+            {
+              "reference": "Genesis 29:32-35",
+              "text": "Leah became pregnant and gave birth to a son. She named him Reuben, for she said, 'It is because the LORD has seen my misery. Surely my husband will love me now.' She conceived again, and when she gave birth to a son she said, 'Because the LORD heard that I am not loved, he gave me this one too.' So she named him Simeon. Again she conceived, and when she gave birth to a son she said, 'Now at last my husband will become attached to me, because I have borne him three sons.' So he was named Levi. She conceived again, and when she gave birth to a son she said, 'This time I will praise the LORD.' So she named him Judah."
+            }
+          ]
+        }
+      ],
+      "01-31": [
+        {
+          "title": "Joseph Born to Rachel",
+          "description": "Rachel finally bears a son, Joseph, who becomes Jacob's favored child",
+          "historical_context": "Around 1906 BC, Joseph is born and later becomes a key figure in salvation history",
+          "approximate_date": "1906 BC",
+          "verses": [
+            {
+              "reference": "Genesis 30:22-24",
+              "text": "Then God remembered Rachel; he listened to her and enabled her to conceive. She became pregnant and gave birth to a son and said, 'God has taken away my disgrace.' She named him Joseph, and said, 'May the LORD add to me another son.'"
+            },
+            {
+              "reference": "Genesis 37:3",
+              "text": "Now Israel loved Joseph more than any of his other sons, because he had been born to him in his old age; and he made an ornate robe for him."
+            }
+          ]
+        }
+      ]
+    },
+    "weekly_themes": {
+      "week_01": [
+        {
+          "title": "Creation Week - God's Perfect Design",
+          "description": "The first week of creation when God established the universe and humanity",
+          "time_period": "Creation Week - 4004 BC",
+          "verses": [
+            {
+              "reference": "Genesis 1:31",
+              "text": "God saw all that he had made, and it was very good. And there was evening, and there was morning—the sixth day."
+            }
+          ]
+        }
+      ],
+      "week_02": [
+        {
+          "title": "The Garden of Eden - Paradise Lost",
+          "description": "Adam and Eve's time in Eden and the fall of humanity",
+          "time_period": "Shortly after Creation - 4000 BC",
+          "verses": [
+            {
+              "reference": "Genesis 3:23-24",
+              "text": "So the LORD God banished him from the Garden of Eden to work the ground from which he had been taken. After he drove the man out, he placed on the east side of the Garden of Eden cherubim and a flaming sword flashing back and forth to guard the way to the tree of life."
+            }
+          ]
+        }
+      ],
+      "week_03": [
+        {
+          "title": "Cain and Abel - First Murder",
+          "description": "The first brothers and the first murder in human history",
+          "time_period": "Early humanity - ~3900 BC",
+          "verses": [
+            {
+              "reference": "Genesis 4:8-10",
+              "text": "Now Cain said to his brother Abel, 'Let's go out to the field.' While they were in the field, Cain attacked his brother Abel and killed him. Then the LORD said to Cain, 'Where is your brother Abel?' 'I don't know,' he replied. 'Am I my brother's keeper?' The LORD said, 'What have you done? Listen! Your brother's blood cries out to me from the ground.'"
+            }
+          ]
+        }
+      ],
+      "week_04": [
+        {
+          "title": "The Line of Seth - Hope Continues",
+          "description": "Seth's lineage preserves the godly line leading to Noah",
+          "time_period": "Early generations - 3800-3000 BC",
+          "verses": [
+            {
+              "reference": "Genesis 4:25-26",
+              "text": "Adam made love to his wife again, and she gave birth to a son and named him Seth, saying, 'God has granted me another child in place of Abel, since Cain killed him.' Seth also had a son, and he named him Enosh. At that time people began to call on the name of the LORD."
+            }
+          ]
+        }
+      ],
+      "week_05": [
+        {
+          "title": "Enoch Walks with God",
+          "description": "Enoch's faithful walk with God and his translation to heaven",
+          "time_period": "Antediluvian period - ~3000 BC",
+          "verses": [
+            {
+              "reference": "Genesis 5:24",
+              "text": "Enoch walked faithfully with God; then he was no more, because God took him away."
+            },
+            {
+              "reference": "Hebrews 11:5",
+              "text": "By faith Enoch was taken from this life, so that he did not experience death: 'He could not be found, because God had taken him away.' For before he was taken, he was commended as one who pleased God."
+            }
+          ]
+        }
+      ],
+      "week_06": [
+        {
+          "title": "Methuselah's Long Life",
+          "description": "The longest-lived man in history and what his life represents",
+          "time_period": "Antediluvian period - 2900-2000 BC",
+          "verses": [
+            {
+              "reference": "Genesis 5:27",
+              "text": "Altogether, Methuselah lived a total of 969 years, and then he died."
+            }
+          ]
+        }
+      ],
+      "week_07": [
+        {
+          "title": "Noah's Call and the Ark",
+          "description": "God calls Noah to build the ark and preserve life through the flood",
+          "time_period": "Pre-flood period - ~2500 BC",
+          "verses": [
+            {
+              "reference": "Genesis 6:13-14",
+              "text": "So God said to Noah, 'I am going to put an end to all people, for the earth is filled with violence because of them. I am surely going to destroy both them and the earth. So make yourself an ark of cypress wood; make rooms in it and coat it with pitch inside and out.'"
+            },
+            {
+              "reference": "Hebrews 11:7",
+              "text": "By faith Noah, when warned about things not yet seen, in holy fear built an ark to save his family. By his faith he condemned the world and became heir of the righteousness that is in keeping with faith."
+            }
+          ]
+        }
+      ],
+      "week_08": [
+        {
+          "title": "The Great Flood",
+          "description": "God's judgment on the world through the worldwide flood",
+          "time_period": "The Flood - ~2348 BC",
+          "verses": [
+            {
+              "reference": "Genesis 7:11-12",
+              "text": "In the six hundredth year of Noah's life, on the seventeenth day of the second month—on that day all the springs of the great deep burst forth, and the floodgates of the heavens were opened. And rain fell on the earth forty days and forty nights."
+            },
+            {
+              "reference": "2 Peter 3:6",
+              "text": "By these waters also the world of that time was deluged and destroyed."
+            }
+          ]
+        }
+      ],
+      "week_09": [
+        {
+          "title": "The Dove and the Rainbow",
+          "description": "The flood ends and God establishes His covenant with Noah",
+          "time_period": "Post-flood - ~2347 BC",
+          "verses": [
+            {
+              "reference": "Genesis 8:11",
+              "text": "When the dove returned to him in the evening, there in its beak was a freshly plucked olive leaf! Then Noah knew that the water had receded from the earth."
+            },
+            {
+              "reference": "Genesis 9:13",
+              "text": "I have set my rainbow in the clouds, and it will be the sign of the covenant between me and the earth."
+            }
+          ]
+        }
+      ],
+      "week_10": [
+        {
+          "title": "The Tower of Babel",
+          "description": "Humanity's pride leads to the confusion of languages and scattering",
+          "time_period": "Post-flood civilization - ~2200 BC",
+          "verses": [
+            {
+              "reference": "Genesis 11:4-6",
+              "text": "Then they said, 'Come, let us build ourselves a city, with a tower that reaches to the heavens, so that we may make a name for ourselves; otherwise we will be scattered over the face of the whole earth.' But the LORD came down to see the city and the tower the people were building. The LORD said, 'If as one people speaking the same language they have begun to do this, then nothing they plan to do will be impossible for them.'"
+            }
+          ]
+        }
+      ],
+      "week_11": [
+        {
+          "title": "Abraham's Call",
+          "description": "God calls Abraham to leave his homeland and start a new covenant",
+          "time_period": "Beginning of the Abrahamic covenant - ~2091 BC",
+          "verses": [
+            {
+              "reference": "Genesis 12:1-3",
+              "text": "The LORD had said to Abram, 'Go from your country, your people and your father's household to the land I will show you. I will make you into a great nation, and I will bless you; I will make your name great, and you will be a blessing. I will bless those who bless you, and whoever curses you I will curse; and all peoples on earth will be blessed through you.'"
+            }
+          ]
+        }
+      ],
+      "week_12": [
+        {
+          "title": "Abraham in Egypt",
+          "description": "Abraham's journey to Egypt during famine and his deception about Sarah",
+          "time_period": "Early Abrahamic period - ~2085 BC",
+          "verses": [
+            {
+              "reference": "Genesis 12:10-13",
+              "text": "Now there was a famine in the land, and Abram went down to Egypt to live there for a while because the famine was severe. As he was about to enter Egypt, he said to his wife Sarai, 'I know what a beautiful woman you are. When the Egyptians see you, they will say, This is his wife. Then they will kill me but will let you live. Say you are my sister, so that I will be treated well for your sake and my life will be spared because of you.'"
+            }
+          ]
+        }
+      ],
+      "week_13": [
+        {
+          "title": "Abraham and Lot Separate",
+          "description": "Abraham and Lot part ways due to their growing herds and strife",
+          "time_period": "Abrahamic period - ~2083 BC",
+          "verses": [
+            {
+              "reference": "Genesis 13:8-9",
+              "text": "So Abram said to Lot, 'Let's not have any quarreling between you and me, or between your herders and mine, for we are close relatives. Is not the whole land before you? Let's part company. If you go to the left, I'll go to the right; if you go to the right, I'll go to the left.'"
+            }
+          ]
+        }
+      ],
+      "week_14": [
+        {
+          "title": "War of the Kings",
+          "description": "Abraham rescues Lot from the coalition of kings and meets Melchizedek",
+          "time_period": "Abrahamic period - ~2080 BC",
+          "verses": [
+            {
+              "reference": "Genesis 14:18-20",
+              "text": "Then Melchizedek king of Salem brought out bread and wine. He was priest of God Most High, and he blessed Abram, saying, 'Blessed be Abram by God Most High, Creator of heaven and earth. And praise be to God Most High, who delivered your enemies into your hand.' Then Abram gave him a tenth of everything."
+            },
+            {
+              "reference": "Hebrews 7:1-3",
+              "text": "This Melchizedek was king of Salem and priest of God Most High. He met Abraham returning from the defeat of the kings and blessed him, and Abraham gave him a tenth of everything. First, the name Melchizedek means 'king of righteousness'; then also, 'king of Salem' means 'king of peace.' Without father or mother, without genealogy, without beginning of days or end of life, resembling the Son of God, he remains a priest forever."
+            }
+          ]
+        }
+      ],
+      "week_15": [
+        {
+          "title": "God's Covenant with Abraham",
+          "description": "God makes a formal covenant with Abraham about his descendants",
+          "time_period": "Abrahamic covenant - ~2078 BC",
+          "verses": [
+            {
+              "reference": "Genesis 15:5-6",
+              "text": "He took him outside and said, 'Look up at the sky and count the stars—if indeed you can count them.' Then he said to him, 'So shall your offspring be.' Abram believed the LORD, and he credited it to him as righteousness."
+            },
+            {
+              "reference": "Romans 4:3",
+              "text": "What does Scripture say? 'Abraham believed God, and it was credited to him as righteousness.'"
+            }
+          ]
+        }
+      ],
+      "week_16": [
+        {
+          "title": "Ishmael's Birth",
+          "description": "Abraham and Sarah's attempt to fulfill God's promise through Hagar",
+          "time_period": "Abrahamic period - ~2077 BC",
+          "verses": [
+            {
+              "reference": "Genesis 16:15-16",
+              "text": "So Hagar bore Abram a son, and Abram gave the name Ishmael to the son she had borne. Abram was eighty-six years old when Hagar bore him Ishmael."
+            },
+            {
+              "reference": "Galatians 4:22-23",
+              "text": "For it is written that Abraham had two sons, one by the slave woman and the other by the free woman. His son by the slave woman was born according to the flesh, but his son by the free woman was born as the result of a divine promise."
+            }
+          ]
+        }
+      ],
+      "week_17": [
+        {
+          "title": "Circumcision Established",
+          "description": "God establishes circumcision as the sign of His covenant with Abraham",
+          "time_period": "Abrahamic covenant - ~2067 BC",
+          "verses": [
+            {
+              "reference": "Genesis 17:10-11",
+              "text": "This is my covenant with you and your descendants after you, the covenant you are to keep: Every male among you shall be circumcised. You are to undergo circumcision, and it will be the sign of the covenant between me and you."
+            },
+            {
+              "reference": "Romans 4:11",
+              "text": "And he received circumcision as a sign, a seal of the righteousness that he had by faith while he was still uncircumcised. So then, he is the father of all who believe but have not been circumcised, in order that righteousness might be credited to them."
+            }
+          ]
+        }
+      ],
+      "week_18": [
+        {
+          "title": "Three Visitors to Abraham",
+          "description": "The Lord and two angels visit Abraham and promise Isaac's birth",
+          "time_period": "Pre-Isaac period - ~2066 BC",
+          "verses": [
+            {
+              "reference": "Genesis 18:1-3",
+              "text": "The LORD appeared to Abraham near the great trees of Mamre while he was sitting at the entrance to his tent in the heat of the day. Abraham looked up and saw three men standing nearby. When he saw them, he hurried from the entrance of his tent to meet them and bowed low to the ground. He said, 'If I have found favor in your eyes, my lord, do not pass your servant by.'"
+            },
+            {
+              "reference": "Hebrews 13:2",
+              "text": "Do not forget to show hospitality to strangers, for by so doing some people have shown hospitality to angels without knowing it."
+            }
+          ]
+        }
+      ],
+      "week_19": [
+        {
+          "title": "Abraham Intercedes for Sodom",
+          "description": "Abraham's bold intercession for the righteous in Sodom and Gomorrah",
+          "time_period": "Pre-destruction of Sodom - ~2065 BC",
+          "verses": [
+            {
+              "reference": "Genesis 18:23-25",
+              "text": "Then Abraham approached him and said: 'Will you sweep away the righteous with the wicked? What if there are fifty righteous people in the city? Will you really sweep it away and not spare the place for the sake of the fifty righteous people in it? Far be it from you to do such a thing—to kill the righteous with the wicked, treating the righteous and the wicked alike. Far be it from you! Will not the Judge of all the earth do right?'"
+            },
+            {
+              "reference": "James 5:16",
+              "text": "The prayer of a righteous person is powerful and effective."
+            }
+          ]
+        }
+      ],
+      "week_20": [
+        {
+          "title": "Lot's Rescue from Sodom",
+          "description": "Angels rescue Lot and his family from the destruction of Sodom and Gomorrah",
+          "time_period": "Destruction of Sodom - ~2065 BC",
+          "verses": [
+            {
+              "reference": "Genesis 19:15-16",
+              "text": "With the coming of dawn, the angels urged Lot, saying, 'Hurry! Take your wife and your two daughters who are here, or you will be swept away when the city is punished.' When he hesitated, the men grasped his hand and the hands of his wife and of his two daughters and led them safely out of the city, for the LORD was merciful to them."
+            },
+            {
+              "reference": "2 Peter 2:7-8",
+              "text": "And if he rescued Lot, a righteous man, who was distressed by the depraved conduct of the lawless (for that righteous man, living among them day after day, was tormented in his righteous soul by the lawless deeds he saw and heard)."
+            }
+          ]
+        }
+      ],
+      "week_21": [
+        {
+          "title": "Isaac's Miraculous Birth",
+          "description": "God fulfills His promise and Isaac is born to Abraham and Sarah",
+          "time_period": "Birth of Isaac - ~2065 BC",
+          "verses": [
+            {
+              "reference": "Genesis 21:1-2",
+              "text": "Now the LORD was gracious to Sarah as he had said, and the LORD did for Sarah what he had promised. Sarah became pregnant and bore a son to Abraham in his old age, at the very time God had promised him."
+            },
+            {
+              "reference": "Romans 9:9",
+              "text": "For this was how the promise was stated: 'At the appointed time I will return, and Sarah will have a son.'"
+            }
+          ]
+        }
+      ],
+      "week_22": [
+        {
+          "title": "Hagar and Ishmael Sent Away",
+          "description": "Sarah demands that Hagar and Ishmael be sent away, but God provides for them",
+          "time_period": "After Isaac's birth - ~2062 BC",
+          "verses": [
+            {
+              "reference": "Genesis 21:17-19",
+              "text": "God heard the boy crying, and the angel of God called to Hagar from heaven and said to her, 'What is the matter, Hagar? Do not be afraid; God has heard the boy crying as he lies there. Lift the boy up and take him by the hand, for I will make him into a great nation.' Then God opened her eyes and she saw a well of water. So she went and filled the skin with water and gave the boy a drink."
+            }
+          ]
+        }
+      ],
+      "week_23": [
+        {
+          "title": "The Binding of Isaac",
+          "description": "God tests Abraham's faith by asking him to sacrifice Isaac",
+          "time_period": "Testing of Abraham - ~2050 BC",
+          "verses": [
+            {
+              "reference": "Genesis 22:2",
+              "text": "Then God said, 'Take your son, your only son, whom you love—Isaac—and go to the region of Moriah. Sacrifice him there as a burnt offering on a mountain I will show you.'"
+            },
+            {
+              "reference": "Genesis 22:12",
+              "text": "'Do not lay a hand on the boy,' he said. 'Do not do anything to him. Now I know that you fear God, because you have not withheld from me your son, your only son.'"
+            },
+            {
+              "reference": "James 2:21-22",
+              "text": "Was not our father Abraham considered righteous for what he did when he offered his son Isaac on the altar? You see that his faith and his actions were working together, and his faith was made complete by what he did."
+            }
+          ]
+        }
+      ],
+      "week_24": [
+        {
+          "title": "Purchase of Machpelah",
+          "description": "Abraham purchases the cave of Machpelah as a burial place for Sarah",
+          "time_period": "Sarah's death - ~2028 BC",
+          "verses": [
+            {
+              "reference": "Genesis 23:17-18",
+              "text": "So Ephron's field in Machpelah near Mamre—both the field and the cave in it, and all the trees within the borders of the field—was deeded to Abraham as his property in the presence of all the Hittites who had come to the gate of the city."
+            }
+          ]
+        }
+      ],
+      "week_25": [
+        {
+          "title": "Finding a Wife for Isaac",
+          "description": "Abraham's servant's miraculous journey to find Rebekah for Isaac",
+          "time_period": "Isaac's marriage - ~2025 BC",
+          "verses": [
+            {
+              "reference": "Genesis 24:12-14",
+              "text": "Then he prayed, 'LORD, God of my master Abraham, make me successful today, and show kindness to my master Abraham. See, I am standing beside this spring, and the daughters of the townspeople are coming out to draw water. May it be that when I say to a young woman, Please let down your jar that I may have a drink, and she says, Drink, and I'll water your camels too—let her be the one you have chosen for your servant Isaac.'"
+            }
+          ]
+        }
+      ],
+      "week_26": [
+        {
+          "title": "Isaac and Rebekah's Marriage",
+          "description": "Isaac marries Rebekah and finds comfort after his mother's death",
+          "time_period": "Isaac's marriage - ~2025 BC",
+          "verses": [
+            {
+              "reference": "Genesis 24:67",
+              "text": "Isaac brought her into the tent of his mother Sarah, and he married Rebekah. So she became his wife, and he loved her; and Isaac was comforted after his mother's death."
+            }
+          ]
+        }
+      ],
+      "week_27": [
+        {
+          "title": "Birth of Jacob and Esau",
+          "description": "Isaac and Rebekah's twins are born with prophetic significance",
+          "time_period": "Birth of Jacob and Esau - ~2005 BC",
+          "verses": [
+            {
+              "reference": "Genesis 25:23",
+              "text": "The LORD said to her, 'Two nations are in your womb, and two peoples from within you will be separated; one people will be stronger than the other, and the older will serve the younger.'"
+            },
+            {
+              "reference": "Malachi 1:2-3",
+              "text": "'I have loved you,' says the LORD. 'But you ask, How have you loved us? Was not Esau Jacob's brother?' declares the LORD. 'Yet I have loved Jacob, but Esau I have hated.'"
+            }
+          ]
+        }
+      ],
+      "week_28": [
+        {
+          "title": "Esau Sells His Birthright",
+          "description": "Esau despises his birthright and sells it to Jacob for a bowl of stew",
+          "time_period": "Youth of Jacob and Esau - ~1985 BC",
+          "verses": [
+            {
+              "reference": "Genesis 25:32-34",
+              "text": "'Look, I am about to die,' Esau said. 'What good is the birthright to me?' But Jacob said, 'Swear to me first.' So he swore an oath to him, selling his birthright to Jacob. Then Jacob gave Esau some bread and some lentil stew. He ate and drank, and then got up and left. So Esau despised his birthright."
+            },
+            {
+              "reference": "Hebrews 12:16",
+              "text": "See that no one is sexually immoral, or is godless like Esau, who for a single meal sold his inheritance rights as the oldest son."
+            }
+          ]
+        }
+      ],
+      "week_29": [
+        {
+          "title": "Isaac's Deception in Gerar",
+          "description": "Isaac repeats his father's mistake and lies about Rebekah being his sister",
+          "time_period": "Isaac's sojourn - ~1970 BC",
+          "verses": [
+            {
+              "reference": "Genesis 26:7-9",
+              "text": "When the men of that place asked him about his wife, he said, 'She is my sister,' because he was afraid to say, 'She is my wife.' He thought, 'The men of this place might kill me on account of Rebekah, because she is beautiful.' When Isaac had been there a long time, Abimelek king of the Philistines looked down from a window and saw Isaac caressing his wife Rebekah. So Abimelek summoned Isaac and said, 'She is really your wife! Why did you say, She is my sister?'"
+            }
+          ]
+        }
+      ],
+      "week_30": [
+        {
+          "title": "Isaac's Wells and Prosperity",
+          "description": "Isaac digs wells and prospers in the land, showing God's blessing",
+          "time_period": "Isaac's prosperity - ~1968 BC",
+          "verses": [
+            {
+              "reference": "Genesis 26:12-14",
+              "text": "Isaac planted crops in that land and the same year reaped a hundredfold, because the LORD blessed him. The man became rich, and his wealth continued to grow until he became very wealthy. He had so many flocks and herds and servants that the Philistines envied him."
+            }
+          ]
+        }
+      ],
+      "week_31": [
+        {
+          "title": "Jacob Steals Isaac's Blessing",
+          "description": "Jacob deceives his blind father and receives Esau's blessing",
+          "time_period": "Jacob's deception - ~1965 BC",
+          "verses": [
+            {
+              "reference": "Genesis 27:35-36",
+              "text": "But he said, 'Your brother came deceitfully and took your blessing.' Esau said, 'Isn't he rightly named Jacob? This is the second time he has taken advantage of me: He took my birthright, and now he's taken my blessing!' Then he asked, 'Haven't you reserved any blessing for me?'"
+            }
+          ]
+        }
+      ],
+      "week_32": [
+        {
+          "title": "Jacob Flees to Haran",
+          "description": "Jacob flees from Esau's anger and journeys to find a wife among his relatives",
+          "time_period": "Jacob's flight - ~1964 BC",
+          "verses": [
+            {
+              "reference": "Genesis 27:43-44",
+              "text": "Now then, my son, do what I say: Flee at once to my brother Laban in Harran. Stay with him for a while until your brother's fury subsides."
+            }
+          ]
+        }
+      ],
+      "week_33": [
+        {
+          "title": "Jacob's Ladder Vision",
+          "description": "Jacob dreams of a ladder to heaven and receives God's covenant promise",
+          "time_period": "Jacob's vision - ~1964 BC",
+          "verses": [
+            {
+              "reference": "Genesis 28:12-15",
+              "text": "He had a dream in which he saw a stairway resting on the earth, with its top reaching to heaven, and the angels of God were ascending and descending on it. There above it stood the LORD, and he said: 'I am the LORD, the God of your father Abraham and the God of Isaac. I will give you and your descendants the land on which you are lying.'"
+            }
+          ]
+        }
+      ],
+      "week_34": [
+        {
+          "title": "Jacob Meets Rachel",
+          "description": "Jacob arrives in Haran and meets Rachel at the well",
+          "time_period": "Jacob in Haran - ~1964 BC",
+          "verses": [
+            {
+              "reference": "Genesis 29:9-11",
+              "text": "While he was still talking with them, Rachel came with her father's sheep, for she was a shepherd. When Jacob saw Rachel daughter of his uncle Laban, and Laban's sheep, he went over and rolled the stone away from the mouth of the well and watered his uncle's sheep. Then Jacob kissed Rachel and began to weep aloud."
+            }
+          ]
+        }
+      ],
+      "week_35": [
+        {
+          "title": "Jacob's Wedding Deception",
+          "description": "Laban deceives Jacob by giving him Leah instead of Rachel",
+          "time_period": "Jacob's marriages - ~1957 BC",
+          "verses": [
+            {
+              "reference": "Genesis 29:23-25",
+              "text": "But when evening came, he took his daughter Leah and brought her to Jacob, and Jacob made love to her. And Laban gave his servant Zilpah to his daughter as her attendant. When morning came, there was Leah! So Jacob said to Laban, 'What is this you have done to me? I served you for Rachel, didn't I? Why have you deceived me?'"
+            }
+          ]
+        }
+      ],
+      "week_36": [
+        {
+          "title": "The Birth of the Twelve Patriarchs",
+          "description": "Jacob's wives and concubines bear the twelve sons who become Israel's tribes",
+          "time_period": "Births of the patriarchs - ~1955-1948 BC",
+          "verses": [
+            {
+              "reference": "Genesis 35:23-26",
+              "text": "The sons of Leah: Reuben the firstborn of Jacob, Simeon, Levi, Judah, Issachar and Zebulun. The sons of Rachel: Joseph and Benjamin. The sons of Rachel's servant Bilhah: Dan and Naphtali. The sons of Leah's servant Zilpah: Gad and Asher. These were the sons of Jacob, who were born to him in Paddan Aram."
+            }
+          ]
+        }
+      ],
+      "week_37": [
+        {
+          "title": "Jacob's Prosperity in Haran",
+          "description": "Jacob prospers under Laban's employment through God's blessing",
+          "time_period": "Jacob's wealth - ~1951-1944 BC",
+          "verses": [
+            {
+              "reference": "Genesis 30:43",
+              "text": "In this way the man grew exceedingly prosperous and came to own large flocks, and female and male servants, and camels and donkeys."
+            }
+          ]
+        }
+      ],
+      "week_38": [
+        {
+          "title": "Jacob's Return to Canaan",
+          "description": "God tells Jacob to return to the land of his fathers",
+          "time_period": "Jacob's return - ~1943 BC",
+          "verses": [
+            {
+              "reference": "Genesis 31:3",
+              "text": "Then the LORD said to Jacob, 'Go back to the land of your fathers and to your relatives, and I will be with you.'"
+            }
+          ]
+        }
+      ],
+      "week_39": [
+        {
+          "title": "Wrestling with God",
+          "description": "Jacob wrestles with God and his name is changed to Israel",
+          "time_period": "Jacob becomes Israel - ~1943 BC",
+          "verses": [
+            {
+              "reference": "Genesis 32:28",
+              "text": "Then the man said, 'Your name will no longer be Jacob, but Israel, because you have struggled with God and with humans and have overcome.'"
+            },
+            {
+              "reference": "Hosea 12:4",
+              "text": "He struggled with the angel and overcame him; he wept and begged for his favor. He found him at Bethel and talked with him there."
+            }
+          ]
+        }
+      ],
+      "week_40": [
+        {
+          "title": "Reconciliation with Esau",
+          "description": "Jacob and Esau are reconciled after twenty years of separation",
+          "time_period": "Brothers reunited - ~1943 BC",
+          "verses": [
+            {
+              "reference": "Genesis 33:4",
+              "text": "But Esau ran to meet Jacob and embraced him; he threw his arms around his neck and kissed him. And they wept."
+            }
+          ]
+        }
+      ],
+      "week_41": [
+        {
+          "title": "Dinah and the Shechemites",
+          "description": "The violent incident at Shechem involving Dinah and her brothers' revenge",
+          "time_period": "Incident at Shechem - ~1942 BC",
+          "verses": [
+            {
+              "reference": "Genesis 34:25-26",
+              "text": "Three days later, while all of them were still in pain, two of Jacob's sons, Simeon and Levi, Dinah's brothers, took their swords and attacked the unsuspecting city, killing every male. They put Hamor and his son Shechem to the sword and took Dinah from Shechem's house and left."
+            }
+          ]
+        }
+      ],
+      "week_42": [
+        {
+          "title": "Return to Bethel",
+          "description": "Jacob returns to Bethel and builds an altar to God",
+          "time_period": "Return to Bethel - ~1941 BC",
+          "verses": [
+            {
+              "reference": "Genesis 35:1",
+              "text": "Then God said to Jacob, 'Go up to Bethel and settle there, and build an altar there to God, who appeared to you when you were fleeing from your brother Esau.'"
+            }
+          ]
+        }
+      ],
+      "week_43": [
+        {
+          "title": "Rachel's Death",
+          "description": "Rachel dies giving birth to Benjamin, Jacob's twelfth son",
+          "time_period": "Rachel's death - ~1940 BC",
+          "verses": [
+            {
+              "reference": "Genesis 35:18-19",
+              "text": "As she breathed her last—for she was dying—she named her son Ben-Oni. But his father named him Benjamin. So Rachel died and was buried on the way to Ephrath (that is, Bethlehem)."
+            }
+          ]
+        }
+      ],
+      "week_44": [
+        {
+          "title": "Isaac's Death",
+          "description": "Isaac dies at age 180 and is buried by his sons Jacob and Esau",
+          "time_period": "Isaac's death - ~1925 BC",
+          "verses": [
+            {
+              "reference": "Genesis 35:28-29",
+              "text": "Isaac lived a hundred and eighty years. Then he breathed his last and died and was gathered to his people, old and full of years. And his sons Esau and Jacob buried him."
+            }
+          ]
+        }
+      ],
+      "week_45": [
+        {
+          "title": "Joseph's Dreams",
+          "description": "Joseph shares his prophetic dreams with his family, increasing his brothers' jealousy",
+          "time_period": "Joseph's youth - ~1920 BC",
+          "verses": [
+            {
+              "reference": "Genesis 37:5-7",
+              "text": "Joseph had a dream, and when he told it to his brothers, they hated him all the more. He said to them, 'Listen to this dream I had: We were binding sheaves of grain out in the field when suddenly my sheaf rose and stood upright, while your sheaves gathered around mine and bowed down to it.'"
+            }
+          ]
+        }
+      ],
+      "week_46": [
+        {
+          "title": "Joseph Sold into Slavery",
+          "description": "Joseph's brothers sell him to Midianite traders bound for Egypt",
+          "time_period": "Joseph's slavery - ~1917 BC",
+          "verses": [
+            {
+              "reference": "Genesis 37:28",
+              "text": "So when the Midianite merchants came by, his brothers pulled Joseph up out of the cistern and sold him for twenty shekels of silver to the Ishmaelites, who took him to Egypt."
+            },
+            {
+              "reference": "Genesis 50:20",
+              "text": "You intended to harm me, but God intended it for good to accomplish what is now being done, the saving of many lives."
+            }
+          ]
+        }
+      ],
+      "week_47": [
+        {
+          "title": "Joseph in Potiphar's House",
+          "description": "Joseph prospers in Potiphar's house until he's falsely accused by Potiphar's wife",
+          "time_period": "Joseph's service - ~1916-1910 BC",
+          "verses": [
+            {
+              "reference": "Genesis 39:2-3",
+              "text": "The LORD was with Joseph so that he prospered, and he lived in the house of his Egyptian master. When his master saw that the LORD was with him and that the LORD gave him success in everything he did."
+            },
+            {
+              "reference": "Genesis 39:9",
+              "text": "'How then could I do such a wicked thing and sin against God?'"
+            }
+          ]
+        }
+      ],
+      "week_48": [
+        {
+          "title": "Joseph Interprets Dreams in Prison",
+          "description": "Joseph interprets dreams for Pharaoh's cupbearer and baker while in prison",
+          "time_period": "Joseph in prison - ~1910-1908 BC",
+          "verses": [
+            {
+              "reference": "Genesis 40:8",
+              "text": "'We both had dreams,' they answered, 'but there is no one to interpret them.' Then Joseph said to them, 'Do not interpretations belong to God? Tell me your dreams.'"
+            }
+          ]
+        }
+      ],
+      "week_49": [
+        {
+          "title": "Pharaoh's Dreams and Joseph's Elevation",
+          "description": "Joseph interprets Pharaoh's dreams and becomes second ruler of Egypt",
+          "time_period": "Joseph's elevation - ~1908 BC",
+          "verses": [
+            {
+              "reference": "Genesis 41:39-40",
+              "text": "Then Pharaoh said to Joseph, 'Since God has made all this known to you, there is no one so discerning and wise as you. You shall be in charge of my palace, and all my people are to submit to your orders. Only with respect to the throne will I be greater than you.'"
+            }
+          ]
+        }
+      ],
+      "week_50": [
+        {
+          "title": "Seven Years of Plenty",
+          "description": "Joseph administers Egypt during seven years of abundance",
+          "time_period": "Years of plenty - ~1908-1901 BC",
+          "verses": [
+            {
+              "reference": "Genesis 41:53-54",
+              "text": "The seven years of abundance in Egypt came to an end, and the seven years of famine began, just as Joseph had said. There was famine in all the other lands, but in the whole land of Egypt there was food."
+            }
+          ]
+        }
+      ],
+      "week_51": [
+        {
+          "title": "The Brothers Come to Egypt",
+          "description": "Joseph's brothers come to Egypt to buy grain during the famine",
+          "time_period": "Famine years - ~1901-1894 BC",
+          "verses": [
+            {
+              "reference": "Genesis 42:6-7",
+              "text": "Now Joseph was the governor of the land, the person who sold grain to all its people. So when Joseph's brothers arrived, they bowed down to him with their faces to the ground. Although Joseph recognized his brothers, he pretended to be a stranger and spoke harshly to them."
+            }
+          ]
+        }
+      ],
+      "week_52": [
+        {
+          "title": "Joseph Reveals Himself",
+          "description": "Joseph reveals his identity to his brothers and forgives them",
+          "time_period": "Family reunion - ~1900 BC",
+          "verses": [
+            {
+              "reference": "Genesis 45:3-4",
+              "text": "Joseph said to his brothers, 'I am Joseph! Is my father still living?' But his brothers were not able to answer him, because they were terrified at his presence. Then Joseph said to his brothers, 'Come close to me.' When they had done so, he said, 'I am your brother Joseph, the one you sold into Egypt!'"
+            },
+            {
+              "reference": "Genesis 45:5",
+              "text": "And now, do not be distressed and do not be angry with yourselves for selling me here, because it was to save lives that God sent me ahead of you."
+            }
+          ]
+        }
+      ]
+    },
+    "monthly_themes": {
+      "january": [
+        {
+          "title": "Creation and New Beginnings",
+          "description": "The month of creation and God's establishment of time and order",
+          "time_period": "Creation Week - 4004 BC",
+          "events": [
+            "Creation of the Universe",
+            "Formation of Adam and Eve",
+            "Establishment of the Sabbath",
+            "The Garden of Eden"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 1:1",
+              "text": "In the beginning God created the heavens and the earth."
+            },
+            {
+              "reference": "2 Corinthians 5:17",
+              "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"
+            }
+          ]
+        },
+        {
+          "title": "Early Patriarchal Period",
+          "description": "The foundational period of God's relationship with humanity",
+          "time_period": "4000-3000 BC",
+          "events": [
+            "Adam and Eve's Fall",
+            "Cain and Abel",
+            "Seth's Lineage",
+            "Enoch's Translation"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 3:15",
+              "text": "And I will put enmity between you and the woman, and between your offspring and hers; he will crush your head, and you will strike his heel."
+            }
+          ]
+        },
+        {
+          "title": "Jesus' Early Life and Ministry Beginning",
+          "description": "The incarnation and early ministry of Jesus Christ",
+          "time_period": "5 BC - 30 AD",
+          "events": [
+            "The Wise Men's Visit",
+            "Jesus' Circumcision",
+            "Jesus' Baptism",
+            "Calling of the First Disciples"
+          ],
+          "verses": [
+            {
+              "reference": "Matthew 3:17",
+              "text": "And a voice from heaven said, 'This is my Son, whom I love; with him I am well pleased.'"
+            }
+          ]
+        }
+      ],
+      "february": [
+        {
+          "title": "The Antediluvian World",
+          "description": "The world before the flood and humanity's corruption",
+          "time_period": "3000-2500 BC",
+          "events": [
+            "Methuselah's Long Life",
+            "Growing Wickedness",
+            "The Nephilim",
+            "God's Grief Over Creation"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 6:5-6",
+              "text": "The LORD saw how great the wickedness of the human race had become on the earth, and that every inclination of the thoughts of the human heart was only evil all the time. The LORD regretted that he had made human beings on the earth, and his heart was deeply troubled."
+            }
+          ]
+        },
+        {
+          "title": "Noah's Calling and Preparation",
+          "description": "God's call to Noah and preparation for the great flood",
+          "time_period": "2500-2348 BC",
+          "events": [
+            "God's Call to Noah",
+            "Building the Ark",
+            "Gathering the Animals",
+            "Final Warning to Humanity"
+          ],
+          "verses": [
+            {
+              "reference": "Hebrews 11:7",
+              "text": "By faith Noah, when warned about things not yet seen, in holy fear built an ark to save his family. By his faith he condemned the world and became heir of the righteousness that is in keeping with faith."
+            }
+          ]
+        },
+        {
+          "title": "Jesus' Ministry in Galilee",
+          "description": "Jesus' teaching and miracles in Galilee",
+          "time_period": "29-30 AD",
+          "events": [
+            "Sermon on the Mount",
+            "Healing the Sick",
+            "Calling More Disciples",
+            "Parables of the Kingdom"
+          ],
+          "verses": [
+            {
+              "reference": "Matthew 5:3",
+              "text": "Blessed are the poor in spirit, for theirs is the kingdom of heaven."
+            }
+          ]
+        }
+      ],
+      "march": [
+        {
+          "title": "The Great Flood",
+          "description": "God's judgment through the worldwide flood",
+          "time_period": "2348 BC",
+          "events": [
+            "The Flood Begins",
+            "All Flesh Perishes",
+            "The Ark Floats",
+            "God's Preservation of Life"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 7:23",
+              "text": "Every living thing on the face of the earth was wiped out; people and animals and the creatures that move along the ground and the birds were wiped from the earth. Only Noah was left, and those with him in the ark."
+            }
+          ]
+        },
+        {
+          "title": "Post-Flood Covenant",
+          "description": "God's covenant with Noah and the new beginning",
+          "time_period": "2347 BC",
+          "events": [
+            "The Dove Returns",
+            "Leaving the Ark",
+            "The Rainbow Covenant",
+            "Noah's Sacrifice"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 9:13",
+              "text": "I have set my rainbow in the clouds, and it will be the sign of the covenant between me and the earth."
+            }
+          ]
+        },
+        {
+          "title": "Persian Period - Esther and Purim",
+          "description": "God's deliverance of the Jews through Queen Esther",
+          "time_period": "473 BC",
+          "events": [
+            "Haman's Plot",
+            "Esther's Courage",
+            "Mordecai's Honor",
+            "Jews' Deliverance"
+          ],
+          "verses": [
+            {
+              "reference": "Esther 4:14",
+              "text": "For if you remain silent at this time, relief and deliverance for the Jews will arise from another place, but you and your father's family will perish. And who knows but that you have come to your royal position for such a time as this?"
+            }
+          ]
+        }
+      ],
+      "april": [
+        {
+          "title": "The Passion Week",
+          "description": "The final week of Jesus' earthly ministry",
+          "time_period": "30 AD",
+          "events": [
+            "Triumphal Entry",
+            "Cleansing the Temple",
+            "The Last Supper",
+            "Gethsemane",
+            "The Crucifixion",
+            "The Resurrection"
+          ],
+          "verses": [
+            {
+              "reference": "1 Corinthians 15:3-4",
+              "text": "For what I received I passed on to you as of first importance: that Christ died for our sins according to the Scriptures, that he was buried, that he was raised on the third day according to the Scriptures."
+            }
+          ]
+        },
+        {
+          "title": "Post-Flood Civilization",
+          "description": "The rebuilding of civilization after the flood",
+          "time_period": "2300-2100 BC",
+          "events": [
+            "Population Growth",
+            "The Tower of Babel",
+            "Language Confusion",
+            "Scattering of Nations"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 11:4",
+              "text": "Then they said, 'Come, let us build ourselves a city, with a tower that reaches to the heavens, so that we may make a name for ourselves; otherwise we will be scattered over the face of the whole earth.'"
+            }
+          ]
+        },
+        {
+          "title": "The Exodus Preparation",
+          "description": "God's preparation for delivering Israel from Egypt",
+          "time_period": "1447-1446 BC",
+          "events": [
+            "The Plagues on Egypt",
+            "Pharaoh's Stubbornness",
+            "The Passover",
+            "The Exodus Begins"
+          ],
+          "verses": [
+            {
+              "reference": "Exodus 12:13",
+              "text": "The blood will be a sign for you on the houses where you are, and when I see the blood, I will pass over you. No destructive plague will touch you when I strike Egypt."
+            }
+          ]
+        }
+      ],
+      "may": [
+        {
+          "title": "Post-Resurrection Appearances",
+          "description": "Jesus appears to His disciples after the resurrection",
+          "time_period": "30 AD",
+          "events": [
+            "Appearance to Mary",
+            "Road to Emmaus",
+            "Upper Room Appearances",
+            "Thomas' Doubt Resolved",
+            "The Great Commission",
+            "The Ascension"
+          ],
+          "verses": [
+            {
+              "reference": "Acts 1:8",
+              "text": "But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth."
+            }
+          ]
+        },
+        {
+          "title": "Wilderness Wanderings Begin",
+          "description": "Israel's journey through the wilderness",
+          "time_period": "1446-1406 BC",
+          "events": [
+            "Crossing the Red Sea",
+            "Water from the Rock",
+            "Manna from Heaven",
+            "Mount Sinai"
+          ],
+          "verses": [
+            {
+              "reference": "Exodus 14:21",
+              "text": "Then Moses stretched out his hand over the sea, and all that night the LORD drove the sea back with a strong east wind and turned it into dry land. The waters were divided."
+            }
+          ]
+        },
+        {
+          "title": "Abrahamic Covenant Established",
+          "description": "God's covenant with Abraham begins",
+          "time_period": "2091-2085 BC",
+          "events": [
+            "Call from Ur",
+            "Journey to Canaan",
+            "Covenant Ceremony",
+            "Promise of Isaac"
+          ],
+          "verses": [
+            {
+              "reference": "Genesis 12:2-3",
+              "text": "I will make you into a great nation, and I will bless you; I will make your name great, and you will be a blessing. I will bless those who bless you, and whoever curses you I will curse; and all peoples on earth will be blessed through you."
+            }
+          ]
+        }
+      ],
+      "june": [
+        {
+          "title": "Pentecost and the Birth of the Church",
+          "description": "The Holy Spirit comes and the church is born",
+          "time_period": "30 AD",
+          "events": [
+            "The Holy Spirit Descends",
+            "Speaking in Tongues",
+            "Peter's Sermon",
+            "3000 Converts",
+            "The Early Church Forms"
+          ],
+          "verses": [
+            {
+              "reference": "Acts 2:4",
+              "text": "All of them were filled with the Holy Spirit and began to speak in other tongues as the Spirit enabled them."
+            }
+          ]
+        },
+        {
+          "title": "Law Given at Sinai",
+          "description": "God gives the Law to Moses at Mount Sinai",
+          "time_period": "1446 BC",
+          "events": [
+            "The Ten Commandments",
+            "The Ceremonial Law",
+            "The Tabernacle Instructions",
+            "The Golden Calf Incident"
+          ],
+          "verses": [
+            {
+              "reference": "Exodus 20:1-2",
+              "text": "And God spoke all these words: 'I am the LORD your God, who brought you out of Egypt, out of the land of slavery.'"
+            }
+          ]
+        },
+        {
+          "title": "John the Baptist's Ministry",
+          "description": "The forerunner prepares the way for Christ",
+          "time_period": "28-29 AD",
+          "events": [
+            "Birth of John",
+            "Ministry in the Wilderness",
+            "Baptizing Jesus",
+            "Imprisonment and Death"
+          ],
+          "verses": [
+            {
+              "reference": "Mark 1:3",
+              "text": "A voice of one calling in the wilderness, 'Prepare the way for the Lord, make straight paths for him.'"
+            }
+          ]
+        }
+      ],
+      "july": [
+        {
+          "title": "Conquest of Canaan",
+          "description": "Israel conquers the Promised Land under Joshua",
+          "time_period": "1406-1400 BC",
+          "events": [
+            "Crossing the Jordan",
+            "Fall of Jericho",
+            "Conquest of Ai",
+            "Dividing the Land"
+          ],
+          "verses": [
+            {
+              "reference": "Joshua 1:3",
+              "text": "I will give you every place where you set your foot, as I promised Moses."
+            }
+          ]
+        },
+        {
+          "title": "Period of the Judges",
+          "description": "Israel's cycle of sin, oppression, and deliverance",
+          "time_period": "1400-1050 BC",
+          "events": [
+            "Deborah and Barak",
+            "Gideon's Victory",
+            "Jephthah's Vow",
+            "Samson's Strength"
+          ],
+          "verses": [
+            {
+              "reference": "Judges 2:16",
+              "text": "Then the LORD raised up judges, who saved them out of the hands of these raiders."
+            }
+          ]
+        },
+        {
+          "title": "Early Church Growth",
+          "description": "The church expands throughout the Roman Empire",
+          "time_period": "30-60 AD",
+          "events": [
+            "Persecution Begins",
+            "Stephen's Martyrdom",
+            "Philip's Ministry",
+            "Church Scattered"
+          ],
+          "verses": [
+            {
+              "reference": "Acts 8:4",
+              "text": "Those who had been scattered preached the word wherever they went."
+            }
+          ]
+        }
+      ],
+      "august": [
+        {
+          "title": "Establishment of the Monarchy",
+          "description": "Israel demands a king and God gives them Saul",
+          "time_period": "1050-1010 BC",
+          "events": [
+            "Samuel's Leadership",
+            "Israel Demands a King",
+            "Saul's Anointing",
+            "Saul's Failures"
+          ],
+          "verses": [
+            {
+              "reference": "1 Samuel 8:7",
+              "text": "And the LORD told him: 'Listen to all that the people are saying to you; it is not you they have rejected, but they have rejected me as their king.'"
+            }
+          ]
+        },
+        {
+          "title": "David's Rise to Power",
+          "description": "David becomes king and establishes his dynasty",
+          "time_period": "1010-970 BC",
+          "events": [
+            "David Anointed",
+            "Goliath Defeated",
+            "Flight from Saul",
+            "Becomes King"
+          ],
+          "verses": [
+            {
+              "reference": "1 Samuel 16:13",
+              "text": "So Samuel took the horn of oil and anointed him in the presence of his brothers, and from that day on the Spirit of the LORD came powerfully upon David."
+            }
+          ]
+        },
+        {
+          "title": "Paul's Missionary Journeys",
+          "description": "Paul spreads the Gospel throughout the Roman world",
+          "time_period": "47-67 AD",
+          "events": [
+            "First Journey",
+            "Jerusalem Council",
+            "Second Journey",
+            "Third Journey"
+          ],
+          "verses": [
+            {
+              "reference": "Acts 13:2",
+              "text": "While they were worshiping the Lord and fasting, the Holy Spirit said, 'Set apart for me Barnabas and Saul for the work to which I have called them.'"
+            }
+          ]
+        }
+      ],
+      "september": [
+        {
+          "title": "Solomon's Reign and the Temple",
+          "description": "The golden age of Israel under Solomon",
+          "time_period": "970-930 BC",
+          "events": [
+            "Solomon's Wisdom",
+            "Building the Temple",
+            "Queen of Sheba",
+            "Solomon's Decline"
+          ],
+          "verses": [
+            {
+              "reference": "1 Kings 3:9",
+              "text": "So give your servant a discerning heart to govern your people and to distinguish between right and wrong. For who is able to govern this great people of yours?"
+            }
+          ]
+        },
+        {
+          "title": "Jewish High Holy Days",
+          "description": "The most sacred days of the Jewish calendar",
+          "time_period": "Established at Sinai - 1446 BC",
+          "events": [
+            "Rosh Hashanah",
+            "Days of Awe",
+            "Yom Kippur",
+            "Feast of Tabernacles"
+          ],
+          "verses": [
+            {
+              "reference": "Leviticus 23:27",
+              "text": "The tenth day of this seventh month is the Day of Atonement. Hold a sacred assembly and deny yourselves, and present a food offering to the LORD."
+            }
+          ]
+        },
+        {
+          "title": "The Divided Kingdom",
+          "description": "Israel splits into northern and southern kingdoms",
+          "time_period": "930 BC",
+          "events": [
+            "Rehoboam's Folly",
+            "Jeroboam's Rebellion",
+            "Two Kingdoms",
+            "Beginning of Decline"
+          ],
+          "verses": [
+            {
+              "reference": "1 Kings 12:16",
+              "text": "When all Israel saw that the king refused to listen to them, they answered the king: 'What share do we have in David, what part in Jesse's son? To your tents, Israel! Look after your own house, David!' So the Israelites went home."
+            }
+          ]
+        }
+      ],
+      "october": [
+        {
+          "title": "The Prophetic Era",
+          "description": "God sends prophets to call Israel and Judah to repentance",
+          "time_period": "900-400 BC",
+          "events": [
+            "Elijah's Ministry",
+            "Elisha's Miracles",
+            "Isaiah's Prophecies",
+            "Jeremiah's Warnings"
+          ],
+          "verses": [
+            {
+              "reference": "2 Kings 17:13",
+              "text": "The LORD warned Israel and Judah through all his prophets and seers: 'Turn from your evil ways. Observe my commands and decrees, in accordance with the entire Law that I commanded your ancestors to obey and that I delivered to you through my servants the prophets.'"
+            }
+          ]
+        },
+        {
+          "title": "The Assyrian Conquest",
+          "description": "The northern kingdom falls to Assyria",
+          "time_period": "722 BC",
+          "events": [
+            "Siege of Samaria",
+            "Deportation of Israel",
+            "Foreign Resettlement",
+            "End of Northern Kingdom"
+          ],
+          "verses": [
+            {
+              "reference": "2 Kings 17:6",
+              "text": "In the ninth year of Hoshea, the king of Assyria captured Samaria and deported the Israelites to Assyria. He settled them in Halah, in Gozan on the Habor River and in the towns of the Medes."
+            }
+          ]
+        },
+        {
+          "title": "Reformation and Revival",
+          "description": "Periods of spiritual renewal in Judah",
+          "time_period": "800-600 BC",
+          "events": [
+            "Hezekiah's Reforms",
+            "Josiah's Revival",
+            "Discovery of the Law",
+            "Temple Restoration"
+          ],
+          "verses": [
+            {
+              "reference": "2 Kings 23:25",
+              "text": "Neither before nor after Josiah was there a king like him who turned to the LORD as he did—with all his heart and with all his soul and with all his strength, in accordance with all the Law of Moses."
+            }
+          ]
+        }
+      ],
+      "november": [
+        {
+          "title": "The Babylonian Exile",
+          "description": "Judah is conquered and exiled to Babylon",
+          "time_period": "605-586 BC",
+          "events": [
+            "First Deportation",
+            "Daniel in Babylon",
+            "Destruction of Jerusalem",
+            "Final Exile"
+          ],
+          "verses": [
+            {
+              "reference": "2 Kings 25:11",
+              "text": "Nebuzaradan the commander of the guard carried into exile the people who remained in the city, along with the rest of the populace and those who had deserted to the king of Babylon."
+            }
+          ]
+        },
+        {
+          "title": "Exile Period",
+          "description": "Life in Babylonian captivity and God's faithfulness",
+          "time_period": "586-538 BC",
+          "events": [
+            "Ezekiel's Visions",
+            "Daniel's Prophecies",
+            "Fiery Furnace",
+            "Lion's Den"
+          ],
+          "verses": [
+            {
+              "reference": "Jeremiah 29:11",
+              "text": "For I know the plans I have for you,' declares the LORD, 'plans to prosper you and not to harm you, to give you hope and a future."
+            }
+          ]
+        },
+        {
+          "title": "Thanksgiving and Harvest",
+          "description": "God's provision throughout biblical history",
+          "time_period": "All periods",
+          "events": [
+            "Harvest Festivals",
+            "Firstfruits Offerings",
+            "God's Provision",
+            "Grateful Hearts"
+          ],
+          "verses": [
+            {
+              "reference": "Deuteronomy 8:10",
+              "text": "When you have eaten and are satisfied, praise the LORD your God for the good land he has given you."
+            }
+          ]
+        }
+      ],
+      "december": [
+        {
+          "title": "The Return from Exile",
+          "description": "God restores His people to the Promised Land",
+          "time_period": "538-444 BC",
+          "events": [
+            "Cyrus' Decree",
+            "First Return",
+            "Temple Rebuilt",
+            "Ezra's Reforms",
+            "Nehemiah's Wall"
+          ],
+          "verses": [
+            {
+              "reference": "Ezra 1:3",
+              "text": "Any of his people among you may go up to Jerusalem in Judah and build the temple of the LORD, the God of Israel, the God who is in Jerusalem, and may their God be with them."
+            }
+          ]
+        },
+        {
+          "title": "Intertestamental Period",
+          "description": "The 400 years between Malachi and Matthew",
+          "time_period": "400-5 BC",
+          "events": [
+            "Greek Rule",
+            "Maccabean Revolt",
+            "Roman Conquest",
+            "Expectation of Messiah"
+          ],
+          "verses": [
+            {
+              "reference": "Malachi 4:2",
+              "text": "But for you who revere my name, the sun of righteousness will rise with healing in its rays. And you will go out and frolic like well-fed calves."
+            }
+          ]
+        },
+        {
+          "title": "The Incarnation",
+          "description": "God becomes man in Jesus Christ",
+          "time_period": "5-4 BC",
+          "events": [
+            "Annunciation",
+            "Virgin Birth",
+            "Angels and Shepherds",
+            "Wise Men's Visit",
+            "Flight to Egypt"
+          ],
+          "verses": [
+            {
+              "reference": "John 1:14",
+              "text": "The Word became flesh and made his dwelling among us. We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth."
+            }
+          ]
+        }
+      ]
+    },
+    "seasonal_themes": {
+      "spring": [
+        {
+          "title": "Creation and New Life - The Spring of Beginnings",
+          "description": "Spring represents God's creative power and the renewal of life",
+          "time_period": "Creation to Present",
+          "biblical_connections": [
+            "God's creation of life",
+            "The resurrection of Jesus",
+            "New birth in Christ",
+            "Spiritual renewal"
+          ],
+          "verses": [
+            {
+              "reference": "Isaiah 43:19",
+              "text": "See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland."
+            },
+            {
+              "reference": "2 Corinthians 5:17",
+              "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"
+            },
+            {
+              "reference": "Romans 6:4",
+              "text": "We were therefore buried with him through baptism into death in order that, just as Christ was raised from the dead through the glory of the Father, we too may live a new life."
+            }
+          ]
+        },
+        {
+          "title": "The Exodus and Liberation - Spring of Freedom",
+          "description": "God's deliverance of His people from bondage, celebrated at Passover",
+          "time_period": "1446 BC",
+          "biblical_connections": [
+            "Deliverance from Egypt",
+            "Passover celebration",
+            "Freedom from slavery",
+            "Journey to the Promised Land"
+          ],
+          "verses": [
+            {
+              "reference": "Exodus 13:3",
+              "text": "Then Moses said to the people, 'Commemorate this day, the day you came out of Egypt, out of the land of slavery, because the LORD brought you out of it with a mighty hand.'"
+            },
+            {
+              "reference": "1 Corinthians 5:7",
+              "text": "Get rid of the old yeast, so that you may be a new unleavened batch—as you really are. For Christ, our Passover lamb, has been sacrificed."
+            }
+          ]
+        },
+        {
+          "title": "The Resurrection Season",
+          "description": "Christ's victory over death brings eternal spring to believers",
+          "time_period": "30 AD",
+          "biblical_connections": [
+            "Jesus' resurrection",
+            "Victory over death",
+            "Promise of eternal life",
+            "New covenant established"
+          ],
+          "verses": [
+            {
+              "reference": "1 Corinthians 15:20-22",
+              "text": "But Christ has indeed been raised from the dead, the firstfruits of those who have fallen asleep. For since death came through a man, the resurrection of the dead comes also through a man. For as in Adam all die, so in Christ all will be made alive."
+            }
+          ]
+        }
+      ],
+      "summer": [
+        {
+          "title": "Growth and Abundance - The Summer of Blessing",
+          "description": "Summer represents God's provision and the growth of His kingdom",
+          "time_period": "All biblical periods",
+          "biblical_connections": [
+            "God's provision of manna",
+            "Abundant harvests",
+            "Growth of the early church",
+            "Spiritual maturity"
+          ],
+          "verses": [
+            {
+              "reference": "Psalm 65:11",
+              "text": "You crown the year with your bounty, and your carts overflow with abundance."
+            },
+            {
+              "reference": "2 Corinthians 9:8",
+              "text": "And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work."
+            },
+            {
+              "reference": "Acts 2:47",
+              "text": "Praising God and enjoying the favor of all the people. And the Lord added to their number daily those who were being saved."
+            }
+          ]
+        },
+        {
+          "title": "The Kingdom of Solomon - Summer of Glory",
+          "description": "The peak of Israel's prosperity and influence under Solomon",
+          "time_period": "970-930 BC",
+          "biblical_connections": [
+            "Temple construction",
+            "International peace",
+            "Unprecedented wealth",
+            "Wisdom literature"
+          ],
+          "verses": [
+            {
+              "reference": "1 Kings 4:20-21",
+              "text": "The people of Judah and Israel were as numerous as the sand on the seashore; they ate, they drank and they were happy. And Solomon ruled over all the kingdoms from the Euphrates River to the land of the Philistines, as far as the border of Egypt."
+            }
+          ]
+        },
+        {
+          "title": "Ministry and Mission - Summer of Service",
+          "description": "The active period of ministry and spreading the Gospel",
+          "time_period": "29-30 AD, 30-100 AD",
+          "biblical_connections": [
+            "Jesus' active ministry",
+            "Disciples' mission",
+            "Paul's journeys",
+            "Church growth"
+          ],
+          "verses": [
+            {
+              "reference": "Matthew 9:37-38",
+              "text": "Then he said to his disciples, 'The harvest is plentiful but the workers are few. Ask the Lord of the harvest, therefore, to send out workers into his harvest field.'"
+            }
+          ]
+        }
+      ],
+      "autumn": [
+        {
+          "title": "Harvest and Thanksgiving - Autumn of Gratitude",
+          "description": "Autumn represents reaping what has been sown and giving thanks to God",
+          "time_period": "All agricultural cycles",
+          "biblical_connections": [
+            "Feast of Tabernacles",
+            "Harvest celebrations",
+            "Thanksgiving offerings",
+            "God's faithfulness"
+          ],
+          "verses": [
+            {
+              "reference": "Galatians 6:9",
+              "text": "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up."
+            },
+            {
+              "reference": "Leviticus 23:39",
+              "text": "So beginning with the fifteenth day of the seventh month, after you have gathered the crops of the land, celebrate the festival to the LORD for seven days; the first day is a day of sabbath rest, and the eighth day also is a day of sabbath rest."
+            },
+            {
+              "reference": "Psalm 126:5-6",
+              "text": "Those who sow with tears will reap with songs of joy. Those who go out weeping, carrying seed to sow, will return with songs of joy, carrying sheaves with them."
+            }
+          ]
+        },
+        {
+          "title": "Judgment and Consequence - Autumn of Accountability",
+          "description": "The time when God's judgment falls and consequences are reaped",
+          "time_period": "Various periods of judgment",
+          "biblical_connections": [
+            "The flood judgment",
+            "Sodom and Gomorrah",
+            "Babylonian exile",
+            "Final judgment"
+          ],
+          "verses": [
+            {
+              "reference": "Hosea 8:7",
+              "text": "They sow the wind and reap the whirlwind. The stalk has no head; it will produce no flour. Were it to yield grain, foreigners would swallow it up."
+            },
+            {
+              "reference": "Revelation 14:15",
+              "text": "Then another angel came out of the temple and called in a loud voice to him who was sitting on the cloud, 'Take your sickle and reap, because the time to reap has come, for the harvest of the earth is ripe.'"
+            }
+          ]
+        },
+        {
+          "title": "Preparation and Warning - Autumn of Readiness",
+          "description": "The season of preparing for what is to come",
+          "time_period": "Pre-judgment periods",
+          "biblical_connections": [
+            "Noah's preparation",
+            "Joseph's grain storage",
+            "Prophetic warnings",
+            "End times preparation"
+          ],
+          "verses": [
+            {
+              "reference": "Matthew 25:13",
+              "text": "Therefore keep watch, because you do not know the day or the hour."
+            }
+          ]
+        }
+      ],
+      "winter": [
+        {
+          "title": "Testing and Refinement - Winter of Trials",
+          "description": "Winter represents times of testing, suffering, and spiritual growth",
+          "time_period": "Periods of difficulty",
+          "biblical_connections": [
+            "Job's trials",
+            "Israel in the wilderness",
+            "Daniel in exile",
+            "Persecution of the church"
+          ],
+          "verses": [
+            {
+              "reference": "1 Peter 1:6-7",
+              "text": "In all this you greatly rejoice, though now for a little while you may have had to suffer grief in all kinds of trials. These have come so that the proven genuineness of your faith—of greater worth than gold, which perishes even though refined by fire—may result in praise, glory and honor when Jesus Christ is revealed."
+            },
+            {
+              "reference": "James 1:2-4",
+              "text": "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance. Let perseverance finish its work so that you may be mature and complete, not lacking anything."
+            }
+          ]
+        },
+        {
+          "title": "Waiting and Hope - Winter of Expectation",
+          "description": "Seasons of waiting for God's promises to be fulfilled",
+          "time_period": "Periods of waiting",
+          "biblical_connections": [
+            "Abraham waiting for Isaac",
+            "Israel in Egypt",
+            "Exile in Babylon",
+            "Waiting for Messiah"
+          ],
+          "verses": [
+            {
+              "reference": "Isaiah 40:31",
+              "text": "But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."
+            },
+            {
+              "reference": "Lamentations 3:25-26",
+              "text": "The LORD is good to those whose hope is in him, to the one who seeks him; it is good to wait quietly for the salvation of the LORD."
+            }
+          ]
+        },
+        {
+          "title": "The Incarnation - Winter of Wonder",
+          "description": "God comes to earth in the darkness of winter, bringing light",
+          "time_period": "5-4 BC",
+          "biblical_connections": [
+            "Jesus' birth",
+            "Light in darkness",
+            "God with us",
+            "Hope fulfilled"
+          ],
+          "verses": [
+            {
+              "reference": "John 1:5",
+              "text": "The light shines in the darkness, and the darkness has not overcome it."
+            },
+            {
+              "reference": "Isaiah 9:2",
+              "text": "The people walking in darkness have seen a great light; on those living in the land of deep darkness a light has dawned."
+            },
+            {
+              "reference": "Matthew 1:23",
+              "text": "'The virgin will conceive and give birth to a son, and they will call him Immanuel' (which means 'God with us')."
+            }
+          ]
+        }
+      ]
+    },
+    "yearly_themes": [
+      {
+        "title": "The Year of Creation - 4004 BC",
+        "description": "The foundational year when God created the universe and established time",
+        "significance": "Establishes God as Creator and the pattern of work and rest",
+        "verses": [
+          {
+            "reference": "Genesis 1:31",
+            "text": "God saw all that he had made, and it was very good. And there was evening, and there was morning—the sixth day."
+          }
+        ]
+      },
+      {
+        "title": "The Year of the Flood - 2348 BC",
+        "description": "God's judgment on wickedness and preservation of life through Noah",
+        "significance": "Demonstrates God's justice and mercy",
+        "verses": [
+          {
+            "reference": "Genesis 7:1",
+            "text": "The LORD then said to Noah, 'Go into the ark, you and your whole family, because I have found you righteous in this generation.'"
+          }
+        ]
+      },
+      {
+        "title": "The Year of Promise - 2091 BC",
+        "description": "God calls Abraham and establishes the covenant of faith",
+        "significance": "Beginning of God's plan of redemption through the chosen people",
+        "verses": [
+          {
+            "reference": "Genesis 12:3",
+            "text": "I will bless those who bless you, and whoever curses you I will curse; and all peoples on earth will be blessed through you."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Deliverance - 1446 BC",
+        "description": "The Exodus from Egypt and the giving of the Law at Sinai",
+        "significance": "God's power to deliver and His holy standards revealed",
+        "verses": [
+          {
+            "reference": "Exodus 19:5-6",
+            "text": "Now if you obey me fully and keep my covenant, then out of all nations you will be my treasured possession. Although the whole earth is mine, you will be for me a kingdom of priests and a holy nation."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Conquest - 1406 BC",
+        "description": "Israel enters and conquers the Promised Land under Joshua",
+        "significance": "God's faithfulness to His promises demonstrated",
+        "verses": [
+          {
+            "reference": "Joshua 21:45",
+            "text": "Not one of all the LORD's good promises to Israel failed; every one was fulfilled."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Kingdom - 1010 BC",
+        "description": "David becomes king and establishes the messianic line",
+        "significance": "Foreshadows the eternal kingdom of Christ",
+        "verses": [
+          {
+            "reference": "2 Samuel 7:16",
+            "text": "Your house and your kingdom will endure forever before me; your throne will be established forever."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Glory - 960 BC",
+        "description": "Solomon's Temple is dedicated and God's glory fills it",
+        "significance": "God's presence dwelling among His people",
+        "verses": [
+          {
+            "reference": "1 Kings 8:10-11",
+            "text": "When the priests withdrew from the Holy Place, the cloud filled the temple of the LORD. And the priests could not perform their service because of the cloud, for the glory of the LORD filled his temple."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Division - 930 BC",
+        "description": "The kingdom splits into Israel and Judah",
+        "significance": "Consequences of unfaithfulness and pride",
+        "verses": [
+          {
+            "reference": "1 Kings 11:31",
+            "text": "He said to Jeroboam, 'Take ten pieces for yourself, for this is what the LORD, the God of Israel, says: See, I am going to tear the kingdom out of Solomon's hand and give you ten tribes.'"
+          }
+        ]
+      },
+      {
+        "title": "The Year of Exile - 586 BC",
+        "description": "Jerusalem falls and Judah is exiled to Babylon",
+        "significance": "God's judgment while preserving a remnant",
+        "verses": [
+          {
+            "reference": "Jeremiah 25:11",
+            "text": "This whole country will become a desolate wasteland, and these nations will serve the king of Babylon seventy years."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Return - 538 BC",
+        "description": "Cyrus allows the Jews to return and rebuild the Temple",
+        "significance": "God's faithfulness to restore His people",
+        "verses": [
+          {
+            "reference": "Ezra 1:2-3",
+            "text": "This is what Cyrus king of Persia says: 'The LORD, the God of heaven, has given me all the kingdoms of the earth and he has appointed me to build a temple for him at Jerusalem in Judah. Any of his people among you may go up to Jerusalem in Judah and build the temple of the LORD, the God of Israel, the God who is in Jerusalem, and may their God be with them.'"
+          }
+        ]
+      },
+      {
+        "title": "The Year of Incarnation - 5 BC",
+        "description": "God becomes man in Jesus Christ",
+        "significance": "The ultimate revelation of God's love and plan of salvation",
+        "verses": [
+          {
+            "reference": "Galatians 4:4-5",
+            "text": "But when the set time had fully come, God sent his Son, born of a woman, born under the law, to redeem those under the law, that we might receive adoption to sonship."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Salvation - 30 AD",
+        "description": "Jesus' death and resurrection accomplish salvation",
+        "significance": "The central event of all history",
+        "verses": [
+          {
+            "reference": "2 Corinthians 6:2",
+            "text": "For he says, 'In the time of my favor I heard you, and in the day of salvation I helped you.' I tell you, now is the time of God's favor, now is the day of salvation."
+          }
+        ]
+      },
+      {
+        "title": "The Year of the Church - 30 AD",
+        "description": "Pentecost and the birth of the New Testament church",
+        "significance": "The beginning of the church age and worldwide mission",
+        "verses": [
+          {
+            "reference": "Acts 1:8",
+            "text": "But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth."
+          }
+        ]
+      },
+      {
+        "title": "The Year of Mission - 47 AD",
+        "description": "Paul's first missionary journey begins",
+        "significance": "The Gospel spreads to the Gentile world",
+        "verses": [
+          {
+            "reference": "Acts 13:47",
+            "text": "For this is what the Lord has commanded us: 'I have made you a light for the Gentiles, that you may bring salvation to the ends of the earth.'"
+          }
+        ]
+      },
+      {
+        "title": "The Year of Hope - Future",
+        "description": "Christ's second coming and eternal kingdom",
+        "significance": "The ultimate fulfillment of all God's promises",
+        "verses": [
+          {
+            "reference": "Revelation 21:3-4",
+            "text": "And I heard a loud voice from the throne saying, 'Look! God's dwelling place is now among the people, and he will dwell with them. They will be his people, and God himself will be with them and be their God. He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain, for the old order of things has passed away.'"
+          }
+        ]
+      }
+    ]
+  }
+}

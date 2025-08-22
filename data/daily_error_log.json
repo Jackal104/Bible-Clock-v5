@@ -1,0 +1,49 @@
+{
+  "date": "2025-08-22",
+  "created_at": "2025-08-22T01:17:38.550964",
+  "error_count": 0,
+  "errors": [],
+  "error_summary": {},
+  "services": {
+    "verse_manager": {
+      "errors": 0,
+      "last_error": null
+    },
+    "image_generator": {
+      "errors": 0,
+      "last_error": null
+    },
+    "display_manager": {
+      "errors": 0,
+      "last_error": null
+    },
+    "scheduler": {
+      "errors": 0,
+      "last_error": null
+    },
+    "service_manager": {
+      "errors": 0,
+      "last_error": null
+    },
+    "web_interface": {
+      "errors": 0,
+      "last_error": null
+    },
+    "voice_control": {
+      "errors": 0,
+      "last_error": null
+    },
+    "news_service": {
+      "errors": 0,
+      "last_error": null
+    },
+    "weather_service": {
+      "errors": 0,
+      "last_error": null
+    },
+    "other": {
+      "errors": 0,
+      "last_error": null
+    }
+  }
+}

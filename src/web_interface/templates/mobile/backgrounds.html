@@ -1,0 +1,599 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}Backgrounds & Fonts - Bible Clock{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Backgrounds Section -->
+    <div class="mobile-card bg-white p-4">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-800">Background Selection</h2>
+            <button id="randomize-bg" class="mobile-button px-4 py-2 bg-blue-600 text-white rounded-lg text-sm touch-feedback">
+                🎲 Random
+            </button>
+        </div>
+        
+        <!-- Background Preview -->
+        <div class="mb-4 p-4 border rounded-lg bg-gray-50">
+            <div class="text-sm text-gray-600 mb-2">Current Background:</div>
+            <div id="current-bg-name" class="font-medium text-gray-800">Loading...</div>
+            <div class="mt-2">
+                <img id="current-bg-preview" src="" alt="Current Background" class="w-full max-w-xs h-32 object-cover rounded border">
+            </div>
+        </div>
+
+        <!-- Background Grid -->
+        <div class="grid grid-cols-2 gap-3" id="background-grid">
+            <!-- Background options will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Borders Section -->
+    <div class="mobile-card bg-white p-4">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-800">Border Selection</h2>
+            <button id="randomize-border" class="mobile-button px-4 py-2 bg-purple-600 text-white rounded-lg text-sm touch-feedback">
+                🎲 Random Border
+            </button>
+        </div>
+        
+        <!-- Border Preview -->
+        <div class="mb-4 p-4 border rounded-lg bg-gray-50">
+            <div class="text-sm text-gray-600 mb-2">Current Border:</div>
+            <div id="current-border-name" class="font-medium text-gray-800">Loading...</div>
+            <div class="mt-2">
+                <img id="current-border-preview" src="" alt="Current Border" class="w-full max-w-xs h-32 object-cover rounded border">
+            </div>
+        </div>
+
+        <!-- Border Grid -->
+        <div class="grid grid-cols-2 gap-3" id="border-grid">
+            <!-- Border options will be loaded here -->
+        </div>
+        
+        <!-- Enhanced Layering Section -->
+        <div class="mt-6 border-t pt-4">
+            <h3 class="font-medium text-gray-800 mb-3">Enhanced Layering</h3>
+            <div class="space-y-3">
+                <label class="flex items-center space-x-3">
+                    <input type="checkbox" id="enhanced-layering-toggle" class="rounded">
+                    <span class="text-sm">Enable separate background/border selection</span>
+                </label>
+                <div class="text-xs text-gray-500">
+                    When enabled, backgrounds and borders can be mixed and matched independently
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fonts Section -->
+    <div class="mobile-card bg-white p-4">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Font Selection</h2>
+        
+        <!-- Current Font Preview -->
+        <div class="mb-4 p-4 border rounded-lg bg-gray-50">
+            <div class="text-sm text-gray-600 mb-2">Current Font:</div>
+            <div id="current-font-name" class="font-medium text-gray-800 mb-2">Loading...</div>
+            <div id="font-preview" class="text-xl bg-white p-3 rounded border" style="font-family: 'DejaVu Serif', serif;">
+                For God so loved the world that he gave his one and only Son...
+            </div>
+        </div>
+
+        <!-- Font Selection -->
+        <div class="space-y-3">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Font Family:</label>
+                <select id="font-select" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-base">
+                    <!-- Font options will be loaded here -->
+                </select>
+            </div>
+        </div>
+        
+        <!-- Font Size Controls -->
+        <div class="mt-4 space-y-3">
+            <h3 class="font-medium text-gray-800">Font Sizes</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Verse Text Size:</label>
+                    <div class="flex items-center space-x-3">
+                        <input type="range" id="verse-size-slider" min="40" max="120" class="flex-1">
+                        <span id="verse-size-value" class="text-sm w-12 text-gray-600">80</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Reference Size:</label>
+                    <div class="flex items-center space-x-3">
+                        <input type="range" id="reference-size-slider" min="30" max="100" class="flex-1">
+                        <span id="reference-size-value" class="text-sm w-12 text-gray-600">84</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mobile-card bg-white p-4">
+        <div class="space-y-3">
+            <button id="preview-settings" class="w-full mobile-button bg-green-600 text-white py-3 px-4 rounded-lg font-medium touch-feedback">
+                📱 Preview Changes
+            </button>
+            <button id="apply-settings" class="w-full mobile-button bg-blue-600 text-white py-3 px-4 rounded-lg font-medium touch-feedback">
+                ✅ Apply to Display
+            </button>
+            <div class="text-xs text-gray-500 text-center">
+                Changes will be applied to the Bible Clock display
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-sm w-full">
+            <div class="p-4 border-b">
+                <h3 class="font-semibold">Settings Preview</h3>
+            </div>
+            <div class="p-4">
+                <img id="preview-image" src="" alt="Settings Preview" class="w-full border rounded">
+            </div>
+            <div class="p-4 border-t">
+                <button id="close-preview" class="w-full mobile-button bg-gray-600 text-white py-2 px-4 rounded-lg touch-feedback">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentSettings = {};
+    let availableBackgrounds = [];
+    let availableBorders = [];
+    let availableFonts = [];
+
+    // Load initial data
+    loadSettings();
+    loadBackgrounds();
+    loadBorders();
+    loadFonts();
+
+    // Font selection change handler
+    document.getElementById('font-select').addEventListener('change', function() {
+        const selectedFont = this.value;
+        updateFontPreview(selectedFont);
+        currentSettings.font = selectedFont;
+    });
+
+    // Font size slider handlers
+    document.getElementById('verse-size-slider').addEventListener('input', function() {
+        document.getElementById('verse-size-value').textContent = this.value;
+        currentSettings.verse_size = parseInt(this.value);
+    });
+
+    document.getElementById('reference-size-slider').addEventListener('input', function() {
+        document.getElementById('reference-size-value').textContent = this.value;
+        currentSettings.reference_size = parseInt(this.value);
+    });
+
+    // Enhanced layering toggle
+    document.getElementById('enhanced-layering-toggle').addEventListener('change', function() {
+        const enabled = this.checked;
+        document.getElementById('separate-backgrounds').classList.toggle('hidden', !enabled);
+        document.getElementById('separate-borders').classList.toggle('hidden', !enabled);
+        currentSettings.enhanced_layering_enabled = enabled;
+        
+        if (enabled) {
+            loadSeparateBackgrounds();
+            loadSeparateBorders();
+        }
+    });
+
+    // Background randomization
+    document.getElementById('randomize-bg').addEventListener('click', function() {
+        if (availableBackgrounds.length > 0) {
+            const randomIndex = Math.floor(Math.random() * availableBackgrounds.length);
+            selectBackground(randomIndex);
+        }
+    });
+
+    // Border randomization
+    document.getElementById('randomize-border').addEventListener('click', function() {
+        if (availableBorders.length > 0) {
+            const randomIndex = Math.floor(Math.random() * availableBorders.length);
+            selectBorder(randomIndex);
+        }
+    });
+
+    // Preview and apply buttons
+    document.getElementById('preview-settings').addEventListener('click', previewChanges);
+    document.getElementById('apply-settings').addEventListener('click', applyChanges);
+    document.getElementById('close-preview').addEventListener('click', closePreview);
+
+    function loadSettings() {
+        fetch('/api/settings')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    currentSettings = data.data;
+                    updateCurrentInfo();
+                    updateSliders();
+                    document.getElementById('enhanced-layering-toggle').checked = currentSettings.enhanced_layering_enabled || false;
+                }
+            })
+            .catch(console.error);
+    }
+
+    function loadBackgrounds() {
+        fetch('/api/backgrounds')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Filter for backgrounds only (exclude borders)
+                    availableBackgrounds = (data.data.backgrounds || []).filter(bg => {
+                        const name = (bg.name || '').toLowerCase();
+                        const type = (bg.type || '').toLowerCase();
+                        
+                        // Include if explicitly marked as background
+                        if (type === 'background') return true;
+                        
+                        // Include if name suggests it's a background
+                        if (name.includes('bg:') || name.includes('bg_') || name.startsWith('bg ')) return true;
+                        
+                        // Exclude if name suggests it's a border
+                        if (type === 'border' || name.includes('border') || name.includes('frame') || 
+                            name.includes('thick') || name.includes('ornate') || name.includes('gothic') ||
+                            name.includes('manuscript') || name.includes('corners')) return false;
+                        
+                        // Default to including as background if uncertain
+                        return true;
+                    });
+                    renderBackgroundGrid();
+                }
+            })
+            .catch(console.error);
+    }
+
+    function loadFonts() {
+        fetch('/api/fonts')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    availableFonts = data.data.available_fonts || [];
+                    renderFontSelect();
+                }
+            })
+            .catch(console.error);
+    }
+
+    function loadBorders() {
+        fetch('/api/backgrounds')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Filter for borders only
+                    availableBorders = (data.data.backgrounds || []).filter(bg => {
+                        const name = (bg.name || '').toLowerCase();
+                        const type = (bg.type || '').toLowerCase();
+                        
+                        // Include if explicitly marked as border
+                        if (type === 'border') return true;
+                        
+                        // Include if name suggests it's a border
+                        if (name.includes('border') || name.includes('frame') || 
+                            name.includes('thick') || name.includes('ornate') || 
+                            name.includes('gothic') || name.includes('manuscript') ||
+                            name.includes('corners') || name.includes('deco') ||
+                            name.includes('celtic') || name.includes('dashed')) return true;
+                        
+                        // Exclude if name suggests it's a background
+                        if (name.includes('bg:') || name.includes('bg_') || name.startsWith('bg ')) return false;
+                        
+                        // Default to excluding if uncertain (opposite of backgrounds)
+                        return false;
+                    });
+                    renderBorderGrid();
+                }
+            })
+            .catch(console.error);
+    }
+
+    function loadSeparateBackgrounds() {
+        fetch('/api/enhanced-layering/backgrounds')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderSeparateBackgrounds(data.data.backgrounds || []);
+                }
+            })
+            .catch(console.error);
+    }
+
+    function loadSeparateBorders() {
+        fetch('/api/enhanced-layering/borders')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    renderSeparateBorders(data.data.borders || []);
+                }
+            })
+            .catch(console.error);
+    }
+
+    function renderBackgroundGrid() {
+        const grid = document.getElementById('background-grid');
+        grid.innerHTML = availableBackgrounds.map((bg, index) => `
+            <button class="mobile-button touch-feedback bg-selection ${index === currentSettings.background_index ? 'ring-2 ring-blue-500' : ''}" 
+                    onclick="selectBackground(${index})"
+                    data-bg-index="${index}">
+                <img src="${bg.thumbnail || '/static/thumbnails/placeholder.png'}" 
+                     alt="${bg.name}" 
+                     class="w-full h-20 object-cover rounded-lg mb-2 bg-gray-100"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-20 bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-xs text-gray-500" style="display:none;">
+                    No Preview
+                </div>
+                <div class="text-xs font-medium text-gray-700">${bg.name}</div>
+            </button>
+        `).join('');
+    }
+
+    function renderBorderGrid() {
+        const grid = document.getElementById('border-grid');
+        grid.innerHTML = availableBorders.map((border, index) => `
+            <button class="mobile-button touch-feedback bg-selection ${index === currentSettings.border_index ? 'ring-2 ring-purple-500' : ''}" 
+                    onclick="selectBorder(${index})"
+                    data-border-index="${index}">
+                <img src="${border.thumbnail || '/static/thumbnails/placeholder.png'}" 
+                     alt="${border.name}" 
+                     class="w-full h-20 object-cover rounded-lg mb-2 bg-gray-100"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-20 bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-xs text-gray-500" style="display:none;">
+                    No Preview
+                </div>
+                <div class="text-xs font-medium text-gray-700">${border.name}</div>
+            </button>
+        `).join('');
+    }
+
+    function renderFontSelect() {
+        const select = document.getElementById('font-select');
+        select.innerHTML = availableFonts.map(font => {
+            const fontName = typeof font === 'object' ? font.name : font;
+            return `
+                <option value="${fontName}" ${fontName === currentSettings.current_font ? 'selected' : ''}>
+                    ${formatFontName(fontName)}
+                </option>
+            `;
+        }).join('');
+    }
+
+    function formatFontName(fontName) {
+        // Convert font file names to readable names
+        const fontMap = {
+            'default': 'DejaVu Serif (Default)',
+            'DejaVuSans': 'DejaVu Sans',
+            'DejaVuSerif': 'DejaVu Serif', 
+            'Ubuntu': 'Ubuntu',
+            'Cardo-Regular': 'Cardo (Biblical)',
+            'EBGaramond-Regular': 'EB Garamond (Classical)',
+            'CrimsonText-Regular': 'Crimson Text (Book)',
+            'GentiumPlus-Regular': 'Gentium Plus (Readable)',
+            'LibreBaskerville-Regular': 'Libre Baskerville',
+            'Lora-Regular': 'Lora (Optimized)',
+            'GentiumBookPlus-Regular': 'Gentium Book Plus'
+        };
+        return fontMap[fontName] || fontName.replace(/[-_]/g, ' ').replace('.ttf', '');
+    }
+
+    function updateCurrentInfo() {
+        document.getElementById('current-bg-name').textContent = 
+            availableBackgrounds[currentSettings.background_index]?.name || 'Loading...';
+        document.getElementById('current-border-name').textContent = 
+            availableBorders[currentSettings.border_index]?.name || 'Loading...';
+        document.getElementById('current-font-name').textContent = 
+            formatFontName(currentSettings.current_font || 'default');
+    }
+
+    function updateFontPreview(fontName) {
+        const preview = document.getElementById('font-preview');
+        // Map font names to actual font families for preview
+        const fontFamilyMap = {
+            'Cardo-Regular': 'Cardo, serif',
+            'EBGaramond-Regular': 'EB Garamond, serif',
+            'CrimsonText-Regular': 'Crimson Text, serif',
+            'GentiumPlus-Regular': 'Gentium Plus, serif',
+            'LibreBaskerville-Regular': 'Libre Baskerville, serif',
+            'Lora-Regular': 'Lora, serif',
+            'DejaVuSans': 'DejaVu Sans, sans-serif',
+            'Ubuntu': 'Ubuntu, sans-serif',
+            'default': 'DejaVu Serif, serif'
+        };
+        preview.style.fontFamily = fontFamilyMap[fontName] || 'serif';
+    }
+
+    function updateSliders() {
+        const verseSlider = document.getElementById('verse-size-slider');
+        const referenceSlider = document.getElementById('reference-size-slider');
+        
+        if (currentSettings.font_sizes) {
+            verseSlider.value = currentSettings.font_sizes.verse_size || 80;
+            referenceSlider.value = currentSettings.font_sizes.reference_size || 84;
+        }
+        
+        document.getElementById('verse-size-value').textContent = verseSlider.value;
+        document.getElementById('reference-size-value').textContent = referenceSlider.value;
+    }
+
+    function selectBackground(filteredIndex) {
+        // Map filtered index back to original background index
+        const originalIndex = availableBackgrounds[filteredIndex]?.index;
+        if (originalIndex === undefined) {
+            console.error('Invalid background index:', filteredIndex);
+            return;
+        }
+        
+        // Update UI
+        document.querySelectorAll('[data-bg-index]').forEach(btn => {
+            btn.classList.remove('ring-2', 'ring-blue-500');
+        });
+        document.querySelector(`[data-bg-index="${filteredIndex}"]`)?.classList.add('ring-2', 'ring-blue-500');
+        
+        // Update settings with original index
+        currentSettings.background_index = originalIndex;
+        updateCurrentInfo();
+        
+        // Show immediate preview of the change
+        showLoading('Applying background...');
+        applySettingsImmediate();
+    }
+
+    function selectBorder(filteredIndex) {
+        // Map filtered index back to original border index
+        const originalIndex = availableBorders[filteredIndex]?.index;
+        if (originalIndex === undefined) {
+            console.error('Invalid border index:', filteredIndex);
+            return;
+        }
+        
+        // Update UI
+        document.querySelectorAll('[data-border-index]').forEach(btn => {
+            btn.classList.remove('ring-2', 'ring-purple-500');
+        });
+        document.querySelector(`[data-border-index="${filteredIndex}"]`)?.classList.add('ring-2', 'ring-purple-500');
+        
+        // Update settings with original index
+        currentSettings.border_index = originalIndex;
+        updateCurrentInfo();
+        
+        // Show immediate preview of the change
+        showLoading('Applying border...');
+        applySettingsImmediate();
+    }
+
+    function previewChanges() {
+        const settingsData = {
+            ...currentSettings,
+            font_sizes: {
+                verse_size: currentSettings.verse_size,
+                reference_size: currentSettings.reference_size
+            }
+        };
+
+        fetch('/api/preview', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settingsData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('preview-image').src = data.preview_url;
+                document.getElementById('preview-modal').classList.remove('hidden');
+            } else {
+                alert('Preview failed: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Preview error:', error);
+            alert('Failed to generate preview');
+        });
+    }
+
+    function applyChanges() {
+        const settingsData = {
+            ...currentSettings,
+            update_display: true,
+            font_sizes: {
+                verse_size: currentSettings.verse_size,
+                reference_size: currentSettings.reference_size
+            }
+        };
+
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settingsData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Settings applied to display!');
+                loadSettings(); // Refresh current settings
+            } else {
+                alert('❌ Failed to apply settings: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Apply error:', error);
+            alert('❌ Failed to apply settings');
+        });
+    }
+
+    function closePreview() {
+        document.getElementById('preview-modal').classList.add('hidden');
+    }
+
+    function applySettingsImmediate() {
+        const settingsData = {
+            background_index: currentSettings.background_index,
+            update_display: true
+        };
+
+        fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settingsData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideLoading();
+            if (data.success) {
+                // Refresh current settings display
+                loadSettings();
+            } else {
+                console.error('Failed to apply settings:', data.error);
+                alert('Failed to apply settings: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            hideLoading();
+            console.error('Apply error:', error);
+            alert('Failed to apply settings');
+        });
+    }
+
+    function showLoading(message = 'Loading...') {
+        // Create loading overlay if it doesn't exist
+        let loading = document.getElementById('loading-overlay');
+        if (!loading) {
+            loading = document.createElement('div');
+            loading.id = 'loading-overlay';
+            loading.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            loading.innerHTML = `
+                <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                    <span class="text-gray-700" id="loading-message">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(loading);
+        } else {
+            document.getElementById('loading-message').textContent = message;
+            loading.classList.remove('hidden');
+        }
+    }
+
+    function hideLoading() {
+        const loading = document.getElementById('loading-overlay');
+        if (loading) {
+            loading.classList.add('hidden');
+        }
+    }
+
+    window.selectBackground = selectBackground;
+    window.selectBorder = selectBorder;
+});
+</script>
+{% endblock %}

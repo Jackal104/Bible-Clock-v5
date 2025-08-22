@@ -1,0 +1,22 @@
+[Unit]
+Description=Bible Clock Unified System Monitor
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=admin
+Group=admin
+ExecStart=/usr/bin/python3 /home/admin/Bible-Clock-v4/system_monitor.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+WorkingDirectory=/home/admin/Bible-Clock-v4
+
+# Resource limits for the monitor itself
+MemoryHigh=100M
+MemoryMax=150M
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1180 @@
+{
+  "biblical_events_calendar": {
+    "description": "Comprehensive biblical events calendar with historically significant dates from creation through early church period (400 AD)",
+    "events": {
+      "01-01": [
+        {
+          "title": "God's New Beginnings",
+          "description": "Celebrating God's gift of new beginnings as we start a new year",
+          "historical_context": "New Year represents fresh starts and renewal in God's grace",
+          "verses": [
+            {
+              "reference": "Revelation 21:5",
+              "text": "He who was seated on the throne said, 'I am making everything new!' Then he said, 'Write this down, for these words are trustworthy and true.'"
+            },
+            {
+              "reference": "2 Corinthians 5:17",
+              "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"
+            },
+            {
+              "reference": "Lamentations 3:22-23",
+              "text": "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."
+            }
+          ]
+        }
+      ],
+      "01-02": [
+        {
+          "title": "The Call of Samuel",
+          "description": "Traditionally associated with this time of year - God's call to young Samuel in the temple",
+          "historical_context": "Around 1070 BC, God called the boy Samuel to serve as priest and prophet",
+          "verses": [
+            {
+              "reference": "1 Samuel 3:9",
+              "text": "So Eli told Samuel, 'Go and lie down, and if he calls you, say, Speak, LORD, for your servant is listening.' So Samuel went and lay down in his place."
+            },
+            {
+              "reference": "1 Samuel 3:19",
+              "text": "The LORD was with Samuel as he grew up, and he let none of Samuel's words fall to the ground."
+            }
+          ]
+        }
+      ],
+      "01-10": [
+        {
+          "title": "Moses Descends from Mount Sinai",
+          "description": "Traditional date when Moses came down from Mount Sinai with the stone tablets",
+          "historical_context": "Around 1446 BC, Moses received the Ten Commandments on Mount Sinai",
+          "verses": [
+            {
+              "reference": "Exodus 34:29",
+              "text": "When Moses came down from Mount Sinai with the two tablets of the covenant law in his hands, he was not aware that his face was radiant because he had spoken with the LORD."
+            },
+            {
+              "reference": "Exodus 20:1-3",
+              "text": "And God spoke all these words: 'I am the LORD your God, who brought you out of Egypt, out of the land of slavery. You shall have no other gods before me.'"
+            }
+          ]
+        }
+      ],
+      "01-17": [
+        {
+          "title": "Abraham's Covenant with God",
+          "description": "Traditional remembrance of God's covenant promise to Abraham",
+          "historical_context": "Around 2091 BC, God made His covenant with Abraham in Canaan",
+          "verses": [
+            {
+              "reference": "Genesis 17:7",
+              "text": "I will establish my covenant as an everlasting covenant between me and you and your descendants after you for the generations to come, to be your God and the God of your descendants after you."
+            },
+            {
+              "reference": "Genesis 15:6",
+              "text": "Abram believed the LORD, and he credited it to him as righteousness."
+            }
+          ]
+        }
+      ],
+      "01-06": [
+        {
+          "title": "Epiphany - The Wise Men's Journey",
+          "description": "Traditional celebration of the Magi visiting Jesus, likely occurred 6-12 months after His birth",
+          "historical_context": "The Wise Men from the East followed the star to worship the Christ child in Bethlehem, circa 5-4 BC",
+          "verses": [
+            {
+              "reference": "Matthew 2:11",
+              "text": "On coming to the house, they saw the child with his mother Mary, and they bowed down and worshiped him. Then they opened their treasures and presented him with gifts of gold, frankincense and myrrh."
+            },
+            {
+              "reference": "Matthew 2:1-2",
+              "text": "After Jesus was born in Bethlehem in Judea, during the time of King Herod, Magi from the east came to Jerusalem and asked, 'Where is the one who has been born king of the Jews? We saw his star when it rose and have come to worship him.'"
+            }
+          ]
+        }
+      ],
+      "01-15": [
+        {
+          "title": "The Beginning of Jesus' Ministry",
+          "description": "Traditional date for Jesus beginning His public ministry after His baptism",
+          "historical_context": "Around 30 AD, Jesus began preaching in Galilee after His baptism by John",
+          "verses": [
+            {
+              "reference": "Mark 1:14-15",
+              "text": "After John was put in prison, Jesus went into Galilee, proclaiming the good news of God. 'The time has come,' he said. 'The kingdom of God has come near. Repent and believe the good news!'"
+            },
+            {
+              "reference": "Luke 4:14",
+              "text": "Jesus returned to Galilee in the power of the Spirit, and news about him spread through the whole countryside."
+            }
+          ]
+        }
+      ],
+      "01-25": [
+        {
+          "title": "The Conversion of Paul",
+          "description": "Traditional commemoration of Paul's dramatic conversion on the road to Damascus",
+          "historical_context": "Around 34-35 AD, Saul of Tarsus encountered the risen Christ and became Paul the Apostle",
+          "verses": [
+            {
+              "reference": "Acts 9:3-4",
+              "text": "As he neared Damascus on his journey, suddenly a light from heaven flashed around him. He fell to the ground and heard a voice say to him, 'Saul, Saul, why do you persecute me?'"
+            },
+            {
+              "reference": "Acts 9:15",
+              "text": "But the Lord said to Ananias, 'Go! This man is my chosen instrument to proclaim my name to the Gentiles and their kings and to the people of Israel.'"
+            }
+          ]
+        }
+      ],
+      "02-02": [
+        {
+          "title": "Jesus Presented in the Temple",
+          "description": "Traditional date of Jesus' presentation in the temple 40 days after His birth",
+          "historical_context": "According to Jewish law, Mary and Joseph presented the infant Jesus in the temple, circa 5-4 BC",
+          "verses": [
+            {
+              "reference": "Luke 2:22",
+              "text": "When the time came for the purification rites required by the Law of Moses, Joseph and Mary took him to Jerusalem to present him to the Lord."
+            },
+            {
+              "reference": "Luke 2:29-32",
+              "text": "Sovereign Lord, as you have promised, you may now dismiss your servant in peace. For my eyes have seen your salvation, which you have prepared in the sight of all nations: a light for revelation to the Gentiles, and the glory of your people Israel."
+            }
+          ]
+        }
+      ],
+      "02-14": [
+        {
+          "title": "God's Perfect Love",
+          "description": "Reflecting on God's unconditional love for humanity on Valentine's Day",
+          "historical_context": "Throughout scripture, God demonstrates His perfect love for His people",
+          "verses": [
+            {
+              "reference": "1 John 4:8",
+              "text": "Whoever does not love does not know God, because God is love."
+            },
+            {
+              "reference": "John 3:16",
+              "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+            },
+            {
+              "reference": "Romans 5:8",
+              "text": "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us."
+            }
+          ]
+        }
+      ],
+      "02-05": [
+        {
+          "title": "The Death of Moses",
+          "description": "Traditional commemoration of Moses' death on Mount Nebo",
+          "historical_context": "Around 1406 BC, Moses died at age 120 after viewing the Promised Land",
+          "verses": [
+            {
+              "reference": "Deuteronomy 34:5-7",
+              "text": "And Moses the servant of the LORD died there in Moab, as the LORD had said. He buried him in Moab, in the valley opposite Beth Peor, but to this day no one knows where his grave is. Moses was a hundred and twenty years old when he died, yet his eyes were not weak nor his strength gone."
+            },
+            {
+              "reference": "Deuteronomy 34:10",
+              "text": "Since then, no prophet has risen in Israel like Moses, whom the LORD knew face to face."
+            }
+          ]
+        }
+      ],
+      "02-12": [
+        {
+          "title": "The Exodus from Egypt Begins",
+          "description": "Traditional remembrance of the beginning of Israel's exodus journey",
+          "historical_context": "Around 1446 BC, God delivered Israel from Egyptian bondage",
+          "verses": [
+            {
+              "reference": "Exodus 12:41-42",
+              "text": "At the end of the 430 years, to the very day, all the LORD's divisions left Egypt. Because the LORD kept vigil that night to bring them out of Egypt, on this night all the Israelites are to keep vigil to honor the LORD for the generations to come."
+            },
+            {
+              "reference": "Exodus 13:3",
+              "text": "Then Moses said to the people, 'Commemorate this day, the day you came out of Egypt, out of the land of slavery, because the LORD brought you out of it with a mighty hand.'"
+            }
+          ]
+        }
+      ],
+      "02-24": [
+        {
+          "title": "Matthias Chosen as Apostle",
+          "description": "Traditional date when the apostles chose Matthias to replace Judas Iscariot",
+          "historical_context": "After Jesus' ascension (30 AD), the eleven apostles cast lots to choose a replacement for Judas",
+          "verses": [
+            {
+              "reference": "Acts 1:23-26",
+              "text": "So they nominated two men: Joseph called Barsabbas (also known as Justus) and Matthias. Then they prayed, 'Lord, you know everyone's heart. Show us which of these two you have chosen to take over this apostolic ministry, which Judas left to go where he belongs.' Then they cast lots, and the lot fell to Matthias; so he was added to the eleven apostles."
+            }
+          ]
+        }
+      ],
+      "03-12": [
+        {
+          "title": "Feast of Purim",
+          "description": "Jewish festival celebrating Esther's deliverance of the Jews from Haman's plot",
+          "historical_context": "Around 473 BC, Queen Esther saved the Jewish people in Persia",
+          "verses": [
+            {
+              "reference": "Esther 9:22",
+              "text": "As the time when the Jews got relief from their enemies, and as the month when their sorrow was turned into joy and their mourning into a day of celebration. He wrote them to observe the days as days of feasting and joy and giving presents of food to one another and gifts to the poor."
+            },
+            {
+              "reference": "Esther 4:14",
+              "text": "For if you remain silent at this time, relief and deliverance for the Jews will arise from another place, but you and your father's family will perish. And who knows but that you have come to your royal position for such a time as this?"
+            }
+          ]
+        }
+      ],
+      "03-17": [
+        {
+          "title": "Patrick's Mission to Ireland",
+          "description": "St. Patrick brought the Gospel to Ireland, demonstrating the Great Commission",
+          "historical_context": "Around 432 AD, Patrick began his missionary work in Ireland, converting thousands",
+          "verses": [
+            {
+              "reference": "Matthew 28:19-20",
+              "text": "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you."
+            },
+            {
+              "reference": "Romans 10:15",
+              "text": "And how can anyone preach unless they are sent? As it is written: 'How beautiful are the feet of those who bring good news!'"
+            }
+          ]
+        }
+      ],
+      "03-19": [
+        {
+          "title": "Joseph, Guardian of Jesus",
+          "description": "Traditional feast day of St. Joseph, earthly father of Jesus",
+          "historical_context": "Joseph the carpenter protected and raised Jesus in Nazareth",
+          "verses": [
+            {
+              "reference": "Matthew 1:20",
+              "text": "But after he had considered this, an angel of the Lord appeared to him in a dream and said, 'Joseph son of David, do not be afraid to take Mary home as your wife, because what is conceived in her is from the Holy Spirit.'"
+            },
+            {
+              "reference": "Matthew 2:13",
+              "text": "When they had gone, an angel of the Lord appeared to Joseph in a dream. 'Get up,' he said, 'take the child and his mother and escape to Egypt.'"
+            }
+          ]
+        }
+      ],
+      "03-25": [
+        {
+          "title": "The Annunciation",
+          "description": "Traditional date of the Angel Gabriel's announcement to Mary",
+          "historical_context": "Nine months before Christmas, Gabriel announced to Mary that she would bear the Messiah, circa 6-5 BC",
+          "verses": [
+            {
+              "reference": "Luke 1:28",
+              "text": "The angel went to her and said, 'Greetings, you who are highly favored! The Lord is with you.'"
+            },
+            {
+              "reference": "Luke 1:35",
+              "text": "The angel answered, 'The Holy Spirit will come on you, and the power of the Most High will overshadow you. So the holy one to be born will be called the Son of God.'"
+            },
+            {
+              "reference": "Luke 1:38",
+              "text": "I am the Lord's servant, Mary answered. May your word to me be fulfilled. Then the angel left her."
+            }
+          ]
+        }
+      ],
+      "04-14": [
+        {
+          "title": "The Last Supper",
+          "description": "Jesus instituted the Lord's Supper on the night before His crucifixion",
+          "historical_context": "On Passover evening, 30 AD, Jesus shared His final meal with the disciples",
+          "verses": [
+            {
+              "reference": "Matthew 26:26-28",
+              "text": "While they were eating, Jesus took bread, and when he had given thanks, he broke it and gave it to his disciples, saying, 'Take and eat; this is my body.' Then he took a cup, and when he had given thanks, he gave it to them, saying, 'Drink from it, all of you. This is my blood of the covenant, which is poured out for many for the forgiveness of sins.'"
+            },
+            {
+              "reference": "1 Corinthians 11:24-25",
+              "text": "And when he had given thanks, he broke it and said, 'This is my body, which is for you; do this in remembrance of me.' In the same way, after supper he took the cup, saying, 'This cup is the new covenant in my blood; do this, whenever you drink it, in remembrance of me.'"
+            }
+          ]
+        }
+      ],
+      "04-15": [
+        {
+          "title": "Good Friday - The Crucifixion",
+          "description": "Jesus Christ was crucified on Golgotha for the sins of the world",
+          "historical_context": "On Friday, April 3, 30 AD (traditional date), Jesus was crucified under Pontius Pilate",
+          "verses": [
+            {
+              "reference": "John 19:30",
+              "text": "When he had received the drink, Jesus said, 'It is finished.' With that, he bowed his head and gave up his spirit."
+            },
+            {
+              "reference": "Isaiah 53:5",
+              "text": "But he was pierced for our transgressions, he was crushed for our iniquities; the punishment that brought us peace was on him, and by his wounds we are healed."
+            },
+            {
+              "reference": "1 Peter 2:24",
+              "text": "He himself bore our sins in his body on the cross, so that we might die to sins and live for righteousness; by his wounds you have been healed."
+            }
+          ]
+        }
+      ],
+      "04-17": [
+        {
+          "title": "Easter Sunday - The Resurrection",
+          "description": "Jesus Christ rose from the dead, conquering sin and death",
+          "historical_context": "On Sunday, April 5, 30 AD (traditional date), Jesus rose triumphantly from the tomb",
+          "verses": [
+            {
+              "reference": "Matthew 28:6",
+              "text": "He is not here; he has risen, just as he said. Come and see the place where he lay."
+            },
+            {
+              "reference": "1 Corinthians 15:20",
+              "text": "But Christ has indeed been raised from the dead, the firstfruits of those who have fallen asleep."
+            },
+            {
+              "reference": "Romans 6:9",
+              "text": "For we know that since Christ was raised from the dead, he cannot die again; death no longer has mastery over him."
+            }
+          ]
+        }
+      ],
+      "05-01": [
+        {
+          "title": "Philip and James the Lesser",
+          "description": "Traditional feast day of apostles Philip and James",
+          "historical_context": "Philip called Nathanael to Jesus; James was called 'the Lesser' to distinguish from James, son of Zebedee",
+          "verses": [
+            {
+              "reference": "John 1:45-46",
+              "text": "Philip found Nathanael and told him, 'We have found the one Moses wrote about in the Law, and about whom the prophets also wrote—Jesus of Nazareth, the son of Joseph.' 'Nazareth! Can anything good come from there?' Nathanael asked. 'Come and see,' said Philip."
+            },
+            {
+              "reference": "John 14:8-9",
+              "text": "Philip said, 'Lord, show us the Father and that will be enough for us.' Jesus answered: 'Don't you know me, Philip, even after I have been among you such a long time? Anyone who has seen me has seen the Father.'"
+            }
+          ]
+        }
+      ],
+      "05-14": [
+        {
+          "title": "Matthias the Apostle",
+          "description": "Celebration of Matthias, chosen to replace Judas Iscariot",
+          "historical_context": "Matthias was selected by lot to become the twelfth apostle after Judas' betrayal",
+          "verses": [
+            {
+              "reference": "Acts 1:26",
+              "text": "Then they cast lots, and the lot fell to Matthias; so he was added to the eleven apostles."
+            }
+          ]
+        }
+      ],
+      "05-25": [
+        {
+          "title": "Ascension of Jesus",
+          "description": "Jesus ascended to heaven 40 days after His resurrection",
+          "historical_context": "Around May 14, 30 AD (40 days after Easter), Jesus ascended from the Mount of Olives",
+          "verses": [
+            {
+              "reference": "Acts 1:9",
+              "text": "After he said this, he was taken up before their very eyes, and a cloud hid him from their sight."
+            },
+            {
+              "reference": "Luke 24:50-51",
+              "text": "When he had led them out to the vicinity of Bethany, he lifted up his hands and blessed them. While he was blessing them, he left them and was taken up into heaven."
+            },
+            {
+              "reference": "Acts 1:11",
+              "text": "Men of Galilee, they said, why do you stand here looking into the sky? This same Jesus, who has been taken from you into heaven, will come back in the same way you have seen him go into heaven."
+            }
+          ]
+        }
+      ],
+      "06-04": [
+        {
+          "title": "Pentecost - The Holy Spirit Comes",
+          "description": "The Holy Spirit came upon the apostles in Jerusalem",
+          "historical_context": "50 days after Easter, around May 24, 30 AD, the church was born when the Spirit descended",
+          "verses": [
+            {
+              "reference": "Acts 2:2-4",
+              "text": "Suddenly a sound like the blowing of a violent wind came from heaven and filled the whole house where they were sitting. They saw what seemed to be tongues of fire that separated and came to rest on each of them. All of them were filled with the Holy Spirit and began to speak in other tongues as the Spirit enabled them."
+            },
+            {
+              "reference": "Acts 2:41",
+              "text": "Those who accepted his message were baptized, and about three thousand were added to their number that day."
+            }
+          ]
+        }
+      ],
+      "06-11": [
+        {
+          "title": "Barnabas the Encourager",
+          "description": "Traditional feast day of Barnabas, companion of Paul",
+          "historical_context": "Barnabas introduced Paul to the apostles and later traveled with him on missionary journeys",
+          "verses": [
+            {
+              "reference": "Acts 4:36",
+              "text": "Joseph, a Levite from Cyprus, whom the apostles called Barnabas (which means 'son of encouragement')."
+            },
+            {
+              "reference": "Acts 11:24",
+              "text": "He was a good man, full of the Holy Spirit and faith, and a great number of people were brought to the Lord."
+            }
+          ]
+        }
+      ],
+      "06-24": [
+        {
+          "title": "Birth of John the Baptist",
+          "description": "Traditional celebration of John the Baptist's birth",
+          "historical_context": "John was born 6 months before Jesus, around 6-5 BC, to Zechariah and Elizabeth",
+          "verses": [
+            {
+              "reference": "Luke 1:57",
+              "text": "When it was time for Elizabeth to give birth, she gave birth to a son."
+            },
+            {
+              "reference": "Luke 1:76",
+              "text": "And you, my child, will be called a prophet of the Most High; for you will go on before the Lord to prepare the way for him."
+            },
+            {
+              "reference": "Matthew 3:3",
+              "text": "This is he who was spoken of through the prophet Isaiah: 'A voice of one calling in the wilderness, Prepare the way for the Lord, make straight paths for him.'"
+            }
+          ]
+        }
+      ],
+      "06-29": [
+        {
+          "title": "Peter and Paul",
+          "description": "Traditional feast day commemorating the apostles Peter and Paul",
+          "historical_context": "Both Peter and Paul were martyred in Rome under Emperor Nero, around 64-67 AD",
+          "verses": [
+            {
+              "reference": "Matthew 16:18",
+              "text": "And I tell you that you are Peter, and on this rock I will build my church, and the gates of Hades will not overcome it."
+            },
+            {
+              "reference": "2 Timothy 4:7",
+              "text": "I have fought the good fight, I have finished the race, I have kept the faith."
+            }
+          ]
+        }
+      ],
+      "07-03": [
+        {
+          "title": "Thomas the Apostle",
+          "description": "Traditional feast day of Thomas, called 'Doubting Thomas'",
+          "historical_context": "Thomas preached the Gospel in India and was martyred there around 72 AD",
+          "verses": [
+            {
+              "reference": "John 20:28",
+              "text": "Thomas said to him, 'My Lord and my God!'"
+            },
+            {
+              "reference": "John 20:29",
+              "text": "Then Jesus told him, 'Because you have seen me, you have believed; blessed are those who have not seen and yet have believed.'"
+            }
+          ]
+        }
+      ],
+      "07-17": [
+        {
+          "title": "Noah's Ark Rests on Mount Ararat",
+          "description": "Traditional date when Noah's ark came to rest after the great flood",
+          "historical_context": "According to biblical chronology, the ark rested on the mountains of Ararat",
+          "verses": [
+            {
+              "reference": "Genesis 8:4",
+              "text": "And on the seventeenth day of the seventh month the ark came to rest on the mountains of Ararat."
+            },
+            {
+              "reference": "Genesis 8:20-21",
+              "text": "Then Noah built an altar to the LORD and, taking some of all the clean animals and clean birds, he sacrificed burnt offerings on it. The LORD smelled the pleasing aroma and said in his heart: 'Never again will I curse the ground because of humans.'"
+            }
+          ]
+        }
+      ],
+      "07-25": [
+        {
+          "title": "James the Greater",
+          "description": "Traditional feast day of James, son of Zebedee",
+          "historical_context": "James was the first apostle to be martyred, killed by Herod Agrippa around 44 AD",
+          "verses": [
+            {
+              "reference": "Acts 12:2",
+              "text": "He had James, the brother of John, put to death with the sword."
+            },
+            {
+              "reference": "Mark 10:39",
+              "text": "'We can,' they answered. Jesus said to them, 'You will drink the cup I drink and be baptized with the baptism I am baptized with.'"
+            }
+          ]
+        }
+      ],
+      "09-15": [
+        {
+          "title": "Feast of Trumpets - Rosh Hashanah",
+          "description": "Jewish New Year and the Feast of Trumpets",
+          "historical_context": "Biblical feast established by God as a holy convocation with trumpet blasts",
+          "verses": [
+            {
+              "reference": "Leviticus 23:24",
+              "text": "Say to the Israelites: 'On the first day of the seventh month you are to have a day of sabbath rest, a sacred assembly commemorated with trumpet blasts.'"
+            },
+            {
+              "reference": "Numbers 29:1",
+              "text": "On the first day of the seventh month hold a sacred assembly and do no regular work. It is a day for you to sound the trumpets."
+            }
+          ]
+        }
+      ],
+      "09-24": [
+        {
+          "title": "Day of Atonement - Yom Kippur",
+          "description": "The holiest day in the Jewish calendar, Day of Atonement",
+          "historical_context": "Annual day when the high priest entered the Holy of Holies to make atonement",
+          "verses": [
+            {
+              "reference": "Leviticus 16:30",
+              "text": "Because on this day atonement will be made for you, to cleanse you. Then, before the LORD, you will be clean from all your sins."
+            },
+            {
+              "reference": "Hebrews 9:12",
+              "text": "He did not enter by means of the blood of goats and calves; but he entered the Most Holy Place once for all by his own blood, thus obtaining eternal redemption."
+            }
+          ]
+        }
+      ],
+      "09-29": [
+        {
+          "title": "Feast of Tabernacles Begins",
+          "description": "Seven-day feast commemorating Israel's wilderness journey",
+          "historical_context": "Festival established to remember God's provision during the wilderness wandering",
+          "verses": [
+            {
+              "reference": "Leviticus 23:42-43",
+              "text": "Live in temporary shelters for seven days: All native-born Israelites are to live in such shelters so your descendants will know that I had the Israelites live in temporary shelters when I brought them out of Egypt."
+            },
+            {
+              "reference": "John 7:37",
+              "text": "On the last and greatest day of the festival, Jesus stood and said in a loud voice, 'Let anyone who is thirsty come to me and drink.'"
+            }
+          ]
+        }
+      ],
+      "08-10": [
+        {
+          "title": "Lawrence the Deacon",
+          "description": "Traditional feast day of Lawrence, early church deacon and martyr",
+          "historical_context": "Lawrence was martyred in Rome under Emperor Valerian in 258 AD",
+          "verses": [
+            {
+              "reference": "Acts 6:3",
+              "text": "Brothers and sisters, choose seven men from among you who are known to be full of the Spirit and wisdom. We will turn this responsibility over to them."
+            }
+          ]
+        }
+      ],
+      "08-15": [
+        {
+          "title": "Mary, Mother of Jesus",
+          "description": "Traditional feast of the Assumption, honoring Mary",
+          "historical_context": "Mary, chosen to bear the Messiah, remained faithful throughout Jesus' life and ministry",
+          "verses": [
+            {
+              "reference": "Luke 1:48",
+              "text": "For he has been mindful of the humble state of his servant. From now on all generations will call me blessed."
+            },
+            {
+              "reference": "John 19:27",
+              "text": "And to the disciple, 'Here is your mother.' From that time on, this disciple took her into his home."
+            }
+          ]
+        }
+      ],
+      "08-24": [
+        {
+          "title": "Bartholomew the Apostle",
+          "description": "Traditional feast day of Bartholomew (Nathanael)",
+          "historical_context": "Bartholomew preached in India and Armenia, martyred around 71 AD",
+          "verses": [
+            {
+              "reference": "John 1:47",
+              "text": "When Jesus saw Nathanael approaching, he said of him, 'Here truly is an Israelite in whom there is no deceit.'"
+            },
+            {
+              "reference": "John 1:49",
+              "text": "Then Nathanael declared, 'Rabbi, you are the Son of God; you are the king of Israel.'"
+            }
+          ]
+        }
+      ],
+      "09-14": [
+        {
+          "title": "Exaltation of the Holy Cross",
+          "description": "Traditional celebration of Christ's cross and sacrifice",
+          "historical_context": "Commemorates the finding of the True Cross by Helena in 326 AD",
+          "verses": [
+            {
+              "reference": "Galatians 6:14",
+              "text": "May I never boast except in the cross of our Lord Jesus Christ, through which the world has been crucified to me, and I to the world."
+            },
+            {
+              "reference": "1 Corinthians 1:18",
+              "text": "For the message of the cross is foolishness to those who are perishing, but to us who are being saved it is the power of God."
+            }
+          ]
+        }
+      ],
+      "09-21": [
+        {
+          "title": "Matthew the Evangelist",
+          "description": "Traditional feast day of Matthew, tax collector turned apostle",
+          "historical_context": "Matthew wrote the first Gospel and preached in Ethiopia, martyred around 60 AD",
+          "verses": [
+            {
+              "reference": "Matthew 9:9",
+              "text": "As Jesus went on from there, he saw a man named Matthew sitting at the tax collector's booth. 'Follow me,' he told him, and Matthew got up and followed him."
+            },
+            {
+              "reference": "Matthew 9:13",
+              "text": "But go and learn what this means: 'I desire mercy, not sacrifice.' For I have not come to call the righteous, but sinners."
+            }
+          ]
+        }
+      ],
+      "09-29": [
+        {
+          "title": "Michael and All Angels",
+          "description": "Traditional feast day of Archangel Michael and all angels",
+          "historical_context": "Michael appears throughout scripture as God's warrior angel",
+          "verses": [
+            {
+              "reference": "Revelation 12:7",
+              "text": "Then war broke out in heaven. Michael and his angels fought against the dragon, and the dragon and his angels fought back."
+            },
+            {
+              "reference": "Daniel 12:1",
+              "text": "At that time Michael, the great prince who protects your people, will arise."
+            }
+          ]
+        }
+      ],
+      "10-18": [
+        {
+          "title": "Luke the Evangelist",
+          "description": "Traditional feast day of Luke, physician and Gospel writer",
+          "historical_context": "Luke wrote the Gospel of Luke and Acts, companion of Paul around 60-80 AD",
+          "verses": [
+            {
+              "reference": "Colossians 4:14",
+              "text": "Our dear friend Luke, the doctor, and Demas send greetings."
+            },
+            {
+              "reference": "Luke 1:3",
+              "text": "With this in mind, since I myself have carefully investigated everything from the beginning, I too decided to write an orderly account for you, most excellent Theophilus."
+            }
+          ]
+        }
+      ],
+      "10-28": [
+        {
+          "title": "Simon and Jude",
+          "description": "Traditional feast day of apostles Simon the Zealot and Jude",
+          "historical_context": "Simon and Jude preached together in Persia and were martyred around 65 AD",
+          "verses": [
+            {
+              "reference": "Jude 1:3",
+              "text": "Dear friends, although I was very eager to write to you about the salvation we share, I felt compelled to write and urge you to contend for the faith that was once for all entrusted to God's holy people."
+            }
+          ]
+        }
+      ],
+      "11-01": [
+        {
+          "title": "All Saints Day",
+          "description": "Commemorating all faithful Christians who have died",
+          "historical_context": "Honoring the communion of saints throughout church history",
+          "verses": [
+            {
+              "reference": "Revelation 7:9",
+              "text": "After this I looked, and there before me was a great multitude that no one could count, from every nation, tribe, people and language, standing before the throne and before the Lamb."
+            },
+            {
+              "reference": "Hebrews 12:1",
+              "text": "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles."
+            }
+          ]
+        }
+      ],
+      "11-30": [
+        {
+          "title": "Andrew the Apostle",
+          "description": "Traditional feast day of Andrew, Simon Peter's brother",
+          "historical_context": "Andrew was crucified on an X-shaped cross in Patras, Greece around 60 AD",
+          "verses": [
+            {
+              "reference": "John 1:40-41",
+              "text": "Andrew, Simon Peter's brother, was one of the two who heard what John had said and who had followed Jesus. The first thing Andrew did was to find his brother Simon and tell him, 'We have found the Messiah.'"
+            },
+            {
+              "reference": "John 12:22",
+              "text": "Philip went to tell Andrew; Andrew and Philip in turn told Jesus."
+            }
+          ]
+        }
+      ],
+      "12-06": [
+        {
+          "title": "Nicholas of Myra",
+          "description": "Traditional feast day of St. Nicholas, inspiration for Santa Claus",
+          "historical_context": "Nicholas was bishop of Myra around 270-343 AD, known for his generosity",
+          "verses": [
+            {
+              "reference": "2 Corinthians 9:7",
+              "text": "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."
+            }
+          ]
+        }
+      ],
+      "12-13": [
+        {
+          "title": "Lucy of Syracuse",
+          "description": "Traditional feast day of St. Lucy, early Christian martyr",
+          "historical_context": "Lucy was martyred during Diocletian's persecution around 304 AD",
+          "verses": [
+            {
+              "reference": "John 8:12",
+              "text": "When Jesus spoke again to the people, he said, 'I am the light of the world. Whoever follows me will never walk in darkness, but will have the light of life.'"
+            }
+          ]
+        }
+      ],
+      "12-21": [
+        {
+          "title": "Thomas the Apostle",
+          "description": "Winter commemoration of Thomas, who preached to India",
+          "historical_context": "Thomas established churches in India and was martyred there around 72 AD",
+          "verses": [
+            {
+              "reference": "John 14:5",
+              "text": "Thomas said to him, 'Lord, we don't know where you are going, so how can we know the way?'"
+            },
+            {
+              "reference": "John 14:6",
+              "text": "Jesus answered, 'I am the way and the truth and the life. No one comes to the Father except through me.'"
+            }
+          ]
+        }
+      ],
+      "12-24": [
+        {
+          "title": "Christmas Eve - The Holy Night",
+          "description": "The night before Christ's birth, when angels announced the good news",
+          "historical_context": "The night Jesus was born in Bethlehem, around 5-4 BC",
+          "verses": [
+            {
+              "reference": "Luke 2:8-9",
+              "text": "And there were shepherds living out in the fields nearby, keeping watch over their flocks at night. An angel of the Lord appeared to them, and the glory of the Lord shone around them."
+            },
+            {
+              "reference": "Luke 2:13-14",
+              "text": "Suddenly a great company of the heavenly host appeared with the angel, praising God and saying, 'Glory to God in the highest heaven, and on earth peace to those on whom his favor rests.'"
+            }
+          ]
+        }
+      ],
+      "12-25": [
+        {
+          "title": "Christmas Day - The Nativity",
+          "description": "Celebrating the birth of Jesus Christ, our Savior",
+          "historical_context": "Jesus was born in Bethlehem around 5-4 BC during the reign of Herod the Great",
+          "verses": [
+            {
+              "reference": "Luke 2:11",
+              "text": "Today in the town of David a Savior has been born to you; he is the Messiah, the Lord."
+            },
+            {
+              "reference": "John 1:14",
+              "text": "The Word became flesh and made his dwelling among us. We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth."
+            },
+            {
+              "reference": "Isaiah 9:6",
+              "text": "For to us a child is born, to us a son is given, and the government will be on his shoulders. And he will be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace."
+            }
+          ]
+        }
+      ],
+      "12-26": [
+        {
+          "title": "Stephen the First Martyr",
+          "description": "Traditional feast day of Stephen, the first Christian martyr",
+          "historical_context": "Stephen was stoned to death around 34 AD, becoming the first Christian martyr",
+          "verses": [
+            {
+              "reference": "Acts 7:59-60",
+              "text": "While they were stoning him, Stephen prayed, 'Lord Jesus, receive my spirit.' Then he fell on his knees and cried out, 'Lord, do not hold this sin against them.' When he had said this, he fell asleep."
+            },
+            {
+              "reference": "Acts 6:8",
+              "text": "Now Stephen, a man full of God's grace and power, performed great wonders and signs among the people."
+            }
+          ]
+        }
+      ],
+      "12-27": [
+        {
+          "title": "John the Evangelist",
+          "description": "Traditional feast day of John, the beloved disciple",
+          "historical_context": "John wrote the Gospel of John, three epistles, and Revelation, died around 100 AD in Ephesus",
+          "verses": [
+            {
+              "reference": "John 21:20",
+              "text": "Peter turned and saw that the disciple whom Jesus loved was following them."
+            },
+            {
+              "reference": "John 20:31",
+              "text": "But these are written that you may believe that Jesus is the Messiah, the Son of God, and that by believing you may have life in his name."
+            }
+          ]
+        }
+      ],
+      "12-28": [
+        {
+          "title": "Holy Innocents",
+          "description": "Commemorating the children killed by Herod in his attempt to kill Jesus",
+          "historical_context": "Herod ordered the massacre of male infants in Bethlehem around 4 BC",
+          "verses": [
+            {
+              "reference": "Matthew 2:16",
+              "text": "When Herod realized that he had been outwitted by the Magi, he was furious, and he gave orders to kill all the boys in Bethlehem and its vicinity who were two years old and under."
+            },
+            {
+              "reference": "Jeremiah 31:15",
+              "text": "This is what the LORD says: 'A voice is heard in Ramah, mourning and great weeping, Rachel weeping for her children and refusing to be comforted, because they are no more.'"
+            }
+          ]
+        }
+      ],
+      "12-31": [
+        {
+          "title": "New Year's Eve - God's Faithfulness",
+          "description": "Reflecting on God's faithfulness through the year",
+          "historical_context": "A time to reflect on God's blessings and prepare for the future",
+          "verses": [
+            {
+              "reference": "Psalm 90:12",
+              "text": "Teach us to number our days, that we may gain a heart of wisdom."
+            },
+            {
+              "reference": "Lamentations 3:23",
+              "text": "They are new every morning; great is your faithfulness."
+            }
+          ]
+        }
+      ]
+    },
+    "weekly_themes": {
+      "sunday": [
+        {
+          "title": "Resurrection and New Life",
+          "description": "Sunday celebrates Christ's resurrection and the promise of eternal life",
+          "verses": [
+            {
+              "reference": "1 Corinthians 15:20",
+              "text": "But Christ has indeed been raised from the dead, the firstfruits of those who have fallen asleep."
+            }
+          ]
+        }
+      ],
+      "monday": [
+        {
+          "title": "New Beginnings and Fresh Starts",
+          "description": "Monday represents new beginnings and God's fresh mercies",
+          "verses": [
+            {
+              "reference": "Lamentations 3:22-23",
+              "text": "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."
+            }
+          ]
+        }
+      ],
+      "tuesday": [
+        {
+          "title": "Strength and Perseverance",
+          "description": "Tuesday focuses on God's strength for the challenges ahead",
+          "verses": [
+            {
+              "reference": "Isaiah 40:31",
+              "text": "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."
+            }
+          ]
+        }
+      ],
+      "wednesday": [
+        {
+          "title": "Midweek Renewal and Wisdom",
+          "description": "Wednesday is a time for spiritual renewal and seeking God's wisdom",
+          "verses": [
+            {
+              "reference": "James 1:5",
+              "text": "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+            }
+          ]
+        }
+      ],
+      "thursday": [
+        {
+          "title": "Gratitude and Thanksgiving",
+          "description": "Thursday is traditionally a day of thanksgiving and gratitude",
+          "verses": [
+            {
+              "reference": "1 Thessalonians 5:18",
+              "text": "Give thanks in all circumstances; for this is God's will for you in Christ Jesus."
+            }
+          ]
+        }
+      ],
+      "friday": [
+        {
+          "title": "Sacrifice and Service",
+          "description": "Friday remembers Christ's sacrifice and calls us to service",
+          "verses": [
+            {
+              "reference": "John 15:13",
+              "text": "Greater love has no one than this: to lay down one's life for one's friends."
+            }
+          ]
+        }
+      ],
+      "saturday": [
+        {
+          "title": "Rest and Reflection",
+          "description": "Saturday is a day of rest and spiritual reflection",
+          "verses": [
+            {
+              "reference": "Matthew 11:28",
+              "text": "Come to me, all you who are weary and burdened, and I will give you rest."
+            }
+          ]
+        }
+      ]
+    },
+    "monthly_themes": {
+      "january": [
+        {
+          "title": "New Beginnings and Resolutions",
+          "description": "January represents fresh starts and spiritual renewal",
+          "verses": [
+            {
+              "reference": "2 Corinthians 5:17",
+              "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"
+            }
+          ]
+        }
+      ],
+      "february": [
+        {
+          "title": "Love and Relationships",
+          "description": "February focuses on God's love and loving relationships",
+          "verses": [
+            {
+              "reference": "1 John 4:19",
+              "text": "We love because he first loved us."
+            }
+          ]
+        }
+      ],
+      "march": [
+        {
+          "title": "Preparation and Growth",
+          "description": "March is a time of spiritual preparation and growth",
+          "verses": [
+            {
+              "reference": "1 Corinthians 3:6",
+              "text": "I planted the seed, Apollos watered it, but God has been making it grow."
+            }
+          ]
+        }
+      ],
+      "april": [
+        {
+          "title": "Resurrection and Victory",
+          "description": "April celebrates Christ's resurrection and our victory in Him",
+          "verses": [
+            {
+              "reference": "1 Corinthians 15:57",
+              "text": "But thanks be to God! He gives us the victory through our Lord Jesus Christ."
+            }
+          ]
+        }
+      ],
+      "may": [
+        {
+          "title": "Growth and Flourishing",
+          "description": "May represents spiritual growth and flourishing in faith",
+          "verses": [
+            {
+              "reference": "Psalm 1:3",
+              "text": "That person is like a tree planted by streams of water, which yields its fruit in season and whose leaf does not wither—whatever they do prospers."
+            }
+          ]
+        }
+      ],
+      "june": [
+        {
+          "title": "Light and Guidance",
+          "description": "June celebrates God's light and guidance in our lives",
+          "verses": [
+            {
+              "reference": "Psalm 119:105",
+              "text": "Your word is a lamp for my feet, a light on my path."
+            }
+          ]
+        }
+      ],
+      "july": [
+        {
+          "title": "Freedom and Liberty",
+          "description": "July celebrates the freedom we have in Christ",
+          "verses": [
+            {
+              "reference": "Galatians 5:1",
+              "text": "It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery."
+            }
+          ]
+        }
+      ],
+      "august": [
+        {
+          "title": "Harvest and Abundance",
+          "description": "August represents God's provision and spiritual harvest",
+          "verses": [
+            {
+              "reference": "2 Corinthians 9:8",
+              "text": "And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work."
+            }
+          ]
+        }
+      ],
+      "september": [
+        {
+          "title": "Wisdom and Learning",
+          "description": "September focuses on gaining wisdom and spiritual understanding",
+          "verses": [
+            {
+              "reference": "Proverbs 9:10",
+              "text": "The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding."
+            }
+          ]
+        }
+      ],
+      "october": [
+        {
+          "title": "Thanksgiving and Gratitude",
+          "description": "October emphasizes thanksgiving for God's blessings",
+          "verses": [
+            {
+              "reference": "Psalm 100:4",
+              "text": "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name."
+            }
+          ]
+        }
+      ],
+      "november": [
+        {
+          "title": "Gratitude and Reflection",
+          "description": "November is a time of deep gratitude and spiritual reflection",
+          "verses": [
+            {
+              "reference": "Colossians 3:17",
+              "text": "And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him."
+            }
+          ]
+        }
+      ],
+      "december": [
+        {
+          "title": "Hope and Expectation",
+          "description": "December celebrates the hope of Christ's coming",
+          "verses": [
+            {
+              "reference": "Romans 15:13",
+              "text": "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit."
+            }
+          ]
+        }
+      ]
+    },
+    "seasonal_themes": {
+      "spring": [
+        {
+          "title": "New Life and Renewal",
+          "description": "Spring represents spiritual rebirth and new beginnings",
+          "verses": [
+            {
+              "reference": "Isaiah 43:19",
+              "text": "See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland."
+            }
+          ]
+        }
+      ],
+      "summer": [
+        {
+          "title": "Growth and Abundance",
+          "description": "Summer represents spiritual growth and God's abundant provision",
+          "verses": [
+            {
+              "reference": "Psalm 65:11",
+              "text": "You crown the year with your bounty, and your carts overflow with abundance."
+            }
+          ]
+        }
+      ],
+      "autumn": [
+        {
+          "title": "Harvest and Thanksgiving",
+          "description": "Autumn represents the spiritual harvest and thanksgiving",
+          "verses": [
+            {
+              "reference": "Galatians 6:9",
+              "text": "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up."
+            }
+          ]
+        }
+      ],
+      "winter": [
+        {
+          "title": "Reflection and Hope",
+          "description": "Winter represents spiritual reflection and hope in God's promises",
+          "verses": [
+            {
+              "reference": "Ecclesiastes 3:1",
+              "text": "There is a time for everything, and a season for every activity under the heavens."
+            }
+          ]
+        }
+      ]
+    },
+    "yearly_themes": [
+      {
+        "title": "God's Eternal Faithfulness",
+        "description": "Throughout all years, God remains faithful to His people",
+        "verses": [
+          {
+            "reference": "Psalm 100:5",
+            "text": "For the Lord is good and his love endures forever; his faithfulness continues through all generations."
+          },
+          {
+            "reference": "Hebrews 13:8",
+            "text": "Jesus Christ is the same yesterday and today and forever."
+          }
+        ]
+      }
+    ]
+  }
+}

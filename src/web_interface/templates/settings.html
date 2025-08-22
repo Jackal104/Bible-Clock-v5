@@ -1,0 +1,1546 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Bible Clock{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-bible-dark mb-2">Settings</h2>
+        <p class="text-gray-600">Configure your Bible Clock display and preferences</p>
+    </div>
+
+    <!-- Settings Form -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Display Settings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Display Settings</h3>
+            
+            <div class="space-y-6">
+                <!-- Display Mode -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Display Mode</label>
+                    <select id="display-mode" class="form-select" onchange="updateDisplayMode()">
+                        <option value="time">Time-based (Hour:Minute = Chapter:Verse)</option>
+                        <option value="date">Date-based (Biblical Calendar Events)</option>
+                        <option value="random">Random Verses</option>
+                        <option value="weather">Forecast with Moon Phase</option>
+                        <option value="news">Israel News</option>
+                        <option value="parallel">Parallel Translations</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Choose how verses are selected for display</p>
+                </div>
+
+                <!-- Time Format -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
+                    <select id="time-format" class="form-select" onchange="updateSetting('time_format')">
+                        <option value="12">12-hour format (12:40 AM = Chapter 12:40)</option>
+                        <option value="24">24-hour format (00:40 = Chapter 24:40)</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Choose how time maps to chapter:verse in time mode</p>
+                </div>
+
+                <!-- Primary Translation -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Primary Bible Translation</label>
+                    <select id="translation" class="form-select" onchange="updateSetting('translation')">
+                        <option value="kjv">King James Version (KJV)</option>
+                        <option value="esv">English Standard Version (ESV)</option>
+                        <option value="niv">New International Version (NIV)</option>
+                        <option value="nasb">New American Standard Bible (NASB)</option>
+                        <option value="amp">Amplified Bible (AMP)</option>
+                        <option value="nlt">New Living Translation (NLT)</option>
+                        <option value="msg">The Message (MSG)</option>
+                        <option value="cev">Contemporary English Version (CEV)</option>
+                        <option value="web">World English Bible (WEB)</option>
+                        <option value="asv">American Standard Version (ASV)</option>
+                        <option value="bbe">Bible in Basic English (BBE)</option>
+                        <option value="ylt">Young's Literal Translation (YLT)</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Select your preferred Bible translation</p>
+                </div>
+
+                <!-- Parallel Translation Settings (shown when parallel mode is selected) -->
+                <div id="parallel-settings" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Bible Translation</label>
+                    <select id="secondary-translation" class="form-select" onchange="updateSetting('secondary_translation')">
+                        <!-- Options populated dynamically to prevent duplicates -->
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Used for parallel translation mode (auto-filtered to prevent duplicates)</p>
+                </div>
+
+                <!-- Auto Refresh -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Auto Refresh Interval</label>
+                    <select id="auto-refresh" class="form-select" onchange="updateSetting('auto_refresh')">
+                        <option value="30">30 seconds</option>
+                        <option value="60">1 minute</option>
+                        <option value="300">5 minutes</option>
+                        <option value="600">10 minutes</option>
+                        <option value="1800">30 minutes</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">How often to check for verse updates</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Settings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Weather Settings</h3>
+            
+            <div class="space-y-6">
+                <!-- Temperature Unit -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Temperature Unit</label>
+                    <select id="temperature-unit" class="form-select" onchange="updateWeatherSetting('temperature_unit', this.value)">
+                        <option value="F">Fahrenheit (°F)</option>
+                        <option value="C">Celsius (°C)</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Choose temperature display format</p>
+                </div>
+
+                <!-- Location Settings -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location Detection</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="radio" name="location-mode" value="auto" 
+                                   class="form-radio text-bible-accent" 
+                                   onchange="toggleLocationMode('auto')" checked>
+                            <span class="ml-2">Auto-detect location (IP-based)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="location-mode" value="custom" 
+                                   class="form-radio text-bible-accent"
+                                   onchange="toggleLocationMode('custom')">
+                            <span class="ml-2">Custom location</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Custom Location Settings -->
+                <div id="custom-location-settings" class="hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                            <input type="text" id="custom-city" class="form-input" 
+                                   placeholder="e.g., New York" 
+                                   onchange="updateCustomLocation()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                            <input type="text" id="custom-country" class="form-input" 
+                                   placeholder="e.g., United States"
+                                   onchange="updateCustomLocation()">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                            <input type="number" step="0.000001" id="custom-latitude" class="form-input" 
+                                   placeholder="e.g., 40.7128"
+                                   onchange="updateCustomLocation()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                            <input type="number" step="0.000001" id="custom-longitude" class="form-input" 
+                                   placeholder="e.g., -74.0060"
+                                   onchange="updateCustomLocation()">
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500">Enter either city/country or latitude/longitude coordinates</p>
+                </div>
+
+                <!-- Second Location Settings -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Second Location</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="enable-second-location" 
+                                   class="form-checkbox text-bible-accent" 
+                                   onchange="toggleSecondLocation()" checked>
+                            <span class="ml-2">Show second location weather</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Second Location Details -->
+                <div id="second-location-settings" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Location Name</label>
+                            <input type="text" id="second-location-name" class="form-input" 
+                                   value="Jerusalem, Israel"
+                                   onchange="updateSecondLocation()">
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                            <input type="number" step="0.000001" id="second-latitude" class="form-input" 
+                                   value="31.7683"
+                                   onchange="updateSecondLocation()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                            <input type="number" step="0.000001" id="second-longitude" class="form-input" 
+                                   value="35.2137"
+                                   onchange="updateSecondLocation()">
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500">Default: Jerusalem, Israel. Change to any location worldwide.</p>
+                </div>
+
+                <!-- Weather Refresh Settings -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Weather Refresh Interval</label>
+                    <select id="weather-refresh" class="form-select" onchange="updateWeatherSetting('weather_refresh_minutes', this.value)">
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">How often to fetch fresh weather data</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Settings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Visual Settings</h3>
+            
+            <div class="space-y-6">
+                <!-- Image Selection Tabs -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <label class="block text-sm font-medium text-gray-700">Image Selection</label>
+                        <div class="text-sm text-gray-500">
+                            <span id="bg-page-info">Page 1 of 5</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Type Tabs -->
+                    <div class="flex border-b border-gray-200 mb-4">
+                        <button id="backgrounds-tab" onclick="switchImageTab('backgrounds')" 
+                                class="py-2 px-4 border-b-2 border-bible-accent text-bible-accent font-medium">
+                            Backgrounds
+                        </button>
+                        <button id="borders-tab" onclick="switchImageTab('borders')" 
+                                class="py-2 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium ml-4">
+                            Borders
+                        </button>
+                        <button id="all-tab" onclick="switchImageTab('all')" 
+                                class="py-2 px-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium ml-4">
+                            All Images
+                        </button>
+                    </div>
+                    
+                    <!-- Thumbnail Gallery (6 per page) -->
+                    <div id="background-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                        <!-- Image thumbnails will be loaded here -->
+                    </div>
+                    
+                    <!-- Pagination Controls -->
+                    <div class="flex justify-between items-center mb-4">
+                        <button id="bg-prev-btn" onclick="changePage(-1)" class="btn-secondary" disabled>
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Previous
+                        </button>
+                        <div class="flex space-x-1" id="bg-page-dots">
+                            <!-- Page dots will be generated here -->
+                        </div>
+                        <button id="bg-next-btn" onclick="changePage(1)" class="btn-secondary">
+                            Next
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Background Cycling Settings -->
+                    <div class="border-t pt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Auto-Cycle Backgrounds</label>
+                                <p class="text-xs text-gray-500">Automatically change background at set intervals</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="cycling-enabled" onchange="updateCyclingSettings()">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div id="cycling-interval-section" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cycling Interval</label>
+                            <select id="cycling-interval" class="form-select" onchange="updateCyclingSettings()">
+                                <option value="5">Every 5 minutes</option>
+                                <option value="15">Every 15 minutes</option>
+                                <option value="30" selected>Every 30 minutes</option>
+                                <option value="60">Every hour</option>
+                                <option value="180">Every 3 hours</option>
+                                <option value="360">Every 6 hours</option>
+                                <option value="720">Every 12 hours</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Font -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+                    <select id="font-family" class="form-select" onchange="updateSetting('font')">
+                        <!-- Font options will be loaded here -->
+                    </select>
+                    <p class="text-sm text-gray-500 mt-1">Choose font for verse display</p>
+                </div>
+
+                <!-- Font Sizes -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Font Sizes</label>
+                    <div class="space-y-4">
+                        <!-- Verse Font Size -->
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Verse Size</label>
+                            <div class="flex items-center space-x-3">
+                                <input type="range" id="verse-size" class="flex-1" min="18" max="120" value="80" 
+                                       oninput="updateFontSizePreview(); updateSetting('verse_size', parseInt(this.value))">
+                                <span id="verse-size-value" class="text-sm text-gray-600 w-8">80</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Reference Font Size -->
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Reference Size</label>
+                            <div class="flex items-center space-x-3">
+                                <input type="range" id="reference-size" class="flex-1" min="16" max="48" value="32" 
+                                       oninput="updateFontSizePreview(); updateSetting('reference_size', parseInt(this.value))">
+                                <span id="reference-size-value" class="text-sm text-gray-600 w-8">32</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reference Position Settings -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Verse Reference Position
+                        <span class="text-xs text-gray-500 ml-1">(Time Display Location)</span>
+                    </label>
+                    <div class="space-y-4">
+                        <!-- Position Selector -->
+                        <div>
+                            <select id="reference-position" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bible-gold focus:border-transparent">
+                                <option value="bottom-right">Bottom Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="top-right">Top Right</option>
+                                <option value="top-left">Top Left</option>
+                                <option value="center-top">Center Top</option>
+                                <option value="center-bottom">Center Bottom</option>
+                                <option value="custom">Custom Position</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Custom Offsets -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-gray-600 mb-1">X Offset</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="range" id="reference-x-offset" min="-100" max="100" value="0" class="flex-1">
+                                    <span id="reference-x-offset-value" class="text-sm text-gray-600 w-12">0px</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-600 mb-1">Y Offset</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="range" id="reference-y-offset" min="-100" max="100" value="0" class="flex-1">
+                                    <span id="reference-y-offset-value" class="text-sm text-gray-600 w-12">0px</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Margin Setting -->
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Margin from Edge</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="range" id="reference-margin" min="10" max="100" value="20" class="flex-1">
+                                <span id="reference-margin-value" class="text-sm text-gray-600 w-12">20px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Font Size Preview -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Font Preview</label>
+                    <div class="border rounded-lg p-4 bg-gray-50">
+                        <div class="text-center space-y-2">
+                            <p id="verse-preview" style="font-size: 16px;">"For God so loved the world..."</p>
+                            <p id="reference-preview" class="font-bold text-gray-600" style="font-size: 14px;">King James Version</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-bible-dark">Live Preview</h3>
+            <div class="space-x-2">
+                <button onclick="generatePreview()" class="btn-secondary">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Generate Preview
+                </button>
+                <button onclick="applySettings()" class="btn-primary">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Apply Settings
+                </button>
+            </div>
+        </div>
+        
+        <div class="aspect-video bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center" id="settings-preview">
+            <div class="text-center">
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p class="text-gray-500 text-lg">Click "Generate Preview" to see how your settings will look</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Settings -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Advanced Settings</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- System Settings -->
+            <div class="space-y-4">
+                <h4 class="font-medium text-gray-900">System Settings</h4>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Hardware Mode</label>
+                        <p class="text-sm text-gray-500">Enable E-ink display hardware (disable for testing)</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="hardware-mode" onchange="updateSetting('hardware_mode')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Voice Announcements</label>
+                        <p class="text-sm text-gray-500">Enable voice reading of verses</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="voice-enabled" onchange="updateSetting('voice_enabled')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Web Interface</label>
+                        <p class="text-sm text-gray-500">Enable web-based control</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="web-enabled" checked disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Simulation Mode</label>
+                        <p class="text-sm text-gray-500">Use file output instead of e-ink display</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="simulation-mode" onchange="updateSetting('simulation_mode')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- API Settings -->
+            <div class="space-y-4">
+                <h4 class="font-medium text-gray-900">API Settings</h4>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Bible API URL</label>
+                    <input type="url" id="api-url" class="form-input" placeholder="https://bible-api.com" onchange="updateSetting('api_url')">
+                    <p class="text-sm text-gray-500 mt-1">API endpoint for verse retrieval</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Request Timeout (seconds)</label>
+                    <input type="number" id="timeout" class="form-input" min="5" max="60" value="10" onchange="updateSetting('timeout')">
+                    <p class="text-sm text-gray-500 mt-1">How long to wait for API responses</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Retry Attempts</label>
+                    <input type="number" id="retry-attempts" class="form-input" min="1" max="5" value="3" onchange="updateSetting('retry_attempts')">
+                    <p class="text-sm text-gray-500 mt-1">Number of retries for failed requests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backup & Restore -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Backup & Restore</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="font-medium text-gray-900 mb-2">Export Settings</h4>
+                <p class="text-sm text-gray-500 mb-4">Download your current configuration as a backup file</p>
+                <button onclick="exportSettings()" class="btn-secondary w-full">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Export Settings
+                </button>
+            </div>
+            
+            <div>
+                <h4 class="font-medium text-gray-900 mb-2">Import Settings</h4>
+                <p class="text-sm text-gray-500 mb-4">Restore configuration from a backup file</p>
+                <input type="file" id="settings-file" class="hidden" accept=".json" onchange="importSettings()">
+                <button onclick="document.getElementById('settings-file').click()" class="btn-secondary w-full">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                    </svg>
+                    Import Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Error Log -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-bible-dark">Daily Error Log</h3>
+                <p class="text-gray-600">View system errors from today (resets at midnight)</p>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="refreshErrorLog()" class="btn-secondary text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Refresh
+                </button>
+                <button onclick="clearErrorLog()" class="btn-danger text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    Clear
+                </button>
+            </div>
+        </div>
+        
+        <!-- Error Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Total Errors</p>
+                        <p id="total-errors" class="text-2xl font-semibold text-gray-900">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Services with Errors</p>
+                        <p id="services-with-errors" class="text-2xl font-semibold text-gray-900">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Most Problems</p>
+                        <p id="most-problematic-service" class="text-sm font-semibold text-gray-900">None</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Log Date</p>
+                        <p id="log-date" class="text-sm font-semibold text-gray-900">Today</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Error List -->
+        <div class="border rounded-lg">
+            <div class="px-4 py-3 bg-gray-50 border-b">
+                <h4 class="text-sm font-medium text-gray-900">Recent Errors</h4>
+            </div>
+            <div id="error-list" class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                <div class="px-4 py-3 text-sm text-gray-500 text-center">
+                    Loading error logs...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Settings -->
+    <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-400">
+        <h3 class="text-lg font-semibold text-red-700 mb-4">Danger Zone</h3>
+        <div class="flex justify-between items-center">
+            <div>
+                <h4 class="font-medium text-gray-900">Reset All Settings</h4>
+                <p class="text-sm text-gray-500">This will restore all settings to their default values</p>
+            </div>
+            <button onclick="resetSettings()" class="btn-danger">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Reset Settings
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentSettings = {};
+
+// Load settings on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadSettings();
+    loadBackgrounds();
+    loadFonts();
+    loadErrorLog();
+});
+
+function loadSettings() {
+    fetch('/api/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                currentSettings = data.data;
+                populateSettingsForm(data.data);
+            } else {
+                showError('Failed to load settings');
+            }
+        })
+        .catch(error => showError('Network error loading settings'));
+}
+
+// Error Log Functions
+function loadErrorLog() {
+    fetch('/api/error-log')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateErrorLogDisplay(data.data);
+            } else {
+                showError('Failed to load error log');
+            }
+        })
+        .catch(error => showError('Network error loading error log'));
+}
+
+function updateErrorLogDisplay(errorData) {
+    // Update statistics
+    document.getElementById('total-errors').textContent = errorData.total_errors || 0;
+    document.getElementById('services-with-errors').textContent = errorData.services_with_errors || 0;
+    document.getElementById('most-problematic-service').textContent = errorData.most_problematic_service || 'None';
+    document.getElementById('log-date').textContent = new Date().toLocaleDateString();
+    
+    // Update error list
+    const errorList = document.getElementById('error-list');
+    if (errorData.recent_errors && errorData.recent_errors.length > 0) {
+        errorList.innerHTML = '';
+        errorData.recent_errors.slice().reverse().forEach(error => {
+            const errorItem = document.createElement('div');
+            errorItem.className = 'px-4 py-3';
+            
+            const timestamp = new Date(error.timestamp).toLocaleTimeString();
+            const errorType = error.error_type || error.level || 'Unknown';
+            const service = error.service || 'Unknown';
+            const message = error.message || 'No message';
+            
+            errorItem.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                ${errorType}
+                            </span>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                ${service}
+                            </span>
+                            <span class="text-xs text-gray-500">${timestamp}</span>
+                        </div>
+                        <p class="text-sm text-gray-900">${message}</p>
+                        ${error.details && Object.keys(error.details).length > 0 ? 
+                            `<p class="text-xs text-gray-500 mt-1">Details: ${JSON.stringify(error.details)}</p>` : ''}
+                    </div>
+                </div>
+            `;
+            errorList.appendChild(errorItem);
+        });
+    } else {
+        errorList.innerHTML = '<div class="px-4 py-3 text-sm text-gray-500 text-center">No errors recorded today 🎉</div>';
+    }
+}
+
+function refreshErrorLog() {
+    const refreshButton = document.querySelector('button[onclick="refreshErrorLog()"]');
+    const originalText = refreshButton.innerHTML;
+    refreshButton.innerHTML = '<svg class="w-4 h-4 mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" class="opacity-75"></path></svg>Refreshing...';
+    
+    loadErrorLog();
+    
+    setTimeout(() => {
+        refreshButton.innerHTML = originalText;
+    }, 1000);
+}
+
+function clearErrorLog() {
+    if (confirm('Are you sure you want to clear all error logs? This action cannot be undone.')) {
+        fetch('/api/error-log', {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccess('Error log cleared successfully');
+                loadErrorLog(); // Reload to show empty state
+            } else {
+                showError('Failed to clear error log');
+            }
+        })
+        .catch(error => showError('Network error clearing error log'));
+    }
+}
+
+function populateSettingsForm(settings) {
+    // Store settings globally so updateSecondaryTranslationOptions can access them
+    window.currentSettings = settings;
+    
+    // Populate primary translation dropdown dynamically
+    populatePrimaryTranslations(settings);
+    
+    // Handle parallel mode display
+    if (settings.parallel_mode) {
+        document.getElementById('display-mode').value = 'parallel';
+        document.getElementById('parallel-settings').classList.remove('hidden');
+    } else {
+        document.getElementById('display-mode').value = settings.display_mode || 'time';
+        document.getElementById('parallel-settings').classList.add('hidden');
+    }
+    
+    document.getElementById('time-format').value = settings.time_format || '12';
+    document.getElementById('translation').value = settings.translation || 'kjv';
+    document.getElementById('auto-refresh').value = settings.auto_refresh || '60';
+    document.getElementById('voice-enabled').checked = settings.voice_enabled || false;
+    document.getElementById('hardware-mode').checked = settings.hardware_mode !== false;
+    document.getElementById('api-url').value = settings.api_url || 'https://bible-api.com';
+    document.getElementById('timeout').value = settings.timeout || 10;
+    document.getElementById('retry-attempts').value = settings.retry_attempts || 3;
+    
+    // Populate secondary translation options and set value
+    updateSecondaryTranslationOptions();
+    document.getElementById('secondary-translation').value = settings.secondary_translation || 'amp';
+    
+    // Font sizes
+    if (settings.font_sizes) {
+        document.getElementById('verse-size').value = settings.font_sizes.verse_size || 80;
+        document.getElementById('reference-size').value = settings.font_sizes.reference_size || 32;
+        
+        document.getElementById('verse-size-value').textContent = settings.font_sizes.verse_size || 80;
+        document.getElementById('reference-size-value').textContent = settings.font_sizes.reference_size || 32;
+        
+        updateFontSizePreview();
+    }
+    
+    // Reference position settings
+    if (settings.reference_position_info) {
+        document.getElementById('reference-position').value = settings.reference_position_info.position || 'bottom-right';
+        document.getElementById('reference-x-offset').value = settings.reference_position_info.x_offset || 0;
+        document.getElementById('reference-y-offset').value = settings.reference_position_info.y_offset || 0;
+        document.getElementById('reference-margin').value = settings.reference_position_info.margin || 20;
+        
+        updateReferencePositionPreview();
+    }
+    
+    // Set up event listeners for reference position controls
+    setupReferencePositionListeners();
+}
+
+function populatePrimaryTranslations(settings) {
+    const primarySelect = document.getElementById('translation');
+    const currentPrimary = settings.translation || 'kjv';
+    
+    if (settings.available_translations && settings.translation_display_names) {
+        const availableTranslations = settings.available_translations;
+        const translationNames = settings.translation_display_names;
+        
+        // Clear current options
+        primarySelect.innerHTML = '';
+        
+        // Add all available translations
+        availableTranslations.forEach(trans => {
+            const option = document.createElement('option');
+            option.value = trans;
+            option.textContent = translationNames[trans] || trans.toUpperCase();
+            option.selected = trans === currentPrimary;
+            primarySelect.appendChild(option);
+        });
+    }
+}
+
+function updateSecondaryTranslationOptions() {
+    const primaryTranslation = document.getElementById('translation').value;
+    const secondarySelect = document.getElementById('secondary-translation');
+    const currentSecondary = secondarySelect.value;
+    
+    // Get available translations from backend settings data
+    if (window.currentSettings && window.currentSettings.available_translations) {
+        const availableTranslations = window.currentSettings.available_translations;
+        const translationNames = window.currentSettings.translation_display_names || {};
+        
+        // Clear current options
+        secondarySelect.innerHTML = '';
+        
+        // Add options except the primary translation
+        availableTranslations.forEach(trans => {
+            if (trans !== primaryTranslation) {
+                const option = document.createElement('option');
+                option.value = trans;
+                option.textContent = translationNames[trans] || trans.toUpperCase();
+                option.selected = trans === currentSecondary;
+                secondarySelect.appendChild(option);
+            }
+        });
+    } else {
+        // Fallback to hardcoded list if backend data not available
+        console.warn('Backend translation data not available, using fallback');
+        
+        const fallbackTranslations = [
+            { value: 'kjv', label: 'King James Version (KJV)' },
+            { value: 'web', label: 'World English Bible (WEB)' },
+            { value: 'asv', label: 'American Standard Version (ASV)' },
+            { value: 'bbe', label: 'Bible in Basic English (BBE)' },
+            { value: 'ylt', label: 'Young\'s Literal Translation (YLT)' },
+            { value: 'darby', label: 'Darby Translation' },
+            { value: 'esv', label: 'English Standard Version (ESV)' },
+            { value: 'amp', label: 'Amplified Bible (AMP)' },
+            { value: 'nasb', label: 'New American Standard Bible (NASB)' },
+            { value: 'cev', label: 'Contemporary English Version (CEV)' }
+        ];
+        
+        // Clear current options
+        secondarySelect.innerHTML = '';
+        
+        // Add options except the primary translation
+        fallbackTranslations.forEach(trans => {
+            if (trans.value !== primaryTranslation) {
+                const option = document.createElement('option');
+                option.value = trans.value;
+                option.textContent = trans.label;
+                option.selected = trans.value === currentSecondary;
+                secondarySelect.appendChild(option);
+            }
+        });
+    }
+}
+
+function updateDisplayMode() {
+    const mode = document.getElementById('display-mode').value;
+    const parallelSettings = document.getElementById('parallel-settings');
+    
+    // Show/hide parallel settings
+    if (mode === 'parallel') {
+        parallelSettings.classList.remove('hidden');
+        updateSecondaryTranslationOptions();
+        // Enable parallel mode and set display mode to time (combined call)
+        updateMultipleSettings({
+            'parallel_mode': true,
+            'display_mode': 'time'
+        });
+    } else {
+        parallelSettings.classList.add('hidden');
+        // Disable parallel mode and update display mode (combined call)
+        updateMultipleSettings({
+            'parallel_mode': false,
+            'display_mode': mode
+        });
+    }
+}
+
+function updateMultipleSettings(settings) {
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess('Settings updated');
+            Object.keys(settings).forEach(key => {
+                currentSettings[key] = settings[key];
+            });
+        } else {
+            showError('Failed to update settings');
+        }
+    })
+    .catch(error => showError('Network error updating settings'));
+}
+
+// Image gallery state
+let allBackgrounds = [];
+let filteredBackgrounds = [];
+let currentImageTab = 'backgrounds';
+let currentPage = 0;
+const backgroundsPerPage = 6;
+
+function loadBackgrounds() {
+    fetch('/api/backgrounds')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                allBackgrounds = data.data.backgrounds || [];
+                // Load cycling settings
+                if (data.data.cycling) {
+                    updateCyclingUI(data.data.cycling);
+                }
+                filterBackgroundsByTab();
+                displayBackgroundGallery();
+            }
+        })
+        .catch(error => console.error('Background load error:', error));
+}
+
+function switchImageTab(tabName) {
+    currentImageTab = tabName;
+    currentPage = 0; // Reset to first page when switching tabs
+    
+    // Update tab appearance
+    document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+        tab.classList.remove('border-bible-accent', 'text-bible-accent');
+        tab.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    document.getElementById(tabName + '-tab').classList.remove('border-transparent', 'text-gray-500');
+    document.getElementById(tabName + '-tab').classList.add('border-bible-accent', 'text-bible-accent');
+    
+    // Filter and display images
+    filterBackgroundsByTab();
+    displayBackgroundGallery();
+}
+
+function filterBackgroundsByTab() {
+    if (currentImageTab === 'backgrounds') {
+        filteredBackgrounds = allBackgrounds.filter(bg => bg.type === 'background');
+    } else if (currentImageTab === 'borders') {
+        filteredBackgrounds = allBackgrounds.filter(bg => bg.type === 'border');
+    } else {
+        // 'all' tab - show everything
+        filteredBackgrounds = allBackgrounds;
+    }
+}
+
+function displayBackgroundGallery() {
+    const gallery = document.getElementById('background-gallery');
+    const totalPages = Math.ceil(filteredBackgrounds.length / backgroundsPerPage);
+    
+    // Update page info with current tab info
+    const tabDisplayName = currentImageTab === 'backgrounds' ? 'Backgrounds' : 
+                          currentImageTab === 'borders' ? 'Borders' : 'All Images';
+    document.getElementById('bg-page-info').textContent = `${tabDisplayName}: Page ${currentPage + 1} of ${Math.max(1, totalPages)}`;
+    
+    // Clear gallery
+    gallery.innerHTML = '';
+    
+    if (filteredBackgrounds.length === 0) {
+        gallery.innerHTML = `
+            <div class="col-span-3 text-center py-8 text-gray-500">
+                <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p>No ${tabDisplayName.toLowerCase()} found</p>
+            </div>
+        `;
+        updatePaginationControls(0);
+        return;
+    }
+    
+    // Calculate start and end indices
+    const startIndex = currentPage * backgroundsPerPage;
+    const endIndex = Math.min(startIndex + backgroundsPerPage, filteredBackgrounds.length);
+    
+    // Display images for current page
+    for (let i = startIndex; i < endIndex; i++) {
+        const bg = filteredBackgrounds[i];
+        const div = document.createElement('div');
+        
+        // Add type indicator styling
+        const typeIndicator = bg.type === 'border' ? 'border-blue-500' : 
+                             bg.type === 'background' ? 'border-green-500' : 'border-gray-400';
+        
+        div.className = `relative cursor-pointer border-2 rounded-lg overflow-hidden ${bg.current ? 'border-bible-accent ring-2 ring-bible-accent ring-opacity-50' : 'border-gray-200'} hover:border-bible-accent transition-all`;
+        div.onclick = () => selectBackground(bg.index);
+        
+        div.innerHTML = `
+            <div class="aspect-square relative">
+                <img src="${bg.thumbnail}" alt="${bg.name}" class="w-full h-full object-cover" onerror="this.src='/static/placeholder.png'">
+                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-xs p-2">
+                    <div class="font-medium truncate">${bg.name}</div>
+                    <div class="text-xs text-gray-300 capitalize">${bg.type}</div>
+                </div>
+                ${bg.current ? '<div class="absolute top-2 right-2 w-4 h-4 bg-bible-accent rounded-full border-2 border-white shadow-lg"></div>' : ''}
+                <div class="absolute top-2 left-2 w-3 h-3 ${bg.type === 'border' ? 'bg-blue-500' : bg.type === 'background' ? 'bg-green-500' : 'bg-gray-400'} rounded-full border border-white"></div>
+            </div>
+        `;
+        
+        gallery.appendChild(div);
+    }
+    
+    // Update pagination controls
+    updatePaginationControls(totalPages);
+}
+
+function updatePaginationControls(totalPages) {
+    const prevBtn = document.getElementById('bg-prev-btn');
+    const nextBtn = document.getElementById('bg-next-btn');
+    const pageDots = document.getElementById('bg-page-dots');
+    
+    // Update button states
+    prevBtn.disabled = currentPage === 0;
+    nextBtn.disabled = currentPage === totalPages - 1;
+    
+    // Generate page dots
+    pageDots.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full ${i === currentPage ? 'bg-bible-accent' : 'bg-gray-300'} hover:bg-bible-accent transition-colors`;
+        dot.onclick = () => goToPage(i);
+        pageDots.appendChild(dot);
+    }
+}
+
+function changePage(direction) {
+    const totalPages = Math.ceil(filteredBackgrounds.length / backgroundsPerPage);
+    const newPage = currentPage + direction;
+    
+    if (newPage >= 0 && newPage < totalPages) {
+        currentPage = newPage;
+        displayBackgroundGallery();
+    }
+}
+
+function goToPage(page) {
+    currentPage = page;
+    displayBackgroundGallery();
+}
+
+function loadFonts() {
+    fetch('/api/fonts')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                populateFontSelect(data.data.available_fonts || []);
+            }
+        })
+        .catch(error => console.error('Font load error:', error));
+}
+
+function populateFontSelect(fonts) {
+    const select = document.getElementById('font-family');
+    select.innerHTML = '';
+    
+    fonts.forEach(font => {
+        const option = document.createElement('option');
+        option.value = font.name;
+        option.textContent = font.name;
+        option.selected = font.current;
+        select.appendChild(option);
+    });
+}
+
+function selectBackground(index) {
+    updateSetting('background_index', index);
+    // Update current selection in both arrays
+    allBackgrounds.forEach(bg => bg.current = bg.index === index);
+    filteredBackgrounds.forEach(bg => bg.current = bg.index === index);
+    displayBackgroundGallery(); // Refresh display
+}
+
+function updateCyclingSettings() {
+    const enabled = document.getElementById('cycling-enabled').checked;
+    const interval = parseInt(document.getElementById('cycling-interval').value);
+    const intervalSection = document.getElementById('cycling-interval-section');
+    
+    // Show/hide interval section
+    if (enabled) {
+        intervalSection.classList.remove('hidden');
+    } else {
+        intervalSection.classList.add('hidden');
+    }
+    
+    // Send settings to backend
+    fetch('/api/background/cycling', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            enabled: enabled,
+            interval_minutes: interval
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess(enabled ? `Background cycling enabled (${getIntervalText(interval)})` : 'Background cycling disabled');
+        } else {
+            showError('Failed to update cycling settings');
+        }
+    })
+    .catch(error => showError('Network error updating cycling settings'));
+}
+
+function updateCyclingUI(cyclingSettings) {
+    document.getElementById('cycling-enabled').checked = cyclingSettings.enabled;
+    document.getElementById('cycling-interval').value = cyclingSettings.interval_minutes;
+    
+    const intervalSection = document.getElementById('cycling-interval-section');
+    if (cyclingSettings.enabled) {
+        intervalSection.classList.remove('hidden');
+    } else {
+        intervalSection.classList.add('hidden');
+    }
+}
+
+function getIntervalText(minutes) {
+    if (minutes < 60) {
+        return `every ${minutes} minutes`;
+    } else if (minutes < 1440) {
+        const hours = minutes / 60;
+        return `every ${hours} hour${hours > 1 ? 's' : ''}`;
+    } else {
+        const days = minutes / 1440;
+        return `every ${days} day${days > 1 ? 's' : ''}`;
+    }
+}
+
+function updateSetting(key, valueOverride = null) {
+    let value;
+    
+    if (valueOverride !== null) {
+        value = valueOverride;
+    } else {
+        const element = document.getElementById(key.replace('_', '-'));
+        if (element.type === 'checkbox') {
+            value = element.checked;
+        } else {
+            value = element.value;
+        }
+    }
+    
+    const data = {};
+    data[key] = value;
+    
+    // Special handling for display_mode to prevent "parallel" from being sent
+    if (key === 'display_mode' && value === 'parallel') {
+        // When setting to parallel mode, set display_mode to time and parallel_mode to true
+        data['display_mode'] = 'time';
+        data['parallel_mode'] = true;
+        delete data[key]; // Remove the original key
+    }
+    
+    // Force display update for visual changes (background, font, etc.)
+    if (['background_index', 'font', 'verse_size', 'reference_size', 'time_format'].includes(key)) {
+        data.update_display = true;
+    }
+    
+    // Update secondary translation options if primary translation changed
+    if (key === 'translation') {
+        updateSecondaryTranslationOptions();
+    }
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show different messages for visual vs non-visual changes
+            if (['background_index', 'font', 'verse_size', 'reference_size'].includes(key)) {
+                showSuccess('Setting updated and display refreshed');
+            } else {
+                showSuccess('Setting updated');
+            }
+            currentSettings[key] = value;
+        } else {
+            showError('Failed to update setting');
+        }
+    })
+    .catch(error => showError('Network error updating setting'));
+}
+
+function generatePreview() {
+    const previewDiv = document.getElementById('settings-preview');
+    previewDiv.innerHTML = `
+        <div class="flex items-center justify-center h-full">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-bible-accent"></div>
+        </div>
+    `;
+    
+    // Get current form values
+    const mode = document.getElementById('display-mode').value;
+    const previewSettings = {
+        display_mode: mode === 'parallel' ? 'time' : mode,  // Convert parallel to time
+        parallel_mode: mode === 'parallel',                  // Add parallel mode flag
+        translation: document.getElementById('translation').value,
+        font: document.getElementById('font-family').value
+    };
+    
+    // Add secondary translation if parallel mode is enabled
+    if (mode === 'parallel') {
+        previewSettings.secondary_translation = document.getElementById('secondary-translation').value;
+    }
+    
+    fetch('/api/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(previewSettings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            previewDiv.innerHTML = `
+                <img src="${data.preview_url}?${Date.now()}" 
+                     alt="Settings Preview" 
+                     class="max-w-full max-h-full rounded-lg shadow-sm">
+            `;
+        } else {
+            showPreviewError();
+        }
+    })
+    .catch(error => showPreviewError());
+}
+
+function showPreviewError() {
+    document.getElementById('settings-preview').innerHTML = `
+        <div class="text-center">
+            <svg class="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-red-500 text-lg">Preview generation failed</p>
+        </div>
+    `;
+}
+
+function applySettings() {
+    // Show confirmation modal
+    if (!confirm('Apply all current settings and refresh the display? This will immediately update the Bible Clock.')) {
+        return;
+    }
+    
+    const displayMode = document.getElementById('display-mode').value;
+    const settings = {
+        display_mode: displayMode === 'parallel' ? 'time' : displayMode,
+        parallel_mode: displayMode === 'parallel',
+        translation: document.getElementById('translation').value,
+        secondary_translation: document.getElementById('secondary-translation').value,
+        font: document.getElementById('font-family').value,
+        auto_refresh: parseInt(document.getElementById('auto-refresh').value),
+        voice_enabled: document.getElementById('voice-enabled').checked,
+        update_display: true
+    };
+    
+    // Add font sizes if they've been modified
+    const verseSize = document.getElementById('verse-size').value;
+    const referenceSize = document.getElementById('reference-size').value;
+    if (verseSize) settings.verse_size = parseInt(verseSize);
+    if (referenceSize) settings.reference_size = parseInt(referenceSize);
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess('All settings applied successfully! Display updated.');
+            // Show a brief success message before optional redirect
+            setTimeout(() => {
+                if (confirm('Settings applied successfully! Return to dashboard?')) {
+                    window.location.href = '/';
+                }
+            }, 1500);
+        } else {
+            showError('Failed to apply settings: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => showError('Network error applying settings'));
+}
+
+function exportSettings() {
+    const dataStr = JSON.stringify(currentSettings, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = `bible-clock-settings-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    
+    showSuccess('Settings exported successfully');
+}
+
+function importSettings() {
+    const file = document.getElementById('settings-file').files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const settings = JSON.parse(e.target.result);
+            
+            fetch('/api/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess('Settings imported successfully');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showError('Failed to import settings');
+                }
+            })
+            .catch(error => showError('Network error importing settings'));
+            
+        } catch (error) {
+            showError('Invalid settings file format');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function resetSettings() {
+    if (!confirm('Are you sure you want to reset ALL settings to defaults? This will:\n\n• Reset display mode, translation, and fonts\n• Reset all background and timing settings\n• Update the Bible Clock display immediately\n\nThis action cannot be undone.')) {
+        return;
+    }
+    
+    const defaultSettings = {
+        display_mode: 'time',
+        translation: 'kjv',
+        background_index: 0,
+        font: 'default',
+        auto_refresh: 60,
+        voice_enabled: false,
+        verse_size: 80,
+        reference_size: 32,
+        update_display: true
+    };
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(defaultSettings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess('All settings reset to defaults successfully! Display updated.');
+            setTimeout(() => {
+                if (confirm('Settings reset complete! Reload the page to see updated values?')) {
+                    location.reload();
+                }
+            }, 2000);
+        } else {
+            showError('Failed to reset settings: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => showError('Network error resetting settings'));
+}
+
+function showSuccess(message) {
+    // Create success notification
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 3 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+function updateFontSizePreview() {
+    const verseSize = document.getElementById('verse-size').value;
+    const referenceSize = document.getElementById('reference-size').value;
+    
+    // Update display values
+    document.getElementById('verse-size-value').textContent = verseSize;
+    document.getElementById('reference-size-value').textContent = referenceSize;
+    
+    // Update preview styles (scaled down for web display)
+    document.getElementById('verse-preview').style.fontSize = (verseSize * 0.4) + 'px';
+    document.getElementById('reference-preview').style.fontSize = (referenceSize * 0.4) + 'px';
+}
+
+function setupReferencePositionListeners() {
+    // Position dropdown
+    document.getElementById('reference-position').addEventListener('change', function() {
+        updateReferencePositionSetting();
+    });
+    
+    // X offset slider
+    document.getElementById('reference-x-offset').addEventListener('input', function() {
+        updateReferencePositionPreview();
+    });
+    
+    document.getElementById('reference-x-offset').addEventListener('change', function() {
+        updateReferencePositionSetting();
+    });
+    
+    // Y offset slider
+    document.getElementById('reference-y-offset').addEventListener('input', function() {
+        updateReferencePositionPreview();
+    });
+    
+    document.getElementById('reference-y-offset').addEventListener('change', function() {
+        updateReferencePositionSetting();
+    });
+    
+    // Margin slider
+    document.getElementById('reference-margin').addEventListener('input', function() {
+        updateReferencePositionPreview();
+    });
+    
+    document.getElementById('reference-margin').addEventListener('change', function() {
+        updateReferencePositionSetting();
+    });
+}
+
+function updateReferencePositionPreview() {
+    const xOffset = document.getElementById('reference-x-offset').value;
+    const yOffset = document.getElementById('reference-y-offset').value;
+    const margin = document.getElementById('reference-margin').value;
+    
+    // Update display values
+    document.getElementById('reference-x-offset-value').textContent = xOffset + 'px';
+    document.getElementById('reference-y-offset-value').textContent = yOffset + 'px';
+    document.getElementById('reference-margin-value').textContent = margin + 'px';
+}
+
+function updateReferencePositionSetting() {
+    const position = document.getElementById('reference-position').value;
+    const xOffset = parseInt(document.getElementById('reference-x-offset').value);
+    const yOffset = parseInt(document.getElementById('reference-y-offset').value);
+    const margin = parseInt(document.getElementById('reference-margin').value);
+    
+    const data = {
+        reference_position: position,
+        reference_x_offset: xOffset,
+        reference_y_offset: yOffset,
+        reference_margin: margin,
+        update_display: true
+    };
+    
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess('Reference position updated and display refreshed');
+        } else {
+            showError('Failed to update reference position');
+        }
+    })
+    .catch(error => showError('Network error updating reference position'));
+}
+
+function showError(message) {
+    // Create error notification
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 5 seconds (longer for errors)
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+}
+</script>
+{% endblock %}

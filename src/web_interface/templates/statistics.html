@@ -1,0 +1,1229 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics - Bible Clock{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="text-2xl font-bold text-bible-dark mb-2">Statistics & Analytics</h2>
+                <p class="text-gray-600">Monitor usage patterns and system performance</p>
+            </div>
+            <div class="flex space-x-3">
+                <button onclick="refreshStats()" class="btn-secondary">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Refresh
+                </button>
+                <button onclick="exportStats()" class="btn-primary">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Export Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Filter Buttons -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex flex-wrap gap-3">
+            <button onclick="setTimeFilter('today')" class="filter-btn px-4 py-2 bg-bible-accent text-white rounded-lg hover:bg-bible-dark transition-colors" data-filter="today">Today</button>
+            <button onclick="setTimeFilter('weekly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="weekly">This Week</button>
+            <button onclick="setTimeFilter('monthly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="monthly">This Month</button>
+            <button onclick="setTimeFilter('yearly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="yearly">This Year</button>
+            <button onclick="setTimeFilter('all')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="all">All Time</button>
+        </div>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <!-- Verses Today -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-blue-100 rounded-lg">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Verses Today</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="verses-today">--</p>
+                    <p class="text-sm text-gray-500" id="verses-period">Today's activity</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Verses -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-lg">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Verses</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="total-verses">--</p>
+                    <p class="text-sm text-gray-500" id="verses-change">Since launch</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Accessed -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-lg">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Books Accessed</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="books-accessed">--</p>
+                    <p class="text-sm text-gray-500">of 66 Bible books</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uptime -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-purple-100 rounded-lg">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">System Uptime</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="system-uptime">--</p>
+                    <p class="text-sm text-gray-500">Running continuously</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Success Rate -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-yellow-100 rounded-lg">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">API Success</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="api-success">--%</p>
+                    <p class="text-sm text-gray-500">Successful requests</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ChatGPT Token Usage -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-indigo-100 rounded-lg">
+                    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">ChatGPT Tokens</h4>
+                    <p class="text-3xl font-bold text-gray-900" id="chatgpt-tokens">--</p>
+                    <p class="text-sm text-gray-500" id="token-cost">Est. cost: $--</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Usage Section -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">AI Assistant Usage</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Questions Asked -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="total-questions">--</p>
+                <p class="text-sm text-gray-500">Questions Asked</p>
+            </div>
+            
+            <!-- Average Response Time -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="avg-response-time">--</p>
+                <p class="text-sm text-gray-500">Avg Response (sec)</p>
+            </div>
+            
+            <!-- Success Rate -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="ai-success-rate">--%</p>
+                <p class="text-sm text-gray-500">Success Rate</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conversation Analytics Section -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Conversation Analytics</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <!-- Total Conversations -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="total-conversations">--</p>
+                <p class="text-sm text-gray-500">Total Conversations</p>
+            </div>
+
+            <!-- Active Sessions -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="active-sessions">--</p>
+                <p class="text-sm text-gray-500">Active Sessions</p>
+            </div>
+
+            <!-- Avg ChatGPT Time -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="avg-chatgpt-time">--</p>
+                <p class="text-sm text-gray-500">Avg ChatGPT (sec)</p>
+            </div>
+
+            <!-- Avg TTS Time -->
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg mb-3">
+                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-gray-900" id="avg-tts-time">--</p>
+                <p class="text-sm text-gray-500">Avg TTS (sec)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question Categories & Popular Questions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Question Categories -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Question Categories</h3>
+            <div class="h-64">
+                <canvas id="categories-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Bible Keywords & Topics -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Popular Bible Topics</h3>
+            <div class="space-y-3" id="bible-keywords">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Book & Chapter Analytics -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Most Popular Books -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Most Popular Books</h3>
+            <div class="h-64">
+                <canvas id="books-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Most Popular Chapters -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Most Popular Chapters</h3>
+            <div class="h-64">
+                <canvas id="chapters-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Visualization -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Verse Activity Timeline</h3>
+        <div class="h-64">
+            <canvas id="timeline-chart"></canvas>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Usage by Mode Chart -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Usage by Display Mode</h3>
+            <div class="h-64">
+                <canvas id="mode-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Translation Usage Chart -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Translation Usage</h3>
+            <div class="h-64">
+                <canvas id="translation-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Performance Charts -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">System Performance</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- CPU & Memory Usage -->
+            <div class="h-64">
+                <canvas id="performance-chart"></canvas>
+            </div>
+            <!-- Response Times -->
+            <div class="h-64">
+                <canvas id="response-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Most Popular Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Most Popular Books -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Most Popular Books</h3>
+            <div id="popular-books" class="space-y-3">
+                <div class="text-center text-gray-500 py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-bible-accent mx-auto mb-2"></div>
+                    <p>Loading book statistics...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Verses -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-bible-dark mb-4">Recent Verses</h3>
+            <div id="recent-verses" class="space-y-3">
+                <div class="text-center text-gray-500 py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-bible-accent mx-auto mb-2"></div>
+                    <p>Loading recent activity...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Health -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">System Health Monitoring</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Memory Usage -->
+            <div class="text-center">
+                <div class="mx-auto w-24 h-24 relative mb-4">
+                    <svg class="w-24 h-24 transform -rotate-90">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-gray-200" transform="translate(36,36)"/>
+                        <circle id="memory-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-blue-500" transform="translate(36,36)" stroke-dasharray="62.8" stroke-dashoffset="62.8"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-xl font-bold" id="memory-percent">--%</span>
+                    </div>
+                </div>
+                <h4 class="font-medium text-gray-900">Memory Usage</h4>
+            </div>
+
+            <!-- CPU Usage -->
+            <div class="text-center">
+                <div class="mx-auto w-24 h-24 relative mb-4">
+                    <svg class="w-24 h-24 transform -rotate-90">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-gray-200" transform="translate(36,36)"/>
+                        <circle id="cpu-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-green-500" transform="translate(36,36)" stroke-dasharray="62.8" stroke-dashoffset="62.8"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-xl font-bold" id="cpu-percent">--%</span>
+                    </div>
+                </div>
+                <h4 class="font-medium text-gray-900">CPU Usage</h4>
+            </div>
+
+            <!-- Disk Usage -->
+            <div class="text-center">
+                <div class="mx-auto w-24 h-24 relative mb-4">
+                    <svg class="w-24 h-24 transform -rotate-90">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-gray-200" transform="translate(36,36)"/>
+                        <circle id="disk-circle" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="transparent" class="text-purple-500" transform="translate(36,36)" stroke-dasharray="62.8" stroke-dashoffset="62.8"/>
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="text-xl font-bold" id="disk-percent">--%</span>
+                    </div>
+                </div>
+                <h4 class="font-medium text-gray-900">Disk Usage</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let charts = {};
+let refreshInterval;
+let currentFilter = 'today';
+
+// Load statistics on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadStatistics();
+    loadSystemStatus();
+    initializeCharts();
+    setTimeFilter('today'); // Start with today's view
+    startAutoRefresh();
+});
+
+function loadStatistics() {
+    // Load statistics with better error handling and timeouts
+    const timeout = 10000; // 10 second timeout
+    
+    const fetchWithTimeout = (url) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        
+        return fetch(url, { signal: controller.signal })
+            .then(response => {
+                clearTimeout(timeoutId);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timeout');
+                }
+                throw error;
+            });
+    };
+    
+    Promise.all([
+        fetchWithTimeout('/api/statistics'),
+        fetchWithTimeout(`/api/statistics/filtered?filter=${currentFilter}`),
+        fetchWithTimeout('/api/statistics/visualization')
+    ]).then(([generalStats, filteredStats, visualStats]) => {
+        if (generalStats.success && filteredStats.success) {
+            updateStatistics(generalStats.data, filteredStats.data, visualStats.data || {});
+        } else {
+            console.warn('Statistics API returned error:', generalStats.error || filteredStats.error);
+            loadBasicStatistics();
+        }
+    }).catch(error => {
+        console.warn('Statistics loading failed, using fallback:', error.message);
+        console.error('Full error details:', error);
+        // Silently fallback to basic statistics instead of showing error
+        loadBasicStatistics();
+    });
+}
+
+function loadBasicStatistics() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+    
+    fetch('/api/statistics', { signal: controller.signal })
+        .then(response => {
+            clearTimeout(timeoutId);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                updateBasicStatistics(data.data);
+            } else {
+                console.warn('Basic statistics API error:', data.error);
+                // Show minimal fallback data instead of error
+                updateBasicStatistics({
+                    verses_today: 0,
+                    verses_displayed: 0,
+                    books_accessed: [],
+                    ai_statistics: { total_tokens: 0, total_questions: 0, avg_response_time: 0, success_rate: 0 }
+                });
+            }
+        })
+        .catch(error => {
+            clearTimeout(timeoutId);
+            console.debug('Basic statistics failed, showing minimal data:', error.message);
+            console.error('Basic statistics full error:', error);
+            // Show minimal fallback data instead of error popup
+            updateBasicStatistics({
+                verses_today: 0,
+                verses_displayed: 0,
+                books_accessed: [],
+                ai_statistics: { total_tokens: 0, total_questions: 0, avg_response_time: 0, success_rate: 0 }
+            });
+        });
+}
+
+function updateStatistics(generalStats, filteredStats, visualStats) {
+    try {
+        // Update main counters - use filtered data for verses today, general for totals
+        const versesToday = getVersesToday(generalStats, filteredStats);
+        
+        // Safely update DOM elements
+        const versesTodayEl = document.getElementById('verses-today');
+        const totalVersesEl = document.getElementById('total-verses');
+        const booksAccessedEl = document.getElementById('books-accessed');
+        
+        if (versesTodayEl) versesTodayEl.textContent = versesToday || 0;
+        if (totalVersesEl) totalVersesEl.textContent = generalStats.verses_displayed || 0;
+        if (booksAccessedEl) booksAccessedEl.textContent = (generalStats.books_accessed || []).length;
+        
+        const apiSuccessEl = document.getElementById('api-success');
+        if (apiSuccessEl) apiSuccessEl.textContent = Math.round(generalStats.api_success_rate || 98.5) + '%';
+    
+        // Update ChatGPT/AI statistics
+        const aiStats = generalStats.ai_statistics || {};
+        const chatgptTokensEl = document.getElementById('chatgpt-tokens');
+        const tokenCostEl = document.getElementById('token-cost');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const avgResponseTimeEl = document.getElementById('avg-response-time');
+        const aiSuccessRateEl = document.getElementById('ai-success-rate');
+
+        if (chatgptTokensEl) chatgptTokensEl.textContent = (aiStats.total_tokens || 0).toLocaleString();
+
+        // Estimate cost (roughly $0.002 per 1K tokens for GPT-3.5-turbo)
+        const estimatedCost = ((aiStats.total_tokens || 0) / 1000) * 0.002;
+        if (tokenCostEl) tokenCostEl.textContent = `Est. cost: $${estimatedCost.toFixed(4)}`;
+        
+        if (totalQuestionsEl) totalQuestionsEl.textContent = aiStats.total_questions || 0;
+        if (avgResponseTimeEl) avgResponseTimeEl.textContent = (aiStats.avg_response_time || 0).toFixed(1);
+        if (aiSuccessRateEl) aiSuccessRateEl.textContent = Math.round(aiStats.success_rate || 0) + '%';
+        
+        // Update charts with enhanced data
+        updateModeChart(generalStats.mode_usage || {});
+        updateTranslationChart(generalStats.translation_usage || {});
+        updatePopularBooks(generalStats.books_accessed || []);
+        
+        // Update enhanced charts
+        updateBookChart(visualStats.book_chapter_data?.book_totals || []);
+        updateChapterChart(visualStats.book_chapter_data?.chapter_details || []);
+        updateTimelineChart(visualStats.timeline_data || {});
+        
+        // Update recent verses
+        updateRecentVerses(generalStats.detailed_verse_history || []);
+        
+        // Update period information
+        updatePeriodInfo(filteredStats, currentFilter);
+        
+    } catch (error) {
+        console.error('Error updating statistics display:', error);
+        // Don't let this bubble up as unhandled promise rejection
+    }
+}
+
+function updateBasicStatistics(stats) {
+    try {
+        // Fallback function for basic statistics with safe DOM access
+        const versesTodayEl = document.getElementById('verses-today');
+        const totalVersesEl = document.getElementById('total-verses');
+        const booksAccessedEl = document.getElementById('books-accessed');
+        const apiSuccessEl = document.getElementById('api-success');
+        
+        if (versesTodayEl) versesTodayEl.textContent = stats.verses_today || 0;
+        if (totalVersesEl) totalVersesEl.textContent = stats.verses_displayed || 0;
+        if (booksAccessedEl) booksAccessedEl.textContent = (stats.books_accessed || []).length;
+        if (apiSuccessEl) apiSuccessEl.textContent = Math.round(stats.api_success_rate || 98.5) + '%';
+        
+        const aiStats = stats.ai_statistics || {};
+        const chatgptTokensEl = document.getElementById('chatgpt-tokens');
+        const tokenCostEl = document.getElementById('token-cost');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const avgResponseTimeEl = document.getElementById('avg-response-time');
+        const aiSuccessRateEl = document.getElementById('ai-success-rate');
+        
+        if (chatgptTokensEl) chatgptTokensEl.textContent = (aiStats.total_tokens || 0).toLocaleString();
+        const estimatedCost = ((aiStats.total_tokens || 0) / 1000) * 0.002;
+        if (tokenCostEl) tokenCostEl.textContent = `Est. cost: $${estimatedCost.toFixed(4)}`;
+        if (totalQuestionsEl) totalQuestionsEl.textContent = aiStats.total_questions || 0;
+        if (avgResponseTimeEl) avgResponseTimeEl.textContent = (aiStats.avg_response_time || 0).toFixed(1);
+        if (aiSuccessRateEl) aiSuccessRateEl.textContent = Math.round(aiStats.success_rate || 0) + '%';
+        
+        updateModeChart(stats.mode_usage || {});
+        updateTranslationChart(stats.translation_usage || {});
+        updatePopularBooks(stats.books_accessed || []);
+        updateRecentVerses(stats.detailed_verse_history || []);
+        
+    } catch (error) {
+        console.error('Error updating basic statistics display:', error);
+        // Don't let this bubble up as unhandled promise rejection
+    }
+}
+
+function getVersesToday(generalStats, filteredStats) {
+    // Try to get verses today from various sources
+    if (filteredStats && filteredStats.total_verses !== undefined) {
+        return filteredStats.total_verses;
+    }
+    if (generalStats.verses_today !== undefined) {
+        return generalStats.verses_today;
+    }
+    if (generalStats.enhanced?.filter_summaries?.today?.verses !== undefined) {
+        return generalStats.enhanced.filter_summaries.today.verses;
+    }
+    return 0;
+}
+
+function setTimeFilter(filter) {
+    currentFilter = filter;
+    
+    // Update button appearance
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        const btnFilter = btn.getAttribute('data-filter');
+        if (btnFilter === filter) {
+            btn.classList.remove('bg-gray-200', 'text-gray-700');
+            btn.classList.add('bg-bible-accent', 'text-white');
+        } else {
+            btn.classList.remove('bg-bible-accent', 'text-white');
+            btn.classList.add('bg-gray-200', 'text-gray-700');
+        }
+    });
+    
+    // Reload statistics with new filter
+    loadStatistics();
+}
+
+function updatePeriodInfo(filteredStats, filter) {
+    const periodElement = document.getElementById('verses-period');
+    const versesTodayElement = document.getElementById('verses-today');
+    
+    if (!filteredStats) return;
+    
+    switch (filter) {
+        case 'today':
+            periodElement.textContent = "Today's activity";
+            break;
+        case 'weekly':
+            periodElement.textContent = "This week";
+            if (filteredStats.most_active_day) {
+                const [date, count] = filteredStats.most_active_day;
+                periodElement.textContent = `This week (peak: ${count} on ${date})`;
+            }
+            break;
+        case 'monthly':
+            periodElement.textContent = "This month";
+            if (filteredStats.avg_verses_per_day) {
+                periodElement.textContent = `This month (avg ${filteredStats.avg_verses_per_day.toFixed(1)}/day)`;
+            }
+            break;
+        case 'yearly':
+            periodElement.textContent = "This year";
+            if (filteredStats.unique_books) {
+                periodElement.textContent = `This year (${filteredStats.unique_books} books)`;
+            }
+            break;
+        case 'all':
+            periodElement.textContent = "All time total";
+            break;
+    }
+}
+
+function loadSystemStatus() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for status
+    
+    fetch('/api/status', { signal: controller.signal })
+        .then(response => {
+            clearTimeout(timeoutId);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                updateSystemStatus(data.data);
+            }
+        })
+        .catch(error => {
+            clearTimeout(timeoutId);
+            // Silently handle status errors - don't show to user
+            console.debug('Status load failed (this is normal):', error.message);
+        });
+}
+
+function updateSystemStatus(status) {
+    if (status.system) {
+        const uptime = status.system.uptime || 'Unknown';
+        document.getElementById('system-uptime').textContent = uptime;
+        
+        const memoryPercent = Math.round(status.system.memory_percent || 0);
+        const cpuPercent = Math.round(status.system.cpu_percent || 0);
+        const diskPercent = Math.round(status.system.disk_percent || 0);
+        
+        updateCircularProgress('memory', memoryPercent);
+        updateCircularProgress('cpu', cpuPercent);
+        updateCircularProgress('disk', diskPercent);
+        
+        updatePerformanceChart(cpuPercent, memoryPercent);
+    }
+}
+
+function updateCircularProgress(type, percent) {
+    const circle = document.getElementById(`${type}-circle`);
+    const text = document.getElementById(`${type}-percent`);
+    
+    if (circle && text) {
+        const circumference = 62.8; // 2 * π * 10
+        const offset = circumference - (percent / 100 * circumference);
+        circle.style.strokeDashoffset = offset;
+        text.textContent = percent + '%';
+    }
+}
+
+function initializeCharts() {
+    // Mode usage chart
+    const modeCtx = document.getElementById('mode-chart').getContext('2d');
+    charts.mode = new Chart(modeCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Time-based', 'Date-based', 'Random'],
+            datasets: [{
+                data: [0, 0, 0],
+                backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Translation usage chart
+    const translationCtx = document.getElementById('translation-chart').getContext('2d');
+    charts.translation = new Chart(translationCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Usage Count',
+                data: [],
+                backgroundColor: '#5E81AC'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Performance chart
+    const perfCtx = document.getElementById('performance-chart').getContext('2d');
+    charts.performance = new Chart(perfCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'CPU %',
+                data: [],
+                borderColor: '#10B981',
+                tension: 0.1
+            }, {
+                label: 'Memory %',
+                data: [],
+                borderColor: '#3B82F6',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Response time chart
+    const responseCtx = document.getElementById('response-chart').getContext('2d');
+    charts.response = new Chart(responseCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Response Time (ms)',
+                data: [],
+                borderColor: '#8B5CF6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Books Chart
+    const booksCtx = document.getElementById('books-chart').getContext('2d');
+    charts.books = new Chart(booksCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Verses Accessed',
+                data: [],
+                backgroundColor: '#3B82F6'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y + ' verses';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grace: '5%', // Add 5% padding above the highest value
+                    ticks: {
+                        precision: 0, // Only show whole numbers
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                }
+            }
+        }
+    });
+
+    // Chapters Chart
+    const chaptersCtx = document.getElementById('chapters-chart').getContext('2d');
+    charts.chapters = new Chart(chaptersCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Verses',
+                data: [],
+                backgroundColor: '#10B981'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y + ' verses';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grace: '5%', // Add 5% padding above the highest value
+                    ticks: {
+                        precision: 0, // Only show whole numbers
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                }
+            }
+        }
+    });
+
+    // Timeline Chart
+    const timelineCtx = document.getElementById('timeline-chart').getContext('2d');
+    charts.timeline = new Chart(timelineCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Verses',
+                data: [],
+                borderColor: '#8B5CF6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function updateBookChart(bookTotals) {
+    if (charts.books && bookTotals.length > 0) {
+        const topBooks = bookTotals.slice(0, 10); // Show top 10
+        const values = topBooks.map(book => book.total_verses);
+        const maxValue = Math.max(...values);
+        
+        // Update data
+        charts.books.data.labels = topBooks.map(book => book.book);
+        charts.books.data.datasets[0].data = values;
+        
+        // Dynamic axis scaling based on data range
+        const suggestedMax = maxValue < 5 ? maxValue + 1 : Math.ceil(maxValue * 1.1);
+        charts.books.options.scales.y.suggestedMax = suggestedMax;
+        
+        // Dynamic tick step size for better granularity
+        if (maxValue <= 10) {
+            charts.books.options.scales.y.ticks.stepSize = 1;
+        } else if (maxValue <= 50) {
+            charts.books.options.scales.y.ticks.stepSize = 5;
+        } else {
+            charts.books.options.scales.y.ticks.stepSize = 10;
+        }
+        
+        // Update colors based on values for better visual distinction
+        const colors = values.map((value, index) => {
+            const intensity = (value / maxValue) * 0.8 + 0.2; // 20% to 100% intensity
+            return `rgba(59, 130, 246, ${intensity})`; // Blue with varying opacity
+        });
+        charts.books.data.datasets[0].backgroundColor = colors;
+        
+        charts.books.update();
+    }
+}
+
+function updateChapterChart(chapterDetails) {
+    if (charts.chapters && chapterDetails.length > 0) {
+        const topChapters = chapterDetails.slice(0, 10); // Show top 10
+        const values = topChapters.map(ch => ch.verse_count);
+        const maxValue = Math.max(...values);
+        
+        // Update data
+        charts.chapters.data.labels = topChapters.map(ch => ch.book_chapter);
+        charts.chapters.data.datasets[0].data = values;
+        
+        // Dynamic axis scaling based on data range
+        const suggestedMax = maxValue < 5 ? maxValue + 1 : Math.ceil(maxValue * 1.1);
+        charts.chapters.options.scales.y.suggestedMax = suggestedMax;
+        
+        // Dynamic tick step size for better granularity
+        if (maxValue <= 10) {
+            charts.chapters.options.scales.y.ticks.stepSize = 1;
+        } else if (maxValue <= 50) {
+            charts.chapters.options.scales.y.ticks.stepSize = 5;
+        } else {
+            charts.chapters.options.scales.y.ticks.stepSize = 10;
+        }
+        
+        // Update colors based on values for better visual distinction
+        const colors = values.map((value, index) => {
+            const intensity = (value / maxValue) * 0.8 + 0.2; // 20% to 100% intensity
+            return `rgba(16, 185, 129, ${intensity})`; // Green with varying opacity
+        });
+        charts.chapters.data.datasets[0].backgroundColor = colors;
+        
+        charts.chapters.update();
+    }
+}
+
+function updateTimelineChart(timelineData) {
+    if (charts.timeline) {
+        let data = [];
+        let labels = [];
+        
+        // Use appropriate timeline data based on current filter
+        switch (currentFilter) {
+            case 'today':
+            case 'weekly':
+                data = timelineData.daily || [];
+                labels = data.map(d => d.date);
+                data = data.map(d => d.verses);
+                break;
+            case 'monthly':
+                data = timelineData.monthly || [];
+                labels = data.map(d => d.month);
+                data = data.map(d => d.verses);
+                break;
+            case 'yearly':
+            case 'all':
+                data = timelineData.yearly || [];
+                labels = data.map(d => d.year);
+                data = data.map(d => d.verses);
+                break;
+        }
+        
+        charts.timeline.data.labels = labels;
+        charts.timeline.data.datasets[0].data = data;
+        
+        // Dynamic axis scaling for timeline
+        if (data.length > 0) {
+            const maxValue = Math.max(...data);
+            const suggestedMax = maxValue < 5 ? maxValue + 1 : Math.ceil(maxValue * 1.1);
+            charts.timeline.options.scales.y.suggestedMax = suggestedMax;
+            
+            // Dynamic tick step size
+            if (maxValue <= 10) {
+                charts.timeline.options.scales.y.ticks.stepSize = 1;
+            } else if (maxValue <= 50) {
+                charts.timeline.options.scales.y.ticks.stepSize = 5;
+            } else {
+                charts.timeline.options.scales.y.ticks.stepSize = 10;
+            }
+        }
+        
+        charts.timeline.update();
+    }
+}
+
+function updateRecentVerses(verseHistory) {
+    const container = document.getElementById('recent-verses');
+    
+    if (!verseHistory || verseHistory.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-gray-500 py-8">
+                <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <p>No recent verse activity</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Get the most recent 10 verses and reverse to show newest first
+    const recentVerses = verseHistory.slice(-10).reverse();
+    
+    container.innerHTML = recentVerses.map(verse => {
+        const timestamp = new Date(verse.timestamp);
+        const timeStr = timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const dateStr = timestamp.toLocaleDateString();
+        
+        return `
+            <div class="flex justify-between items-start py-3 border-b border-gray-100 last:border-b-0">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <span class="font-semibold text-bible-dark">${verse.reference || verse.book + ' ' + verse.chapter + ':' + verse.verse}</span>
+                        <span class="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600 uppercase">${verse.translation}</span>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        <span class="inline-flex items-center space-x-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>${timeStr}</span>
+                        </span>
+                        <span class="mx-2">•</span>
+                        <span class="inline-flex items-center space-x-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>${dateStr}</span>
+                        </span>
+                        <span class="mx-2">•</span>
+                        <span class="inline-flex items-center space-x-1 capitalize">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            <span>${verse.mode} mode</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function updateModeChart(modeUsage) {
+    if (charts.mode) {
+        charts.mode.data.datasets[0].data = [
+            modeUsage.time || 0,
+            modeUsage.date || 0,
+            modeUsage.random || 0
+        ];
+        charts.mode.update();
+    }
+}
+
+function updateTranslationChart(translationUsage) {
+    if (charts.translation) {
+        charts.translation.data.labels = Object.keys(translationUsage);
+        charts.translation.data.datasets[0].data = Object.values(translationUsage);
+        charts.translation.update();
+    }
+}
+
+function updatePerformanceChart(cpu, memory) {
+    if (charts.performance) {
+        const now = new Date().toLocaleTimeString();
+        
+        // Keep only last 20 data points
+        if (charts.performance.data.labels.length >= 20) {
+            charts.performance.data.labels.shift();
+            charts.performance.data.datasets[0].data.shift();
+            charts.performance.data.datasets[1].data.shift();
+        }
+        
+        charts.performance.data.labels.push(now);
+        charts.performance.data.datasets[0].data.push(cpu);
+        charts.performance.data.datasets[1].data.push(memory);
+        charts.performance.update();
+    }
+}
+
+function updatePopularBooks(booksAccessed) {
+    const container = document.getElementById('popular-books');
+    
+    if (!booksAccessed || booksAccessed.length === 0) {
+        container.innerHTML = `
+            <div class="text-center text-gray-500 py-8">
+                <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <p>No book data available yet</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort books by usage frequency (mock data for now)
+    const bookData = booksAccessed.slice(0, 10).map((book, index) => ({
+        name: book,
+        count: Math.max(10 - index, 1)
+    }));
+    
+    container.innerHTML = bookData.map(book => `
+        <div class="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
+            <span class="font-medium text-gray-900">${book.name}</span>
+            <span class="text-sm text-gray-500">${book.count} verses</span>
+        </div>
+    `).join('');
+}
+
+function refreshStats() {
+    loadStatistics();
+    loadSystemStatus();
+    showSuccess('Statistics refreshed');
+}
+
+function exportStats() {
+    // Generate statistics report
+    const report = {
+        timestamp: new Date().toISOString(),
+        summary: {
+            total_verses: document.getElementById('total-verses').textContent,
+            books_accessed: document.getElementById('books-accessed').textContent,
+            uptime: document.getElementById('system-uptime').textContent,
+            api_success: document.getElementById('api-success').textContent
+        },
+        system: {
+            cpu: document.getElementById('cpu-percent').textContent,
+            memory: document.getElementById('memory-percent').textContent,
+            disk: document.getElementById('disk-percent').textContent
+        }
+    };
+    
+    const dataStr = JSON.stringify(report, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(dataBlob);
+    link.download = `bible-clock-stats-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    
+    showSuccess('Statistics report exported');
+}
+
+function startAutoRefresh() {
+    // Refresh every 60 seconds (reduced frequency to prevent network issues)
+    refreshInterval = setInterval(() => {
+        loadSystemStatus();
+    }, 60000);
+}
+
+function showSuccess(message) {
+    console.log('Success:', message);
+    // Could implement toast notifications here
+}
+
+function showError(message) {
+    console.error('Error:', message);
+    // Could implement toast notifications here
+}
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', function() {
+    if (refreshInterval) {
+        clearInterval(refreshInterval);
+    }
+});
+</script>
+{% endblock %}

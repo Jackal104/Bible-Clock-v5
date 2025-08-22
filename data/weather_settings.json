@@ -1,0 +1,18 @@
+{
+  "temperature_unit": "F",
+  "auto_location": true,
+  "custom_location": {
+    "enabled": false
+  },
+  "second_location": {
+    "enabled": true,
+    "latitude": 31.7683,
+    "longitude": 35.2137,
+    "name": "Jerusalem, Israel"
+  },
+  "weather_refresh_minutes": 30,
+  "show_moon_phases": true,
+  "show_wind_speed": true,
+  "show_precipitation": true,
+  "display_format": "detailed"
+}
