@@ -200,6 +200,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 'translation': current_app.verse_manager.translation,
                 'api_url': current_app.verse_manager.api_url,
                 'display_mode': getattr(current_app.verse_manager, 'display_mode', 'time'),
+                'parallel_mode': getattr(current_app.verse_manager, 'parallel_mode', False),
+                'secondary_translation': getattr(current_app.verse_manager, 'secondary_translation', 'amp'),
                 'simulation_mode': simulation_mode,
                 'hardware_mode': 'Simulation' if simulation_mode else 'Hardware',
                 'current_background': current_app.image_generator.get_current_background_info(),
@@ -2075,6 +2077,11 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                         'display_name': current_app.verse_manager.get_translation_display_names().get(translation, translation.upper())
                     }
                 
+                # Get daily cache count
+                daily_cached = 0
+                if hasattr(current_app.verse_manager, 'statistics') and 'verses_cached_today' in current_app.verse_manager.statistics:
+                    daily_cached = current_app.verse_manager.statistics['verses_cached_today']
+                
                 return jsonify({
                     'success': True, 
                     'data': {
@@ -2083,7 +2090,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                             'total_translations': len(completion),
                             'completed_translations': len([t for t, p in completion.items() if p >= 100.0]),
                             'total_bible_verses': total_verses,
-                            'overall_progress': current_app.verse_manager._format_completion_summary() if hasattr(current_app.verse_manager, '_format_completion_summary') else 'Not available'
+                            'overall_progress': current_app.verse_manager._format_completion_summary() if hasattr(current_app.verse_manager, '_format_completion_summary') else 'Not available',
+                            'verses_cached_today': daily_cached
                         }
                     }
                 })
@@ -2094,7 +2102,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                         'total_translations': 0,
                         'completed_translations': 0,
                         'total_bible_verses': 31100,
-                        'overall_progress': 'Translation caching not available'
+                        'overall_progress': 'Translation caching not available',
+                        'verses_cached_today': 0
                     }
                 }})
         except Exception as e:

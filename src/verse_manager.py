@@ -75,13 +75,16 @@ class VerseManager:
             'verses_today': 0,
             'books_accessed': set(),
             'translation_usage': {},
-            'mode_usage': {'time': 0, 'date': 0, 'random': 0, 'devotional': 0, 'news': 0},
+            'mode_usage': {'time': 0, 'date': 0, 'random': 0, 'devotional': 0, 'news': 0, 'parallel': 0},
             'daily_activity': {},  # Date -> count mapping for rotation
             # Enhanced statistics for detailed tracking
             'detailed_verse_history': [],  # List of {date, book, chapter, verse, translation, mode}
             'book_chapter_breakdown': {},  # book -> {chapter -> verse_count, total}
             'monthly_stats': {},  # YYYY-MM -> verse_count  
-            'yearly_stats': {}   # YYYY -> verse_count
+            'yearly_stats': {},   # YYYY -> verse_count
+            # Daily cache tracking
+            'verses_cached_today': 0,  # Count of verses cached today
+            'cache_daily_reset': datetime.now().date()  # Track when to reset daily count
         }
         self.start_time = datetime.now()
         self.daily_reset_time = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -434,13 +437,25 @@ class VerseManager:
         
         # Update statistics with rotation
         self.statistics['mode_usage'][self.display_mode] += 1
+        
+        # Track parallel mode usage separately
+        if self.parallel_mode and verse_data and verse_data.get('parallel_mode'):
+            self.statistics['mode_usage']['parallel'] += 1
+        
         if verse_data.get('book'):
             self.statistics['books_accessed'].add(verse_data['book'])
             # Limit books_accessed set size to prevent memory growth
             self._rotate_books_accessed()
         
+        # Track primary translation
         translation = getattr(self, 'translation', 'kjv')
         self.statistics['translation_usage'][translation] = self.statistics['translation_usage'].get(translation, 0) + 1
+        
+        # Track secondary translation when in parallel mode
+        if self.parallel_mode and verse_data and verse_data.get('parallel_mode'):
+            secondary_translation = getattr(self, 'secondary_translation', 'amp')
+            self.statistics['translation_usage'][secondary_translation] = self.statistics['translation_usage'].get(secondary_translation, 0) + 1
+        
         # Limit translation_usage dict size
         self._rotate_translation_usage()
         
@@ -1065,6 +1080,23 @@ class VerseManager:
         }
         
         return stats
+    
+    def _increment_daily_cache_count(self):
+        """Increment the daily cache count, resetting if it's a new day."""
+        try:
+            today = datetime.now().date()
+            
+            # Reset daily count if it's a new day
+            if today != self.statistics['cache_daily_reset']:
+                self.statistics['verses_cached_today'] = 0
+                self.statistics['cache_daily_reset'] = today
+                self.logger.info(f"Reset daily cache count for new day: {today}")
+            
+            # Increment today's count
+            self.statistics['verses_cached_today'] += 1
+            
+        except Exception as e:
+            self.logger.error(f"Error updating daily cache count: {e}")
     
     def get_filtered_statistics(self, filter_type='all', start_date=None, end_date=None) -> Dict:
         """Get statistics filtered by time period."""
@@ -2226,6 +2258,9 @@ getVerse();
             # Only cache if we don't already have this verse
             if str(verse) not in cache[book][str(chapter)]:
                 cache[book][str(chapter)][str(verse)] = text.strip()
+                
+                # Track daily cache additions
+                self._increment_daily_cache_count()
                 
                 # Save to file immediately (to persist across restarts)
                 self._save_translation_cache(translation)
