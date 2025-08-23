@@ -527,13 +527,18 @@ class ImageGenerator:
             self._draw_book_summary_single_page(draw, verse_data, margin, content_width)
             return
         
-        # Calculate current page based on time rotation (same as devotionals)
+        # Calculate current page based on time rotation, favoring page 1 start
         # Use 15-second rotation interval for pages
         from datetime import datetime
         now = datetime.now()
         page_rotation_seconds = 15  # Change page every 15 seconds
-        seconds_since_midnight = now.hour * 3600 + now.minute * 60 + now.second
-        page_slot = (seconds_since_midnight // page_rotation_seconds) % len(pages)
+        
+        # Use a more predictable rotation that starts closer to page 1
+        # by using minute-based intervals instead of seconds-since-midnight
+        minutes_since_midnight = now.hour * 60 + now.minute
+        seconds_in_minute = now.second
+        time_slot = (minutes_since_midnight * 60 + seconds_in_minute) // page_rotation_seconds
+        page_slot = time_slot % len(pages)
         current_page = page_slot + 1  # Pages are 1-indexed
         
         # Update verse_data with page information
@@ -1202,12 +1207,17 @@ class ImageGenerator:
             self._draw_date_event_single_page(draw, verse_data, margin, content_width)
             return
         
-        # Multiple pages - use pagination with 10-second cycling
+        # Multiple pages - use pagination with 10-second cycling, favoring page 1 start
         from datetime import datetime
         now = datetime.now()
         page_rotation_seconds = 10  # Same as devotional mode
-        seconds_since_midnight = now.hour * 3600 + now.minute * 60 + now.second
-        page_slot = (seconds_since_midnight // page_rotation_seconds) % len(pages)
+        
+        # Use a more predictable rotation that starts closer to page 1
+        # by using minute-based intervals instead of seconds-since-midnight
+        minutes_since_midnight = now.hour * 60 + now.minute
+        seconds_in_minute = now.second
+        time_slot = (minutes_since_midnight * 60 + seconds_in_minute) // page_rotation_seconds
+        page_slot = time_slot % len(pages)
         current_page = page_slot + 1
         
         # Update verse_data with page information
@@ -1234,13 +1244,25 @@ class ImageGenerator:
             self._draw_devotional_single_page(draw, verse_data, margin, content_width)
             return
         
-        # Calculate current page based on time rotation
-        # Use a different rotation interval for pages (e.g., every 10 seconds)
+        # Calculate current page based on coordinated timing with devotional rotation
         from datetime import datetime
+        
         now = datetime.now()
         page_rotation_seconds = 10  # Change page every 10 seconds
-        seconds_since_midnight = now.hour * 3600 + now.minute * 60 + now.second
-        page_slot = (seconds_since_midnight // page_rotation_seconds) % len(pages)
+        
+        # Get devotional rotation info to coordinate page timing
+        rotation_minutes = verse_data.get('rotation_minutes', 5)  # Default 5 minutes if not provided
+        rotation_slot = verse_data.get('rotation_slot', 0)  # Current devotional rotation slot
+        
+        # Calculate time within the current devotional rotation interval
+        minutes_since_midnight = now.hour * 60 + now.minute
+        current_rotation_start = (minutes_since_midnight // rotation_minutes) * rotation_minutes
+        minutes_into_rotation = minutes_since_midnight - current_rotation_start
+        seconds_into_rotation = (minutes_into_rotation * 60) + now.second
+        
+        # Calculate page based on time within the current rotation interval
+        # This ensures each new devotional starts on page 1
+        page_slot = (seconds_into_rotation // page_rotation_seconds) % len(pages)
         current_page = page_slot + 1  # Pages are 1-indexed
         
         # Update verse_data with page information
@@ -1274,16 +1296,31 @@ class ImageGenerator:
         min_gap = 40
         reference_bottom = ref_y + ref_height + min_gap
         
-        # Draw devotional title
-        devotional_title = verse_data.get('devotional_title', "Today's Devotional")
+        # Draw current time instead of devotional title for devotional mode
+        from datetime import datetime
+        now = datetime.now()
+        current_time = now.strftime('%I:%M %p')
+        current_date = now.strftime('%A, %B %d, %Y')
+        time_display = f"{current_time} - {current_date}"
+        
         content_start_y = reference_bottom
         if self.title_font:
-            title_bbox = draw.textbbox((0, 0), devotional_title, font=self.title_font)
+            title_bbox = draw.textbbox((0, 0), time_display, font=self.title_font)
             title_width = title_bbox[2] - title_bbox[0]
             title_height = title_bbox[3] - title_bbox[1]
-            title_x = (self.width - title_width) // 2
-            draw.text((title_x, content_start_y), devotional_title, fill=0, font=self.title_font)
+            title_x = (self.width - title_width) // 2  # Mathematical center - same as devotional title
+            draw.text((title_x, content_start_y), time_display, fill=0, font=self.title_font)
             content_start_y += title_height + 30
+        
+        # Add devotional title below the time
+        devotional_title = verse_data.get('devotional_title', "Today's Devotional")
+        if self.reference_font:  # Use smaller font for devotional title
+            title_bbox = draw.textbbox((0, 0), devotional_title, font=self.reference_font)
+            title_width = title_bbox[2] - title_bbox[0]
+            title_height = title_bbox[3] - title_bbox[1]
+            title_x = (self.width - title_width) // 2  # Center the devotional title
+            draw.text((title_x, content_start_y), devotional_title, fill=0, font=self.reference_font)
+            content_start_y += title_height + 20
         
         # Prepare devotional text
         devotional_text = verse_data['text']
@@ -1722,16 +1759,31 @@ class ImageGenerator:
         min_gap = 40
         reference_bottom = ref_y + ref_height + min_gap
         
-        # Draw devotional title
-        devotional_title = verse_data.get('devotional_title', "Today's Devotional")
+        # Draw current time instead of devotional title for devotional mode
+        from datetime import datetime
+        now = datetime.now()
+        current_time = now.strftime('%I:%M %p')
+        current_date = now.strftime('%A, %B %d, %Y')
+        time_display = f"{current_time} - {current_date}"
+        
         content_start_y = reference_bottom
         if self.title_font:
-            title_bbox = draw.textbbox((0, 0), devotional_title, font=self.title_font)
+            title_bbox = draw.textbbox((0, 0), time_display, font=self.title_font)
             title_width = title_bbox[2] - title_bbox[0]
             title_height = title_bbox[3] - title_bbox[1]
-            title_x = (self.width - title_width) // 2
-            draw.text((title_x, content_start_y), devotional_title, fill=0, font=self.title_font)
+            title_x = (self.width - title_width) // 2  # Mathematical center - same as devotional title
+            draw.text((title_x, content_start_y), time_display, fill=0, font=self.title_font)
             content_start_y += title_height + 30
+        
+        # Add devotional title below the time
+        devotional_title = verse_data.get('devotional_title', "Today's Devotional")
+        if self.reference_font:  # Use smaller font for devotional title
+            title_bbox = draw.textbbox((0, 0), devotional_title, font=self.reference_font)
+            title_width = title_bbox[2] - title_bbox[0]
+            title_height = title_bbox[3] - title_bbox[1]
+            title_x = (self.width - title_width) // 2  # Center the devotional title
+            draw.text((title_x, content_start_y), devotional_title, fill=0, font=self.reference_font)
+            content_start_y += title_height + 20
         
         # Use consistent font size for all pages
         page_font = self._get_font(self.verse_size)
@@ -1918,10 +1970,10 @@ class ImageGenerator:
         """Add verse reference prominently at the configured position - this is the main time display."""
         # Check if this is devotional mode
         if verse_data.get('is_devotional') or 'devotional_text' in verse_data:
-            # For devotional mode, show time before date
+            # For devotional mode, always use current time to ensure minute-by-minute updates
             now = datetime.now()
-            current_time = verse_data.get('current_time', now.strftime('%I:%M %p'))
-            current_date = verse_data.get('current_date', now.strftime('%A, %B %d, %Y'))
+            current_time = now.strftime('%I:%M %p')  # Always use current time, not cached
+            current_date = now.strftime('%A, %B %d, %Y')  # Always use current date
             display_text = f"{current_time} - {current_date}"
         elif verse_data.get('is_date_event'):
             # Show both time and date for date-based mode
@@ -1990,15 +2042,38 @@ class ImageGenerator:
             # Apply custom X offset only (Y offset is already applied in positioning logic above)
             x += self.reference_x_offset
             
-            # Ensure text stays within bounds
+            # Ensure text stays within bounds and log position for debugging
+            original_x, original_y = x, y
             x = max(base_margin, min(x, self.width - text_width - base_margin))
             y = max(base_margin, min(y, self.height - text_height - base_margin))
+            
+            # For devotional mode, log position to help debug visibility
+            if verse_data.get('is_devotional'):
+                self.logger.info(f"Devotional date/time display: '{display_text}' at position ({x}, {y}) (original: {original_x}, {original_y}), size: {text_width}x{text_height}")
             
             # Note: Frame buffer clearing is now handled in display_manager.py
             # No need for local clearing that can create white rectangles on backgrounds
             
             # Draw the reference at the configured position (prominently at top for center-top)
-            draw.text((x, y), display_text, fill=0, font=self.reference_font)
+            # For devotional mode, make the date/time more prominent with better visibility
+            if verse_data.get('is_devotional'):
+                # Use a larger font and add shadow/outline for better visibility
+                font_to_use = self.title_font if self.title_font else self.reference_font
+                
+                # Draw bold white outline for maximum visibility on any background
+                outline_width = 3
+                for dx in range(-outline_width, outline_width + 1):
+                    for dy in range(-outline_width, outline_width + 1):
+                        if dx != 0 or dy != 0:  # Don't draw at the center position yet
+                            draw.text((x + dx, y + dy), display_text, fill=255, font=font_to_use)  # White outline
+                
+                # Draw the main text in black with bold effect
+                for dx in [0, 1]:
+                    for dy in [0, 1]:
+                        draw.text((x + dx, y + dy), display_text, fill=0, font=font_to_use)  # Bold black text
+            else:
+                font_to_use = self.reference_font
+                draw.text((x, y), display_text, fill=0, font=font_to_use)
     
     # Enhanced Layering Methods
     def set_separate_background(self, index: int):
