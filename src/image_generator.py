@@ -1228,8 +1228,7 @@ class ImageGenerator:
         page_content = pages[page_slot]
         self._draw_date_event_page(draw, verse_data, page_content, margin, content_width)
         
-        # Add verse reference display
-        self._add_verse_reference_display(draw, verse_data)
+        # Note: Time display is now handled within devotional content drawing
     
     def _draw_devotional(self, draw: ImageDraw.Draw, verse_data: Dict, margin: int, content_width: int):
         """Draw devotional content with pagination support."""
@@ -1275,8 +1274,7 @@ class ImageGenerator:
         # Draw the current page
         self._draw_devotional_page(draw, verse_data, page_content, margin, content_width)
         
-        # Add verse reference display (shows current time for devotionals)
-        self._add_verse_reference_display(draw, verse_data)
+        # Note: Time display is now handled within devotional content drawing
 
     def _draw_devotional_single_page(self, draw: ImageDraw.Draw, verse_data: Dict, margin: int, content_width: int):
         """Draw devotional content on a single page."""
@@ -1293,7 +1291,7 @@ class ImageGenerator:
         
         # Calculate actual reference Y position to ensure proper spacing
         ref_y = base_margin + self.reference_y_offset
-        min_gap = 40
+        min_gap = 20  # Reduced gap to move time display up
         reference_bottom = ref_y + ref_height + min_gap
         
         # Draw current time instead of devotional title for devotional mode
@@ -1304,12 +1302,14 @@ class ImageGenerator:
         time_display = f"{current_time} - {current_date}"
         
         content_start_y = reference_bottom
-        if self.title_font:
-            title_bbox = draw.textbbox((0, 0), time_display, font=self.title_font)
+        # Use verse font (larger) for time display instead of title font
+        time_font = self._get_font(int(self.verse_size * 1.2))  # Make it 20% larger than verse text
+        if time_font:
+            title_bbox = draw.textbbox((0, 0), time_display, font=time_font)
             title_width = title_bbox[2] - title_bbox[0]
             title_height = title_bbox[3] - title_bbox[1]
             title_x = (self.width - title_width) // 2  # Mathematical center - same as devotional title
-            draw.text((title_x, content_start_y), time_display, fill=0, font=self.title_font)
+            draw.text((title_x, content_start_y), time_display, fill=0, font=time_font)
             content_start_y += title_height + 30
         
         # Add devotional title below the time
@@ -1756,7 +1756,7 @@ class ImageGenerator:
             base_margin = max(base_margin, 80)
         
         ref_y = base_margin + self.reference_y_offset
-        min_gap = 40
+        min_gap = 20  # Reduced gap to move time display up
         reference_bottom = ref_y + ref_height + min_gap
         
         # Draw current time instead of devotional title for devotional mode
@@ -1767,12 +1767,14 @@ class ImageGenerator:
         time_display = f"{current_time} - {current_date}"
         
         content_start_y = reference_bottom
-        if self.title_font:
-            title_bbox = draw.textbbox((0, 0), time_display, font=self.title_font)
+        # Use verse font (larger) for time display instead of title font
+        time_font = self._get_font(int(self.verse_size * 1.2))  # Make it 20% larger than verse text
+        if time_font:
+            title_bbox = draw.textbbox((0, 0), time_display, font=time_font)
             title_width = title_bbox[2] - title_bbox[0]
             title_height = title_bbox[3] - title_bbox[1]
             title_x = (self.width - title_width) // 2  # Mathematical center - same as devotional title
-            draw.text((title_x, content_start_y), time_display, fill=0, font=self.title_font)
+            draw.text((title_x, content_start_y), time_display, fill=0, font=time_font)
             content_start_y += title_height + 30
         
         # Add devotional title below the time
