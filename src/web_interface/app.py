@@ -2177,6 +2177,42 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         except Exception as e:
             current_app.logger.error(f"Wake word toggle API error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/voice-control/volume', methods=['GET', 'POST'])
+    def voice_volume_control():
+        """Get or set voice control volume."""
+        try:
+            if not hasattr(current_app.service_manager, 'voice_control') or not current_app.service_manager.voice_control:
+                return jsonify({'success': False, 'error': 'Voice control not available'})
+            
+            if request.method == 'GET':
+                # Get current volume
+                volume = getattr(current_app.service_manager.voice_control, 'volume', 70)
+                return jsonify({'volume': volume})
+            
+            elif request.method == 'POST':
+                # Set volume
+                data = request.get_json()
+                if not data or 'volume' not in data:
+                    return jsonify({'success': False, 'error': 'Volume value required'})
+                
+                volume = int(data['volume'])
+                if volume < 0 or volume > 100:
+                    return jsonify({'success': False, 'error': 'Volume must be between 0 and 100'})
+                
+                # Set volume on voice control
+                if hasattr(current_app.service_manager.voice_control, 'set_volume'):
+                    current_app.service_manager.voice_control.set_volume(volume)
+                else:
+                    # Store volume directly if set_volume method not available
+                    current_app.service_manager.voice_control.volume = volume
+                
+                current_app.logger.info(f"Voice control volume set to: {volume}%")
+                return jsonify({'success': True, 'volume': volume})
+                
+        except Exception as e:
+            current_app.logger.error(f"Voice volume control API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
     
     def _apply_display_transformations(image):
         """Apply transformations to show what the final display looks like after hardware processing."""

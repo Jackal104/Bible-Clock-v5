@@ -872,6 +872,9 @@ class BibleClockVoiceControl:
                 'response_time': response_time
             })
             
+            # Return to previous display mode after ChatGPT processing
+            self._restore_display_after_voice_interaction()
+            
         except Exception as e:
             # Update failed request stats
             response_time = time.time() - start_time
@@ -879,6 +882,9 @@ class BibleClockVoiceControl:
             
             self.logger.error(f"ChatGPT processing error: {e}")
             self._speak("I'm sorry, I'm having trouble accessing my biblical knowledge base right now. Please try again later.")
+            
+            # Return to previous display mode even if there was an error
+            self._restore_display_after_voice_interaction()
     
     def _update_token_stats(self, tokens: int, response_time: float, success: bool):
         """Update token usage statistics."""

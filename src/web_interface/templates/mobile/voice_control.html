@@ -47,6 +47,53 @@
         </div>
     </div>
 
+    <!-- Voice Volume Control -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Voice Volume Settings</h2>
+        <div class="space-y-4">
+            <div>
+                <label for="volume-slider" class="block text-lg font-medium text-gray-800 mb-2">
+                    Voice Response Volume
+                </label>
+                <div class="flex items-center space-x-4">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5 7h4l5-5v20l-5-5H5a2 2 0 01-2-2V9a2 2 0 012-2z"></path>
+                    </svg>
+                    <input 
+                        type="range" 
+                        id="volume-slider" 
+                        min="0" 
+                        max="100" 
+                        value="70" 
+                        class="flex-1 h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                        onchange="updateVolume(this.value)"
+                        oninput="updateVolumeDisplay(this.value)"
+                    >
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5 7h4l5-5v20l-5-5H5a2 2 0 01-2-2V9a2 2 0 012-2z"></path>
+                    </svg>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500 mt-2">
+                    <span>Quiet</span>
+                    <span id="volume-display" class="font-medium">70%</span>
+                    <span>Loud</span>
+                </div>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg">
+                <div class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-medium text-blue-800">Volume Control</h4>
+                        <p class="text-sm text-blue-700 mt-1">Adjust the volume of voice responses. This controls how loud the Bible Clock speaks when responding to your voice commands.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Manual Voice Commands -->
     <div class="mobile-card bg-white p-6">
         <h2 class="text-xl font-semibold mb-4 text-gray-800">Manual Voice Commands</h2>
@@ -309,12 +356,51 @@ function showStatus(message, type) {
     }, 5000);
 }
 
+function updateVolume(value) {
+    fetch('/api/voice-control/volume', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ volume: parseInt(value) })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Volume updated to ${value}%`, 'success');
+        } else {
+            showStatus('Failed to update volume', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating volume:', error);
+        showStatus('Error updating volume', 'error');
+    });
+}
+
+function updateVolumeDisplay(value) {
+    document.getElementById('volume-display').textContent = value + '%';
+}
+
 // Load initial state and set up auto-refresh
 document.addEventListener('DOMContentLoaded', function() {
     updateVoiceStatus();
     
     // Auto-refresh voice status every 10 seconds
     setInterval(updateVoiceStatus, 10000);
+    
+    // Load current volume setting
+    fetch('/api/voice-control/volume')
+        .then(response => response.json())
+        .then(data => {
+            if (data.volume !== undefined) {
+                const slider = document.getElementById('volume-slider');
+                const display = document.getElementById('volume-display');
+                slider.value = data.volume;
+                display.textContent = data.volume + '%';
+            }
+        })
+        .catch(error => console.error('Error loading volume:', error));
     
     // Simulate some initial log entries for demo
     setTimeout(() => {
