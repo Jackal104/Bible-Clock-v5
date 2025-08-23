@@ -125,14 +125,20 @@ class DevotionalManager:
         if rotation_minutes is None:
             rotation_minutes = self.rotation_minutes
         
-        # Calculate which rotation slot we're in
+        # Calculate which rotation slot we're in (includes day for more randomness)
+        days_since_epoch = (now - datetime(1970, 1, 1)).days
         minutes_since_midnight = now.hour * 60 + now.minute
-        rotation_slot = minutes_since_midnight // rotation_minutes
+        rotation_slot = (days_since_epoch * 1000) + (minutes_since_midnight // rotation_minutes)
         
         # Get random devotional from cache using slot as seed for consistency during the interval
         devotional = self._get_random_devotional_from_cache(rotation_slot)
         
         if devotional:
+            # Remove date-based information since we're cycling randomly
+            devotional.pop('date', None)
+            devotional.pop('month', None) 
+            devotional.pop('day', None)
+            
             # Add rotation metadata
             devotional['rotation_slot'] = rotation_slot
             devotional['rotation_minutes'] = rotation_minutes
@@ -174,6 +180,9 @@ class DevotionalManager:
 
     def _clean_devotional_text(self, text: str) -> str:
         """Clean up devotional text by removing unwanted content."""
+        if not text:
+            return ""
+            
         # Remove purchase messages and archive links (enhanced patterns)
         text = re.sub(r'Purchase your own copy of this devotional\..*?$', '', text, flags=re.MULTILINE | re.DOTALL)
         text = re.sub(r'Or, catch up on.*?Archives\..*?$', '', text, flags=re.MULTILINE | re.DOTALL)
