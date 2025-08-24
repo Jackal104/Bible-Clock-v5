@@ -35,9 +35,29 @@
                         <h4 class="font-medium text-gray-900">🎤 Wake Word Detection</h4>
                         <p class="text-sm text-gray-600">Enable "Bible Clock" wake word</p>
                     </div>
+                    <div class="flex items-center space-x-3">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="mobile-voice-control-toggle" class="sr-only peer" checked>
+                            <div class="w-12 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-purple-600"></div>
+                        </label>
+                        <button onclick="refreshVoiceStatus()" class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded hover:bg-gray-200" title="Refresh status if toggle seems out of sync">
+                            🔄 Sync
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ChatGPT Enable -->
+            <div class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+                <h4 class="font-medium text-gray-900 mb-3">🤖 ChatGPT</h4>
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <span class="text-sm font-medium text-gray-900">AI Biblical Assistant</span>
+                        <p class="text-xs text-gray-500">Enable ChatGPT for biblical questions</p>
+                    </div>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="mobile-voice-control-toggle" class="sr-only peer" checked>
-                        <div class="w-12 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-purple-600"></div>
+                        <input type="checkbox" id="mobile-chatgpt-enabled" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                     </label>
                 </div>
             </div>
@@ -75,7 +95,7 @@
                     <input 
                         type="text" 
                         id="mobile-text-input" 
-                        placeholder="Example: Explain John 3:16, What is faith?"
+                        placeholder="Ask a biblical question: What is faith? Explain John 3:16? Tell me about love?"
                         class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                         maxlength="200"
                     >
@@ -89,7 +109,7 @@
                         Send to Display
                     </button>
                 </div>
-                <p class="text-xs text-gray-500 mt-2">💡 Alternative to saying "Bible Clock [question]" - just type and send!</p>
+                <p class="text-xs text-gray-500 mt-2">💡 Ask any biblical question - AI will display the answer on your e-ink screen!</p>
             </div>
         </div>
     </div>
@@ -262,6 +282,35 @@ function toggleWakeWord() {
             addVoiceLogEntry(`Wake word ${enabled ? 'enabled' : 'disabled'}`, 'system');
         } else {
             showStatus(`Failed to toggle wake word: ${data.error}`, 'error');
+            toggle.checked = !enabled; // Revert toggle
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+        toggle.checked = !enabled; // Revert toggle
+    });
+}
+
+function toggleChatGPT() {
+    const toggle = document.getElementById('mobile-chatgpt-enabled');
+    const enabled = toggle.checked;
+    
+    showStatus(`${enabled ? 'Enabling' : 'Disabling'} ChatGPT...`, 'info');
+    
+    fetch('/api/voice/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ chatgpt_enabled: enabled })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`ChatGPT ${enabled ? 'enabled' : 'disabled'}`, 'success');
+            addVoiceLogEntry(`ChatGPT ${enabled ? 'enabled' : 'disabled'}`, 'system');
+        } else {
+            showStatus(`Failed to toggle ChatGPT: ${data.error}`, 'error');
             toggle.checked = !enabled; // Revert toggle
         }
     })
@@ -482,13 +531,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 slider.value = volume;
                 display.textContent = volume + '%';
                 
-                // Update voice control toggle
-                document.getElementById('mobile-voice-control-toggle').checked = status.enabled !== false;
+                // Update voice control toggle - ensure it reflects actual server state
+                const mobileToggle = document.getElementById('mobile-voice-control-toggle');
+                const actualEnabled = status.enabled === true; // Be explicit about boolean conversion
+                mobileToggle.checked = actualEnabled;
+                
+                console.log('Voice status loaded:', {
+                    enabled: status.enabled,
+                    actualEnabled: actualEnabled,
+                    toggleState: mobileToggle.checked
+                });
                 
                 // Update playback mode
                 const playbackMode = status.tts_playback_mode || 'audio';
                 document.getElementById('mobile-playback-audio').checked = playbackMode === 'audio';
                 document.getElementById('mobile-playback-visual').checked = playbackMode === 'visual';
+                
+                // Update ChatGPT toggle
+                const chatgptToggle = document.getElementById('mobile-chatgpt-enabled');
+                chatgptToggle.checked = status.chatgpt_enabled === true;
             }
         })
         .catch(error => console.error('Error loading voice settings:', error));
@@ -526,12 +587,28 @@ function setupMobileFeatures() {
                 showStatus(`🎯 Wake word detection ${enabled ? 'enabled' : 'disabled'} successfully!`, 'success');
                 addVoiceLogEntry(`Wake word detection ${enabled ? 'enabled' : 'disabled'}`, 'system');
                 
-                // Update the main toggle if it exists
+                // Update other toggles if they exist
                 const mainToggle = document.getElementById('wake-word-toggle');
                 if (mainToggle) mainToggle.checked = enabled;
                 
-                // Refresh voice status
-                setTimeout(() => updateVoiceStatus(), 1000);
+                // Force refresh voice status to sync all UI elements
+                setTimeout(() => {
+                    updateVoiceStatus();
+                    // Double-check toggle state matches server response
+                    fetch('/api/voice/status')
+                        .then(response => response.json())
+                        .then(statusData => {
+                            if (statusData.success && statusData.data) {
+                                const serverEnabled = statusData.data.enabled === true;
+                                toggle.checked = serverEnabled;
+                                console.log('Synced toggle state:', {
+                                    serverEnabled: serverEnabled,
+                                    toggleState: toggle.checked
+                                });
+                            }
+                        })
+                        .catch(error => console.error('Status sync error:', error));
+                }, 1500);
             } else {
                 showStatus('⚠️ Failed to update voice control: ' + (data.error || 'Unknown error'), 'error');
                 toggle.checked = !enabled; // Revert
@@ -545,6 +622,11 @@ function setupMobileFeatures() {
             // Re-enable toggle
             toggle.disabled = false;
         });
+    });
+    
+    // ChatGPT toggle
+    document.getElementById('mobile-chatgpt-enabled').addEventListener('change', function() {
+        toggleChatGPT();
     });
     
     // Playback mode toggles
@@ -632,6 +714,42 @@ function setupMobileFeatures() {
             document.getElementById('mobile-send-button').click();
         }
     });
+}
+
+function refreshVoiceStatus() {
+    showStatus('🔄 Refreshing voice status...', 'info');
+    
+    fetch('/api/voice/status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data) {
+                const status = data.data;
+                const actualEnabled = status.enabled === true;
+                
+                // Update toggles with server state
+                document.getElementById('mobile-voice-control-toggle').checked = actualEnabled;
+                
+                const mainToggle = document.getElementById('wake-word-toggle');
+                if (mainToggle) mainToggle.checked = actualEnabled;
+                
+                // Update voice status display
+                updateVoiceStatus();
+                
+                showStatus(`✨ Status synced! Voice control is ${actualEnabled ? 'enabled' : 'disabled'}`, 'success');
+                addVoiceLogEntry(`Status refreshed: Voice control ${actualEnabled ? 'enabled' : 'disabled'}`, 'system');
+                
+                console.log('Manual status refresh:', {
+                    serverEnabled: actualEnabled,
+                    toggleSynced: true
+                });
+            } else {
+                showStatus('⚠️ Failed to refresh status', 'error');
+            }
+        })
+        .catch(error => {
+            showStatus('😱 Error refreshing status', 'error');
+            console.error('Refresh error:', error);
+        });
 }
 
 function updatePlaybackMode(mode) {

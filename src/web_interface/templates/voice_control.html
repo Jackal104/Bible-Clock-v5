@@ -51,6 +51,20 @@
                 </div>
             </div>
             
+            <!-- ChatGPT Enable -->
+            <div class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h4 class="font-medium text-gray-900">🤖 ChatGPT</h4>
+                        <p class="text-sm text-gray-600">Enable AI Biblical Assistant</p>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="main-chatgpt-enabled" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
             <!-- AI Response Mode -->
             <div class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
                 <h4 class="font-medium text-gray-900 mb-3">🎯 AI Response Mode</h4>
@@ -79,7 +93,7 @@
                 <input 
                     type="text" 
                     id="main-text-input" 
-                    placeholder="Example: Explain John 3:16, What is faith?, Tell me about love..."
+                    placeholder="Ask any biblical question: What is faith? Explain John 3:16? Tell me about love?"
                     class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                     maxlength="200"
                 >
@@ -93,7 +107,7 @@
                     Send
                 </button>
             </div>
-            <p class="text-xs text-gray-500 mt-2">💡 Alternative to saying "Bible Clock [question]" - just type and send!</p>
+            <p class="text-xs text-gray-500 mt-2">💡 Ask any biblical question - AI will display the answer on your e-ink screen!</p>
         </div>
     </div>
 
@@ -623,6 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('voice-volume').addEventListener('change', updateVoiceSettings);
     document.getElementById('mic-volume').addEventListener('change', updateMicrophoneVolume);
     document.getElementById('chatgpt-enabled').addEventListener('change', updateVoiceSettings);
+    document.getElementById('main-chatgpt-enabled').addEventListener('change', updateVoiceSettings);
     document.getElementById('help-enabled').addEventListener('change', updateVoiceSettings);
     document.getElementById('voice-selection').addEventListener('change', updateVoiceSettings);
     document.getElementById('voice-control-enabled').addEventListener('change', updateVoiceSettings);
@@ -821,6 +836,7 @@ function updateVoiceStatusUI(status) {
     document.getElementById('voice-rate').value = status.voice_rate || 150;
     document.getElementById('voice-volume').value = status.tts_volume || status.voice_volume || 0.8;
     document.getElementById('chatgpt-enabled').checked = status.chatgpt_enabled || false;
+    document.getElementById('main-chatgpt-enabled').checked = status.chatgpt_enabled || false;
     document.getElementById('help-enabled').checked = status.help_enabled !== false;
     document.getElementById('voice-selection').value = status.voice_selection || status.tts_voice || 'nova';
     document.getElementById('voice-control-enabled').checked = status.enabled !== false;
@@ -966,7 +982,7 @@ function updateVoiceSettings() {
     const settings = {
         voice_rate: parseInt(document.getElementById('voice-rate').value),
         voice_volume: parseFloat(document.getElementById('voice-volume').value),
-        chatgpt_enabled: document.getElementById('chatgpt-enabled').checked,
+        chatgpt_enabled: document.getElementById('chatgpt-enabled').checked || document.getElementById('main-chatgpt-enabled').checked,
         help_enabled: document.getElementById('help-enabled').checked,
         voice_selection: document.getElementById('voice-selection').value,
         tts_playback_mode: playbackMode,

@@ -1,60 +1,103 @@
 {
-  "date": "2025-08-23",
-  "created_at": "2025-08-23T01:30:57.878693",
-  "error_count": 264,
+  "date": "2025-08-24",
+  "created_at": "2025-08-24T02:07:17.433363",
+  "error_count": 47,
   "errors": [
     {
-      "timestamp": "2025-08-23T15:51:57.202414",
-      "service": "image_generator",
-      "logger": "image_generator",
+      "timestamp": "2025-08-24T11:38:07.369964",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "Devotional mode: display_text set to '03:51 PM - Saturday, August 23, 2025'",
-      "function": "_add_verse_reference_display",
-      "line": 1956,
-      "filename": "image_generator.py"
+      "message": "Exception on /api/text-query [POST]",
+      "function": "log_exception",
+      "line": 825,
+      "filename": "app.py",
+      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
     },
     {
-      "timestamp": "2025-08-23T15:52:00.925439",
-      "service": "image_generator",
-      "logger": "image_generator",
+      "timestamp": "2025-08-24T11:38:43.118801",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "_add_verse_reference_display: is_devotional=True, has_devotional_text=True",
-      "function": "_add_verse_reference_display",
-      "line": 1947,
-      "filename": "image_generator.py"
+      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
+      "function": "update_voice_settings",
+      "line": 1421,
+      "filename": "app.py"
     },
     {
-      "timestamp": "2025-08-23T15:52:00.937034",
-      "service": "image_generator",
-      "logger": "image_generator",
+      "timestamp": "2025-08-24T11:38:48.739804",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "Devotional mode: display_text set to '03:52 PM - Saturday, August 23, 2025'",
-      "function": "_add_verse_reference_display",
-      "line": 1956,
-      "filename": "image_generator.py"
+      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
+      "function": "update_voice_settings",
+      "line": 1421,
+      "filename": "app.py"
     },
     {
-      "timestamp": "2025-08-23T15:52:01.575241",
-      "service": "image_generator",
-      "logger": "image_generator",
+      "timestamp": "2025-08-24T11:38:50.355868",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "_add_verse_reference_display: is_devotional=True, has_devotional_text=True",
-      "function": "_add_verse_reference_display",
-      "line": 1947,
-      "filename": "image_generator.py"
+      "message": "Exception on /api/text-query [POST]",
+      "function": "log_exception",
+      "line": 825,
+      "filename": "app.py",
+      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
     },
     {
-      "timestamp": "2025-08-23T15:52:01.587880",
-      "service": "image_generator",
-      "logger": "image_generator",
+      "timestamp": "2025-08-24T11:38:59.815754",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "Devotional mode: display_text set to '03:52 PM - Saturday, August 23, 2025'",
-      "function": "_add_verse_reference_display",
-      "line": 1956,
-      "filename": "image_generator.py"
+      "message": "Exception on /api/text-query [POST]",
+      "function": "log_exception",
+      "line": 825,
+      "filename": "app.py",
+      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
     },
     {
-      "timestamp": "2025-08-23T17:25:44.054174",
+      "timestamp": "2025-08-24T11:44:45.959918",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
+      "function": "update_voice_settings",
+      "line": 1421,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T11:44:51.784178",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
+      "function": "update_voice_settings",
+      "line": 1421,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T11:44:58.528750",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
+      "function": "update_voice_settings",
+      "line": 1421,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T11:48:59.250267",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: name 'logger' is not defined",
+      "function": "update_voice_settings",
+      "line": 1448,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T11:49:09.766805",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -64,7 +107,18 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:26:11.221592",
+      "timestamp": "2025-08-24T11:49:34.834504",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Exception on /api/text-query [POST]",
+      "function": "log_exception",
+      "line": 825,
+      "filename": "app.py",
+      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
+    },
+    {
+      "timestamp": "2025-08-24T11:50:05.600493",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -74,7 +128,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:27:06.812898",
+      "timestamp": "2025-08-24T11:50:31.010380",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -84,7 +138,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:28:08.679041",
+      "timestamp": "2025-08-24T11:50:56.413704",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -94,7 +148,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:29:10.054245",
+      "timestamp": "2025-08-24T11:51:05.937728",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -104,7 +158,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:30:06.975409",
+      "timestamp": "2025-08-24T11:51:32.467666",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -114,7 +168,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:31:06.223487",
+      "timestamp": "2025-08-24T11:51:57.969512",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -124,7 +178,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:32:07.710744",
+      "timestamp": "2025-08-24T11:52:06.750566",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -134,7 +188,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:33:07.222854",
+      "timestamp": "2025-08-24T11:52:34.395560",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -144,7 +198,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:34:07.467186",
+      "timestamp": "2025-08-24T11:52:59.785263",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -154,7 +208,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T17:35:06.886418",
+      "timestamp": "2025-08-24T11:53:06.353400",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -164,47 +218,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T19:49:25.714799",
-      "service": "other",
-      "logger": "werkzeug",
-      "level": "ERROR",
-      "message": "192.168.68.11 - - [23/Aug/2025 19:49:25] code 400, message Bad request version ('\\x94\u00db\\x00*JJ\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
-      "function": "_log",
-      "line": 97,
-      "filename": "_internal.py"
-    },
-    {
-      "timestamp": "2025-08-23T19:49:25.827043",
-      "service": "other",
-      "logger": "werkzeug",
-      "level": "ERROR",
-      "message": "192.168.68.11 - - [23/Aug/2025 19:49:25] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x05\u00ff\\x01\\x00\\x05\u00fb\\x03\\x03e,\u00eb\u00bb#\\x9d\\x8c\u00e5\u00bf\u00a1Z?\u00fe\u00d0\\x10_\u00e3\u00f62\u00f2\u00bc\u00c2{[\\x19\\x11\\x81\u00fa\u00ed\\x8ddy')",
-      "function": "_log",
-      "line": 97,
-      "filename": "_internal.py"
-    },
-    {
-      "timestamp": "2025-08-23T19:49:25.928841",
-      "service": "other",
-      "logger": "werkzeug",
-      "level": "ERROR",
-      "message": "192.168.68.11 - - [23/Aug/2025 19:49:25] code 400, message Bad request version (\"\\x82EC\\x83'~\u00c6\\x0eRd\u00c2\\x00*\\x9a\\x9a\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0\")",
-      "function": "_log",
-      "line": 97,
-      "filename": "_internal.py"
-    },
-    {
-      "timestamp": "2025-08-23T19:49:26.030024",
-      "service": "other",
-      "logger": "werkzeug",
-      "level": "ERROR",
-      "message": "192.168.68.11 - - [23/Aug/2025 19:49:26] code 400, message Bad request version ('+\u00a3\u00beG\\x1a\u00dc\\x8e\u00e8\\x00*\\x8a\\x8a\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
-      "function": "_log",
-      "line": 97,
-      "filename": "_internal.py"
-    },
-    {
-      "timestamp": "2025-08-23T22:51:08.422227",
+      "timestamp": "2025-08-24T11:53:35.938113",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -214,7 +228,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T22:52:07.111326",
+      "timestamp": "2025-08-24T11:54:01.518160",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -224,7 +238,7 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T22:53:05.524613",
+      "timestamp": "2025-08-24T11:54:08.396019",
       "service": "display_manager",
       "logger": "display_manager",
       "level": "ERROR",
@@ -234,28 +248,18 @@
       "filename": "display_manager.py"
     },
     {
-      "timestamp": "2025-08-23T22:54:05.949299",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-24T12:07:59.489423",
+      "service": "web_interface",
+      "logger": "web_interface.app",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-23T22:55:07.819177",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice settings API error: name 'logger' is not defined",
+      "function": "update_voice_settings",
+      "line": 1448,
+      "filename": "app.py"
     }
   ],
   "error_summary": {
-    "ERROR": 264
+    "ERROR": 47
   },
   "services": {
     "verse_manager": {
@@ -263,24 +267,24 @@
       "last_error": null
     },
     "image_generator": {
-      "errors": 166,
-      "last_error": "2025-08-23T15:52:01.587880"
+      "errors": 0,
+      "last_error": null
     },
     "display_manager": {
-      "errors": 16,
-      "last_error": "2025-08-23T22:55:07.819177"
+      "errors": 22,
+      "last_error": "2025-08-24T11:54:08.396019"
     },
     "scheduler": {
       "errors": 0,
       "last_error": null
     },
     "service_manager": {
-      "errors": 1,
-      "last_error": "2025-08-23T14:16:57.936324"
+      "errors": 0,
+      "last_error": null
     },
     "web_interface": {
-      "errors": 29,
-      "last_error": "2025-08-23T15:31:15.857529"
+      "errors": 12,
+      "last_error": "2025-08-24T12:07:59.489423"
     },
     "voice_control": {
       "errors": 0,
@@ -291,12 +295,12 @@
       "last_error": null
     },
     "weather_service": {
-      "errors": 24,
-      "last_error": "2025-08-23T14:17:02.224534"
+      "errors": 0,
+      "last_error": null
     },
     "other": {
-      "errors": 28,
-      "last_error": "2025-08-23T19:49:26.030024"
+      "errors": 13,
+      "last_error": "2025-08-24T10:26:59.564833"
     }
   }
 }

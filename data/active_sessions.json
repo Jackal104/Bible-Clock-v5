@@ -1,15 +1,41 @@
 {
-  "a701cc00-83d2-475e-8ee6-d7b30f9ccbc3": {
-    "session_id": "a701cc00-83d2-475e-8ee6-d7b30f9ccbc3",
+  "92cea4d6-3151-471e-9e22-b04306093482": {
+    "session_id": "92cea4d6-3151-471e-9e22-b04306093482",
     "turns": [
       {
-        "question": "timothy 5:24 mean",
-        "response": "I'm sorry, but it seems there is a confusion with the verse reference. Timothy is a book in the New Testament, not the Old Testament where Genesis is ...",
-        "timestamp": "2025-08-23T17:25:32.829547",
+        "question": "What\u2019s a good verse that shows for every season there is something",
+        "response": "A verse that captures the idea of different seasons in life is Ecclesiastes 3:1, which says, \"There is a time for everything, and a season for every a...",
+        "timestamp": "2025-08-24T11:38:07.338313",
+        "category": "bible_verse"
+      }
+    ],
+    "created_at": "2025-08-24T11:38:07.338226",
+    "last_activity": "2025-08-24T11:38:07.338340"
+  },
+  "66326a92-aa0e-480a-a397-055e0db1c4df": {
+    "session_id": "66326a92-aa0e-480a-a397-055e0db1c4df",
+    "turns": [
+      {
+        "question": "What\u2019s a good verse that shows for every season there is something",
+        "response": "A verse that reflects the idea that for every season there is a purpose or time appointed is Ecclesiastes 3:1, which states, \"For everything there is ...",
+        "timestamp": "2025-08-24T11:38:59.796020",
+        "category": "bible_verse"
+      }
+    ],
+    "created_at": "2025-08-24T11:38:59.795875",
+    "last_activity": "2025-08-24T11:38:59.796042"
+  },
+  "ca005d32-616c-40ac-8a36-a9de39f30f15": {
+    "session_id": "ca005d32-616c-40ac-8a36-a9de39f30f15",
+    "turns": [
+      {
+        "question": "Tell me where does joy come from?",
+        "response": "As a Christian, joy is ultimately found in a relationship with God. The Bible teaches that true joy comes from knowing God, experiencing His love and ...",
+        "timestamp": "2025-08-24T11:49:34.800364",
         "category": "general"
       }
     ],
-    "created_at": "2025-08-23T17:25:32.829425",
-    "last_activity": "2025-08-23T17:25:32.829564"
+    "created_at": "2025-08-24T11:49:34.800231",
+    "last_activity": "2025-08-24T11:49:34.800386"
   }
 }

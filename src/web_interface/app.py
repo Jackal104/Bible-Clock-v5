@@ -1359,10 +1359,37 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             # Handle voice control enabled/disabled
             if 'voice_control_enabled' in data:
+                import os  # Ensure os is available in this scope
                 voice_control.enabled = data['voice_control_enabled']
                 # Also update the environment variable
                 os.environ['ENABLE_VOICE'] = 'true' if data['voice_control_enabled'] else 'false'
                 current_app.logger.info(f"Voice control: {'enabled' if data['voice_control_enabled'] else 'disabled'}")
+                
+                # Also update the .env file to persist the setting
+                try:
+                    env_path = '.env'
+                    if os.path.exists(env_path):
+                        with open(env_path, 'r') as f:
+                            lines = f.readlines()
+                        
+                        # Update ENABLE_VOICE line
+                        voice_enabled_updated = False
+                        for i, line in enumerate(lines):
+                            if line.startswith('ENABLE_VOICE='):
+                                lines[i] = f'ENABLE_VOICE={"true" if data["voice_control_enabled"] else "false"}\n'
+                                voice_enabled_updated = True
+                                break
+                        
+                        if not voice_enabled_updated:
+                            # Add ENABLE_VOICE line if it doesn't exist
+                            lines.append(f'ENABLE_VOICE={"true" if data["voice_control_enabled"] else "false"}\n')
+                        
+                        with open(env_path, 'w') as f:
+                            f.writelines(lines)
+                        
+                        current_app.logger.info(f"Updated ENABLE_VOICE in .env file to {data['voice_control_enabled']}")
+                except Exception as env_error:
+                    current_app.logger.error(f"Failed to update ENABLE_VOICE in .env: {env_error}")
             
             if 'voice_selection' in data:
                 voice_control.voice_selection = data['voice_selection']
@@ -2576,55 +2603,66 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if not hasattr(current_app.service_manager, 'voice_control') or not current_app.service_manager.voice_control:
                 return jsonify({'success': False, 'error': 'AI service not available'}), 503
             
-            # Try to get the voice assistant if available (for direct ChatGPT access)
-            voice_assistant = None
+            # Use the existing voice control ChatGPT integration
+            voice_control = current_app.service_manager.voice_control
+            
+            # Check if ChatGPT is enabled
+            if not hasattr(voice_control, 'chatgpt_enabled') or not voice_control.chatgpt_enabled:
+                return jsonify({'success': False, 'error': 'ChatGPT is not enabled. Please enable it in voice settings.'}), 400
+            
             try:
-                # Try to import and create a temporary voice assistant for the query
-                from voice_assistant import VoiceAssistant
+                current_app.logger.info(f"Processing text query: {query[:100]}...")
                 
-                # Create a visual feedback callback that uses the display manager
-                def text_visual_callback(state, message):
-                    if state == "ai_response" and message:
-                        # Display the AI response on the e-ink screen
-                        if hasattr(current_app.service_manager, 'display_manager'):
-                            try:
-                                # Use the display manager to show the response
-                                current_app.service_manager.display_manager.show_transient_message(
-                                    "ai_response", message, duration=15.0
-                                )
-                                logger.info(f"Text query response displayed on screen: {message[:100]}...")
-                            except Exception as display_error:
-                                logger.error(f"Failed to display text response: {display_error}")
-                
-                # Create a temporary voice assistant just for this query
-                voice_assistant = VoiceAssistant(
-                    verse_manager=current_app.service_manager.verse_manager,
-                    visual_feedback_callback=text_visual_callback
-                )
-                
-                # Force visual mode for text queries
-                original_playback_mode = voice_assistant.tts_playback_mode
-                voice_assistant.tts_playback_mode = 'visual'
-                
-                # Process the query using ChatGPT
-                response = voice_assistant.query_chatgpt(query)
-                
-                # Restore original mode (though this instance is temporary)
-                voice_assistant.tts_playback_mode = original_playback_mode
+                # Use the voice control's ChatGPT integration directly
+                response = None
+                if hasattr(voice_control, 'query_chatgpt'):
+                    response = voice_control.query_chatgpt(query)
+                elif hasattr(voice_control, 'ask_chatgpt'):
+                    response = voice_control.ask_chatgpt(query)
+                else:
+                    # Fallback: try to call ChatGPT directly if available
+                    if hasattr(voice_control, 'openai_client') and voice_control.openai_client:
+                        import os
+                        system_prompt = os.getenv('CHATGPT_SYSTEM_PROMPT', 
+                            'You are a knowledgeable biblical scholar and theologian helping users understand Bible verses, biblical history, theology, and Christian faith. Keep responses concise but meaningful, suitable for voice interaction.')
+                        
+                        messages = [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": query}
+                        ]
+                        
+                        completion = voice_control.openai_client.chat.completions.create(
+                            model=voice_control.chatgpt_model or "gpt-3.5-turbo",
+                            messages=messages,
+                            max_tokens=int(os.getenv('CHATGPT_MAX_TOKENS', '150')),
+                            temperature=float(os.getenv('CHATGPT_TEMPERATURE', '0.7'))
+                        )
+                        response = completion.choices[0].message.content.strip()
                 
                 if response:
-                    logger.info(f"Text query processed successfully: {query[:100]}...")
+                    # Display the response on the e-ink screen
+                    if hasattr(current_app.service_manager, 'display_manager'):
+                        try:
+                            current_app.service_manager.display_manager.show_transient_message(
+                                "ai_response", response, duration=15.0
+                            )
+                            current_app.logger.info(f"Text query response displayed: {response[:100]}...")
+                        except Exception as display_error:
+                            current_app.logger.error(f"Display error: {display_error}")
+                            # Don't fail the whole request if display fails
+                    
+                    current_app.logger.info(f"Text query completed successfully")
                     return jsonify({
                         'success': True, 
                         'message': 'Question processed and displayed on screen',
                         'response_preview': response[:100] + '...' if len(response) > 100 else response
                     })
                 else:
-                    return jsonify({'success': False, 'error': 'No response received from AI'})
+                    return jsonify({'success': False, 'error': 'No response received from ChatGPT'})
                 
-            except Exception as va_error:
-                logger.error(f"Voice assistant text query failed: {va_error}")
-                return jsonify({'success': False, 'error': f'AI processing failed: {str(va_error)}'})
+            except Exception as chatgpt_error:
+                current_app.logger.error(f"ChatGPT processing failed: {chatgpt_error}")
+                return jsonify({'success': False, 'error': f'AI processing failed: {str(chatgpt_error)}'})
             
         except Exception as e:
             logger.error(f"Text query processing error: {e}")

@@ -40,5 +40,20 @@
     "hourly_distribution": {
       "17": 1
     }
+  },
+  "2025-08-24": {
+    "date": "2025-08-24",
+    "total_conversations": 1,
+    "categories": {
+      "general": 1
+    },
+    "keywords": {
+      "joy": 1
+    },
+    "avg_response_time": 5.15,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "11": 1
+    }
   }
 }

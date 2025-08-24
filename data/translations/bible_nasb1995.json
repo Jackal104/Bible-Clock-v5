@@ -2,6 +2,9 @@
   "1 Corinthians": {
     "11": {
       "33": "So then, my brethren, when you come together to eat, wait for one another."
+    },
+    "2": {
+      "15": "But he who is (A)spiritual appraises all things, yet he himself is appraised by no one."
     }
   },
   "1 Chronicles": {
@@ -9,7 +12,33 @@
       "34": "the sons of [a]Hashem the Gizonite, Jonathan the son of Shagee the Hararite,"
     },
     "12": {
-      "38": "All these, being men of war who could draw up in battle formation, came to Hebron with (A)a perfect heart to make David king over all Israel; and all the rest also of Israel were of one mind to make David king."
+      "38": "All these, being men of war who could draw up in battle formation, came to Hebron with (A)a perfect heart to make David king over all Israel; and all the rest also of Israel were of one mind to make David king.",
+      "31": "Of the half-tribe of Manasseh 18,000, who were designated by name to come and make David king.",
+      "40": "Moreover those who were near to them, even as far as Issachar and Zebulun and Naphtali, (A)brought food on donkeys, camels, mules and on oxen, great quantities of flour cakes, fig cakes and bunches of raisins, wine, oil, oxen and sheep. There was joy indeed in Israel."
+    },
+    "2": {
+      "31": "The [a]son of Appaim was Ishi. And the [b]son of Ishi was Sheshan. And the [c]son of Sheshan was Ahlai.",
+      "35": "Sheshan gave his daughter to Jarha his servant in marriage, and she bore him Attai.",
+      "39": "and Azariah became the father of Helez, and Helez became the father of Eleasah,",
+      "45": "The son of Shammai was Maon, and Maon was the father of Bethzur.",
+      "47": "The sons of Jahdai were Regem, Jotham, Geshan, Pelet, Ephah and Shaaph.",
+      "6": "The sons of Zerah were [a]Zimri, Ethan, Heman, Calcol and [b]Dara; five of them in all.",
+      "27": "The sons of Ram, the firstborn of Jerahmeel, were Maaz, Jamin and Eker.",
+      "34": "Now Sheshan had no sons, only daughters. And Sheshan had an Egyptian servant whose name was Jarha."
+    },
+    "4": {
+      "12": "Eshton became the father of Beth-rapha and Paseah, and Tehinnah the father of [a]Ir-nahash. These are the men of Recah."
+    },
+    "5": {
+      "5": "Micah his son, Reaiah his son, Baal his son,"
+    },
+    "1": {
+      "35": "(A)The sons of Esau were Eliphaz, Reuel, Jeush, Jalam and Korah.",
+      "41": "The [a]son of Anah was Dishon. And the sons of Dishon were [b]Hamran, Eshban, Ithran and Cheran.",
+      "48": "When Samlah died, Shaul of Rehoboth by the River became king in his place."
+    },
+    "3": {
+      "1": "Family of David3 (A)Now these were the sons of David who were born to him in Hebron: the firstborn was Amnon, by Ahinoam the Jezreelitess; the second was Daniel, by Abigail the Carmelitess;"
     }
   },
   "Luke": {
@@ -20,7 +49,34 @@
     "12": {
       "32": "(A)Do not be afraid, (B)little flock, for (C)your Father has chosen gladly to give you the kingdom.",
       "35": "Be in Readiness35 \u201c[a](A)Be dressed in (B)readiness, and keep your lamps lit.",
-      "44": "Truly I say to you that he will put him in charge of all his possessions."
+      "44": "Truly I say to you that he will put him in charge of all his possessions.",
+      "14": "But He said to him, \u201c(A)Man, who appointed Me a judge or arbitrator over you?\u201d",
+      "28": "But if God so clothes the grass in the field, which is alive today and tomorrow is thrown into the furnace, how much more will He clothe you? (A)You men of little faith!",
+      "37": "Blessed are those slaves whom the master will find (A)on the alert when he comes; truly I say to you, that (B)he will gird himself to serve, and have them recline at the table, and will come up and wait on them.",
+      "45": "But if that slave says in his heart, \u2018My master [a]will be a long time in coming,\u2019 and begins to beat the slaves, both men and women, and to eat and drink and get drunk;"
+    },
+    "2": {
+      "21": "Jesus Presented at the Temple21 And when (A)eight days had passed, [a]before His circumcision, (B)His name was then called Jesus, the name given by the angel before He was conceived in the womb.",
+      "28": "then he took Him into his arms, and blessed God, and said,",
+      "42": "And when He became twelve, they went up there according to the custom of the Feast;",
+      "49": "And He said to them, \u201cWhy is it that you were looking for Me? Did you not know that (A)I had to be in My Father\u2019s [a]house?\u201d",
+      "36": "And there was a (A)prophetess, [a]Anna the daughter of Phanuel, of (B)the tribe of Asher. She was advanced in [b]years (C)and had lived with her husband seven years after her [c]marriage,"
+    },
+    "4": {
+      "27": "And there were many lepers in Israel in the time of Elisha the prophet; and none of them was cleansed, but (A)only Naaman the Syrian.\u201d",
+      "32": "and (A)they were amazed at His teaching, for (B)His [a]message was with authority.",
+      "36": "And amazement came upon them all, and they began talking with one another saying, \u201cWhat is [a]this message? For (A)with authority and power He commands the unclean spirits and they come out.\u201d",
+      "38": "Many Are Healed38 (A)Then He got up and left the synagogue, and entered Simon\u2019s home. Now Simon\u2019s mother-in-law was (B)suffering from a high fever, and they asked Him [a]to help her."
+    },
+    "5": {
+      "25": "Immediately he got up before them, and picked up what he had been lying on, and went home (A)glorifying God.",
+      "31": "And Jesus answered and said to them, \u201c(A)It is not those who are well who need a physician, but those who are sick.",
+      "36": "And He was also telling them a parable: \u201cNo one tears a piece of cloth from a new garment and puts it on an old garment; otherwise he will both tear the new, and the piece from the new will not match the old."
+    },
+    "1": {
+      "24": "After these days Elizabeth his wife became pregnant, and she [a]kept herself in seclusion for five months, saying,",
+      "43": "And [a]how has it happened to me, that the mother of (A)my Lord would come to me?",
+      "49": "\u201cFor the Mighty One has done great things for me;And holy is His name."
     }
   },
   "Nehemiah": {
@@ -30,28 +86,88 @@
     "12": {
       "39": "and above (A)the Gate of Ephraim, by (B)the Old Gate, by the (C)Fish Gate, (D)the Tower of Hananel and the Tower of the Hundred, as far as the Sheep Gate; and they stopped at (E)the Gate of the Guard.",
       "41": "and the priests, Eliakim, Maaseiah, Miniamin, Micaiah, Elioenai, Zechariah and Hananiah, with the trumpets;",
-      "45": "For they performed the [a]worship of their God and the service of purification, together with the singers and the gatekeepers (A)in accordance with the command of David and of his son Solomon."
+      "45": "For they performed the [a]worship of their God and the service of purification, together with the singers and the gatekeepers (A)in accordance with the command of David and of his son Solomon.",
+      "34": "Judah, Benjamin, Shemaiah, Jeremiah,"
+    },
+    "5": {
+      "8": "I said to them, \u201cWe according to our ability (A)have [a]redeemed our Jewish brothers who were sold to the nations; now would you even sell your brothers that they may be sold to us?\u201d Then they were silent and could not find a word to say."
+    },
+    "2": {
+      "9": "Then I came to (A)the governors of the provinces beyond the River and gave them the king\u2019s letters. Now (B)the king had sent with me officers of the army and horsemen."
+    },
+    "3": {
+      "4": "Next to them Meremoth the son of Uriah the son of Hakkoz made repairs. And next to him Meshullam the son of Berechiah the son of Meshezabel made repairs. And next to [a]him Zadok the son of Baana also made repairs."
     }
   },
   "Hebrews": {
     "11": {
       "37": "They were (A)stoned, they were (B)sawn in two, [a]they were tempted, they were (C)put to death with the sword; they went about (D)in sheepskins, in goatskins, being destitute, afflicted, (E)ill-treated"
+    },
+    "3": {
+      "15": "while it is said,\u201c(A)Today if you hear His voice,Do not harden your hearts, as [a]when they provoked Me.\u201d"
+    },
+    "1": {
+      "6": "And [a]when He again (A)brings the firstborn into [b](B)the world, He says,\u201c(C)And let all the angels of God worship Him.\u201d"
+    },
+    "2": {
+      "14": "Therefore, since the children share in [a](A)flesh and blood, (B)He Himself likewise also partook of the same, that (C)through death He might render powerless (D)him who had the power of death, that is, the devil,"
     }
   },
   "Leviticus": {
     "11": {
       "38": "Though if water is put on the seed and a part of their carcass falls on it, it is unclean to you."
+    },
+    "2": {
+      "8": "When you bring in the grain offering which is made of these things to the Lord, it shall be presented to the priest and he shall bring it to the altar."
+    },
+    "3": {
+      "3": "From the sacrifice of the peace offerings he shall present an offering by fire to the Lord, the fat that covers the entrails and all the fat that is on the entrails,"
+    },
+    "4": {
+      "31": "(A)Then he shall remove all its fat, just as the fat was removed from the sacrifice of peace offerings; and the priest shall offer it up in smoke on the altar for (B)a soothing aroma to the Lord. Thus the priest shall make atonement for him, [a]and he will be forgiven."
     }
   },
   "Judges": {
     "11": {
       "39": "At the end of two months she returned to her father, who did to her according to the vow which he had made; and she [a]had no relations with a man. Thus it became a custom in Israel,"
+    },
+    "2": {
+      "19": "But it came about when the judge died, that they would turn back and act more corruptly than their fathers, in following other gods to serve them and bow down to them; they did not abandon their practices or their stubborn ways."
+    },
+    "5": {
+      "28": "\u201cOut of the window she looked and lamented,The mother of Sisera through the [a]lattice,\u2018Why does his chariot delay in coming?Why do the [b]hoofbeats of his chariots tarry?\u2019"
     }
   },
   "1 Kings": {
     "11": {
       "40": "Solomon sought therefore to put Jeroboam to death; but Jeroboam arose and fled to Egypt to (A)Shishak king of Egypt, and he was in Egypt until the death of Solomon.",
       "43": "And Solomon (A)slept with his fathers and was buried in the city of his father David, and his son (B)Rehoboam reigned in his place."
+    },
+    "2": {
+      "26": "Then to Abiathar the priest the king said, \u201c(A)Go to Anathoth to your own field, (B)for you [a]deserve to die; but I will not put you to death at this time, because (C)you carried the ark of the Lord [b]God before my father David, and because (D)you were afflicted in everything with which my father was afflicted.\u201d",
+      "38": "Shimei then said to the king, \u201cThe word is good. As my lord the king has said, so your servant will do.\u201d So Shimei lived in Jerusalem many days.",
+      "44": "The king also said to Shimei, \u201c(A)You know all the evil which [a]you acknowledge in your heart, which you did to my father David; therefore (B)the Lord shall return your evil on your own head.",
+      "4": "so that (A)the Lord may carry out His promise which He spoke concerning me, saying, \u2018(B)If your sons are careful of their way, (C)to walk before Me in [a]truth with all their heart and with all their soul, [b](D)you shall not lack a man on the throne of Israel.\u2019",
+      "23": "Then King Solomon swore by the Lord, saying, \u201cMay God do so to me and more also, if Adonijah has (A)not spoken this word against his own [a]life.",
+      "33": "(A)So shall their blood return on the head of Joab and on the head of his [a]descendants forever; but to David and his [b]descendants and his house and his throne, may there be peace from the Lord forever.\u201d"
+    },
+    "3": {
+      "7": "Now, O Lord my God, (A)You have made Your servant king in place of my father David, yet (B)I am but a little child; (C)I do not know how to go out or come in.",
+      "16": "Solomon Wisely Judges16 Then two women who were harlots came to the king and stood before him."
+    },
+    "5": {
+      "3": "\u201cYou know that (A)David my father was unable to build a house for the name of the Lord his God because of the wars which surrounded him, until the Lord put them under the soles of his feet."
+    },
+    "12": {
+      "30": "Now (A)this thing became a sin, for the people went to worship before the one as far as Dan.",
+      "33": "Then he [a]went up to the altar which he had made in Bethel on the fifteenth day in the eighth month, even in the month which he had [b](A)devised [c]in his own heart; and he [d]instituted a feast for the sons of Israel and [e]went up to the altar (B)to burn [f]incense."
+    },
+    "1": {
+      "28": "Then King David said, \u201cCall Bathsheba to me.\u201d And she came into the king\u2019s presence and stood before the king.",
+      "33": "The king said to them, \u201cTake with you (A)the servants of your lord, and have my son Solomon ride on my own mule, and bring him down to (B)Gihon.",
+      "34": "Let Zadok the priest and Nathan the prophet (A)anoint him there as king over Israel, and (B)blow the trumpet and say, \u2018(C)Long live King Solomon!\u2019",
+      "40": "All the people went up after him, and the people [a]were playing on flutes and rejoicing with great joy, so that the earth [b]shook at their noise.",
+      "47": "Moreover, the king\u2019s servants came to bless our lord King David, saying, \u2018May (A)your God make the name of Solomon better than your name and his throne greater than your throne!\u2019 And (B)the king bowed himself on the bed."
     }
   },
   "John": {
@@ -59,31 +175,656 @@
       "41": "So they removed the (A)stone. Then Jesus (B)raised His eyes, and said, \u201c(C)Father, I thank You that You have heard Me."
     },
     "12": {
-      "36": "While you have the Light, (A)believe in the Light, so that you may become (B)sons of Light.\u201dThese things Jesus spoke, and He went away and [a](C)hid Himself from them."
+      "36": "While you have the Light, (A)believe in the Light, so that you may become (B)sons of Light.\u201dThese things Jesus spoke, and He went away and [a](C)hid Himself from them.",
+      "15": "\u201c(A)Fear not, daughter of Zion; behold, your King is coming, seated on a donkey\u2019s colt.\u201d",
+      "38": "This was to fulfill the word of Isaiah the prophet which he spoke: \u201c(A)Lord, who has believed our report? And to whom has the arm of the Lord been revealed?\u201d",
+      "46": "(A)I have come as Light into the world, so that everyone who believes in Me will not remain in darkness."
+    },
+    "3": {
+      "32": "What He has seen and heard, of that He (A)testifies; and (B)no one receives His testimony.",
+      "33": "He who has received His testimony (A)has set his seal to this, that God is true."
+    },
+    "4": {
+      "14": "but whoever drinks of the water that I will give him (A)shall never thirst; but the water that I will give him will become in him a well of water springing up to (B)eternal life.\u201d",
+      "33": "So the (A)disciples were saying to one another, \u201cNo one brought Him anything to eat, did he?\u201d",
+      "37": "For in this case the saying is true, \u2018(A)One sows and another reaps.\u2019",
+      "39": "The Samaritans39 From (A)that city many of the Samaritans believed in Him because of the word of the woman who testified, \u201c(B)He told me all the things that I have done.\u201d",
+      "44": "For Jesus Himself testified that (A)a prophet has no honor in his own country.",
+      "47": "When he heard that Jesus had come (A)out of Judea into Galilee, he went to Him and was imploring Him to come down and heal his son; for he was at the point of death."
+    },
+    "5": {
+      "15": "The man went away, and told (A)the Jews that it was Jesus who had made him well.",
+      "27": "and He gave Him authority to (A)execute judgment, because He is [a]the Son of Man.",
+      "29": "and will come forth; (A)those who did the good deeds to a resurrection of life, those who committed the evil deeds to a resurrection of judgment.",
+      "37": "Witness of the Father37 And the Father who sent Me, (A)He has testified of Me. You have neither heard His voice at any time nor seen His form.",
+      "41": "(A)I do not receive glory from men;",
+      "43": "I have come in My Father\u2019s name, and you do not receive Me; (A)if another comes in his own name, you will receive him.",
+      "44": "How can you believe, when you (A)receive [a]glory from one another and you do not seek (B)the [b]glory that is from (C)the one and only God?",
+      "46": "For if you believed Moses, you would believe Me, for (A)he wrote about Me."
+    },
+    "1": {
+      "37": "The two disciples heard him speak, and they followed Jesus.",
+      "44": "Now (A)Philip was from (B)Bethsaida, of the city of Andrew and Peter."
     }
   },
   "Daniel": {
     "11": {
       "44": "But rumors from the East and from the North will disturb him, and he will go forth with great wrath to destroy and [a]annihilate many."
+    },
+    "2": {
+      "30": "But as for me, this mystery has not been revealed to me for any (A)wisdom [a]residing in me more than in any other living man, but for the purpose of making the interpretation known to the king, and that you may [b]understand the (B)thoughts of your [c]mind.",
+      "41": "In that you saw the feet and toes, partly of potter\u2019s clay and partly of iron, it will be a divided kingdom; but it will have in it the toughness of iron, inasmuch as you saw the iron mixed with [a]common clay.",
+      "48": "Then the king [a](A)promoted Daniel and gave him many great gifts, and he made him ruler over the whole (B)province of Babylon and chief [b]prefect over all the wise men of Babylon.",
+      "11": "Moreover, the thing which the king demands is [a]difficult, and there is no one else who could declare it [b]to the king except (A)gods, whose (B)dwelling place is not with mortal flesh.\u201d",
+      "35": "Then the iron, the clay, the bronze, the silver and the gold were crushed [a]all at the same time and became (A)like chaff from the summer threshing floors; and the wind carried them away so that (B)not a trace of them was found. But the stone that struck the statue became a great (C)mountain and filled the whole earth.",
+      "47": "The king answered Daniel and said, \u201cSurely (A)your God is a (B)God of gods and a Lord of kings and a (C)revealer of mysteries, since you have been able to reveal this mystery.\u201d"
+    },
+    "3": {
+      "27": "The (A)satraps, the prefects, the governors and the king\u2019s high officials gathered around and saw in regard to these men that the (B)fire had no [a]effect on [b]the bodies of these men nor was the hair of their head singed, nor were their [c](C)trousers [d]damaged, nor had the smell of fire even come upon them."
+    },
+    "4": {
+      "35": "\u201c(A)All the inhabitants of the earth are accounted as nothing,But (B)He does according to His will in the host of heavenAnd among the inhabitants of earth;And (C)no one can [a]ward off His handOr say to Him, \u2018(D)What have You done?\u2019"
     }
   },
   "Mark": {
     "12": {
       "33": "(A)and to love Him with all the heart and with all the understanding and with all the strength, and to love one\u2019s neighbor as himself, (B)is much more than all burnt offerings and sacrifices.\u201d",
       "34": "When Jesus saw that he had answered intelligently, He said to him, \u201cYou are not far from the kingdom of God.\u201d (A)After that, no one would venture to ask Him any more questions.",
-      "43": "Calling His disciples to Him, He said to them, \u201cTruly I say to you, this poor widow put in more than all [a]the contributors to the treasury;"
+      "43": "Calling His disciples to Him, He said to them, \u201cTruly I say to you, this poor widow put in more than all [a]the contributors to the treasury;",
+      "27": "(A)He is not the God [a]of the dead, but of the living; you are greatly mistaken.\u201d",
+      "36": "David himself said [a]in the Holy Spirit,\u2018(A)The Lord said to my Lord,\u201cSit at My right hand,Until I put Your enemies beneath Your feet.\u201d\u2019"
+    },
+    "2": {
+      "27": "Jesus said to them, \u201c(A)The Sabbath [a]was made [b]for man, and (B)not man [c]for the Sabbath."
+    },
+    "3": {
+      "20": "And He *came [a](A)home, and the (B)crowd *gathered again, (C)to such an extent that they could not even eat [b]a meal.",
+      "29": "but (A)whoever blasphemes against the Holy Spirit never has forgiveness, but is guilty of an eternal sin\u201d\u2014"
+    },
+    "4": {
+      "6": "And after the sun had risen, it was scorched; and because it had no root, it withered away.",
+      "26": "Parable of the Seed26 And He was saying, \u201cThe kingdom of God is like a man who casts seed upon the soil;"
+    },
+    "5": {
+      "24": "And He went off with him; and a large crowd was following Him and pressing in on Him.",
+      "35": "While He was still speaking, they *came from the house of the (A)synagogue official, saying, \u201cYour daughter has died; why trouble the Teacher anymore?\u201d",
+      "40": "They began laughing at Him. But putting them all out, He *took along the child\u2019s father and mother and His own companions, and *entered the room where the child was."
+    },
+    "6": {
+      "18": "For John had been saying to Herod, \u201c(A)It is not lawful for you to have your brother\u2019s wife.\u201d"
+    },
+    "1": {
+      "29": "Crowds Healed29 (A)And immediately after they came (B)out of the synagogue, they came into the house of Simon and Andrew, with [a]James and John.",
+      "36": "Simon and his companions searched for Him;",
+      "42": "Immediately the leprosy left him and he was cleansed."
     }
   },
   "Exodus": {
     "12": {
-      "37": "Now the (A)sons of Israel journeyed from (B)Rameses to Succoth, about (C)six hundred thousand men on foot, aside from children."
+      "37": "Now the (A)sons of Israel journeyed from (B)Rameses to Succoth, about (C)six hundred thousand men on foot, aside from children.",
+      "17": "You shall also observe (A)the Feast of Unleavened Bread, for on this (B)very day I brought your hosts out of the land of Egypt; therefore you shall observe this day throughout your generations as (C)a [a]permanent ordinance.",
+      "22": "(A)You shall take a bunch of hyssop and dip it in the blood which is in the basin, and [a]apply some of the blood that is in the basin to the lintel and the two doorposts; and none of you shall go outside the door of his house until morning.",
+      "39": "They baked the dough which they had brought out of Egypt into cakes of unleavened bread. For it had not become leavened, since they were (A)driven out of Egypt and could not delay, nor had they [a]prepared any provisions for themselves.",
+      "47": "(A)All the congregation of Israel are to [a]celebrate this.",
+      "48": "But (A)if a [a]stranger sojourns with you, and [b]celebrates the Passover to the Lord, let all his males be circumcised, and then let him come near to [c]celebrate it; and he shall be like a native of the land. But no uncircumcised person may eat of it."
+    },
+    "3": {
+      "2": "(A)The angel of the Lord appeared to him in a blazing fire from the midst of [a]a (B)bush; and he looked, and behold, the bush was burning with fire, yet the bush was not consumed."
+    },
+    "4": {
+      "11": "The Lord said to him, \u201cWho has made man\u2019s mouth? Or (A)who makes him mute or deaf, or seeing or blind? Is it not I, the Lord?",
+      "22": "Then you shall say to Pharaoh, \u2018Thus says the Lord, \u201c(A)Israel is My son, My firstborn.",
+      "30": "and (A)Aaron spoke all the words which the Lord had spoken to Moses. He then performed the (B)signs in the sight of the people."
     }
   },
   "Matthew": {
     "12": {
       "40": "for just as (A)Jonah was three days and three nights in the belly of the sea monster, so will (B)the Son of Man be (C)three days and three nights in the heart of the earth.",
       "42": "(A)The Queen of the South will rise up with this generation at the judgment and will condemn it, because she came from the ends of the earth to hear the wisdom of Solomon; and behold, (B)something greater than Solomon is here.",
-      "46": "Changed Relationships46 (A)While He was still speaking to the crowds, behold, His (B)mother and (C)brothers were standing outside, seeking to speak to Him."
+      "46": "Changed Relationships46 (A)While He was still speaking to the crowds, behold, His (B)mother and (C)brothers were standing outside, seeking to speak to Him.",
+      "26": "If (A)Satan casts out Satan, he [a]is divided against himself; how then will his kingdom stand?",
+      "35": "(A)The good man brings out of his good treasure [a]what is good; and the evil man brings out of his evil treasure [b]what is evil.",
+      "49": "And stretching out His hand toward His disciples, He said, \u201cBehold My mother and My brothers!"
+    },
+    "4": {
+      "5": "Then the devil *took Him into (A)the holy city and had Him stand on the pinnacle of the temple,",
+      "19": "And He *said to them, \u201c[a]Follow Me, and I will make you fishers of men.\u201d"
+    },
+    "5": {
+      "33": "\u201cAgain, (A)you have heard that [a]the ancients were told, \u2018[b](B)You shall not [c]make false vows, but shall fulfill your [d]vows to the Lord.\u2019",
+      "34": "But I say to you, (A)make no oath at all, either by heaven, for it is (B)the throne of God,",
+      "39": "But I say to you, do not resist an evil person; but (A)whoever slaps you on your right cheek, turn the other to him also.",
+      "45": "so that you may [a]be (A)sons of your Father who is in heaven; for He causes His sun to rise on the evil and the good, and sends rain on the righteous and the unrighteous.",
+      "47": "If you greet only your brothers, what more are you doing than others? Do not even the Gentiles do the same?",
+      "48": "Therefore [a](A)you are to be perfect, as your heavenly Father is perfect."
+    }
+  },
+  "Numbers": {
+    "2": {
+      "9": "The total of the numbered men of the camp of Judah: 186,400, by their armies. (A)They shall set out first.",
+      "24": "The total of the numbered men of the camp of Ephraim: 108,100, by their armies. And (A)they shall set out third."
+    },
+    "3": {
+      "4": "(A)But Nadab and Abihu died before the Lord when they offered strange fire before the Lord in the wilderness of Sinai; and they had no children. So Eleazar and Ithamar served as priests [a]in the lifetime of their father Aaron.",
+      "31": "Now (A)their duties involved (B)the ark, (C)the table, (D)the lampstand, (E)the altars, and the utensils of the sanctuary with which they minister, and the screen, and all the service [a]concerning them;",
+      "34": "Their numbered men in the numbering of every male from a month old and upward, were 6,200.",
+      "36": "Now the appointed duties of the sons of Merari involved the frames of the tabernacle, its bars, its pillars, its sockets, all its equipment, and the service concerning them,",
+      "37": "and the pillars around the court with their sockets and their pegs and their cords.",
+      "41": "You (A)shall take the Levites for Me, I am the Lord, instead of all the firstborn among the sons of Israel, and the cattle of the Levites instead of all the firstborn among the cattle of the sons of Israel.\u201d",
+      "43": "and all the firstborn males by the number of names from a month old and upward, for their numbered men were (A)22,273.",
+      "45": "\u201c(A)Take the Levites instead of all the firstborn among the sons of Israel and the cattle of the Levites. And the Levites shall be Mine; I am the Lord.",
+      "47": "you shall take (A)five shekels apiece, per head; you shall take them in (B)terms of the shekel of the sanctuary ((C)the shekel is twenty [a]gerahs),",
+      "49": "So Moses took the ransom money from those who were in excess, beyond those ransomed by the Levites;"
+    },
+    "4": {
+      "40": "Their numbered men by their families, by their fathers\u2019 households, were 2,630.",
+      "42": "The numbered men of the families of the sons of Merari by their families, by their fathers\u2019 households,",
+      "45": "These are the numbered men of the families of the sons of Merari, whom Moses and Aaron numbered according to the [a]commandment of the Lord [b]through Moses.",
+      "48": "Their numbered men were (A)8,580."
+    },
+    "5": {
+      "18": "The priest shall then have the woman stand before the Lord and let the hair of the woman\u2019s head go loose, and place the grain offering of memorial [a]in her hands, which is the grain offering of jealousy, and in the hand of the priest is to be the water of bitterness that brings a curse.",
+      "26": "and (A)the priest shall take a handful of the grain offering as its memorial offering and offer it up in smoke on the altar, and afterward he shall make the woman drink the water."
+    },
+    "1": {
+      "38": "(A)Of the sons of Dan, their genealogical registration by their families, by their fathers\u2019 households, according to the number of names, from twenty years old and upward, whoever was able to go out to war,",
+      "45": "So all the numbered men of the sons of Israel by their fathers\u2019 households, from twenty years old and upward, whoever was able to go out to war in Israel,"
+    }
+  },
+  "Deuteronomy": {
+    "2": {
+      "10": "(The (A)Emim lived there formerly, a people as great, numerous, and tall as the Anakim.",
+      "33": "(A)The Lord our God delivered him [a]over to us, and we [b](B)defeated him with his sons and all his people."
+    },
+    "3": {
+      "5": "All these were cities fortified with high walls, gates and bars, besides a great many [a]unwalled towns.",
+      "28": "(A)But charge Joshua and encourage him and strengthen him, (B)for he shall go across [a]at the head of this people, and he will give them as an inheritance the land which you will see.\u2019"
+    },
+    "4": {
+      "20": "But the Lord has taken you and brought you out of (A)the iron furnace, from Egypt, to (B)be a people for His own possession, as today.",
+      "41": "(A)Then Moses set apart three cities across the Jordan to the [a]east,",
+      "43": "(A)Bezer in the wilderness on the plateau for the Reubenites, and Ramoth in Gilead for the Gadites, and Golan in Bashan for the Manassites.",
+      "46": "across the Jordan, in the valley (A)opposite Beth-peor, in the land of (B)Sihon king of the Amorites who lived at Heshbon, whom Moses and the sons of Israel [a]defeated when they came out from Egypt.",
+      "49": "with all the Arabah across the Jordan to the east, even as far as the sea of the Arabah, [a]at the foot of the slopes of Pisgah."
+    },
+    "5": {
+      "32": "So you shall observe to do just as the Lord your God has commanded you; (A)you shall not turn aside to the right or to the left."
+    },
+    "12": {
+      "18": "But (A)you shall eat them before the Lord your God in (B)the place which the Lord your God will choose, you and your son and daughter, and your male and female servants, and the (C)Levite who is within your gates; and you shall (D)rejoice before the Lord your God in all [a]your undertakings.",
+      "23": "Only be sure (A)not to eat the blood, for the blood is the [a]life, and you shall not eat the [b]life with the flesh.",
+      "25": "You shall not eat it, so that (A)it may be well with you and your sons after you, for (B)you will be doing what is right in the sight of the Lord.",
+      "29": "\u201cWhen (A)the Lord your God cuts off before you the nations which you are going in to dispossess, and you dispossess them and dwell in their land,",
+      "32": "\u201c[a](A)Whatever I command you, you shall be careful to do; (B)you shall not add to nor take away from it."
+    },
+    "1": {
+      "23": "The thing pleased me and I took twelve of your men, one man for each tribe.",
+      "32": "But [a](A)for all this, you did not trust the Lord your God,",
+      "39": "Moreover, (A)your little ones who you said would become a prey, and your sons, who this day have (B)no knowledge of good or evil, shall enter there, and I will give it to them and they shall possess it.",
+      "46": "So you remained in (A)Kadesh many days, [a]the days that you spent there."
+    }
+  },
+  "2 Chronicles": {
+    "2": {
+      "11": "Huram to Assist11 Then Huram, king of Tyre, [a]answered in a letter sent to Solomon: \u201c(A)Because the Lord loves His people, He has made you king over them.\u201d",
+      "7": "Now (A)send me a skilled man to work in gold, silver, brass and iron, and in purple, crimson and violet fabrics, and who knows how to make engravings, to work with the skilled men [a](B)whom I have in Judah and Jerusalem, whom David my father provided."
+    },
+    "5": {
+      "6": "And King Solomon and all the congregation of Israel who were assembled with him before the ark, were sacrificing [a]so many sheep and oxen that they could not be counted or numbered.",
+      "14": "so that the priests could not stand to minister because of the cloud, for (A)the glory of the Lord filled the house of God."
+    },
+    "3": {
+      "2": "He began to build on the second day in the second month [a]of the fourth year of his reign."
+    }
+  },
+  "Ezra": {
+    "2": {
+      "12": "the sons of Azgad, 1,222;",
+      "32": "the sons of Harim, 320;",
+      "36": "Priests Returning36 (A)The priests: the sons of Jedaiah of the house of Jeshua, 973;",
+      "37": "the sons of (A)Immer, 1,052;",
+      "40": "Levites Returning40 The Levites: the sons of Jeshua and Kadmiel, of the sons of [a]Hodaviah, 74.",
+      "46": "the sons of Hagab, the sons of Shalmai, the sons of Hanan,",
+      "8": "the sons of Zattu, 945;",
+      "28": "the men of Bethel and Ai, 223;"
+    },
+    "5": {
+      "7": "They sent a report to him in which it was written thus: \u201cTo Darius the king, all peace."
+    },
+    "3": {
+      "3": "So they set up the altar on its foundation, for [a](A)they were terrified because of the peoples of the lands; and they (B)offered burnt offerings on it to the Lord, burnt offerings morning and evening."
+    }
+  },
+  "Ecclesiastes": {
+    "2": {
+      "13": "And I saw that (A)wisdom excels folly as light excels darkness."
+    },
+    "4": {
+      "13": "A (A)poor yet wise lad is better than an old and foolish king who no longer knows how to receive [a]instruction."
+    },
+    "5": {
+      "19": "Furthermore, as for every man to whom (A)God has given riches and wealth, He has also (B)empowered him to eat from them and to receive his [a]reward and rejoice in his labor; this is the (C)gift of God."
+    }
+  },
+  "Romans": {
+    "2": {
+      "14": "For when Gentiles who do not have [a]the Law do [b](A)instinctively the things of the Law, these, not having [c]the Law, are a law to themselves,"
+    },
+    "3": {
+      "13": "\u201c(A)Their throat is an open grave,With their tongues they keep deceiving,\u201d\u201c(B)The poison of asps is under their lips\u201d;"
+    },
+    "12": {
+      "21": "Do not be overcome by evil, but overcome evil with good."
+    },
+    "1": {
+      "26": "For this reason (A)God gave them over to (B)degrading passions; for their women exchanged the natural function for that which is [a]unnatural,"
+    }
+  },
+  "Revelation": {
+    "2": {
+      "16": "Therefore (A)repent; or else (B)I am coming to you quickly, and I will make war against them with (C)the sword of My mouth."
+    },
+    "3": {
+      "18": "I advise you to (A)buy from Me (B)gold refined by fire so that you may become rich, and (C)white garments so that you may clothe yourself, and that (D)the shame of your nakedness will not be revealed; and eye salve to anoint your eyes so that you may see.",
+      "19": "(A)Those whom I love, I reprove and discipline; therefore be zealous and (B)repent."
+    },
+    "4": {
+      "9": "And when the living creatures give glory and honor and thanks to Him who (A)sits on the throne, to (B)Him who lives forever and ever,"
+    },
+    "1": {
+      "10": "I was [a](A)in the Spirit on (B)the Lord\u2019s day, and I heard behind me a loud voice (C)like the sound of a trumpet,"
+    }
+  },
+  "Esther": {
+    "2": {
+      "17": "Esther Becomes Queen17 The king loved Esther more than all the women, and she found favor and kindness with him more than all the virgins, so that (A)he set the royal crown on her head and made her queen instead of Vashti.",
+      "10": "(A)Esther did not make known her people or her kindred, for Mordecai had instructed her that she should not make them known."
+    },
+    "3": {
+      "9": "If it is pleasing to the king, let it be [a]decreed that they be destroyed, and I will pay ten thousand talents of silver into the hands of those who carry on the king\u2019s business, to put into the king\u2019s treasuries.\u201d",
+      "5": "When Haman saw that (A)Mordecai neither bowed down nor paid homage to him, Haman was filled with rage."
+    },
+    "5": {
+      "9": "Haman\u2019s Pride9 Then Haman went out that day glad and pleased of heart; but when Haman saw Mordecai (A)in the king\u2019s gate and (B)that he did not stand up or [a]tremble before him, Haman was filled with anger against Mordecai."
+    }
+  },
+  "1 Thessalonians": {
+    "2": {
+      "18": "[a]For (A)we wanted to come to you\u2014I, Paul, [b](B)more than once\u2014and yet (C)Satan (D)hindered us."
+    },
+    "4": {
+      "7": "For (A)God has not called us for (B)the purpose of impurity, but [a]in sanctification."
+    }
+  },
+  "Ruth": {
+    "2": {
+      "20": "Naomi said to her daughter-in-law, \u201c(A)May he be blessed of the Lord who has not withdrawn his kindness to the living and to the dead.\u201d Again Naomi said to her, \u201cThe man is [a]our relative, he is one of our [b]closest relatives.\u201d",
+      "1": "Ruth Gleans in Boaz\u2019 Field2 Now Naomi had [a]a kinsman of her husband, a [b]man of great wealth, of the family of (A)Elimelech, whose name was Boaz.",
+      "22": "Naomi said to Ruth her daughter-in-law, \u201cIt is good, my daughter, that you go out with his maids, so that others do not fall upon you in another field.\u201d"
+    }
+  },
+  "2 Timothy": {
+    "2": {
+      "22": "Now (A)flee from youthful lusts and pursue righteousness, (B)faith, love and peace, with those who (C)call on the Lord (D)from a pure heart.",
+      "26": "and they may come to their senses and escape from (A)the snare of the devil, having been (B)held captive [a]by him to do his will."
+    },
+    "1": {
+      "3": "(A)I thank God, whom I (B)serve with a (C)clear conscience [a]the way my forefathers did, (D)as I constantly remember you in my [b]prayers night and day,"
+    }
+  },
+  "1 Peter": {
+    "2": {
+      "23": "[a]and while being (A)reviled, He did not revile in return; while suffering, He uttered no threats, but kept entrusting Himself to Him who judges righteously;"
+    },
+    "5": {
+      "14": "(A)Greet one another with a kiss of love.(B)Peace be to you all who are in Christ."
+    },
+    "1": {
+      "20": "For He was (A)foreknown before (B)the foundation of the world, but has (C)appeared [a]in these last times (D)for the sake of you"
+    }
+  },
+  "Joel": {
+    "2": {
+      "25": "\u201cThen I will make up to you for the yearsThat the swarming (A)locust has eaten,The creeping locust, the stripping locust and the gnawing locust,My great army which I sent among you.",
+      "24": "The threshing floors will be full of grain,And the vats will (A)overflow with the new wine and oil."
+    },
+    "3": {
+      "11": "[a](A)Hasten and come, all you surrounding nations,And gather yourselves there.Bring down, O Lord, Your (B)mighty ones."
+    }
+  },
+  "Acts": {
+    "2": {
+      "29": "\u201c[a]Brethren, I may confidently say to you regarding the (A)patriarch David that he both (B)died and (C)was buried, and (D)his tomb is [b]with us to this day.",
+      "43": "[a]Everyone kept feeling a sense of awe; and many (A)wonders and [b]signs were taking place through the apostles.",
+      "37": "The Ingathering37 Now when they heard this, they were [a]pierced to the heart, and said to Peter and the rest of the apostles, \u201c[b]Brethren, [c](A)what shall we do?\u201d"
+    },
+    "4": {
+      "34": "For there was not a needy person among them, for all who were owners of land or houses (A)would sell them and bring the [a]proceeds of the sales"
+    },
+    "5": {
+      "21": "Upon hearing this, they entered into the temple (A)about daybreak and began to teach.Now when (B)the high priest and his associates came, they called (C)the [a]Council together, even all the Senate of the sons of Israel, and sent orders to the prison house for them to be brought.",
+      "30": "(A)The God of our fathers (B)raised up Jesus, [a]whom you had (C)put to death by hanging Him on a [b]cross.",
+      "38": "So in the present case, I say to you, stay away from these men and let them alone, for if this plan or [a]action (A)is of men, it will be overthrown;",
+      "42": "(A)And every day, in the temple and [a]from house to house, they [b]kept right on teaching and [c](B)preaching Jesus as the [d]Christ."
+    }
+  },
+  "1 Samuel": {
+    "2": {
+      "34": "This will be (A)the sign to you which will come concerning your two sons, Hophni and Phinehas: (B)on the same day both of them will die.",
+      "2": "\u201c(A)There is no one holy like the Lord,Indeed, (B)there is no one besides You,(C)Nor is there any rock like our God."
+    },
+    "5": {
+      "1": "Capture of the Ark Provokes God5 Now the Philistines took the ark of God and (A)brought it from Ebenezer to (B)Ashdod."
+    },
+    "12": {
+      "20": "Samuel said to the people, \u201cDo not fear. You have committed all this evil, yet (A)do not turn aside from following the Lord, but serve the Lord with all your heart."
+    },
+    "1": {
+      "11": "She (A)made a vow and said, \u201cO Lord of hosts, if You will indeed (B)look on the affliction of Your maidservant and remember me, and not forget Your maidservant, but will give Your maidservant a [a]son, then I will give him to the Lord all the days of his life, and (C)a razor shall never come on his head.\u201d"
+    }
+  },
+  "Genesis": {
+    "3": {
+      "1": "The Fall of Man3 Now (A)the serpent was more crafty than any beast of the field which the Lord God had made. And he said to the woman, \u201cIndeed, has God said, \u2018You shall not eat from [a]any tree of the garden\u2019?\u201d",
+      "22": "Then the Lord God said, \u201cBehold, the man has become like one of (A)Us, knowing good and evil; and now, he might stretch out his hand, and take also from (B)the tree of life, and eat, and live forever\u201d\u2014"
+    },
+    "4": {
+      "10": "He said, \u201cWhat have you done? (A)The voice of your brother\u2019s blood is crying to Me from the ground.",
+      "24": "If Cain is avenged (A)sevenfold,Then Lamech seventy-sevenfold.\u201d"
+    },
+    "5": {
+      "20": "So all the days of Jared were nine hundred and sixty-two years, and he died."
+    },
+    "2": {
+      "25": "(A)And the man and his wife were both naked and were not ashamed."
+    }
+  },
+  "2 Samuel": {
+    "3": {
+      "6": "Abner Joins David6 It came about while there was war between the house of Saul and the house of David that (A)Abner was making himself strong in the house of Saul.",
+      "35": "Then all the people came (A)to [a]persuade David to eat bread while it was still day; but David vowed, saying, \u201c(B)May God do so to me, and more also, if I taste bread or anything else (C)before the sun goes down.\u201d",
+      "38": "Then the king said to his servants, \u201cDo you not know that a prince and a great man has fallen this day in Israel?"
+    },
+    "5": {
+      "2": "Previously, when Saul was king over us, (A)you were the one who led Israel out and in. And the Lord said to you, \u2018(B)You will shepherd My people Israel, and you will be (C)a ruler over Israel.\u2019\u201d"
+    },
+    "2": {
+      "3": "And (A)David brought up his men who were with him, each with his household; and they lived in the cities of Hebron."
+    }
+  },
+  "2 Kings": {
+    "3": {
+      "8": "He said, \u201cWhich way shall we go up?\u201d And he [a]answered, \u201cThe way of the wilderness of Edom.\u201d"
+    },
+    "5": {
+      "4": "[a]Naaman went in and told his master, saying, \u201cThus and thus spoke the girl who is from the land of Israel.\u201d"
+    },
+    "2": {
+      "5": "(A)The sons of the prophets who were at Jericho approached Elisha and said to him, \u201c(B)Do you know that the Lord will take away your master from over [a]you today?\u201d And he [b]answered, \u201cYes, I know; be still.\u201d",
+      "16": "They said to him, \u201cBehold now, there are with your servants fifty strong men, please let them go and search for your master; perhaps (A)the Spirit of the Lord has taken him up and cast him on some mountain or into some valley.\u201d And he said, \u201cYou shall not send.\u201d"
+    }
+  },
+  "Job": {
+    "3": {
+      "10": "Because it did not shut the opening of my mother\u2019s womb,Or hide trouble from my eyes."
+    },
+    "5": {
+      "10": "\u201cHe (A)gives rain on the earthAnd sends water on the fields,",
+      "16": "\u201cSo the helpless has hope,And (A)unrighteousness must shut its mouth."
+    },
+    "12": {
+      "13": "Job Speaks of the Power of God13 \u201cWith Him are (A)wisdom and (B)might;To Him belong counsel and (C)understanding."
+    }
+  },
+  "Malachi": {
+    "3": {
+      "12": "\u201c(A)All the nations will call you blessed, for you shall be a (B)delightful land,\u201d says the Lord of hosts."
+    },
+    "4": {
+      "4": "\u201c[a](A)Remember the law of Moses My servant, even the statutes and ordinances which I commanded him in Horeb for all Israel."
+    },
+    "2": {
+      "17": "You have (A)wearied the Lord with your words. Yet you say, \u201cHow have we wearied Him?\u201d In that you say, \u201c(B)Everyone who does evil is good in the sight of the Lord, and He (C)delights in them,\u201d or, \u201c(D)Where is the God of (E)justice?\u201d"
+    }
+  },
+  "Titus": {
+    "3": {
+      "14": "(A)Our people must also learn to (B)engage in good [a]deeds to meet (C)pressing needs, so that they will not be (D)unfruitful."
+    },
+    "1": {
+      "4": "To (A)Titus, (B)my true child [a]in a (C)common faith: (D)Grace and peace from God the Father and (E)Christ Jesus our Savior."
+    }
+  },
+  "Proverbs": {
+    "3": {
+      "17": "Her (A)ways are pleasant waysAnd all her paths are (B)peace."
+    },
+    "4": {
+      "17": "For they (A)eat the bread of wickednessAnd drink the wine of violence."
+    },
+    "1": {
+      "17": "Indeed, it is [a]useless to spread the baited netIn the sight of any [b]bird;"
+    }
+  },
+  "Colossians": {
+    "3": {
+      "21": "(A)Fathers, do not exasperate your children, so that they will not lose heart."
+    },
+    "4": {
+      "16": "(A)When [a]this letter is read among you, have it also read in the church of the Laodiceans; and you, for your part (B)read [b]my letter that is coming from (C)Laodicea."
+    }
+  },
+  "Jeremiah": {
+    "3": {
+      "23": "\u201cSurely, (A)the hills are a deception,A tumult on the mountains.Surely in the (B)Lord our GodIs the salvation of Israel."
+    },
+    "5": {
+      "23": "\u2018But this people has a (A)stubborn and rebellious heart;They have turned aside and departed."
+    },
+    "2": {
+      "20": "\u201cFor long ago [a](A)I broke your yokeAnd tore off your bonds;But you said, \u2018I will not serve!\u2019For on every (B)high hillAnd under every green treeYou have lain down as a harlot.",
+      "29": "\u201cWhy do you contend with Me?You have (A)all transgressed against Me,\u201d declares the Lord.",
+      "30": "\u201c(A)In vain I have struck your sons;They accepted no chastening.Your (B)sword has devoured your prophetsLike a destroying lion."
+    }
+  },
+  "1 John": {
+    "3": {
+      "24": "The one who (A)keeps His commandments (B)abides in Him, and He in him. (C)We know by this that (D)He abides in us, by the Spirit whom He has given us."
+    },
+    "4": {
+      "18": "There is no fear in love; but (A)perfect love casts out fear, because fear [a]involves punishment, and the one who fears is not (B)perfected in love."
+    },
+    "2": {
+      "21": "I have not written to you because you do not know the truth, but (A)because you do know it, and [a]because no lie is (B)of the truth."
+    }
+  },
+  "Ezekiel": {
+    "3": {
+      "25": "As for you, son of man, they will (A)put ropes on you and bind you with them so that you cannot go out among them."
+    },
+    "1": {
+      "22": "Vision of Divine Glory22 Now (A)over the heads of the living [a]beings there was something like an expanse, like the awesome gleam of [b]crystal, spread out over their heads.",
+      "25": "And there came a voice from above the (A)expanse that was over their heads; whenever they stood still, they dropped their wings.",
+      "27": "Then I [a]noticed from the appearance of His loins and upward something (A)like [b]glowing metal that looked like fire all around within it, and from the appearance of His loins and downward I saw something like fire; and there was a radiance around Him."
+    }
+  },
+  "Galatians": {
+    "3": {
+      "26": "For you are all (A)sons of God through faith in (B)Christ Jesus."
+    },
+    "4": {
+      "28": "And you brethren, (A)like Isaac, are (B)children of promise."
+    },
+    "6": {
+      "5": "For (A)each one will bear his own load."
+    }
+  },
+  "Lamentations": {
+    "3": {
+      "30": "Let him give his (A)cheek to [a]the smiter,Let him be filled with reproach.",
+      "39": "Why should any living [a]mortal, or any man,Offer (A)complaint [b]in view of his sins?",
+      "40": "Let us (A)examine and probe our ways,And let us return to the Lord.",
+      "42": "We have (A)transgressed and rebelled,You have (B)not pardoned.",
+      "44": "You have (A)covered Yourself with a cloudSo that (B)no prayer can pass through.",
+      "46": "All our enemies have (A)opened their mouths against us.",
+      "48": "My [a](A)eyes run down with streams of waterBecause of the destruction of the daughter of my people."
+    },
+    "5": {
+      "12": "Princes were hung by their hands;[a](A)Elders were not respected."
+    },
+    "1": {
+      "12": "\u201cIs (A)it nothing to all you who pass this way?Look and see if there is any [a]pain like my [b]painWhich was severely dealt out to me,Which the (B)Lord inflicted on the day of His (C)fierce anger."
+    }
+  },
+  "Jonah": {
+    "4": {
+      "1": "Jonah\u2019s Displeasure Rebuked4 But it greatly displeased Jonah and he became (A)angry."
+    }
+  },
+  "Micah": {
+    "4": {
+      "2": "(A)Many nations will come and say,\u201c(B)Come and let us go up to the mountain of the LordAnd to the house of the God of Jacob,That (C)He may teach us about His waysAnd that we may walk in His paths.\u201dFor (D)from Zion will go forth the law,Even the word of the Lord from Jerusalem."
+    }
+  },
+  "Zechariah": {
+    "4": {
+      "3": "also (A)two olive trees by it, one on the right side of the bowl and the other on its left side.\u201d"
+    },
+    "1": {
+      "21": "I said, \u201cWhat are these coming to do?\u201d And he said, \u201cThese are the (A)horns which have scattered Judah so that no man lifts up his head; but these craftsmen have come to terrify them, to (B)throw down the horns of the nations who have lifted up their horns against the land of Judah in order to scatter it.\u201d"
+    }
+  },
+  "1 Timothy": {
+    "4": {
+      "8": "for (A)bodily discipline is only of little profit, but (B)godliness is profitable for all things, since it (C)holds promise for the (D)present life and also for the life to come."
+    },
+    "5": {
+      "22": "(A)Do not lay hands upon anyone too hastily and [a]thereby share (B)responsibility for the sins of others; keep yourself [b]free from sin."
+    },
+    "1": {
+      "2": "To (A)Timothy, (B)my true child in the faith: (C)Grace, mercy and peace from God the Father and (D)Christ Jesus our Lord."
+    }
+  },
+  "Philippians": {
+    "4": {
+      "15": "You yourselves also know, Philippians, that at the [a](A)first preaching of the gospel, after I left (B)Macedonia, no church (C)shared with me in the matter of giving and receiving but you alone;",
+      "23": "(A)The grace of the Lord Jesus Christ (B)be with your spirit."
+    },
+    "1": {
+      "15": "(A)Some, to be sure, are preaching Christ even [a]from envy and strife, but some also [b]from good will;",
+      "30": "experiencing the same (A)conflict which (B)you saw in me, and now hear to be in me."
+    }
+  },
+  "Joshua": {
+    "4": {
+      "21": "He said to the sons of [a]Israel, \u201cWhen your children ask their fathers in time to come, saying, \u2018What are these stones?\u2019"
+    },
+    "12": {
+      "16": "the king of Makkedah, one; the king of Bethel, one;",
+      "19": "the king of Madon, one; the king of Hazor, one;",
+      "24": "the king of Tirzah, one: (A)in all, thirty-one kings."
+    },
+    "1": {
+      "16": "They answered Joshua, saying, \u201cAll that you have commanded us we will do, and wherever you send us we will go."
+    },
+    "2": {
+      "18": "[a]unless, when we come into the land, you tie this cord of scarlet thread in the window through which you let us down, and (A)gather to yourself into the house your father and your mother and your brothers and all your father\u2019s household."
+    }
+  },
+  "Ephesians": {
+    "4": {
+      "25": "Therefore, (A)laying aside falsehood, (B)speak truth each one of you with his neighbor, for we are (C)members of one another.",
+      "29": "Let no [a](A)unwholesome word proceed from your mouth, but only such a word as is good for (B)edification [b]according to the need of the moment, so that it will give grace to those who hear."
+    }
+  },
+  "Psalms": {
+    "5": {
+      "11": "But let all who (A)take refuge in You (B)be glad,Let them ever sing for joy;And [a]may You (C)shelter them,That those who (D)love Your name may exult in You."
+    }
+  },
+  "2 Corinthians": {
+    "5": {
+      "13": "For if we [a]are (A)beside ourselves, it is for God; if we are of sound mind, it is for you."
+    },
+    "6": {
+      "4": "but in everything (A)commending ourselves as [a](B)servants of God, (C)in much endurance, in afflictions, in hardships, in distresses,"
+    },
+    "1": {
+      "19": "For (A)the Son of God, Christ Jesus, who was preached among you by us\u2014by me and (B)Silvanus and (C)Timothy\u2014was not yes and no, but is yes (D)in Him."
+    }
+  },
+  "Amos": {
+    "5": {
+      "17": "\u201cAnd in all the (A)vineyards there is wailing,Because I will pass through the midst of you,\u201d says the Lord."
+    }
+  },
+  "2 Thessalonians": {
+    "1": {
+      "1": "Thanksgiving for Faith and Perseverance1 (A)Paul and (B)Silvanus and (C)Timothy,To the (D)church of the Thessalonians in God our Father and the Lord Jesus Christ:"
+    }
+  },
+  "Philemon": {
+    "1": {
+      "5": "because I (A)hear of your love and of the faith which you have toward the Lord Jesus and toward all the [a]saints;"
+    }
+  },
+  "2 John": {
+    "1": {
+      "7": "For (A)many deceivers have (B)gone out into the world, those who (C)do not acknowledge Jesus Christ as coming in the flesh. This is (D)the deceiver and the (E)antichrist."
+    }
+  },
+  "3 John": {
+    "1": {
+      "8": "Therefore we ought to [a]support such men, so that we may [b]be fellow workers [c]with the truth."
+    }
+  },
+  "Jude": {
+    "1": {
+      "9": "But (A)Michael (B)the archangel, when he disputed with the devil and argued about (C)the body of Moses, did not dare pronounce against him a railing judgment, but said, \u201c(D)The Lord rebuke you!\u201d"
+    }
+  },
+  "Obadiah": {
+    "1": {
+      "13": "\u201cDo not enter the gate of My peopleIn the (A)day of their disaster.Yes, you, do not [a]gloat over their calamityIn the day of their disaster.And do not (B)loot their wealthIn the day of their disaster."
+    }
+  },
+  "Zephaniah": {
+    "1": {
+      "14": "Near is the (A)great (B)day of the Lord,Near and coming very quickly;Listen, the day of the Lord![a]In it the warrior (C)cries out bitterly."
+    },
+    "2": {
+      "13": "And He will (A)stretch out His hand against the northAnd destroy (B)Assyria,And He will make (C)Nineveh a desolation,Parched like the wilderness."
+    }
+  },
+  "2 Peter": {
+    "1": {
+      "18": "and we ourselves heard this [a]utterance made from heaven when we were with Him on the (A)holy mountain."
+    }
+  },
+  "Isaiah": {
+    "1": {
+      "31": "The strong man will become tinder,His work also a spark.Thus they shall both (A)burn togetherAnd there will be (B)none to quench them."
+    },
+    "2": {
+      "19": "Men will (A)go into caves of the rocksAnd into holes of the [a]groundBefore the terror of the LordAnd the splendor of His majesty,When He arises (B)to make the earth tremble."
+    },
+    "3": {
+      "7": "He will [a]protest on that day, saying,\u201cI will not be your [b](A)healer,For in my house there is neither bread nor cloak;You should not appoint me ruler of the people.\u201d"
+    }
+  },
+  "Hosea": {
+    "2": {
+      "12": "\u201cI will (A)destroy her vines and fig trees,Of which she said, \u2018These are my wagesWhich my lovers have given me.\u2019And I will (B)make them a forest,And the (C)beasts of the field will devour them."
+    }
+  },
+  "James": {
+    "2": {
+      "15": "(A)If a brother or sister is without clothing and in need of daily food,"
+    }
+  },
+  "Song of Solomon": {
+    "3": {
+      "6": "Solomon\u2019s Wedding Day6 \u201c[a][b](A)What is this coming up from the wildernessLike (B)columns of smoke,Perfumed with (C)myrrh and (D)frankincense,With all scented powders of the merchant?"
     }
   }
 }
