@@ -580,24 +580,26 @@ class ImageGenerator:
             now = datetime.now()
             current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
             
-            # Use smaller time font to fit in horizontal layout
-            time_font = self.reference_font if self.reference_font else self._get_font(24)
+            # Use larger fonts for better visibility in book summary
+            time_font = self._get_font(60) if self._get_font(60) else self.title_font
+            # Use larger title font for book summaries
+            large_title_font = self._get_font(60) if self._get_font(60) else self.title_font
             book_title = f"Book of {book_name}"
             
             # Calculate header height (use the taller of time or title)
             header_height = 0
-            if time_font and self.title_font:
+            if time_font and large_title_font:
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
             
             # Center time and book title together with minimal spacing
-            if time_font and self.title_font:
+            if time_font and large_title_font:
                 # Calculate widths
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
                 time_width = time_bbox[2] - time_bbox[0]
                 
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 title_width = title_bbox[2] - title_bbox[0]
                 
                 # Small spacing between time and book title
@@ -609,19 +611,19 @@ class ImageGenerator:
                 
                 # Draw time first, then book title
                 draw.text((start_x, header_y), current_time, fill=0, font=time_font)
-                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=self.title_font)
+                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=large_title_font)
             elif time_font:
                 # Only time, center it
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
                 time_width = time_bbox[2] - time_bbox[0]
                 time_x = (self.width - time_width) // 2
                 draw.text((time_x, header_y), current_time, fill=0, font=time_font)
-            elif self.title_font:
+            elif large_title_font:
                 # Only book title, center it
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 title_width = title_bbox[2] - title_bbox[0]
                 title_x = (self.width - title_width) // 2
-                draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
+                draw.text((title_x, header_y), book_title, fill=0, font=large_title_font)
             
             # Start content after the header with a reasonable gap
             content_start_y = header_y + header_height + 40  # 40px gap after header
@@ -731,24 +733,26 @@ class ImageGenerator:
             now = datetime.now()
             current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
             
-            # Use smaller time font to fit in horizontal layout
-            time_font = self.reference_font if self.reference_font else self._get_font(24)
+            # Use larger fonts for better visibility in book summary
+            time_font = self._get_font(60) if self._get_font(60) else self.title_font
+            # Use larger title font for book summaries
+            large_title_font = self._get_font(60) if self._get_font(60) else self.title_font
             book_title = f"Book of {book_name}"
             
             # Calculate header height (use the taller of time or title)
             header_height = 0
-            if time_font and self.title_font:
+            if time_font and large_title_font:
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
             
             # Center time and book title together with minimal spacing
-            if time_font and self.title_font:
+            if time_font and large_title_font:
                 # Calculate widths
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
                 time_width = time_bbox[2] - time_bbox[0]
                 
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 title_width = title_bbox[2] - title_bbox[0]
                 
                 # Small spacing between time and book title
@@ -760,19 +764,19 @@ class ImageGenerator:
                 
                 # Draw time first, then book title
                 draw.text((start_x, header_y), current_time, fill=0, font=time_font)
-                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=self.title_font)
+                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=large_title_font)
             elif time_font:
                 # Only time, center it
                 time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
                 time_width = time_bbox[2] - time_bbox[0]
                 time_x = (self.width - time_width) // 2
                 draw.text((time_x, header_y), current_time, fill=0, font=time_font)
-            elif self.title_font:
+            elif large_title_font:
                 # Only book title, center it
-                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=large_title_font)
                 title_width = title_bbox[2] - title_bbox[0]
                 title_x = (self.width - title_width) // 2
-                draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
+                draw.text((title_x, header_y), book_title, fill=0, font=large_title_font)
             
             # Start content after the header with a reasonable gap
             content_start_y = header_y + header_height + 40  # 40px gap after header
