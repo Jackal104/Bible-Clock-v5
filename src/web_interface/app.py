@@ -1170,6 +1170,14 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 # Add wake_word_enabled field for mobile compatibility
                 if 'enabled' in status:
                     status['wake_word_enabled'] = status['enabled']
+                
+                # Add TTS settings from environment for OpenAI TTS compatibility
+                import os
+                tts_volume = os.getenv('TTS_VOLUME', os.getenv('VOICE_VOLUME', '0.8'))
+                tts_playback_mode = os.getenv('TTS_PLAYBACK_MODE', 'audio')
+                status['tts_volume'] = float(tts_volume)
+                status['tts_playback_mode'] = tts_playback_mode
+                
                 return jsonify({'success': True, 'data': status})
             else:
                 return jsonify({
@@ -1246,6 +1254,78 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 voice_control.voice_volume = data['voice_volume']
                 if voice_control.tts_engine:
                     voice_control.tts_engine.setProperty('volume', data['voice_volume'])
+                
+                # Also update TTS_VOLUME in environment for OpenAI TTS (VoiceAssistant)
+                import os
+                try:
+                    # Update TTS_VOLUME for the current session
+                    os.environ['TTS_VOLUME'] = str(data['voice_volume'])
+                    
+                    # Update .env file to persist the setting
+                    env_path = '.env'
+                    if os.path.exists(env_path):
+                        with open(env_path, 'r') as f:
+                            lines = f.readlines()
+                        
+                        # Update or add TTS_VOLUME line
+                        tts_volume_updated = False
+                        for i, line in enumerate(lines):
+                            if line.startswith('TTS_VOLUME='):
+                                lines[i] = f'TTS_VOLUME={data["voice_volume"]}\n'
+                                tts_volume_updated = True
+                                break
+                        
+                        if not tts_volume_updated:
+                            # Add TTS_VOLUME line after TTS settings
+                            for i, line in enumerate(lines):
+                                if line.startswith('TTS_AUDIO_FORMAT='):
+                                    lines.insert(i + 1, f'TTS_VOLUME={data["voice_volume"]}\n')
+                                    break
+                        
+                        with open(env_path, 'w') as f:
+                            f.writelines(lines)
+                        
+                        logger.info(f"Updated TTS_VOLUME to {data['voice_volume']} in .env file")
+                    
+                except Exception as env_error:
+                    logger.error(f"Failed to update TTS_VOLUME in .env: {env_error}")
+            
+            # Handle TTS playback mode setting
+            if 'tts_playback_mode' in data:
+                try:
+                    playback_mode = data['tts_playback_mode']
+                    if playback_mode in ['audio', 'visual']:
+                        # Update TTS_PLAYBACK_MODE for the current session
+                        os.environ['TTS_PLAYBACK_MODE'] = playback_mode
+                        
+                        # Update .env file to persist the setting
+                        env_path = '.env'
+                        if os.path.exists(env_path):
+                            with open(env_path, 'r') as f:
+                                lines = f.readlines()
+                            
+                            # Update or add TTS_PLAYBACK_MODE line
+                            playback_mode_updated = False
+                            for i, line in enumerate(lines):
+                                if line.startswith('TTS_PLAYBACK_MODE='):
+                                    lines[i] = f'TTS_PLAYBACK_MODE={playback_mode}\n'
+                                    playback_mode_updated = True
+                                    break
+                            
+                            if not playback_mode_updated:
+                                # Add TTS_PLAYBACK_MODE line after TTS_VOLUME
+                                for i, line in enumerate(lines):
+                                    if line.startswith('TTS_VOLUME='):
+                                        lines.insert(i + 1, f'TTS_PLAYBACK_MODE={playback_mode}\n')
+                                        break
+                            
+                            with open(env_path, 'w') as f:
+                                f.writelines(lines)
+                            
+                            logger.info(f"Updated TTS_PLAYBACK_MODE to {playback_mode} in .env file")
+                        
+                except Exception as playback_error:
+                    logger.error(f"Failed to update TTS_PLAYBACK_MODE in .env: {playback_error}")
             
             # Handle API key FIRST before enabling ChatGPT
             if 'chatgpt_api_key' in data:
@@ -2468,5 +2548,80 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         except Exception as e:
             current_app.logger.error(f"Default mode API error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/text-query', methods=['POST'])
+    def process_text_query():
+        """Process text-based AI questions and display on screen."""
+        try:
+            data = request.get_json()
+            if not data or 'query' not in data:
+                return jsonify({'success': False, 'error': 'No query provided'}), 400
+            
+            query = data['query'].strip()
+            force_visual = data.get('force_visual', True)
+            
+            if not query:
+                return jsonify({'success': False, 'error': 'Query cannot be empty'}), 400
+            
+            if len(query) > 500:
+                return jsonify({'success': False, 'error': 'Query too long (max 500 characters)'}), 400
+            
+            # Check if ChatGPT is available
+            if not hasattr(current_app.service_manager, 'voice_control') or not current_app.service_manager.voice_control:
+                return jsonify({'success': False, 'error': 'AI service not available'}), 503
+            
+            # Try to get the voice assistant if available (for direct ChatGPT access)
+            voice_assistant = None
+            try:
+                # Try to import and create a temporary voice assistant for the query
+                from voice_assistant import VoiceAssistant
+                
+                # Create a visual feedback callback that uses the display manager
+                def text_visual_callback(state, message):
+                    if state == "ai_response" and message:
+                        # Display the AI response on the e-ink screen
+                        if hasattr(current_app.service_manager, 'display_manager'):
+                            try:
+                                # Use the display manager to show the response
+                                current_app.service_manager.display_manager.show_transient_message(
+                                    "ai_response", message, duration=15.0
+                                )
+                                logger.info(f"Text query response displayed on screen: {message[:100]}...")
+                            except Exception as display_error:
+                                logger.error(f"Failed to display text response: {display_error}")
+                
+                # Create a temporary voice assistant just for this query
+                voice_assistant = VoiceAssistant(
+                    verse_manager=current_app.service_manager.verse_manager,
+                    visual_feedback_callback=text_visual_callback
+                )
+                
+                # Force visual mode for text queries
+                original_playback_mode = voice_assistant.tts_playback_mode
+                voice_assistant.tts_playback_mode = 'visual'
+                
+                # Process the query using ChatGPT
+                response = voice_assistant.query_chatgpt(query)
+                
+                # Restore original mode (though this instance is temporary)
+                voice_assistant.tts_playback_mode = original_playback_mode
+                
+                if response:
+                    logger.info(f"Text query processed successfully: {query[:100]}...")
+                    return jsonify({
+                        'success': True, 
+                        'message': 'Question processed and displayed on screen',
+                        'response_preview': response[:100] + '...' if len(response) > 100 else response
+                    })
+                else:
+                    return jsonify({'success': False, 'error': 'No response received from AI'})
+                
+            except Exception as va_error:
+                logger.error(f"Voice assistant text query failed: {va_error}")
+                return jsonify({'success': False, 'error': f'AI processing failed: {str(va_error)}'})
+            
+        except Exception as e:
+            logger.error(f"Text query processing error: {e}")
+            return jsonify({'success': False, 'error': f'Server error: {str(e)}'})
     
     return app

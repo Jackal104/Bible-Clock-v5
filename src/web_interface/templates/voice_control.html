@@ -64,6 +64,57 @@
         </div>
     </div>
 
+    <!-- Text Input for Questions (when voice control is off) -->
+    <div id="text-query-section" class="bg-white rounded-lg shadow p-6" style="display: none;">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">
+            <svg class="w-5 h-5 inline mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            Ask Bible Questions (Text Mode)
+        </h3>
+        <p class="text-gray-600 mb-4">
+            Since voice control is disabled, you can type your biblical questions here. Responses will be displayed on the e-ink screen.
+        </p>
+        
+        <div class="space-y-4">
+            <div>
+                <label for="text-query-input" class="block text-sm font-medium text-gray-700 mb-2">
+                    Your Question
+                </label>
+                <textarea 
+                    id="text-query-input" 
+                    rows="3" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical"
+                    placeholder="Example: Explain John 3:16, What is the meaning of faith?, Tell me about the parable of the prodigal son..."
+                    maxlength="500"
+                ></textarea>
+                <p class="text-xs text-gray-500 mt-1">Maximum 500 characters</p>
+            </div>
+            
+            <div class="flex space-x-3">
+                <button 
+                    id="submit-text-query" 
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                >
+                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                    Send to Display
+                </button>
+                <button 
+                    id="clear-text-query" 
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
+                >
+                    Clear
+                </button>
+            </div>
+            
+            <div id="text-query-status" class="text-sm text-gray-600" style="display: none;">
+                <!-- Status messages will appear here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Wake Word Information -->
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-lg font-semibold text-bible-dark mb-4">
@@ -326,6 +377,22 @@
                         <p class="text-sm text-gray-500 mt-1">Choose from OpenAI's high-quality TTS voices</p>
                     </div>
                     
+                    <!-- Playback Mode Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Response Playback Mode</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="playback-mode" id="playback-mode-audio" value="audio" class="mr-2" checked>
+                                <span class="text-sm">🔊 Audio - Speak responses through speakers</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="playback-mode" id="playback-mode-visual" value="visual" class="mr-2">
+                                <span class="text-sm">📖 Visual - Display responses on e-ink screen</span>
+                            </label>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Choose how AI responses are presented: heard or read</p>
+                    </div>
+                    
                     <!-- Piper TTS Voice Selection -->
                     <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                         <div class="flex items-center justify-between mb-3">
@@ -452,6 +519,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('audio-input-enabled').addEventListener('change', updateVoiceSettings);
     document.getElementById('audio-output-enabled').addEventListener('change', updateVoiceSettings);
     document.getElementById('screen-display-enabled').addEventListener('change', updateVoiceSettings);
+    document.getElementById('playback-mode-audio').addEventListener('change', updateVoiceSettings);
+    document.getElementById('playback-mode-visual').addEventListener('change', updateVoiceSettings);
+    
+    // Text query event listeners
+    document.getElementById('submit-text-query').addEventListener('click', submitTextQuery);
+    document.getElementById('clear-text-query').addEventListener('click', clearTextQuery);
+    document.getElementById('text-query-input').addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'Enter') {
+            submitTextQuery();
+        }
+    });
     
     // Add ReSpeaker event listeners only if elements exist (legacy support)
     const respeakerEnabled = document.getElementById('respeaker-enabled');
@@ -521,12 +599,17 @@ function updateVoiceStatusUI(status) {
     
     // Update form controls
     document.getElementById('voice-rate').value = status.voice_rate || 150;
-    document.getElementById('voice-volume').value = status.voice_volume || 0.8;
+    document.getElementById('voice-volume').value = status.tts_volume || status.voice_volume || 0.8;
     document.getElementById('chatgpt-enabled').checked = status.chatgpt_enabled || false;
     document.getElementById('help-enabled').checked = status.help_enabled !== false;
     document.getElementById('voice-selection').value = status.voice_selection || status.tts_voice || 'nova';
     document.getElementById('voice-control-enabled').checked = status.enabled !== false;
     document.getElementById('chatgpt-api-key').value = status.chatgpt_api_key ? '•'.repeat(20) : '';
+    
+    // Set playback mode radio buttons
+    const playbackMode = status.tts_playback_mode || 'audio';
+    document.getElementById('playback-mode-audio').checked = playbackMode === 'audio';
+    document.getElementById('playback-mode-visual').checked = playbackMode === 'visual';
     
     // Update audio controls
     document.getElementById('audio-input-enabled').checked = status.audio_input_enabled !== false;
@@ -537,6 +620,20 @@ function updateVoiceStatusUI(status) {
     const respeakerEnabled = document.getElementById('respeaker-enabled');
     if (respeakerEnabled) {
         respeakerEnabled.checked = status.respeaker_enabled || false;
+    }
+    
+    // Show/hide text query section based on voice control status
+    const textQuerySection = document.getElementById('text-query-section');
+    const voiceControlEnabled = status.enabled !== false;
+    
+    if (textQuerySection) {
+        if (!voiceControlEnabled && status.chatgpt_enabled) {
+            // Show text input when voice control is off but ChatGPT is enabled
+            textQuerySection.style.display = 'block';
+        } else {
+            // Hide text input when voice control is on or ChatGPT is disabled
+            textQuerySection.style.display = 'none';
+        }
     }
     
     const forceRespeakerOutput = document.getElementById('force-respeaker-output');
@@ -619,12 +716,16 @@ function clearHistory() {
 }
 
 function updateVoiceSettings() {
+    // Get playback mode from radio buttons
+    const playbackMode = document.getElementById('playback-mode-audio').checked ? 'audio' : 'visual';
+    
     const settings = {
         voice_rate: parseInt(document.getElementById('voice-rate').value),
         voice_volume: parseFloat(document.getElementById('voice-volume').value),
         chatgpt_enabled: document.getElementById('chatgpt-enabled').checked,
         help_enabled: document.getElementById('help-enabled').checked,
         voice_selection: document.getElementById('voice-selection').value,
+        tts_playback_mode: playbackMode,
         audio_input_enabled: document.getElementById('audio-input-enabled').checked,
         audio_output_enabled: document.getElementById('audio-output-enabled').checked,
         screen_display_enabled: document.getElementById('screen-display-enabled').checked,
@@ -639,6 +740,8 @@ function updateVoiceSettings() {
     .then(data => {
         if (data.success) {
             showNotification('Voice settings updated', 'success');
+            // Refresh the voice status to update text input visibility
+            loadVoiceStatus();
         } else {
             showNotification('Failed to update voice settings', 'error');
         }
@@ -983,6 +1086,80 @@ function updateMicrophoneVolume() {
         console.error('Microphone volume update error:', error);
         showNotification('Failed to update microphone volume', 'error');
     });
+}
+
+// Text Query Functions
+function submitTextQuery() {
+    const input = document.getElementById('text-query-input');
+    const status = document.getElementById('text-query-status');
+    const button = document.getElementById('submit-text-query');
+    
+    const query = input.value.trim();
+    
+    if (!query) {
+        showNotification('Please enter a question', 'error');
+        return;
+    }
+    
+    if (query.length > 500) {
+        showNotification('Question is too long (max 500 characters)', 'error');
+        return;
+    }
+    
+    // Update UI to show processing
+    button.disabled = true;
+    button.innerHTML = '<svg class="w-4 h-4 inline mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
+    status.style.display = 'block';
+    status.textContent = 'Sending question to AI and displaying on screen...';
+    status.className = 'text-sm text-blue-600';
+    
+    // Send to API
+    fetch('/api/text-query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            query: query,
+            force_visual: true  // Always use visual mode for text queries
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Question sent! Check the e-ink display for the answer.', 'success');
+            status.textContent = 'Answer is now displayed on the e-ink screen.';
+            status.className = 'text-sm text-green-600';
+            input.value = ''; // Clear the input
+        } else {
+            showNotification('Failed to process question: ' + (data.error || 'Unknown error'), 'error');
+            status.textContent = 'Error: ' + (data.error || 'Failed to process question');
+            status.className = 'text-sm text-red-600';
+        }
+    })
+    .catch(error => {
+        console.error('Text query error:', error);
+        showNotification('Failed to send question', 'error');
+        status.textContent = 'Error: Failed to send question';
+        status.className = 'text-sm text-red-600';
+    })
+    .finally(() => {
+        // Reset button
+        button.disabled = false;
+        button.innerHTML = '<svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>Send to Display';
+        
+        // Hide status after 10 seconds
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 10000);
+    });
+}
+
+function clearTextQuery() {
+    const input = document.getElementById('text-query-input');
+    const status = document.getElementById('text-query-status');
+    
+    input.value = '';
+    status.style.display = 'none';
+    input.focus();
 }
 </script>
 {% endblock %}

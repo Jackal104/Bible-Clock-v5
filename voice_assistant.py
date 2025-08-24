@@ -55,7 +55,16 @@ class VoiceAssistant:
         self.tts_voice = os.getenv('TTS_VOICE', 'nova')
         self.tts_audio_format = os.getenv('TTS_AUDIO_FORMAT', 'wav')
         self.tts_streaming = os.getenv('TTS_STREAMING', 'true').lower() == 'true'
+        self.tts_playback_mode = os.getenv('TTS_PLAYBACK_MODE', 'audio').lower()
         self.allow_piper_fallback = os.getenv('ALLOW_PIPER_FALLBACK', 'true').lower() == 'true'
+        
+        # Volume settings
+        self.voice_volume = float(os.getenv('TTS_VOLUME', os.getenv('VOICE_VOLUME', '0.8')))
+        self.piper_volume = float(os.getenv('PIPER_VOICE_VOLUME', '0.9'))
+        
+        # Log settings for debugging
+        logger.info(f"🔊 Volume settings - TTS: {self.voice_volume}, Piper: {self.piper_volume}")
+        logger.info(f"🎯 Playback mode: {self.tts_playback_mode}")
         
         # Memory optimization settings
         self.MAX_TTS_QUEUE_SIZE = 2  # Limit TTS queue to prevent memory growth
@@ -99,6 +108,9 @@ class VoiceAssistant:
         self.listening = self.enabled  # Start listening if voice control is enabled
         self.should_stop = False  # Controls main loop termination
         
+        # Display state preservation for proper restoration
+        self.preserved_display_state = None
+        
         # TTS queue for preventing overlapping speech
         self.tts_queue = queue.Queue()
         self.tts_thread = None
@@ -138,8 +150,24 @@ class VoiceAssistant:
         else:
             logger.warning("❌ No visual feedback callback available")
     
+    def _preserve_display_state(self):
+        """Preserve current display state before processing voice command."""
+        try:
+            if self.verse_manager:
+                self.preserved_display_state = {
+                    'display_mode': getattr(self.verse_manager, 'display_mode', 'time'),
+                    'parallel_mode': getattr(self.verse_manager, 'parallel_mode', False),
+                    'translation': getattr(self.verse_manager, 'translation', 'kjv'),
+                    'secondary_translation': getattr(self.verse_manager, 'secondary_translation', 'amp'),
+                    'current_verse': self.verse_manager.get_current_verse()
+                }
+                logger.info(f"🔄 Preserved display state: {self.preserved_display_state['display_mode']} mode, parallel: {self.preserved_display_state['parallel_mode']}")
+        except Exception as e:
+            logger.error(f"Failed to preserve display state: {e}")
+            self.preserved_display_state = None
+
     def _restore_display_after_tts(self):
-        """Restore display to normal after TTS completion."""
+        """Restore display to preserved state after TTS completion."""
         def delayed_restore():
             try:
                 # Wait a moment to ensure TTS has fully completed
@@ -148,12 +176,38 @@ class VoiceAssistant:
                 self._update_visual_state("ready", "✅ Ready")
                 # Additional delay then clear the ready message
                 time_module.sleep(2.0)
-                # Trigger full display restoration to Bible verse
-                logger.info("🔄 Triggering final display restoration to Bible verse")
+                
+                # Restore preserved display state if available
+                if self.preserved_display_state and self.verse_manager:
+                    try:
+                        logger.info(f"🔄 Restoring to preserved state: {self.preserved_display_state['display_mode']} mode")
+                        
+                        # Restore display mode and settings
+                        self.verse_manager.display_mode = self.preserved_display_state['display_mode']
+                        self.verse_manager.parallel_mode = self.preserved_display_state['parallel_mode']
+                        self.verse_manager.translation = self.preserved_display_state['translation']
+                        self.verse_manager.secondary_translation = self.preserved_display_state['secondary_translation']
+                        
+                        # Trigger display restoration - the verse manager state is already restored
+                        if self.visual_feedback:
+                            self.visual_feedback("restore", None)
+                        else:
+                            logger.warning("No visual feedback callback available for restoration")
+                        
+                        # Clear preserved state after restoration
+                        self.preserved_display_state = None
+                        return
+                        
+                    except Exception as restore_err:
+                        logger.error(f"Failed to restore preserved state: {restore_err}")
+                
+                # Fallback to normal restoration if preservation failed
+                logger.info("🔄 Using fallback display restoration")
                 if self.visual_feedback:
                     self.visual_feedback("restore", None)
                 else:
                     logger.warning("No visual feedback callback available for restoration")
+                    
             except Exception as e:
                 logger.error(f"Display restoration failed: {e}")
         
@@ -727,6 +781,7 @@ class VoiceAssistant:
             'tts_voice': self.tts_voice,
             'tts_engine': self.tts_engine,
             'tts_model': self.tts_model,
+            'tts_playback_mode': self.tts_playback_mode,
             'conversation_length': len(self.conversation_manager.conversation_history) if hasattr(self.conversation_manager, 'conversation_history') else 0,
             'available_commands': ['chat', 'help', 'status'],  # Basic commands
             'chatgpt_api_key': bool(self.openai_api_key),
@@ -1048,6 +1103,16 @@ class VoiceAssistant:
             ], input=text, text=True, capture_output=True)
             
             if result.returncode == 0:
+                # Set volume using amixer for USB audio device before playback
+                try:
+                    # Convert volume from 0.0-1.0 range to percentage
+                    volume_percent = int(self.piper_volume * 100)
+                    subprocess.run(['amixer', '-D', self.usb_speaker_device, 'sset', 'PCM', f'{volume_percent}%'], 
+                                 capture_output=True, check=False)
+                    logger.info(f"🔊 Set Piper volume to {volume_percent}% (from PIPER_VOICE_VOLUME={self.piper_volume})")
+                except Exception as vol_err:
+                    logger.warning(f"Failed to set Piper volume: {vol_err}")
+                
                 # Play audio through correct USB speakers with maximum speed
                 subprocess.run(['aplay', '-D', self.usb_speaker_device, 
                               '--buffer-size=512', '--period-size=256', temp_path])
@@ -1069,6 +1134,63 @@ class VoiceAssistant:
     def speak_with_amy(self, text, priority=False):
         """Queue text for TTS to prevent overlapping speech."""
         self.queue_tts(text, priority=priority)
+    
+    def _display_response_visually(self, text, duration=15.0):
+        """Display AI response on e-ink screen instead of speaking."""
+        try:
+            logger.info(f"📖 Displaying response visually: {text[:100]}{'...' if len(text) > 100 else ''}")
+            
+            # Record first speech time for metrics (even though it's visual)
+            if self.metrics['first_speech_time'] is None:
+                self.metrics['first_speech_time'] = time_module.time()
+            
+            # Update visual state to show we're displaying the response
+            self._update_visual_state("displaying", "Displaying AI response...")
+            
+            # Use the visual feedback callback to show the response on display
+            if self.visual_feedback:
+                # Show the AI response on the display
+                self.visual_feedback("ai_response", text)
+                logger.info(f"📖 AI response displayed on screen for {duration}s")
+                
+                # After the duration, restore the normal display
+                def delayed_restore():
+                    try:
+                        time_module.sleep(duration)
+                        logger.info("🔄 Restoring display after visual response")
+                        self._restore_display_after_tts()
+                    except Exception as e:
+                        logger.error(f"Visual response restoration failed: {e}")
+                
+                # Start restoration timer
+                import threading
+                threading.Thread(target=delayed_restore, daemon=True).start()
+                
+            else:
+                logger.warning("❌ No visual feedback callback available for visual display")
+                # Fallback to audio if visual display fails
+                logger.info("🔄 Falling back to audio playback")
+                self._play_openai_tts_stream(text)
+                
+        except Exception as e:
+            logger.error(f"Visual display error: {e}")
+            # Fallback to audio on error
+            logger.info("🔄 Visual display failed, falling back to audio")
+            self._play_openai_tts_stream(text)
+    
+    def _handle_ai_response(self, text):
+        """Handle AI response based on playback mode (audio or visual)."""
+        try:
+            if self.tts_playback_mode == 'visual':
+                logger.info("🎯 Using visual playback mode")
+                self._display_response_visually(text)
+            else:
+                logger.info("🎯 Using audio playback mode")
+                self._play_openai_tts_stream(text)
+        except Exception as e:
+            logger.error(f"AI response handling error: {e}")
+            # Fallback to audio on any error
+            self._play_openai_tts_stream(text)
     
     def _play_openai_tts_stream(self, text):
         """Generate speech using OpenAI TTS API with fast streaming playback and mic management."""
@@ -1110,8 +1232,11 @@ class VoiceAssistant:
                     tmp_path = tmp.name
                 
                 # Use ffplay which handles MP3/WAV automatically and routes to USB speakers
+                # Convert volume from 0.0-1.0 range to ffplay's 0-100 range
+                ffplay_volume = int(self.voice_volume * 100)
+                logger.info(f"🔊 Playing OpenAI TTS with volume: {ffplay_volume}% (from VOICE_VOLUME={self.voice_volume})")
                 result = subprocess.run([
-                    "ffplay", "-nodisp", "-autoexit", "-volume", "70",
+                    "ffplay", "-nodisp", "-autoexit", "-volume", str(ffplay_volume),
                     tmp_path
                 ], capture_output=True, timeout=30)
                 
@@ -1128,6 +1253,15 @@ class VoiceAssistant:
                 # Fallback: try direct aplay with WAV format only
                 if self.tts_audio_format == "wav":
                     try:
+                        # Set volume for fallback aplay method
+                        try:
+                            volume_percent = int(self.voice_volume * 100)
+                            subprocess.run(['amixer', '-D', self.usb_speaker_device, 'sset', 'PCM', f'{volume_percent}%'], 
+                                         capture_output=True, check=False)
+                            logger.info(f"🔊 Set fallback aplay volume to {volume_percent}%")
+                        except Exception as vol_err:
+                            logger.warning(f"Failed to set fallback aplay volume: {vol_err}")
+                        
                         aplay_process = subprocess.Popen([
                             "aplay", "-D", self.usb_speaker_device,
                             "-f", "S16_LE", "-r", "24000", "-c", "1", "-"
@@ -1295,10 +1429,10 @@ For follow-up questions like "continue", "tell me more", or "explain further", r
                         #     early_tts_sent = True
                         #     return trimmed_response
                 
-                # Always use OpenAI TTS for the complete response (early TTS disabled)
+                # Handle response based on playback mode (audio or visual)
                 if full_response.strip():
                     tts_start_time = time_module.time()
-                    self._play_openai_tts_stream(full_response.strip())
+                    self._handle_ai_response(full_response.strip())
                     self.timing_metrics['tts_generation_time'] = time_module.time() - tts_start_time
                 
                 # Record conversation with metrics
@@ -1325,10 +1459,10 @@ For follow-up questions like "continue", "tell me more", or "explain further", r
                 if self.metrics['gpt_first_response_time'] is None:
                     self.metrics['gpt_first_response_time'] = time_module.time()
                 
-                # Use OpenAI TTS for legacy API response too
+                # Handle response based on playback mode for legacy API too
                 if answer.strip():
                     tts_start_time = time_module.time()
-                    self._play_openai_tts_stream(answer.strip())
+                    self._handle_ai_response(answer.strip())
                     self.timing_metrics['tts_generation_time'] = time_module.time() - tts_start_time
                 
                 # Record conversation with metrics for legacy API
@@ -1347,6 +1481,9 @@ For follow-up questions like "continue", "tell me more", or "explain further", r
     def process_voice_command(self, command_text):
         """Process the voice command."""
         try:
+            # Preserve current display state before processing command
+            self._preserve_display_state()
+            
             self._update_visual_state("processing", f"Processing: {command_text}")
             
             # Built-in commands
