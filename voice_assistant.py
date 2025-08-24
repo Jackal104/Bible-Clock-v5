@@ -56,6 +56,8 @@ class VoiceAssistant:
         self.tts_audio_format = os.getenv('TTS_AUDIO_FORMAT', 'wav')
         self.tts_streaming = os.getenv('TTS_STREAMING', 'true').lower() == 'true'
         self.tts_playback_mode = os.getenv('TTS_PLAYBACK_MODE', 'audio').lower()
+        self.tts_page_duration = float(os.getenv('TTS_PAGE_DURATION', '15'))
+        self.tts_max_chars_per_page = int(os.getenv('TTS_MAX_CHARS_PER_PAGE', '800'))
         self.allow_piper_fallback = os.getenv('ALLOW_PIPER_FALLBACK', 'true').lower() == 'true'
         
         # Volume settings
@@ -1135,8 +1137,8 @@ class VoiceAssistant:
         """Queue text for TTS to prevent overlapping speech."""
         self.queue_tts(text, priority=priority)
     
-    def _display_response_visually(self, text, duration=15.0):
-        """Display AI response on e-ink screen instead of speaking."""
+    def _display_response_visually(self, text, page_duration=15.0):
+        """Display AI response on e-ink screen with pagination and auto-sizing."""
         try:
             logger.info(f"📖 Displaying response visually: {text[:100]}{'...' if len(text) > 100 else ''}")
             
@@ -1147,24 +1149,10 @@ class VoiceAssistant:
             # Update visual state to show we're displaying the response
             self._update_visual_state("displaying", "Displaying AI response...")
             
-            # Use the visual feedback callback to show the response on display
+            # Use the visual feedback callback to show paginated response
             if self.visual_feedback:
-                # Show the AI response on the display
-                self.visual_feedback("ai_response", text)
-                logger.info(f"📖 AI response displayed on screen for {duration}s")
-                
-                # After the duration, restore the normal display
-                def delayed_restore():
-                    try:
-                        time_module.sleep(duration)
-                        logger.info("🔄 Restoring display after visual response")
-                        self._restore_display_after_tts()
-                    except Exception as e:
-                        logger.error(f"Visual response restoration failed: {e}")
-                
-                # Start restoration timer
-                import threading
-                threading.Thread(target=delayed_restore, daemon=True).start()
+                # Split text into pages and display with pagination
+                self._display_paginated_response(text, self.tts_page_duration)
                 
             else:
                 logger.warning("❌ No visual feedback callback available for visual display")
@@ -1177,6 +1165,92 @@ class VoiceAssistant:
             # Fallback to audio on error
             logger.info("🔄 Visual display failed, falling back to audio")
             self._play_openai_tts_stream(text)
+    
+    def _display_paginated_response(self, text, page_duration=15.0):
+        """Display AI response with pagination for long content."""
+        try:
+            # Clean and prepare text
+            cleaned_text = text.strip()
+            if not cleaned_text:
+                return
+            
+            # Split text into pages based on environment configuration
+            max_chars_per_page = self.tts_max_chars_per_page
+            pages = []
+            
+            if len(cleaned_text) <= max_chars_per_page:
+                # Single page
+                pages = [cleaned_text]
+            else:
+                # Multiple pages - split intelligently at sentence boundaries
+                import re
+                sentences = re.split(r'(?<=[.!?])\s+', cleaned_text)
+                
+                current_page = ""
+                for sentence in sentences:
+                    # Check if adding this sentence would exceed page limit
+                    if len(current_page + " " + sentence) > max_chars_per_page and current_page:
+                        pages.append(current_page.strip())
+                        current_page = sentence
+                    else:
+                        if current_page:
+                            current_page += " " + sentence
+                        else:
+                            current_page = sentence
+                
+                # Add the last page if it has content
+                if current_page.strip():
+                    pages.append(current_page.strip())
+            
+            total_pages = len(pages)
+            logger.info(f"📄 Displaying {total_pages} page(s) of AI response")
+            
+            # Display each page
+            def display_pages():
+                try:
+                    for page_num, page_text in enumerate(pages, 1):
+                        # Add page indicator if multiple pages
+                        if total_pages > 1:
+                            display_text = f"{page_text}\n\n--- Page {page_num} of {total_pages} ---"
+                        else:
+                            display_text = page_text
+                        
+                        logger.info(f"📖 Displaying page {page_num}/{total_pages}")
+                        
+                        # Show this page on the display
+                        self.visual_feedback("ai_response_page", display_text)
+                        
+                        # Wait for page duration (except for the last page)
+                        if page_num < total_pages:
+                            time_module.sleep(page_duration)
+                    
+                    # After all pages, wait the final duration then restore
+                    logger.info(f"📖 All pages displayed. Waiting {page_duration}s before restore...")
+                    time_module.sleep(page_duration)
+                    
+                    logger.info("🔄 Restoring display after paginated visual response")
+                    self._restore_display_after_tts()
+                    
+                except Exception as e:
+                    logger.error(f"Paginated display error: {e}")
+                    # Try to restore display on error
+                    self._restore_display_after_tts()
+            
+            # Start paginated display in background thread
+            import threading
+            threading.Thread(target=display_pages, daemon=True).start()
+            
+        except Exception as e:
+            logger.error(f"Pagination setup error: {e}")
+            # Fallback to simple display
+            self.visual_feedback("ai_response", text)
+            
+            def simple_restore():
+                time_module.sleep(page_duration)
+                self._restore_display_after_tts()
+            
+            import threading
+            threading.Thread(target=simple_restore, daemon=True).start()
     
     def _handle_ai_response(self, text):
         """Handle AI response based on playback mode (audio or visual)."""

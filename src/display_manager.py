@@ -263,6 +263,12 @@ class DisplayManager:
                 except Exception as e:
                     self.logger.error(f"❌ Display restore clear failed: {e}")
                 return
+            
+            # Handle paginated AI response pages
+            if state == "ai_response_page":
+                if message:
+                    self._show_ai_response_page(message, duration or 15.0)
+                return
             # Map voice states to display messages
             display_messages = {
                 "wake_detected": "🎤 Listening...",
@@ -423,6 +429,90 @@ class DisplayManager:
             
         except Exception as e:
             self.logger.error(f"Failed to show visual feedback: {e}")
+    
+    def _show_ai_response_page(self, text: str, duration: float = 15.0):
+        """Show a paginated AI response with auto-sized text optimized for distance reading."""
+        try:
+            if not text:
+                return
+            
+            # Create full-screen image for AI response
+            image = Image.new('L', (self.width, self.height), 255)  # white background
+            draw = ImageDraw.Draw(image)
+            
+            # Auto-size font for optimal readability from a distance
+            # Start with larger font and reduce if text doesn't fit
+            optimal_font_size = self._calculate_optimal_font_size(text, self.width - 60, self.height - 60)
+            
+            try:
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", optimal_font_size)
+            except:
+                try:
+                    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", optimal_font_size)
+                except:
+                    font = ImageFont.load_default()
+            
+            # Wrap text to fit display width
+            wrapped_lines = self._wrap_text_for_display(text, font, self.width - 60)
+            display_text = "\n".join(wrapped_lines)
+            
+            # Calculate text positioning for center alignment
+            text_bbox = draw.multiline_textbbox((0, 0), display_text, font=font, spacing=8)
+            text_width = text_bbox[2] - text_bbox[0]
+            text_height = text_bbox[3] - text_bbox[1]
+            
+            # Center the text on the display
+            x = max(30, (self.width - text_width) // 2)
+            y = max(30, (self.height - text_height) // 2)
+            
+            # Add subtle background for better contrast
+            padding = 20
+            draw.rectangle(
+                (x - padding, y - padding, x + text_width + padding, y + text_height + padding),
+                fill=250, outline=0, width=2
+            )
+            
+            # Draw the text
+            draw.multiline_text((x, y), display_text, font=font, fill=0, spacing=8)
+            
+            # Display the image
+            self.display_image(image, force_refresh=True)
+            self.logger.info(f"AI response page displayed (font size: {optimal_font_size})")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to show AI response page: {e}")
+    
+    def _calculate_optimal_font_size(self, text: str, max_width: int, max_height: int) -> int:
+        """Calculate optimal font size for text to fit within given dimensions while remaining readable."""
+        # Start with a large font size and reduce until text fits
+        max_font_size = 72  # Large for distance reading
+        min_font_size = 24  # Minimum readable size
+        
+        for font_size in range(max_font_size, min_font_size - 1, -4):
+            try:
+                # Test with this font size
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", font_size)
+            except:
+                try:
+                    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", font_size)
+                except:
+                    font = ImageFont.load_default()
+                    return 24  # Fallback size
+            
+            # Wrap text and check if it fits
+            wrapped_lines = self._wrap_text_for_display(text, font, max_width)
+            
+            # Check if the wrapped text fits within height
+            line_height = font.getbbox("Ay")[3] - font.getbbox("Ay")[1] + 8  # Add spacing
+            total_height = len(wrapped_lines) * line_height
+            
+            if total_height <= max_height:
+                self.logger.info(f"Optimal font size calculated: {font_size}px for {len(wrapped_lines)} lines")
+                return font_size
+        
+        # If nothing fits, return minimum size
+        self.logger.warning(f"Text too long for optimal sizing, using minimum font size: {min_font_size}px")
+        return min_font_size
     
     def _wrap_text_for_display(self, text: str, font, max_width: int) -> list:
         """Wrap text to fit within display width."""
