@@ -1,101 +1,8 @@
 {
   "date": "2025-08-24",
   "created_at": "2025-08-24T02:07:17.433363",
-  "error_count": 47,
+  "error_count": 56,
   "errors": [
-    {
-      "timestamp": "2025-08-24T11:38:07.369964",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Exception on /api/text-query [POST]",
-      "function": "log_exception",
-      "line": 825,
-      "filename": "app.py",
-      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
-    },
-    {
-      "timestamp": "2025-08-24T11:38:43.118801",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1421,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:38:48.739804",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1421,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:38:50.355868",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Exception on /api/text-query [POST]",
-      "function": "log_exception",
-      "line": 825,
-      "filename": "app.py",
-      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
-    },
-    {
-      "timestamp": "2025-08-24T11:38:59.815754",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Exception on /api/text-query [POST]",
-      "function": "log_exception",
-      "line": 825,
-      "filename": "app.py",
-      "traceback": "  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 869, in full_dispatch_request\n    rv = self.handle_user_exception(e)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 867, in full_dispatch_request\n    rv = self.dispatch_request()\n         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/admin/Bible-Clock-v5/venv/lib/python3.11/site-packages/flask/app.py\", line 852, in dispatch_request\n    "
-    },
-    {
-      "timestamp": "2025-08-24T11:44:45.959918",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1421,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:44:51.784178",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1421,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:44:58.528750",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1421,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:48:59.250267",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: name 'logger' is not defined",
-      "function": "update_voice_settings",
-      "line": 1448,
-      "filename": "app.py"
-    },
     {
       "timestamp": "2025-08-24T11:49:09.766805",
       "service": "display_manager",
@@ -256,10 +163,100 @@
       "function": "update_voice_settings",
       "line": 1448,
       "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:10:59.920040",
+      "service": "other",
+      "logger": "werkzeug",
+      "level": "ERROR",
+      "message": "192.168.68.11 - - [24/Aug/2025 15:10:59] code 400, message Bad request version ('X\u00a6\u00aa\u00a3\u00d6\u00ef\\x13\\x00*\u00da\u00da\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:11:00.012953",
+      "service": "other",
+      "logger": "werkzeug",
+      "level": "ERROR",
+      "message": "192.168.68.11 - - [24/Aug/2025 15:11:00] code 400, message Bad request version ('J\\x16+\u00dd\u00ef\u00c9\u00c89\\x13c\\x08\\x95\\x02\u00f6R\\x90f\u00e6\u00e9\\x9cCX\\x06\u00e3\\x00*\\x1a\\x1a\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:11:00.072843",
+      "service": "other",
+      "logger": "werkzeug",
+      "level": "ERROR",
+      "message": "192.168.68.11 - - [24/Aug/2025 15:11:00] code 400, message Bad request version (\"'\u00bd8a&VE\u00fd/`\u00c4`feX\u00a9hs\u00c4\u00e4sUl4\u00a6\\x14S\u00fb+m\u00e9`\\x00*JJ\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0\")",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:11:00.126265",
+      "service": "other",
+      "logger": "werkzeug",
+      "level": "ERROR",
+      "message": "192.168.68.11 - - [24/Aug/2025 15:11:00] code 400, message Bad request version ('\u00e8;\u00b3\u00e8\u00b1\u00f7@s\u00a8\u00aeb\u00cep\u00ee\\x16\u00b3\\x11\u00c5\\x9a\u00a8\\x17\u00a4\u00e2\\x9b\u00c5\\x12nl\\x00*JJ\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:11:17.579646",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: name 'logger' is not defined",
+      "function": "update_voice_settings",
+      "line": 1448,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:14:30.491275",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Voice settings API error: 'VoiceAssistant' object has no attribute 'set_chatgpt_enabled'",
+      "function": "update_voice_settings",
+      "line": 1448,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:19:01.195893",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:19:06.995748",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T15:19:10.833431",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
     }
   ],
   "error_summary": {
-    "ERROR": 47
+    "ERROR": 56
   },
   "services": {
     "verse_manager": {
@@ -271,8 +268,8 @@
       "last_error": null
     },
     "display_manager": {
-      "errors": 22,
-      "last_error": "2025-08-24T11:54:08.396019"
+      "errors": 25,
+      "last_error": "2025-08-24T15:19:10.833431"
     },
     "scheduler": {
       "errors": 0,
@@ -283,8 +280,8 @@
       "last_error": null
     },
     "web_interface": {
-      "errors": 12,
-      "last_error": "2025-08-24T12:07:59.489423"
+      "errors": 14,
+      "last_error": "2025-08-24T15:14:30.491275"
     },
     "voice_control": {
       "errors": 0,
@@ -299,8 +296,8 @@
       "last_error": null
     },
     "other": {
-      "errors": 13,
-      "last_error": "2025-08-24T10:26:59.564833"
+      "errors": 17,
+      "last_error": "2025-08-24T15:11:00.126265"
     }
   }
 }

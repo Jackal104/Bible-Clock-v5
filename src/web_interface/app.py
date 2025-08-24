@@ -1285,10 +1285,10 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                         with open(env_path, 'w') as f:
                             f.writelines(lines)
                         
-                        logger.info(f"Updated TTS_VOLUME to {data['voice_volume']} in .env file")
+                        current_app.logger.info(f"Updated TTS_VOLUME to {data['voice_volume']} in .env file")
                     
                 except Exception as env_error:
-                    logger.error(f"Failed to update TTS_VOLUME in .env: {env_error}")
+                    current_app.logger.error(f"Failed to update TTS_VOLUME in .env: {env_error}")
             
             # Handle TTS playback mode setting
             if 'tts_playback_mode' in data:
@@ -1322,10 +1322,10 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                             with open(env_path, 'w') as f:
                                 f.writelines(lines)
                             
-                            logger.info(f"Updated TTS_PLAYBACK_MODE to {playback_mode} in .env file")
+                            current_app.logger.info(f"Updated TTS_PLAYBACK_MODE to {playback_mode} in .env file")
                         
                 except Exception as playback_error:
-                    logger.error(f"Failed to update TTS_PLAYBACK_MODE in .env: {playback_error}")
+                    current_app.logger.error(f"Failed to update TTS_PLAYBACK_MODE in .env: {playback_error}")
             
             # Handle API key FIRST before enabling ChatGPT
             if 'chatgpt_api_key' in data:
@@ -1339,7 +1339,21 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             # Now handle ChatGPT enabled/disabled AFTER API key is set
             if 'chatgpt_enabled' in data:
-                voice_control.set_chatgpt_enabled(data['chatgpt_enabled'])
+                # For VoiceAssistant, chatgpt_enabled is controlled by the enabled property
+                # and the presence of an API key. We can't set it directly.
+                if hasattr(voice_control, 'set_chatgpt_enabled'):
+                    voice_control.set_chatgpt_enabled(data['chatgpt_enabled'])
+                else:
+                    # For VoiceAssistant class, we need to set enabled property
+                    # ChatGPT will be enabled if both enabled=True and API key exists
+                    if data['chatgpt_enabled']:
+                        # Enable chatgpt by ensuring voice control is enabled and has API key
+                        if hasattr(voice_control, 'openai_api_key') and voice_control.openai_api_key:
+                            voice_control.enabled = True
+                        else:
+                            current_app.logger.warning("Cannot enable ChatGPT: No API key configured")
+                    # Note: We don't disable voice_control.enabled when ChatGPT is disabled
+                    # as it may be used for other voice functions
             
             if 'help_enabled' in data:
                 voice_control.help_enabled = data['help_enabled']
@@ -2607,7 +2621,15 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             voice_control = current_app.service_manager.voice_control
             
             # Check if ChatGPT is enabled
-            if not hasattr(voice_control, 'chatgpt_enabled') or not voice_control.chatgpt_enabled:
+            # For VoiceAssistant, chatgpt_enabled is computed as enabled && has_api_key
+            chatgpt_enabled = False
+            if hasattr(voice_control, 'chatgpt_enabled'):
+                chatgpt_enabled = voice_control.chatgpt_enabled
+            else:
+                # For VoiceAssistant, check enabled status and API key
+                chatgpt_enabled = voice_control.enabled and bool(getattr(voice_control, 'openai_api_key', None))
+                
+            if not chatgpt_enabled:
                 return jsonify({'success': False, 'error': 'ChatGPT is not enabled. Please enable it in voice settings.'}), 400
             
             try:

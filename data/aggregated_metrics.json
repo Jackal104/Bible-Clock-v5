@@ -47,13 +47,11 @@
     "categories": {
       "general": 1
     },
-    "keywords": {
-      "joy": 1
-    },
-    "avg_response_time": 5.15,
+    "keywords": {},
+    "avg_response_time": 29.44,
     "success_rate": 100.0,
     "hourly_distribution": {
-      "11": 1
+      "15": 1
     }
   }
 }
