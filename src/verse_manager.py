@@ -2267,15 +2267,20 @@ getVerse();
         if not self.translation_cache_enabled or not text or not text.strip():
             return False
         
+        # Normalize translation key - handle NASB special case
+        normalized_translation = translation.lower()
+        if normalized_translation == 'nasb1995':
+            normalized_translation = 'nasb'  # Map nasb1995 to nasb for consistency
+        
         if not hasattr(self, 'translation_caches'):
             self.translation_caches = {}
         
-        if translation not in self.translation_caches:
-            self.translation_caches[translation] = {}
+        if normalized_translation not in self.translation_caches:
+            self.translation_caches[normalized_translation] = {}
         
         try:
             # Ensure the structure exists
-            cache = self.translation_caches[translation]
+            cache = self.translation_caches[normalized_translation]
             if book not in cache:
                 cache[book] = {}
             if str(chapter) not in cache[book]:
@@ -2289,12 +2294,12 @@ getVerse();
                 self._increment_daily_cache_count()
                 
                 # Save to file immediately (to persist across restarts)
-                self._save_translation_cache(translation)
+                self._save_translation_cache(normalized_translation)
                 
                 # Update completion percentage
-                old_completion = self.translation_completion.get(translation, 0.0)
+                old_completion = self.translation_completion.get(normalized_translation, 0.0)
                 self.translation_completion = self._calculate_all_translation_completion()
-                new_completion = self.translation_completion.get(translation, 0.0)
+                new_completion = self.translation_completion.get(normalized_translation, 0.0)
                 
                 if new_completion > old_completion:
                     self.logger.info(f"{translation.upper()} Bible cache updated: {book} {chapter}:{verse} - "
