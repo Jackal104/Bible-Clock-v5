@@ -1297,7 +1297,7 @@ class ImageGenerator:
         # Draw current time instead of devotional title for devotional mode
         from datetime import datetime
         now = datetime.now()
-        current_time = now.strftime('%I:%M %p')
+        current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
         current_date = now.strftime('%A, %B %d, %Y')
         time_display = f"{current_time} - {current_date}"
         
@@ -1762,7 +1762,7 @@ class ImageGenerator:
         # Draw current time instead of devotional title for devotional mode
         from datetime import datetime
         now = datetime.now()
-        current_time = now.strftime('%I:%M %p')
+        current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
         current_date = now.strftime('%A, %B %d, %Y')
         time_display = f"{current_time} - {current_date}"
         
@@ -1968,32 +1968,52 @@ class ImageGenerator:
         # Add verse reference in bottom-right corner for parallel mode too
         self._add_verse_reference_display(draw, verse_data)
     
+    def _format_time_with_preference(self, dt, time_format='12'):
+        """Format time with AM/PM for consistency across all display modes."""
+        # Always use 12-hour format with AM/PM for better readability
+        hour_12 = dt.hour % 12
+        if hour_12 == 0:
+            hour_12 = 12
+        return f"{hour_12:02d}:{dt.minute:02d} {dt.strftime('%p')}"
+
     def _add_verse_reference_display(self, draw: ImageDraw.Draw, verse_data: Dict):
         """Add verse reference prominently at the configured position - this is the main time display."""
         # Check if this is devotional mode
         if verse_data.get('is_devotional') or 'devotional_text' in verse_data:
             # For devotional mode, always use current time to ensure minute-by-minute updates
             now = datetime.now()
-            current_time = now.strftime('%I:%M %p')  # Always use current time, not cached
+            current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
             current_date = now.strftime('%A, %B %d, %Y')  # Always use current date
             display_text = f"{current_time} - {current_date}"
         elif verse_data.get('is_date_event'):
             # Show both time and date for date-based mode
             now = datetime.now()
-            current_time = verse_data.get('current_time', now.strftime('%I:%M %p'))
+            current_time = verse_data.get('current_time', self._format_time_with_preference(now, verse_data.get('time_format', '12')))
             current_date = now.strftime('%B %d, %Y')
             display_text = f"{current_time} - {current_date}"
         elif verse_data.get('is_summary'):
-            # For book summaries, use the pre-calculated time from reference field
-            display_text = verse_data.get('reference', 'Unknown')
+            # For book summaries, show current time instead of relying on reference field
+            now = datetime.now()
+            current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
+            display_text = current_time  # Always show current time for book summaries
         else:
-            # Regular verse mode - show reference (this is the main time component!)
-            display_text = verse_data.get('reference', 'Unknown')
+            # Regular verse mode - check if random mode needs time display
+            if verse_data.get('display_mode') == 'random' and verse_data.get('current_time'):
+                # For random mode, show both current time and verse reference
+                verse_ref = verse_data.get('reference', 'Unknown')
+                current_time = self._format_time_with_preference(datetime.now(), verse_data.get('time_format', '12'))
+                display_text = f"{current_time} - {verse_ref}"
+            else:
+                # For time mode, show verse reference only (which IS the time in Bible Clock concept)
+                display_text = verse_data.get('reference', 'Unknown')
         
-        # Use reference font for the verse reference display  
-        if self.reference_font:
+        # Use larger font for time displays (same as devotional mode)
+        time_font = self._get_font(int(self.verse_size * 1.2))  # Make it 20% larger than verse text
+        display_font = time_font if time_font else self.reference_font
+        
+        if display_font:
             # Calculate text dimensions first
-            ref_bbox = draw.textbbox((0, 0), display_text, font=self.reference_font)
+            ref_bbox = draw.textbbox((0, 0), display_text, font=display_font)
             text_width = ref_bbox[2] - ref_bbox[0]
             text_height = ref_bbox[3] - ref_bbox[1]
             
@@ -2024,12 +2044,12 @@ class ImageGenerator:
                     # For Devotional Mode, use original position to avoid overlapping
                     y = base_margin + self.reference_y_offset
                 elif verse_data.get('is_summary'):
-                    # For Book Summaries, keep time at the top for visibility
-                    y = base_margin + self.reference_y_offset
+                    # For Book Summaries, position time prominently below the top margin to avoid overlap with title
+                    y = base_margin + self.reference_y_offset + 80  # Add extra offset to avoid book title overlap
                 else:
-                    # For Time Mode and Date Mode, position lower - start where the bottom of the current placement would be
+                    # For Time Mode and Date Mode, position higher to compensate for larger font
                     current_y = base_margin + self.reference_y_offset
-                    y = current_y + text_height
+                    y = current_y + (text_height // 2)  # Use half text height instead of full height
             elif self.reference_position == 'center-bottom':
                 x = (self.width - text_width) // 2
                 y = self.height - text_height - (base_margin * 4)
@@ -2074,8 +2094,8 @@ class ImageGenerator:
                     for dy in [0, 1]:
                         draw.text((x + dx, y + dy), display_text, fill=0, font=font_to_use)  # Bold black text
             else:
-                font_to_use = self.reference_font
-                draw.text((x, y), display_text, fill=0, font=font_to_use)
+                # Use the larger font for all non-devotional time displays
+                draw.text((x, y), display_text, fill=0, font=display_font)
     
     # Enhanced Layering Methods
     def set_separate_background(self, index: int):

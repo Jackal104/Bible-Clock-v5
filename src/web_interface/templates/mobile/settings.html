@@ -31,12 +31,13 @@
         </div>
     </div>
 
-    <!-- Devotional Settings -->
+    <!-- Interval Settings -->
     <div class="mobile-card bg-white p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Devotional Settings</h2>
-        <div class="space-y-4">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Interval Settings</h2>
+        <div class="space-y-6">
+            <!-- Devotional Mode Interval -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Rotation Interval</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Devotional Mode Rotation Interval</label>
                 <select id="devotional-interval-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500" onchange="updateDevotionalInterval()">
                     <option value="5">5 Minutes</option>
                     <option value="10">10 Minutes</option>
@@ -44,16 +45,76 @@
                     <option value="30">30 Minutes</option>
                     <option value="60">60 Minutes</option>
                 </select>
+                <p class="text-xs text-gray-500 mt-1">How often devotional content changes</p>
             </div>
             
-            <div class="bg-purple-50 p-4 rounded-lg">
+            <!-- Random Mode Interval -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Random Mode Rotation Interval</label>
+                <select id="random-interval-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" onchange="updateRandomInterval()">
+                    <option value="1">1 Minute</option>
+                    <option value="2">2 Minutes</option>
+                    <option value="5">5 Minutes</option>
+                    <option value="10">10 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">How often random verses change</p>
+            </div>
+            
+            <!-- Bible Events Mode Interval -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Bible Events Mode Rotation Interval</label>
+                <select id="date-interval-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateDateInterval()">
+                    <option value="1">1 Minute</option>
+                    <option value="2">2 Minutes</option>
+                    <option value="5">5 Minutes</option>
+                    <option value="10">10 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">How often biblical events cycle</p>
+            </div>
+            
+            <div class="bg-indigo-50 p-4 rounded-lg">
                 <div class="flex items-start space-x-3">
-                    <svg class="w-5 h-5 text-purple-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-indigo-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <div>
-                        <h4 class="font-medium text-purple-800">Devotional Info</h4>
-                        <p class="text-sm text-purple-700 mt-1">Devotional content rotates automatically. Pages cycle every 15 seconds within each devotional.</p>
+                        <h4 class="font-medium text-indigo-800">Interval Info</h4>
+                        <p class="text-sm text-indigo-700 mt-1">These settings control how frequently content rotates in each display mode. Time mode updates every minute automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Default Mode Settings -->
+    <div class="mobile-card bg-white p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Default Mode</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Startup Mode</label>
+                <select id="default-mode-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" onchange="updateDefaultMode()">
+                    <option value="time">Time Mode</option>
+                    <option value="parallel">Parallel Mode</option>
+                    <option value="devotional">Devotional Mode</option>
+                    <option value="random">Random Mode</option>
+                    <option value="date">Bible Events Mode</option>
+                    <option value="weather">Weather Mode</option>
+                    <option value="news">News Mode</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Mode to display after power cycle or service restart</p>
+            </div>
+            
+            <div class="bg-amber-50 p-4 rounded-lg">
+                <div class="flex items-start space-x-3">
+                    <svg class="w-5 h-5 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-medium text-amber-800">Default Mode Info</h4>
+                        <p class="text-sm text-amber-700 mt-1">This setting determines which display mode the Bible Clock will use when it starts up or after a power cycle. You can always change modes manually using the dashboard.</p>
                     </div>
                 </div>
             </div>
@@ -334,6 +395,88 @@ function updateDevotionalInterval() {
             showStatus(`Devotional interval set to ${interval} minutes`, 'success');
         } else {
             showStatus(`Failed to set interval: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function updateRandomInterval() {
+    const interval = document.getElementById('random-interval-select').value;
+    showStatus(`Setting random mode interval to ${interval} minutes...`, 'info');
+    
+    fetch('/api/random/interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ interval: parseInt(interval) })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Random mode interval set to ${interval} minutes`, 'success');
+        } else {
+            showStatus(`Failed to set random interval: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function updateDateInterval() {
+    const interval = document.getElementById('date-interval-select').value;
+    showStatus(`Setting Bible events interval to ${interval} minutes...`, 'info');
+    
+    fetch('/api/date/interval', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ interval: parseInt(interval) })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Bible events interval set to ${interval} minutes`, 'success');
+        } else {
+            showStatus(`Failed to set date interval: ${data.error}`, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus(`Error: ${error.message}`, 'error');
+    });
+}
+
+function updateDefaultMode() {
+    const mode = document.getElementById('default-mode-select').value;
+    const modeNames = {
+        'time': 'Time Mode',
+        'parallel': 'Parallel Mode',
+        'devotional': 'Devotional Mode', 
+        'random': 'Random Mode',
+        'date': 'Bible Events Mode',
+        'weather': 'Weather Mode',
+        'news': 'News Mode'
+    };
+    
+    showStatus(`Setting default startup mode to ${modeNames[mode]}...`, 'info');
+    
+    fetch('/api/default-mode', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mode: mode })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`Default mode set to ${modeNames[mode]}`, 'success');
+        } else {
+            showStatus(`Failed to set default mode: ${data.error}`, 'error');
         }
     })
     .catch(error => {
@@ -761,6 +904,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 const refreshField = document.getElementById('weather-refresh-mobile');
                 if (refreshField) {
                     refreshField.value = weatherSettings.weather_refresh_minutes || 30;
+                }
+            }
+        })
+        .catch(console.error);
+
+    // Load current default mode
+    fetch('/api/default-mode')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.mode) {
+                const defaultModeSelect = document.getElementById('default-mode-select');
+                if (defaultModeSelect) {
+                    defaultModeSelect.value = data.mode;
                 }
             }
         })

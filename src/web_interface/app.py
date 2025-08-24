@@ -2344,5 +2344,102 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         except Exception as e:
             current_app.logger.error(f"Error log clear error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/devotional/interval', methods=['POST'])
+    def set_devotional_interval():
+        """Set devotional mode rotation interval."""
+        try:
+            data = request.get_json()
+            if not data or 'interval' not in data:
+                return jsonify({'success': False, 'error': 'Interval value required'}), 400
+            
+            interval = int(data['interval'])
+            if interval < 1 or interval > 120:
+                return jsonify({'success': False, 'error': 'Interval must be between 1 and 120 minutes'}), 400
+            
+            # Update devotional manager interval
+            if hasattr(current_app, 'devotional_manager') and current_app.devotional_manager:
+                current_app.devotional_manager.rotation_minutes = interval
+                current_app.logger.info(f"Devotional interval set to: {interval} minutes")
+                return jsonify({'success': True, 'interval': interval})
+            else:
+                return jsonify({'success': False, 'error': 'Devotional manager not available'}), 500
+                
+        except Exception as e:
+            current_app.logger.error(f"Devotional interval API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/random/interval', methods=['POST'])
+    def set_random_interval():
+        """Set random mode rotation interval."""
+        try:
+            data = request.get_json()
+            if not data or 'interval' not in data:
+                return jsonify({'success': False, 'error': 'Interval value required'}), 400
+            
+            interval = int(data['interval'])
+            if interval < 1 or interval > 60:
+                return jsonify({'success': False, 'error': 'Interval must be between 1 and 60 minutes'}), 400
+            
+            # Store random interval in verse manager or environment
+            os.environ['RANDOM_INTERVAL_MINUTES'] = str(interval)
+            current_app.logger.info(f"Random mode interval set to: {interval} minutes")
+            return jsonify({'success': True, 'interval': interval})
+                
+        except Exception as e:
+            current_app.logger.error(f"Random interval API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/date/interval', methods=['POST'])
+    def set_date_interval():
+        """Set Bible events mode rotation interval."""
+        try:
+            data = request.get_json()
+            if not data or 'interval' not in data:
+                return jsonify({'success': False, 'error': 'Interval value required'}), 400
+            
+            interval = int(data['interval'])
+            if interval < 1 or interval > 30:
+                return jsonify({'success': False, 'error': 'Interval must be between 1 and 30 minutes'}), 400
+            
+            # Store date interval in environment for verse manager
+            os.environ['DATE_INTERVAL_MINUTES'] = str(interval)
+            current_app.logger.info(f"Bible events interval set to: {interval} minutes")
+            return jsonify({'success': True, 'interval': interval})
+                
+        except Exception as e:
+            current_app.logger.error(f"Date interval API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/default-mode', methods=['GET', 'POST'])
+    def default_mode_api():
+        """Get or set the default display mode for startup."""
+        try:
+            if request.method == 'GET':
+                # Get current default mode
+                current_mode = os.getenv('DEFAULT_DISPLAY_MODE', 'time').lower()
+                return jsonify({'success': True, 'mode': current_mode})
+            
+            elif request.method == 'POST':
+                # Set default mode
+                data = request.get_json()
+                if not data or 'mode' not in data:
+                    return jsonify({'success': False, 'error': 'Mode value required'}), 400
+                
+                mode = data['mode'].lower()
+                valid_modes = ['time', 'parallel', 'devotional', 'random', 'date', 'weather', 'news']
+                
+                if mode not in valid_modes:
+                    return jsonify({'success': False, 'error': f'Invalid mode. Valid modes: {", ".join(valid_modes)}'}), 400
+                
+                # Store default mode in environment variable for persistence
+                os.environ['DEFAULT_DISPLAY_MODE'] = mode
+                current_app.logger.info(f"Default display mode set to: {mode}")
+                
+                return jsonify({'success': True, 'mode': mode})
+                
+        except Exception as e:
+            current_app.logger.error(f"Default mode API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
     
     return app

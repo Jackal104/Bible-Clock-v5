@@ -50,9 +50,17 @@ class VerseManager:
             'cev': {'api': 'biblegateway', 'code': 'CEV', 'name': 'Contemporary English Version'}
         }
         
-        # Enhanced features
-        self.display_mode = 'time'  # 'time', 'date', 'random', 'devotional'
-        self.parallel_mode = False  # Parallel mode off by default - user can enable
+        # Enhanced features - use default mode from environment or fallback to time
+        default_mode = os.getenv('DEFAULT_DISPLAY_MODE', 'time').lower()
+        valid_modes = ['time', 'date', 'random', 'devotional', 'weather', 'news']
+        
+        # Handle parallel as a special case - it's time mode with parallel enabled
+        if default_mode == 'parallel':
+            self.display_mode = 'time'
+            self.parallel_mode = True  # Enable parallel mode for time mode
+        else:
+            self.display_mode = default_mode if default_mode in valid_modes else 'time'
+            self.parallel_mode = False  # Parallel mode off by default - user can enable
         self.secondary_translation = 'amp'  # Default secondary translation when parallel mode enabled
         self.time_format = '12'  # '12' for 12-hour format, '24' for 24-hour format
         # Memory optimization settings
@@ -427,9 +435,18 @@ class VerseManager:
         if verse_data and not verse_data.get('translation'):
             verse_data['translation'] = self.translation.upper()
         
-        # Add time format information for the image generator
+        # Add time format and mode information for the image generator
         if verse_data:
             verse_data['time_format'] = self.time_format
+            verse_data['display_mode'] = self.display_mode
+            
+            # Add current_time for random mode to show actual time with verse
+            if self.display_mode == 'random':
+                now = datetime.now()
+                hour_12 = now.hour % 12
+                if hour_12 == 0:
+                    hour_12 = 12
+                verse_data['current_time'] = f"{hour_12:02d}:{now.minute:02d} {now.strftime('%p')}"
         
         # Add parallel translation if enabled (for all modes except date events)
         if self.parallel_mode and verse_data and not verse_data.get('is_date_event'):
@@ -516,9 +533,9 @@ class VerseManager:
         if minute == 0:
             return self._get_random_book_summary()
         
-        # For very high verse numbers (58, 59), show book summaries
-        # since most chapters don't have that many verses
-        if minute in [58, 59]:
+        # For high verse numbers, show book summaries since most chapters don't have that many verses
+        # Most Bible chapters have fewer than 50 verses, so minutes 50+ often won't have exact matches
+        if minute >= 50:
             return self._get_random_book_summary()
         
         # Determine chapter based on time format setting
