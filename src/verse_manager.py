@@ -486,7 +486,7 @@ class VerseManager:
                     'chapter': 0,
                     'verse': 0,
                     'is_devotional': True,
-                    'devotional_title': devotional_data.get('title', 'Today\'s Devotional'),
+                    'devotional_title': self._clean_devotional_title(devotional_data.get('title', 'Today\'s Devotional')),
                     'devotional_text': devotional_data.get('devotional_text', devotional_data.get('text', '')),
                     'author': devotional_data.get('author', 'Charles Spurgeon'),
                     'source': devotional_data.get('source', 'Faith\'s Checkbook'),
@@ -561,8 +561,9 @@ class VerseManager:
                 books_with_chapter.append(book)
         
         if books_with_chapter:
-            # Select a book based on time for consistency
-            book_index = (now.hour + now.minute) % len(books_with_chapter)
+            # Select a book based on time + daily rotation for diversity
+            day_offset = now.timetuple().tm_yday  # Day of year for daily rotation
+            book_index = (now.hour + now.minute + day_offset) % len(books_with_chapter)
             selected_book = books_with_chapter[book_index]
             
             # Check if ANY book has the exact verse
@@ -879,17 +880,20 @@ class VerseManager:
             exact_match_books = [book for book in all_candidate_books if book['exact_match']]
             
             if exact_match_books:
-                # Use time-based selection among books with exact verse match
+                # Use time + day-based selection for better diversity
                 now = datetime.now()
-                book_index = (now.hour + now.minute) % len(exact_match_books)
+                # Add day of year to create daily rotation while maintaining time correlation
+                day_offset = now.timetuple().tm_yday  # Day of year (1-365/366)
+                book_index = (now.hour + now.minute + day_offset) % len(exact_match_books)
                 selected_book_data = exact_match_books[book_index]
-                self.logger.debug(f"Selected exact match: {selected_book_data['book']} {chapter}:{selected_book_data['verse']}")
+                self.logger.debug(f"Selected exact match: {selected_book_data['book']} {chapter}:{selected_book_data['verse']} (day offset: {day_offset})")
             else:
-                # Fall back to any valid book
+                # Fall back to any valid book with daily rotation
                 now = datetime.now()
-                book_index = (now.hour + now.minute) % len(all_candidate_books)
+                day_offset = now.timetuple().tm_yday  # Day of year (1-365/366)
+                book_index = (now.hour + now.minute + day_offset) % len(all_candidate_books)
                 selected_book_data = all_candidate_books[book_index]
-                self.logger.debug(f"Selected adjusted verse: {selected_book_data['book']} {chapter}:{selected_book_data['verse']} (requested {verse})")
+                self.logger.debug(f"Selected adjusted verse: {selected_book_data['book']} {chapter}:{selected_book_data['verse']} (requested {verse}, day offset: {day_offset})")
             
             book = selected_book_data['book']
             actual_verse = selected_book_data['verse']
@@ -938,8 +942,13 @@ class VerseManager:
                 self.logger.warning(f"No books found with chapter {chapter}")
                 return None
             
-            # Try each book until we find one with the verse
-            random.shuffle(books_with_chapter)  # Randomize the order
+            # Use daily rotation for consistent but diverse selection
+            now = datetime.now()
+            day_offset = now.timetuple().tm_yday  # Day of year for daily rotation
+            # Sort books consistently, then rotate based on time + day
+            books_with_chapter = sorted(books_with_chapter)
+            rotation_offset = (now.hour + now.minute + day_offset) % len(books_with_chapter)
+            books_with_chapter = books_with_chapter[rotation_offset:] + books_with_chapter[:rotation_offset]
             
             for book in books_with_chapter:
                 book_data = self.kjv_bible.get(book, {})
@@ -2992,6 +3001,26 @@ getVerse();
         except Exception as e:
             self.logger.warning(f"Verse history deduplication failed: {e}")
             return history
+
+    def _clean_devotional_title(self, title: str) -> str:
+        """Clean devotional title by removing 'Faith's Checkbook' and keeping just the subject."""
+        import re
+        
+        if not title:
+            return "Today's Devotional"
+        
+        # Remove "Faith's Checkbook" prefix and clean up the title
+        cleaned = title.replace("Faith's Checkbook", "").replace("- ", "").strip()
+        
+        # If nothing left after cleaning, use a default
+        if not cleaned:
+            return "Today's Devotional"
+        
+        # Capitalize first letter if needed
+        if cleaned and cleaned[0].islower():
+            cleaned = cleaned[0].upper() + cleaned[1:]
+        
+        return cleaned
 
 
 class VerseScheduler:
