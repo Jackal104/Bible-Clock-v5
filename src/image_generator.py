@@ -570,39 +570,45 @@ class ImageGenerator:
         if has_decorative_border:
             base_margin = max(base_margin, 80)
         
-        # Calculate actual reference Y position to ensure proper spacing
-        # For book summaries, account for the actual time positioning used by _add_verse_reference_display
+        # For book summaries, create a horizontal header with time (left) and book title (right)
         if verse_data.get('is_summary'):
-            # Time is positioned using: base_margin + reference_y_offset + 120 (from _add_verse_reference_display)
-            # Calculate the actual time height using the larger time font
-            time_font = self._get_font(int(self.verse_size * 1.2)) if hasattr(self, 'verse_size') else self.reference_font
-            actual_time_font = time_font if time_font else self.reference_font
-            time_height = 60  # Default height
-            if actual_time_font:
-                time_bbox = draw.textbbox((0, 0), "12:00 PM", font=actual_time_font)
-                time_height = time_bbox[3] - time_bbox[1]
+            # Use a compact header layout to maximize space for summary content
+            header_y = base_margin + self.reference_y_offset
             
-            # Position book title after the actual time position with proper gap
-            actual_time_y = base_margin + self.reference_y_offset + 120
-            ref_y = actual_time_y + time_height + 30  # Increased gap for better separation
-        else:
-            ref_y = base_margin + self.reference_y_offset  # Original positioning for other modes
-        min_gap = 40  # Minimum gap between reference and content
-        reference_bottom = ref_y + ref_height + min_gap
-        
-        # Draw book title
-        book_title = f"Book of {book_name}"
-        if self.title_font:
-            title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
-            title_width = title_bbox[2] - title_bbox[0]
-            title_height = title_bbox[3] - title_bbox[1]
-            title_x = (self.width - title_width) // 2
-            title_y = reference_bottom
-            draw.text((title_x, title_y), book_title, fill=0, font=self.title_font)
+            # Get the current time for left side
+            from datetime import datetime
+            now = datetime.now()
+            current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
             
-            # Update starting position for summary text
-            content_start_y = title_y + title_height + 30  # 30px gap after title
+            # Use smaller time font to fit in horizontal layout
+            time_font = self.reference_font if self.reference_font else self._get_font(24)
+            book_title = f"Book of {book_name}"
+            
+            # Calculate header height (use the taller of time or title)
+            header_height = 0
+            if time_font and self.title_font:
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
+            
+            # Draw time on the left
+            if time_font:
+                draw.text((base_margin, header_y), current_time, fill=0, font=time_font)
+            
+            # Draw book title on the right
+            if self.title_font:
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_width = title_bbox[2] - title_bbox[0]
+                title_x = self.width - title_width - base_margin
+                draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
+            
+            # Start content after the header with a reasonable gap
+            content_start_y = header_y + header_height + 40  # 40px gap after header
         else:
+            # Original logic for non-summary modes
+            ref_y = base_margin + self.reference_y_offset
+            min_gap = 40
+            reference_bottom = ref_y + ref_height + min_gap
             content_start_y = reference_bottom
         
         # Prepare summary text
@@ -694,38 +700,45 @@ class ImageGenerator:
         if has_decorative_border:
             base_margin = max(base_margin, 80)
         
-        # Calculate actual reference Y position
-        # For book summaries, account for the actual time positioning used by _add_verse_reference_display
+        # For book summaries, create a horizontal header with time (left) and book title (right)
         if verse_data.get('is_summary'):
-            # Time is positioned using: base_margin + reference_y_offset + 120 (from _add_verse_reference_display)
-            # Calculate the actual time height using the larger time font
-            time_font = self._get_font(int(self.verse_size * 1.2)) if hasattr(self, 'verse_size') else self.reference_font
-            actual_time_font = time_font if time_font else self.reference_font
-            time_height = 60  # Default height
-            if actual_time_font:
-                time_bbox = draw.textbbox((0, 0), "12:00 PM", font=actual_time_font)
-                time_height = time_bbox[3] - time_bbox[1]
+            # Use a compact header layout to maximize space for summary content
+            header_y = base_margin + self.reference_y_offset
             
-            # Position book title after the actual time position with proper gap
-            actual_time_y = base_margin + self.reference_y_offset + 120
-            ref_y = actual_time_y + time_height + 30  # Increased gap for better separation
-        else:
-            ref_y = base_margin + self.reference_y_offset  # Original positioning for other modes
-        min_gap = 40
-        reference_bottom = ref_y + ref_height + min_gap
-        
-        # Draw book title
-        book_title = f"Book of {book_name}"
-        if self.title_font:
-            title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
-            title_width = title_bbox[2] - title_bbox[0]
-            title_height = title_bbox[3] - title_bbox[1]
-            title_x = (self.width - title_width) // 2
-            title_y = reference_bottom
-            draw.text((title_x, title_y), book_title, fill=0, font=self.title_font)
+            # Get the current time for left side
+            from datetime import datetime
+            now = datetime.now()
+            current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
             
-            content_start_y = title_y + title_height + 30
+            # Use smaller time font to fit in horizontal layout
+            time_font = self.reference_font if self.reference_font else self._get_font(24)
+            book_title = f"Book of {book_name}"
+            
+            # Calculate header height (use the taller of time or title)
+            header_height = 0
+            if time_font and self.title_font:
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
+            
+            # Draw time on the left
+            if time_font:
+                draw.text((base_margin, header_y), current_time, fill=0, font=time_font)
+            
+            # Draw book title on the right
+            if self.title_font:
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_width = title_bbox[2] - title_bbox[0]
+                title_x = self.width - title_width - base_margin
+                draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
+            
+            # Start content after the header with a reasonable gap
+            content_start_y = header_y + header_height + 40  # 40px gap after header
         else:
+            # Original logic for non-summary modes
+            ref_y = base_margin + self.reference_y_offset
+            min_gap = 40
+            reference_bottom = ref_y + ref_height + min_gap
             content_start_y = reference_bottom
         
         # Draw page indicator if multiple pages
@@ -1999,6 +2012,11 @@ class ImageGenerator:
 
     def _add_verse_reference_display(self, draw: ImageDraw.Draw, verse_data: Dict):
         """Add verse reference prominently at the configured position - this is the main time display."""
+        
+        # Skip drawing for book summaries since time/title are handled in horizontal header
+        if verse_data.get('is_summary'):
+            return
+            
         # Check if this is devotional mode
         if verse_data.get('is_devotional') or 'devotional_text' in verse_data:
             # For devotional mode, always use current time to ensure minute-by-minute updates
@@ -2012,11 +2030,6 @@ class ImageGenerator:
             current_time = verse_data.get('current_time', self._format_time_with_preference(now, verse_data.get('time_format', '12')))
             current_date = now.strftime('%B %d, %Y')
             display_text = f"{current_time} - {current_date}"
-        elif verse_data.get('is_summary'):
-            # For book summaries, show current time instead of relying on reference field
-            now = datetime.now()
-            current_time = self._format_time_with_preference(now, verse_data.get('time_format', '12'))
-            display_text = current_time  # Always show current time for book summaries
         else:
             # Regular verse mode - check if random mode needs time display
             if verse_data.get('display_mode') == 'random' and verse_data.get('current_time'):
@@ -2064,9 +2077,6 @@ class ImageGenerator:
                 if verse_data.get('is_devotional'):
                     # For Devotional Mode, use original position to avoid overlapping
                     y = base_margin + self.reference_y_offset
-                elif verse_data.get('is_summary'):
-                    # For Book Summaries, position time prominently below the top margin to avoid overlap with title
-                    y = base_margin + self.reference_y_offset + 120  # Increased offset to avoid book title overlap
                 else:
                     # For Time Mode and Date Mode, position higher to compensate for larger font
                     current_y = base_margin + self.reference_y_offset
