@@ -1271,9 +1271,9 @@ class BibleClockVoiceControl:
         try:
             self.logger.info(f"Displaying response on screen: {text[:100]}{'...' if len(text) > 100 else ''}")
             
-            # Use the display manager's transient message system
+            # Use the display manager's AI response page system for large, centered text
             if hasattr(self.display_manager, 'show_transient_message'):
-                self.display_manager.show_transient_message("ai_response", text, duration)
+                self.display_manager.show_transient_message("ai_response_page", text, duration)
             else:
                 # Fallback: log the text if display manager not available
                 self.logger.warning("Display manager not available for screen response")

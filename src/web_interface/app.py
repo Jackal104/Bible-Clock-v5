@@ -2653,7 +2653,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                     if hasattr(current_app.service_manager, 'display_manager'):
                         try:
                             current_app.service_manager.display_manager.show_transient_message(
-                                "ai_response", response, duration=15.0
+                                "ai_response_page", response, duration=15.0
                             )
                             current_app.logger.info(f"Text query response displayed: {response[:100]}...")
                         except Exception as display_error:

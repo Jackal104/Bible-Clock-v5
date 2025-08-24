@@ -150,6 +150,11 @@ class ServiceManager:
     @error_handler.with_retry(max_retries=2)
     def _update_verse(self):
         """Update the displayed verse at precise minute boundaries."""
+        # Check if display is locked for AI responses
+        if hasattr(self.display_manager, 'is_display_locked') and self.display_manager.is_display_locked():
+            self.logger.debug("Skipping verse update - display locked for AI response")
+            return
+            
         now = datetime.now()
         
         # Check if we need frequent updates for book summary pagination

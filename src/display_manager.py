@@ -22,6 +22,9 @@ class DisplayManager:
         self.width = int(os.getenv('DISPLAY_WIDTH', '1872'))
         self.height = int(os.getenv('DISPLAY_HEIGHT', '1404'))
         self.restore_callback = None  # Will be set by service manager
+        self._ai_display_active = False  # Flag to prevent interruptions during AI display
+        self._display_locked = False  # Lock to prevent any display updates during AI responses
+        self._lock_timer = None  # Timer to unlock display after AI response completes
         # Convert rotation to IT8951 expected format
         rotation_setting = os.getenv('DISPLAY_ROTATION', '0')
         if rotation_setting == '0':
@@ -50,6 +53,41 @@ class DisplayManager:
         """Set callback function to restore normal display."""
         self.restore_callback = callback
     
+    def lock_display(self, duration: float = 30.0):
+        """Lock display to prevent updates during AI responses."""
+        self._display_locked = True
+        self._ai_display_active = True
+        
+        # Cancel any existing timer
+        if self._lock_timer:
+            self._lock_timer.cancel()
+        
+        # Set timer to unlock display after duration + 15 seconds buffer
+        unlock_delay = duration + 15.0
+        self._lock_timer = threading.Timer(unlock_delay, self._unlock_display)
+        self._lock_timer.start()
+        
+        self.logger.info(f"Display locked for {unlock_delay} seconds during AI response")
+    
+    def _unlock_display(self):
+        """Unlock display and restore normal operation."""
+        self._display_locked = False
+        self._ai_display_active = False
+        self._lock_timer = None
+        
+        self.logger.info("Display unlocked - normal updates resumed")
+        
+        # Trigger display restore
+        if self.restore_callback:
+            try:
+                self.restore_callback()
+            except Exception as e:
+                self.logger.error(f"Failed to restore display after unlock: {e}")
+    
+    def is_display_locked(self) -> bool:
+        """Check if display is currently locked."""
+        return self._display_locked
+    
     def _initialize_hardware(self):
         """Initialize the IT8951 e-ink display."""
         try:
@@ -71,9 +109,13 @@ class DisplayManager:
             self.logger.error(f"Display initialization failed: {e}")
             self.simulation_mode = True
     
-    def display_image(self, image: Image.Image, force_refresh: bool = False, preserve_border: bool = False):
+    def display_image(self, image: Image.Image, force_refresh: bool = False, preserve_border: bool = False, bypass_lock: bool = False):
         """Display image on e-ink screen or save for simulation."""
         try:
+            # Check if display is locked (unless this is an AI response bypassing the lock)
+            if self._display_locked and not bypass_lock:
+                self.logger.debug("Display update skipped - display is locked for AI response")
+                return
             # Resize image to display dimensions
             if image.size != (self.width, self.height):
                 image = image.resize((self.width, self.height), Image.Resampling.LANCZOS)
@@ -244,6 +286,11 @@ class DisplayManager:
     def show_transient_message(self, state: str, message: str = None, duration: float = None):
         """Show a temporary message overlay on the display."""
         try:
+            # Skip status messages if AI response is currently being displayed
+            if self._ai_display_active and state not in ["restore", "ai_response_page"]:
+                self.logger.debug(f"Skipping status message '{state}' - AI response active")
+                return
+                
             # Handle special restore state
             if state == "restore":
                 self.logger.info("🔄 RESTORE STATE RECEIVED - Triggering display restoration to normal Bible verse")
@@ -438,7 +485,12 @@ class DisplayManager:
             
             # Split text into pages that fit on screen with large fonts
             pages = self._paginate_ai_response(text)
-            self.logger.info(f"AI response split into {len(pages)} pages")
+            total_duration = len(pages) * duration
+            
+            # Lock display to prevent interruptions during AI response
+            self.lock_display(total_duration)
+            
+            self.logger.info(f"AI response split into {len(pages)} pages, display locked for {total_duration + 15} seconds")
             
             # Show pages sequentially
             self._show_ai_pages_sequence(pages, duration)
@@ -474,9 +526,9 @@ class DisplayManager:
             font = ImageFont.load_default()
             font_size = 20
         
-        # Calculate usable area (accounting for header and margins)
-        margin = 60
-        header_height = 80  # Space for "ChatGPT Response" header
+        # Calculate usable area (accounting for header and margins) - very conservative
+        margin = 100  # Very large margins to prevent cutoff
+        header_height = 150  # Lots of space for "ChatGPT Response" header
         usable_width = self.width - (2 * margin)
         usable_height = self.height - header_height - (2 * margin)
         
@@ -489,7 +541,7 @@ class DisplayManager:
             # Test adding this word
             test_text = ' '.join(current_page + [word])
             wrapped_lines = self._wrap_text_for_font(test_text, font, usable_width)
-            test_height = len(wrapped_lines) * (font_size + 5)  # Line spacing
+            test_height = len(wrapped_lines) * (font_size + 12)  # More generous line spacing
             
             if test_height <= usable_height:
                 # Fits on current page
@@ -545,8 +597,8 @@ class DisplayManager:
                     # More pages to show
                     threading.Timer(page_duration, lambda: show_next_page(page_index + 1)).start()
                 else:
-                    # Last page, schedule restoration
-                    threading.Timer(page_duration, self._restore_previous_display_state).start()
+                    # Last page - let the display lock timer handle restoration
+                    pass
         
         # Start showing pages
         show_next_page(0)
@@ -558,12 +610,12 @@ class DisplayManager:
             image = Image.new('L', (self.width, self.height), 255)
             draw = ImageDraw.Draw(image)
             
-            # Use large font
-            font_size = 48
+            # Use much larger font for better readability from distance
+            font_size = 96  # Much larger for distance viewing
             font = None
             
-            # Try to get the best available font
-            for size in [font_size, 44, 40, 36, 32]:
+            # Try to get the best available font - start larger
+            for size in [font_size, 88, 80, 72, 64, 56, 48]:
                 try:
                     font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
                     font_size = size
@@ -580,8 +632,8 @@ class DisplayManager:
                 font = ImageFont.load_default()
                 font_size = 20
             
-            # Draw header
-            header_font_size = min(40, font_size)
+            # Draw header with larger font
+            header_font_size = min(60, font_size)  # Larger header font
             header_font = None
             try:
                 header_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", header_font_size)
@@ -600,17 +652,17 @@ class DisplayManager:
             
             draw.text((header_x, header_y), header_text, font=header_font, fill=0)
             
-            # Prepare main text
-            margin = 60
-            content_y_start = header_y + (header_bbox[3] - header_bbox[1]) + 40
+            # Prepare main text with matching margins from pagination
+            margin = 100  # Match pagination margin - very conservative
+            content_y_start = header_y + (header_bbox[3] - header_bbox[1]) + 70
             content_width = self.width - (2 * margin)
             content_height = self.height - content_y_start - margin
             
             # Wrap text
             wrapped_lines = self._wrap_text_for_font(page_text, font, content_width)
             
-            # Calculate total text height
-            line_height = font_size + 8  # Add some line spacing
+            # Calculate total text height with matching spacing from pagination
+            line_height = font_size + 12  # Match pagination line spacing
             total_text_height = len(wrapped_lines) * line_height
             
             # Center text vertically in available space
@@ -626,25 +678,46 @@ class DisplayManager:
                 draw.text((line_x, current_y), line, font=font, fill=0)
                 current_y += line_height
             
-            # Display the image
-            self.display_image(image, force_refresh=True)
+            # Apply only horizontal mirror transformation for AI responses
+            # The physical rotation is handled by the hardware, we just need mirroring
+            mirror_setting = os.getenv('DISPLAY_MIRROR', 'false').lower()
+            
+            if mirror_setting == 'true':
+                image = image.transpose(Image.FLIP_LEFT_RIGHT)
+            
+            # Use direct hardware display to bypass additional transformations
+            if self.simulation_mode:
+                # Save simulation image (bypasses lock check since we call _simulate_display directly)
+                simulation_path = 'current_display.png'
+                image.save(simulation_path)
+                self.logger.info(f"AI response simulated - image saved to {simulation_path}")
+            else:
+                # Direct hardware display without additional transformations
+                self._display_ai_on_hardware_direct(image)
             self.logger.info(f"AI response page {page_num}/{total_pages} displayed (font size: {font_size})")
             
         except Exception as e:
             self.logger.error(f"Failed to display AI page: {e}")
     
-    def _restore_previous_display_state(self):
-        """Restore the display to its previous state after showing an AI response."""
-        try:
-            # Trigger a normal display update to restore the current verse/mode
-            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'verse_manager'):
-                # Force an update of the current display state
-                self.service_manager.verse_manager.force_update()
-                self.logger.info("Display state restored after AI response")
-            else:
-                self.logger.warning("Could not restore display state - service manager not available")
-        except Exception as e:
-            self.logger.error(f"Failed to restore display state: {e}")
+    def _display_ai_on_hardware_direct(self, image: Image.Image):
+        """Display AI response directly on hardware without additional transformations."""
+        if not self.display_device:
+            raise RuntimeError("Display device not initialized")
+        
+        # Clear frame buffer completely
+        white_image = Image.new('L', (self.width, self.height), 255)
+        for i in range(2):
+            self.display_device.frame_buf.paste(white_image, (0, 0))
+        
+        # Paste the pre-transformed image
+        self.display_device.frame_buf.paste(image, (0, 0))
+        
+        # Use full refresh for clean display
+        self.display_device.draw_full(DisplayModes.GC16)
+        self.last_full_refresh = time.time()
+        self.partial_refresh_count = 0
+        self.logger.debug("AI response displayed with direct hardware method")
+    
     
     def _calculate_optimal_font_size(self, text: str, max_width: int, max_height: int) -> int:
         """Calculate optimal font size for text to fit within given dimensions while remaining readable."""
