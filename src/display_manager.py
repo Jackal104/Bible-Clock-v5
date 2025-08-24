@@ -431,48 +431,207 @@ class DisplayManager:
             self.logger.error(f"Failed to show visual feedback: {e}")
     
     def _show_ai_response_page(self, text: str, duration: float = 15.0):
-        """Show a paginated AI response using the main image generator framework."""
+        """Show a paginated AI response with large, centered text and auto-pagination."""
         try:
             if not text:
                 return
             
-            # Use the image generator to create a proper AI response display
-            # This ensures consistent fonts, backgrounds, and layout
-            verse_data = {
-                'text': text,
-                'reference': 'AI Response',  
-                'book': 'ChatGPT',
-                'chapter': '',
-                'verse': '',
-                'translation': 'AI',
-                'is_ai_response': True,  # Flag to identify AI responses
-                'time_format': '12'
-            }
+            # Split text into pages that fit on screen with large fonts
+            pages = self._paginate_ai_response(text)
+            self.logger.info(f"AI response split into {len(pages)} pages")
             
-            # Generate image using the main image generator framework
-            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'image_generator'):
-                image = self.service_manager.image_generator.create_verse_image(verse_data)
-                
-                # Display the image with proper refresh
-                self.display_image(image, force_refresh=True)
-                self.logger.info(f"AI response displayed using image generator framework")
-                
-                # Schedule return to previous state after duration
-                import threading
-                def restore_display():
-                    try:
-                        # Restore the previous display state
-                        self._restore_previous_display_state()
-                    except Exception as e:
-                        self.logger.error(f"Failed to restore display after AI response: {e}")
-                        
-                threading.Timer(duration, restore_display).start()
-                
-            else:
-                self.logger.error("Image generator not available for AI response")
+            # Show pages sequentially
+            self._show_ai_pages_sequence(pages, duration)
                 
         except Exception as e:
             self.logger.error(f"Failed to show AI response page: {e}")
+    
+    def _paginate_ai_response(self, text: str) -> list:
+        """Split AI response text into pages that fit with large fonts."""
+        # Create a temporary image for measurement
+        temp_image = Image.new('L', (self.width, self.height), 255)
+        temp_draw = ImageDraw.Draw(temp_image)
+        
+        # Use large font for optimal readability
+        font_size = 48  # Start with large font
+        font = None
+        
+        # Try to get a good font
+        for size in [font_size, 44, 40, 36, 32]:
+            try:
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
+                font_size = size
+                break
+            except:
+                try:
+                    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
+                    font_size = size
+                    break
+                except:
+                    continue
+        
+        if not font:
+            font = ImageFont.load_default()
+            font_size = 20
+        
+        # Calculate usable area (accounting for header and margins)
+        margin = 60
+        header_height = 80  # Space for "ChatGPT Response" header
+        usable_width = self.width - (2 * margin)
+        usable_height = self.height - header_height - (2 * margin)
+        
+        # Split into pages
+        words = text.split()
+        pages = []
+        current_page = []
+        
+        for word in words:
+            # Test adding this word
+            test_text = ' '.join(current_page + [word])
+            wrapped_lines = self._wrap_text_for_font(test_text, font, usable_width)
+            test_height = len(wrapped_lines) * (font_size + 5)  # Line spacing
+            
+            if test_height <= usable_height:
+                # Fits on current page
+                current_page.append(word)
+            else:
+                # Start new page
+                if current_page:
+                    pages.append(' '.join(current_page))
+                current_page = [word]
+        
+        # Add final page
+        if current_page:
+            pages.append(' '.join(current_page))
+        
+        return pages
+    
+    def _wrap_text_for_font(self, text: str, font, max_width: int) -> list:
+        """Wrap text to fit within max_width using the given font."""
+        words = text.split()
+        lines = []
+        current_line = []
+        
+        temp_draw = ImageDraw.Draw(Image.new('L', (100, 100), 255))
+        
+        for word in words:
+            test_line = ' '.join(current_line + [word])
+            bbox = temp_draw.textbbox((0, 0), test_line, font=font)
+            line_width = bbox[2] - bbox[0]
+            
+            if line_width <= max_width:
+                current_line.append(word)
+            else:
+                if current_line:
+                    lines.append(' '.join(current_line))
+                current_line = [word]
+        
+        if current_line:
+            lines.append(' '.join(current_line))
+        
+        return lines
+    
+    def _show_ai_pages_sequence(self, pages: list, page_duration: float):
+        """Show AI response pages in sequence with timing."""
+        import threading
+        
+        def show_next_page(page_index):
+            if page_index < len(pages):
+                # Show current page
+                self._display_ai_page(pages[page_index], page_index + 1, len(pages))
+                
+                # Schedule next page or restoration
+                if page_index + 1 < len(pages):
+                    # More pages to show
+                    threading.Timer(page_duration, lambda: show_next_page(page_index + 1)).start()
+                else:
+                    # Last page, schedule restoration
+                    threading.Timer(page_duration, self._restore_previous_display_state).start()
+        
+        # Start showing pages
+        show_next_page(0)
+    
+    def _display_ai_page(self, page_text: str, page_num: int, total_pages: int):
+        """Display a single page of AI response with large, centered text."""
+        try:
+            # Create clean background
+            image = Image.new('L', (self.width, self.height), 255)
+            draw = ImageDraw.Draw(image)
+            
+            # Use large font
+            font_size = 48
+            font = None
+            
+            # Try to get the best available font
+            for size in [font_size, 44, 40, 36, 32]:
+                try:
+                    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
+                    font_size = size
+                    break
+                except:
+                    try:
+                        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
+                        font_size = size
+                        break
+                    except:
+                        continue
+            
+            if not font:
+                font = ImageFont.load_default()
+                font_size = 20
+            
+            # Draw header
+            header_font_size = min(40, font_size)
+            header_font = None
+            try:
+                header_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", header_font_size)
+            except:
+                header_font = font
+            
+            header_text = f"🤖 ChatGPT Response"
+            if total_pages > 1:
+                header_text += f" ({page_num}/{total_pages})"
+            
+            # Center header
+            header_bbox = draw.textbbox((0, 0), header_text, font=header_font)
+            header_width = header_bbox[2] - header_bbox[0]
+            header_x = (self.width - header_width) // 2
+            header_y = 30
+            
+            draw.text((header_x, header_y), header_text, font=header_font, fill=0)
+            
+            # Prepare main text
+            margin = 60
+            content_y_start = header_y + (header_bbox[3] - header_bbox[1]) + 40
+            content_width = self.width - (2 * margin)
+            content_height = self.height - content_y_start - margin
+            
+            # Wrap text
+            wrapped_lines = self._wrap_text_for_font(page_text, font, content_width)
+            
+            # Calculate total text height
+            line_height = font_size + 8  # Add some line spacing
+            total_text_height = len(wrapped_lines) * line_height
+            
+            # Center text vertically in available space
+            text_y = content_y_start + max(0, (content_height - total_text_height) // 2)
+            
+            # Draw each line centered
+            current_y = text_y
+            for line in wrapped_lines:
+                line_bbox = draw.textbbox((0, 0), line, font=font)
+                line_width = line_bbox[2] - line_bbox[0]
+                line_x = (self.width - line_width) // 2
+                
+                draw.text((line_x, current_y), line, font=font, fill=0)
+                current_y += line_height
+            
+            # Display the image
+            self.display_image(image, force_refresh=True)
+            self.logger.info(f"AI response page {page_num}/{total_pages} displayed (font size: {font_size})")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to display AI page: {e}")
     
     def _restore_previous_display_state(self):
         """Restore the display to its previous state after showing an AI response."""
