@@ -252,7 +252,12 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if not translation_completion:
                 translation_completion = {}
                 for translation in ['kjv', 'amp', 'esv', 'nlt', 'msg', 'nasb', 'ylt']:
-                    file_path = Path(f'data/translations/bible_{translation}.json')
+                    # Handle special case for NASB which uses nasb1995 file
+                    file_name = translation
+                    if translation == 'nasb':
+                        file_name = 'nasb1995'
+                    
+                    file_path = Path(f'data/translations/bible_{file_name}.json')
                     if file_path.exists():
                         # Estimate completion based on file size (rough approximation)
                         size_bytes = file_path.stat().st_size
@@ -278,8 +283,13 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             for translation_file in translation_dir.glob('bible_*.json'):
                 translation_name = translation_file.stem.replace('bible_', '')
                 if translation_name != 'web' and translation_file.exists():  # Exclude WEB
+                    # Handle special case for NASB which uses nasb1995 file
+                    display_name = translation_name
+                    if translation_name == 'nasb1995':
+                        display_name = 'nasb'  # Map nasb1995 file back to nasb key
+                    
                     size_bytes = translation_file.stat().st_size
-                    file_sizes[translation_name] = {
+                    file_sizes[display_name] = {
                         'size_bytes': size_bytes,
                         'size_mb': round(size_bytes / (1024 * 1024), 2)
                     }
