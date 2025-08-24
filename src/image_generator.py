@@ -571,12 +571,20 @@ class ImageGenerator:
             base_margin = max(base_margin, 80)
         
         # Calculate actual reference Y position to ensure proper spacing
-        # For book summaries, account for the time at the top
+        # For book summaries, account for the actual time positioning used by _add_verse_reference_display
         if verse_data.get('is_summary'):
-            # Time is positioned at the top in summary mode - start title after time + gap
-            time_y = base_margin + self.reference_y_offset
-            time_height = ref_height if self.reference_font else 60
-            ref_y = time_y + time_height + 20  # Start title after the time with gap
+            # Time is positioned using: base_margin + reference_y_offset + 120 (from _add_verse_reference_display)
+            # Calculate the actual time height using the larger time font
+            time_font = self._get_font(int(self.verse_size * 1.2)) if hasattr(self, 'verse_size') else self.reference_font
+            actual_time_font = time_font if time_font else self.reference_font
+            time_height = 60  # Default height
+            if actual_time_font:
+                time_bbox = draw.textbbox((0, 0), "12:00 PM", font=actual_time_font)
+                time_height = time_bbox[3] - time_bbox[1]
+            
+            # Position book title after the actual time position with proper gap
+            actual_time_y = base_margin + self.reference_y_offset + 120
+            ref_y = actual_time_y + time_height + 30  # Increased gap for better separation
         else:
             ref_y = base_margin + self.reference_y_offset  # Original positioning for other modes
         min_gap = 40  # Minimum gap between reference and content
@@ -687,10 +695,20 @@ class ImageGenerator:
             base_margin = max(base_margin, 80)
         
         # Calculate actual reference Y position
-        # For book summaries, account for the adjusted time position
+        # For book summaries, account for the actual time positioning used by _add_verse_reference_display
         if verse_data.get('is_summary'):
-            # Time is positioned lower in summary mode - use the adjusted position
-            ref_y = base_margin + self.reference_y_offset + ref_height  # Start after the time
+            # Time is positioned using: base_margin + reference_y_offset + 120 (from _add_verse_reference_display)
+            # Calculate the actual time height using the larger time font
+            time_font = self._get_font(int(self.verse_size * 1.2)) if hasattr(self, 'verse_size') else self.reference_font
+            actual_time_font = time_font if time_font else self.reference_font
+            time_height = 60  # Default height
+            if actual_time_font:
+                time_bbox = draw.textbbox((0, 0), "12:00 PM", font=actual_time_font)
+                time_height = time_bbox[3] - time_bbox[1]
+            
+            # Position book title after the actual time position with proper gap
+            actual_time_y = base_margin + self.reference_y_offset + 120
+            ref_y = actual_time_y + time_height + 30  # Increased gap for better separation
         else:
             ref_y = base_margin + self.reference_y_offset  # Original positioning for other modes
         min_gap = 40
@@ -2048,7 +2066,7 @@ class ImageGenerator:
                     y = base_margin + self.reference_y_offset
                 elif verse_data.get('is_summary'):
                     # For Book Summaries, position time prominently below the top margin to avoid overlap with title
-                    y = base_margin + self.reference_y_offset + 80  # Add extra offset to avoid book title overlap
+                    y = base_margin + self.reference_y_offset + 120  # Increased offset to avoid book title overlap
                 else:
                     # For Time Mode and Date Mode, position higher to compensate for larger font
                     current_y = base_margin + self.reference_y_offset
