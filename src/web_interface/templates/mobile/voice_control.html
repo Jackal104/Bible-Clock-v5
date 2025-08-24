@@ -18,6 +18,82 @@
         </div>
     </div>
 
+    <!-- Key Features Section -->
+    <div class="mobile-card bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 p-6">
+        <h2 class="text-xl font-bold text-purple-800 mb-4">
+            <svg class="w-6 h-6 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+            </svg>
+            🎆 Key Voice Features
+        </h2>
+        
+        <!-- Voice Control Toggle -->
+        <div class="space-y-4">
+            <div class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <h4 class="font-medium text-gray-900">🎤 Wake Word Detection</h4>
+                        <p class="text-sm text-gray-600">Enable "Bible Clock" wake word</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="mobile-voice-control-toggle" class="sr-only peer" checked>
+                        <div class="w-12 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-purple-600"></div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- AI Response Mode -->
+            <div class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+                <h4 class="font-medium text-gray-900 mb-3">🎯 AI Response Mode</h4>
+                <div class="space-y-3">
+                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer">
+                        <input type="radio" name="mobile-playback-mode" id="mobile-playback-audio" value="audio" class="mr-3 text-purple-600" checked>
+                        <div>
+                            <span class="text-sm font-medium text-gray-900">🔊 Audio Mode</span>
+                            <p class="text-xs text-gray-500">Speak through speakers</p>
+                        </div>
+                    </label>
+                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer">
+                        <input type="radio" name="mobile-playback-mode" id="mobile-playback-visual" value="visual" class="mr-3 text-purple-600">
+                        <div>
+                            <span class="text-sm font-medium text-gray-900">📖 Visual Mode</span>
+                            <p class="text-xs text-gray-500">Display on e-ink screen</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Text Input -->
+            <div id="mobile-text-query-section" class="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+                <h4 class="font-medium text-gray-900 mb-3">
+                    <svg class="w-4 h-4 inline mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    ⌨️ Type Your Biblical Questions
+                </h4>
+                <div class="space-y-3">
+                    <input 
+                        type="text" 
+                        id="mobile-text-input" 
+                        placeholder="Example: Explain John 3:16, What is faith?"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                        maxlength="200"
+                    >
+                    <button 
+                        id="mobile-send-button"
+                        class="w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors shadow-sm"
+                    >
+                        <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                        Send to Display
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">💡 Alternative to saying "Bible Clock [question]" - just type and send!</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Wake Word Control -->
     <div class="mobile-card bg-white p-6">
         <h2 class="text-xl font-semibold mb-4 text-gray-800">Wake Word Settings</h2>
@@ -64,7 +140,7 @@
                         id="volume-slider" 
                         min="0" 
                         max="100" 
-                        value="70" 
+                        value="80" 
                         class="flex-1 h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                         onchange="updateVolume(this.value)"
                         oninput="updateVolumeDisplay(this.value)"
@@ -75,7 +151,7 @@
                 </div>
                 <div class="flex justify-between text-sm text-gray-500 mt-2">
                     <span>Quiet</span>
-                    <span id="volume-display" class="font-medium">70%</span>
+                    <span id="volume-display" class="font-medium">80%</span>
                     <span>Loud</span>
                 </div>
             </div>
@@ -357,17 +433,20 @@ function showStatus(message, type) {
 }
 
 function updateVolume(value) {
-    fetch('/api/voice-control/volume', {
+    const volumeDecimal = parseFloat(value) / 100; // Convert to 0.0-1.0 range
+    
+    fetch('/api/voice/settings', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ volume: parseInt(value) })
+        body: JSON.stringify({ voice_volume: volumeDecimal })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             showStatus(`Volume updated to ${value}%`, 'success');
+            addVoiceLogEntry(`Volume set to ${value}%`, 'system');
         } else {
             showStatus('Failed to update volume', 'error');
         }
@@ -389,23 +468,195 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-refresh voice status every 10 seconds
     setInterval(updateVoiceStatus, 10000);
     
-    // Load current volume setting
-    fetch('/api/voice-control/volume')
+    // Load current voice settings
+    fetch('/api/voice/status')
         .then(response => response.json())
         .then(data => {
-            if (data.volume !== undefined) {
+            if (data.success && data.data) {
+                const status = data.data;
+                
+                // Update volume controls
+                const volume = Math.round((status.tts_volume || status.voice_volume || 0.8) * 100);
                 const slider = document.getElementById('volume-slider');
                 const display = document.getElementById('volume-display');
-                slider.value = data.volume;
-                display.textContent = data.volume + '%';
+                slider.value = volume;
+                display.textContent = volume + '%';
+                
+                // Update voice control toggle
+                document.getElementById('mobile-voice-control-toggle').checked = status.enabled !== false;
+                
+                // Update playback mode
+                const playbackMode = status.tts_playback_mode || 'audio';
+                document.getElementById('mobile-playback-audio').checked = playbackMode === 'audio';
+                document.getElementById('mobile-playback-visual').checked = playbackMode === 'visual';
             }
         })
-        .catch(error => console.error('Error loading volume:', error));
+        .catch(error => console.error('Error loading voice settings:', error));
     
     // Simulate some initial log entries for demo
     setTimeout(() => {
         addVoiceLogEntry('Voice control system initialized', 'system');
     }, 1000);
+    
+    // Mobile features event listeners
+    setupMobileFeatures();
 });
+
+// Mobile Features Functions
+function setupMobileFeatures() {
+    // Voice control toggle
+    document.getElementById('mobile-voice-control-toggle').addEventListener('change', function() {
+        const enabled = this.checked;
+        const toggle = this;
+        
+        // Show immediate feedback
+        showStatus(`${enabled ? 'Enabling' : 'Disabling'} wake word detection...`, 'info');
+        
+        // Disable toggle while processing
+        toggle.disabled = true;
+        
+        fetch('/api/voice/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ voice_control_enabled: enabled })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showStatus(`🎯 Wake word detection ${enabled ? 'enabled' : 'disabled'} successfully!`, 'success');
+                addVoiceLogEntry(`Wake word detection ${enabled ? 'enabled' : 'disabled'}`, 'system');
+                
+                // Update the main toggle if it exists
+                const mainToggle = document.getElementById('wake-word-toggle');
+                if (mainToggle) mainToggle.checked = enabled;
+                
+                // Refresh voice status
+                setTimeout(() => updateVoiceStatus(), 1000);
+            } else {
+                showStatus('⚠️ Failed to update voice control: ' + (data.error || 'Unknown error'), 'error');
+                toggle.checked = !enabled; // Revert
+            }
+        })
+        .catch(error => {
+            showStatus('😱 Error updating voice control: ' + error.message, 'error');
+            toggle.checked = !enabled; // Revert
+        })
+        .finally(() => {
+            // Re-enable toggle
+            toggle.disabled = false;
+        });
+    });
+    
+    // Playback mode toggles
+    document.getElementById('mobile-playback-audio').addEventListener('change', function() {
+        if (this.checked) {
+            updatePlaybackMode('audio');
+        }
+    });
+    
+    document.getElementById('mobile-playback-visual').addEventListener('change', function() {
+        if (this.checked) {
+            updatePlaybackMode('visual');
+        }
+    });
+    
+    // Text input functionality
+    document.getElementById('mobile-send-button').addEventListener('click', function() {
+        const input = document.getElementById('mobile-text-input');
+        const button = this;
+        const query = input.value.trim();
+        
+        if (!query) {
+            showStatus('⚠️ Please enter a biblical question', 'error');
+            input.focus();
+            return;
+        }
+        
+        if (query.length > 200) {
+            showStatus('⚠️ Question is too long (max 200 characters)', 'error');
+            return;
+        }
+        
+        // Show immediate feedback and disable button
+        const originalText = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = `
+            <svg class="w-4 h-4 inline mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Sending to AI...
+        `;
+        
+        showStatus('🤖 Sending your question to ChatGPT...', 'info');
+        addVoiceLogEntry(`Text query: "${query}"`, 'user');
+        
+        // Send to API
+        fetch('/api/text-query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                query: query,
+                force_visual: true
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showStatus('✨ Question sent successfully! The answer will appear on the e-ink display in a few moments.', 'success');
+                input.value = ''; // Clear input
+                addVoiceLogEntry(`AI response: Processing "${query}"`, 'system');
+                
+                // Show additional confirmation
+                setTimeout(() => {
+                    showStatus('📺 Check your Bible Clock display now for the AI response!', 'success');
+                }, 3000);
+            } else {
+                showStatus('😱 Failed to process question: ' + (data.error || 'Unknown error'), 'error');
+                addVoiceLogEntry(`Error: ${data.error || 'Unknown error'}`, 'system');
+            }
+        })
+        .catch(error => {
+            showStatus('😱 Network error: Failed to send question', 'error');
+            addVoiceLogEntry(`Network error: ${error.message}`, 'system');
+        })
+        .finally(() => {
+            // Restore button
+            button.disabled = false;
+            button.innerHTML = originalText;
+        });
+    });
+    
+    // Text input enter key
+    document.getElementById('mobile-text-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('mobile-send-button').click();
+        }
+    });
+}
+
+function updatePlaybackMode(mode) {
+    const modeIcon = mode === 'audio' ? '🔊' : '📖';
+    const modeText = mode === 'audio' ? 'Audio (Speakers)' : 'Visual (E-ink Display)';
+    
+    showStatus(`🔄 Switching to ${modeText} mode...`, 'info');
+    
+    fetch('/api/voice/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tts_playback_mode: mode })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`${modeIcon} AI response mode set to ${modeText}!`, 'success');
+            addVoiceLogEntry(`Playback mode changed to ${mode}`, 'system');
+        } else {
+            showStatus('⚠️ Failed to update playback mode: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        showStatus('😱 Error updating playback mode: ' + error.message, 'error');
+    });
+}
 </script>
 {% endblock %}

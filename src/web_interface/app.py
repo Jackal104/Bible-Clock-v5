@@ -1357,6 +1357,12 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 voice_control.screen_display_enabled = data['screen_display_enabled']
                 current_app.logger.info(f"Screen display: {'enabled' if data['screen_display_enabled'] else 'disabled'}")
             
+            # Handle voice control enabled/disabled
+            if 'voice_control_enabled' in data:
+                voice_control.enabled = data['voice_control_enabled']
+                # Also update the environment variable
+                os.environ['ENABLE_VOICE'] = 'true' if data['voice_control_enabled'] else 'false'
+                current_app.logger.info(f"Voice control: {'enabled' if data['voice_control_enabled'] else 'disabled'}")
             
             if 'voice_selection' in data:
                 voice_control.voice_selection = data['voice_selection']
