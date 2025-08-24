@@ -9,7 +9,13 @@
   },
   "Luke": {
     "11": {
-      "3": "Give us each day the food we need,[a]"
+      "3": "Give us each day the food we need,[a]",
+      "48": "But in fact, you stand as witnesses who agree with what your ancestors did. They killed the prophets, and you join in their crime by building the monuments!"
+    }
+  },
+  "1 Chronicles": {
+    "11": {
+      "47": "Eliel and Obed;Jaasiel from Zobah.[a]"
     }
   }
 }

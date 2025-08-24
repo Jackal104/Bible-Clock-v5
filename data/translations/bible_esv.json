@@ -9,7 +9,18 @@
   },
   "Luke": {
     "11": {
-      "3": "(A)Give us (B)each day our daily bread,[a]"
+      "3": "(A)Give us (B)each day our daily bread,[a]",
+      "45": "One of (A)the lawyers answered him, \u201cTeacher, in saying these things you insult us also.\u201d"
+    }
+  },
+  "Leviticus": {
+    "11": {
+      "46": "This is the law about beast and bird and every living creature that moves through the waters and every creature that swarms on the ground,"
+    }
+  },
+  "1 Chronicles": {
+    "11": {
+      "47": "Eliel, and Obed, and Jaasiel the Mezobaite."
     }
   }
 }

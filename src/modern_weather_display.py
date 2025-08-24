@@ -599,6 +599,28 @@ class ModernWeatherDisplay:
         else:
             return "🌤️"  # Unknown/default
     
+    def _get_moon_emoji(self, phase_name: str) -> str:
+        """Get appropriate moon emoji for phase name."""
+        phase_lower = phase_name.lower()
+        if 'new' in phase_lower:
+            return "🌑"  # New Moon
+        elif 'waxing crescent' in phase_lower:
+            return "🌒"  # Waxing Crescent
+        elif 'first quarter' in phase_lower:
+            return "🌓"  # First Quarter
+        elif 'waxing gibbous' in phase_lower:
+            return "🌔"  # Waxing Gibbous
+        elif 'full' in phase_lower:
+            return "🌕"  # Full Moon
+        elif 'waning gibbous' in phase_lower:
+            return "🌖"  # Waning Gibbous
+        elif 'last quarter' in phase_lower or 'third quarter' in phase_lower:
+            return "🌗"  # Last Quarter
+        elif 'waning crescent' in phase_lower:
+            return "🌘"  # Waning Crescent
+        else:
+            return "🌙"  # Default moon
+    
     def _create_error_card(self, error_message: str) -> Image.Image:
         """Create an error display."""
         image = self._create_background()
@@ -982,10 +1004,20 @@ class ModernWeatherDisplay:
                  fill=self.colors['medium'], font=self.fonts['h2'])
         current_y += 160
         
-        # Weather description with nice emoji (centered)
+        # Weather description with nice emoji and lunar phase (centered)
         description = current.get('description', 'Unknown')
         weather_emoji = self._get_weather_emoji(current.get('weathercode', 0))
-        desc_text = f"{weather_emoji} {description}"
+        
+        # Add lunar cycle status to the weather description
+        lunar_status = ""
+        if moon_data:
+            illumination = moon_data.get('current_illumination', 50)
+            phase_name = moon_data.get('current_phase', 'Unknown')
+            # Get appropriate moon emoji based on phase
+            moon_emoji = self._get_moon_emoji(phase_name)
+            lunar_status = f" | {moon_emoji} {phase_name} ({illumination}%)"
+        
+        desc_text = f"{weather_emoji} {description}{lunar_status}"
         
         # Center weather description
         desc_bbox = draw.textbbox((0, 0), desc_text, font=self.fonts['h2'])

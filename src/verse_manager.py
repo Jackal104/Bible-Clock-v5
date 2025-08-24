@@ -418,18 +418,38 @@ class VerseManager:
         # Rotate old daily activity data to prevent unbounded growth
         self._rotate_daily_activity()
         
-        if self.display_mode == 'date':
-            verse_data = self._get_date_based_verse()
-        elif self.display_mode == 'random':
-            verse_data = self._get_random_verse()
-        elif self.display_mode == 'devotional':
-            verse_data = self._get_devotional_verse()
-        elif self.display_mode == 'weather':
-            verse_data = self._get_weather_data()
-        elif self.display_mode == 'news':
-            verse_data = self._get_news_data()
-        else:  # time mode
-            verse_data = self._get_time_based_verse()
+        # Handle random translation selection
+        original_translation = self.translation
+        original_secondary_translation = getattr(self, 'secondary_translation', 'amp')
+        
+        # Select random translations if needed
+        if self.translation == 'random':
+            self.translation = self._get_random_translation()
+        
+        if hasattr(self, 'secondary_translation') and self.secondary_translation == 'random':
+            # Ensure secondary translation is different from primary when both are random
+            import random
+            secondary_options = [t for t in self.get_available_translations() if t != 'random' and t != self.translation]
+            self.secondary_translation = random.choice(secondary_options) if secondary_options else 'amp'
+        
+        try:
+            if self.display_mode == 'date':
+                verse_data = self._get_date_based_verse()
+            elif self.display_mode == 'random':
+                verse_data = self._get_random_verse()
+            elif self.display_mode == 'devotional':
+                verse_data = self._get_devotional_verse()
+            elif self.display_mode == 'weather':
+                verse_data = self._get_weather_data()
+            elif self.display_mode == 'news':
+                verse_data = self._get_news_data()
+            else:  # time mode
+                verse_data = self._get_time_based_verse()
+        finally:
+            # Restore original translation settings
+            self.translation = original_translation
+            if hasattr(self, 'secondary_translation'):
+                self.secondary_translation = original_secondary_translation
         
         # Ensure translation field is set if not already present
         if verse_data and not verse_data.get('translation'):
@@ -2176,7 +2196,9 @@ getVerse();
     
     def get_available_translations(self) -> List[str]:
         """Get list of available translations."""
-        return list(self.supported_translations.keys())
+        translations = list(self.supported_translations.keys())
+        translations.append('random')  # Add random as an available option
+        return translations
     
     def get_translation_display_names(self) -> Dict[str, str]:
         """Get translation codes mapped to display names."""
@@ -2187,8 +2209,15 @@ getVerse();
             'nlt': 'New Living Translation (NLT)',
             'msg': 'The Message (MSG)',
             'nasb': 'New American Standard Bible 1995 (NASB)',
-            'cev': 'Contemporary English Version (CEV)'
+            'cev': 'Contemporary English Version (CEV)',
+            'random': 'Random (Changes Each Interval)'
         }
+    
+    def _get_random_translation(self) -> str:
+        """Get a random translation from available translations."""
+        import random
+        available_translations = [t for t in self.get_available_translations() if t != 'random']
+        return random.choice(available_translations) if available_translations else 'kjv'
     
     def _rotate_daily_activity(self):
         """Rotate daily activity data to keep only recent days."""

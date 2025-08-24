@@ -214,8 +214,10 @@ class ServiceManager:
                 is_summary_mode = verse_data.get('is_summary', False)
                 
                 if is_devotional_mode:
-                    # For devotional mode, only force refresh on background/parallel changes
-                    force_refresh = background_changed or parallel_mode_changed
+                    # For devotional mode, refresh periodically to update time display but not content
+                    time_since_last_refresh = time.time() - self.display_manager.last_full_refresh
+                    should_refresh_for_time = time_since_last_refresh >= 60  # Refresh every minute for time display
+                    force_refresh = background_changed or parallel_mode_changed or should_refresh_for_time
                 elif is_date_mode:
                     # For date mode, force refresh on every cycle but preserve borders to reduce jarring
                     # Date mode cycles content every minute, so we need clean refreshes

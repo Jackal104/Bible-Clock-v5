@@ -628,6 +628,9 @@ class ImageGenerator:
                 line_x = (self.width - line_width) // 2
                 draw.text((line_x, y_position), line, fill=0, font=self.verse_font)
                 y_position += line_height + 25
+        
+        # Add verse reference display (shows current time for summaries)
+        self._add_verse_reference_display(draw, verse_data)
 
     def _paginate_book_summary_text(self, text: str, content_width: int, margin: int) -> List[str]:
         """Split book summary text into pages that fit the display (similar to devotionals)."""
