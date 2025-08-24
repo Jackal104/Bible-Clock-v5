@@ -1,108 +1,8 @@
 {
   "date": "2025-08-24",
   "created_at": "2025-08-24T02:07:17.433363",
-  "error_count": 63,
+  "error_count": 73,
   "errors": [
-    {
-      "timestamp": "2025-08-24T11:51:57.969512",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:52:06.750566",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:52:34.395560",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:52:59.785263",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:53:06.353400",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:53:35.938113",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:54:01.518160",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T11:54:08.396019",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T12:07:59.489423",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Voice settings API error: name 'logger' is not defined",
-      "function": "update_voice_settings",
-      "line": 1448,
-      "filename": "app.py"
-    },
-    {
-      "timestamp": "2025-08-24T15:10:59.920040",
-      "service": "other",
-      "logger": "werkzeug",
-      "level": "ERROR",
-      "message": "192.168.68.11 - - [24/Aug/2025 15:10:59] code 400, message Bad request version ('X\u00a6\u00aa\u00a3\u00d6\u00ef\\x13\\x00*\u00da\u00da\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
-      "function": "_log",
-      "line": 97,
-      "filename": "_internal.py"
-    },
     {
       "timestamp": "2025-08-24T15:11:00.012953",
       "service": "other",
@@ -252,10 +152,110 @@
       "function": "display_image",
       "line": 108,
       "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:06:06.091292",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:06:06.103340",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:06:07.297182",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:07:06.745404",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:08:07.273963",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:09:06.802318",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:10:07.266150",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:11:06.819969",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:12:07.181934",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-24T16:13:06.627941",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 108,
+      "filename": "display_manager.py"
     }
   ],
   "error_summary": {
-    "ERROR": 63
+    "ERROR": 73
   },
   "services": {
     "verse_manager": {
@@ -267,8 +267,8 @@
       "last_error": null
     },
     "display_manager": {
-      "errors": 30,
-      "last_error": "2025-08-24T15:26:07.730357"
+      "errors": 40,
+      "last_error": "2025-08-24T16:13:06.627941"
     },
     "scheduler": {
       "errors": 0,

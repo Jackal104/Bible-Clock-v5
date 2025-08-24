@@ -56,5 +56,18 @@
     ],
     "created_at": "2025-08-24T15:48:54.740861",
     "last_activity": "2025-08-24T15:48:54.741111"
+  },
+  "44897926-be25-43e2-8f50-3f293896ecea": {
+    "session_id": "44897926-be25-43e2-8f50-3f293896ecea",
+    "turns": [
+      {
+        "question": "Where can Joy be found?",
+        "response": "In the Bible, joy is often associated with God's presence, His blessings, and the hope of salvation. Joy can be found in various places, including in ...",
+        "timestamp": "2025-08-24T16:05:37.288581",
+        "category": "general"
+      }
+    ],
+    "created_at": "2025-08-24T16:05:37.288380",
+    "last_activity": "2025-08-24T16:05:37.288605"
   }
 }

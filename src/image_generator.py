@@ -405,6 +405,7 @@ class ImageGenerator:
         content_width = self.width - (2 * margin)
         
         # Check for different verse types
+        is_ai_response = verse_data.get('is_ai_response', False)
         is_summary = verse_data.get('is_summary', False)
         is_date_event = verse_data.get('is_date_event', False)
         is_parallel = verse_data.get('parallel_mode', False)
@@ -412,7 +413,10 @@ class ImageGenerator:
         is_weather_mode = verse_data.get('is_weather_mode', False)
         is_news_mode = verse_data.get('is_news_mode', False)
         
-        if is_weather_mode:
+        if is_ai_response:
+            # AI Response mode - display ChatGPT response with proper formatting
+            self._draw_ai_response(draw, verse_data, margin, content_width)
+        elif is_weather_mode:
             # Weather mode - generate weather display
             weather_image = self._draw_weather_display(verse_data)
             
@@ -462,6 +466,84 @@ class ImageGenerator:
             background = background.transpose(Image.FLIP_TOP_BOTTOM)
         
         return background
+    
+    def _draw_ai_response(self, draw: ImageDraw.Draw, verse_data: Dict, margin: int, content_width: int):
+        """Draw an AI response with large, readable text filling the screen."""
+        
+        # Get the AI response text
+        response_text = verse_data.get('text', 'AI Response')
+        
+        # Use large fonts for better readability
+        # Start with a large font size and auto-adjust to fit
+        max_font_size = 72
+        min_font_size = 32
+        
+        # Try to fit the text with the largest possible font
+        font = None
+        font_size = max_font_size
+        
+        while font_size >= min_font_size:
+            try:
+                font = self._get_font(font_size)
+                if font:
+                    # Test if text fits with this font size
+                    # Use a reasonable margin for full-screen display
+                    test_width = self.width - 100  # 50px margin each side
+                    test_height = self.height - 100  # 50px margin top/bottom
+                    
+                    # Wrap text and check if it fits
+                    wrapped_lines = self._wrap_text(response_text, font, test_width)
+                    wrapped_text = '\n'.join(wrapped_lines)
+                    
+                    # Check text dimensions
+                    bbox = draw.multiline_textbbox((0, 0), wrapped_text, font=font, spacing=10)
+                    text_height = bbox[3] - bbox[1]
+                    
+                    if text_height <= test_height:
+                        # Text fits with this font size
+                        break
+                        
+            except Exception:
+                pass
+                
+            font_size -= 4  # Reduce by 4 points and try again
+        
+        if not font:
+            font = self.verse_font or self._get_font(24)
+        
+        # Wrap text for the chosen font
+        display_margin = 50
+        display_width = self.width - (2 * display_margin)
+        wrapped_lines = self._wrap_text(response_text, font, display_width)
+        display_text = '\n'.join(wrapped_lines)
+        
+        # Calculate text positioning for center alignment
+        bbox = draw.multiline_textbbox((0, 0), display_text, font=font, spacing=10)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+        
+        # Center the text on screen
+        x = max(display_margin, (self.width - text_width) // 2)
+        y = max(display_margin, (self.height - text_height) // 2)
+        
+        # Add a small header showing "AI Response"
+        header_font = self._get_font(36) or font
+        header_text = "🤖 ChatGPT Response"
+        header_bbox = draw.textbbox((0, 0), header_text, font=header_font)
+        header_width = header_bbox[2] - header_bbox[0]
+        header_x = (self.width - header_width) // 2
+        header_y = 30
+        
+        # Draw header
+        draw.text((header_x, header_y), header_text, font=header_font, fill=0)
+        
+        # Adjust main text position to account for header
+        y = max(header_y + header_bbox[3] - header_bbox[1] + 40, y)
+        
+        # Draw the main AI response text
+        draw.multiline_text((x, y), display_text, font=font, fill=0, spacing=10)
+        
+        self.logger.info(f"AI response drawn with font size {font_size}")
     
     def _draw_verse(self, draw: ImageDraw.Draw, verse_data: Dict, margin: int, content_width: int):
         """Draw a regular Bible verse."""

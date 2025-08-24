@@ -431,56 +431,61 @@ class DisplayManager:
             self.logger.error(f"Failed to show visual feedback: {e}")
     
     def _show_ai_response_page(self, text: str, duration: float = 15.0):
-        """Show a paginated AI response with auto-sized text optimized for distance reading."""
+        """Show a paginated AI response using the main image generator framework."""
         try:
             if not text:
                 return
             
-            # Create full-screen image for AI response
-            image = Image.new('L', (self.width, self.height), 255)  # white background
-            draw = ImageDraw.Draw(image)
+            # Use the image generator to create a proper AI response display
+            # This ensures consistent fonts, backgrounds, and layout
+            verse_data = {
+                'text': text,
+                'reference': 'AI Response',  
+                'book': 'ChatGPT',
+                'chapter': '',
+                'verse': '',
+                'translation': 'AI',
+                'is_ai_response': True,  # Flag to identify AI responses
+                'time_format': '12'
+            }
             
-            # Auto-size font for optimal readability from a distance
-            # Start with larger font and reduce if text doesn't fit
-            optimal_font_size = self._calculate_optimal_font_size(text, self.width - 60, self.height - 60)
-            
-            try:
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", optimal_font_size)
-            except:
-                try:
-                    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", optimal_font_size)
-                except:
-                    font = ImageFont.load_default()
-            
-            # Wrap text to fit display width
-            wrapped_lines = self._wrap_text_for_display(text, font, self.width - 60)
-            display_text = "\n".join(wrapped_lines)
-            
-            # Calculate text positioning for center alignment
-            text_bbox = draw.multiline_textbbox((0, 0), display_text, font=font, spacing=8)
-            text_width = text_bbox[2] - text_bbox[0]
-            text_height = text_bbox[3] - text_bbox[1]
-            
-            # Center the text on the display
-            x = max(30, (self.width - text_width) // 2)
-            y = max(30, (self.height - text_height) // 2)
-            
-            # Add subtle background for better contrast
-            padding = 20
-            draw.rectangle(
-                (x - padding, y - padding, x + text_width + padding, y + text_height + padding),
-                fill=250, outline=0, width=2
-            )
-            
-            # Draw the text
-            draw.multiline_text((x, y), display_text, font=font, fill=0, spacing=8)
-            
-            # Display the image
-            self.display_image(image, force_refresh=True)
-            self.logger.info(f"AI response page displayed (font size: {optimal_font_size})")
-            
+            # Generate image using the main image generator framework
+            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'image_generator'):
+                image = self.service_manager.image_generator.create_verse_image(verse_data)
+                
+                # Display the image with proper refresh
+                self.display_image(image, force_refresh=True)
+                self.logger.info(f"AI response displayed using image generator framework")
+                
+                # Schedule return to previous state after duration
+                import threading
+                def restore_display():
+                    try:
+                        # Restore the previous display state
+                        self._restore_previous_display_state()
+                    except Exception as e:
+                        self.logger.error(f"Failed to restore display after AI response: {e}")
+                        
+                threading.Timer(duration, restore_display).start()
+                
+            else:
+                self.logger.error("Image generator not available for AI response")
+                
         except Exception as e:
             self.logger.error(f"Failed to show AI response page: {e}")
+    
+    def _restore_previous_display_state(self):
+        """Restore the display to its previous state after showing an AI response."""
+        try:
+            # Trigger a normal display update to restore the current verse/mode
+            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'verse_manager'):
+                # Force an update of the current display state
+                self.service_manager.verse_manager.force_update()
+                self.logger.info("Display state restored after AI response")
+            else:
+                self.logger.warning("Could not restore display state - service manager not available")
+        except Exception as e:
+            self.logger.error(f"Failed to restore display state: {e}")
     
     def _calculate_optimal_font_size(self, text: str, max_width: int, max_height: int) -> int:
         """Calculate optimal font size for text to fit within given dimensions while remaining readable."""
