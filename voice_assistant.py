@@ -39,6 +39,7 @@ class VoiceAssistant:
             visual_feedback_callback: Function to call for visual state updates
         """
         self._enabled = os.getenv('ENABLE_CHATGPT_VOICE', 'true').lower() == 'true'
+        self._chatgpt_enabled = os.getenv('ENABLE_CHATGPT', 'true').lower() == 'true'
         self.voice_timeout = int(os.getenv('VOICE_TIMEOUT', '10'))
         
         # Audio device configuration
@@ -768,13 +769,23 @@ class VoiceAssistant:
                     # Clear the message after 3 seconds and restore normal display
                     threading.Timer(3.0, lambda: self._restore_normal_display()).start()
 
+    @property
+    def chatgpt_enabled(self):
+        """Get ChatGPT enabled state."""
+        return self._chatgpt_enabled and bool(self.openai_api_key)
+    
+    @chatgpt_enabled.setter
+    def chatgpt_enabled(self, value):
+        """Set ChatGPT enabled state."""
+        self._chatgpt_enabled = value
+
     def get_voice_status(self):
         """Get comprehensive voice control status for web interface compatibility."""
         return {
             'enabled': self.enabled,
             'listening': hasattr(self, 'listening') and getattr(self, 'listening', False),
             'wake_word': self.wake_word,
-            'chatgpt_enabled': self.enabled and bool(self.openai_api_key),
+            'chatgpt_enabled': self.chatgpt_enabled,
             'help_enabled': True,  # Basic help is always available
             'respeaker_enabled': False,  # VoiceAssistant doesn't use ReSpeaker
             'voice_rate': 150,  # Default rate for compatibility

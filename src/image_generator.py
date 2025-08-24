@@ -591,15 +591,36 @@ class ImageGenerator:
                 title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
                 header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
             
-            # Draw time on the left
-            if time_font:
-                draw.text((base_margin, header_y), current_time, fill=0, font=time_font)
-            
-            # Draw book title on the right
-            if self.title_font:
+            # Center time and book title together with minimal spacing
+            if time_font and self.title_font:
+                # Calculate widths
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                time_width = time_bbox[2] - time_bbox[0]
+                
                 title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
                 title_width = title_bbox[2] - title_bbox[0]
-                title_x = self.width - title_width - base_margin
+                
+                # Small spacing between time and book title
+                spacing = 30
+                total_width = time_width + spacing + title_width
+                
+                # Center the combined elements
+                start_x = (self.width - total_width) // 2
+                
+                # Draw time first, then book title
+                draw.text((start_x, header_y), current_time, fill=0, font=time_font)
+                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=self.title_font)
+            elif time_font:
+                # Only time, center it
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                time_width = time_bbox[2] - time_bbox[0]
+                time_x = (self.width - time_width) // 2
+                draw.text((time_x, header_y), current_time, fill=0, font=time_font)
+            elif self.title_font:
+                # Only book title, center it
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_width = title_bbox[2] - title_bbox[0]
+                title_x = (self.width - title_width) // 2
                 draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
             
             # Start content after the header with a reasonable gap
@@ -721,15 +742,36 @@ class ImageGenerator:
                 title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
                 header_height = max(time_bbox[3] - time_bbox[1], title_bbox[3] - title_bbox[1])
             
-            # Draw time on the left
-            if time_font:
-                draw.text((base_margin, header_y), current_time, fill=0, font=time_font)
-            
-            # Draw book title on the right
-            if self.title_font:
+            # Center time and book title together with minimal spacing
+            if time_font and self.title_font:
+                # Calculate widths
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                time_width = time_bbox[2] - time_bbox[0]
+                
                 title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
                 title_width = title_bbox[2] - title_bbox[0]
-                title_x = self.width - title_width - base_margin
+                
+                # Small spacing between time and book title
+                spacing = 30
+                total_width = time_width + spacing + title_width
+                
+                # Center the combined elements
+                start_x = (self.width - total_width) // 2
+                
+                # Draw time first, then book title
+                draw.text((start_x, header_y), current_time, fill=0, font=time_font)
+                draw.text((start_x + time_width + spacing, header_y), book_title, fill=0, font=self.title_font)
+            elif time_font:
+                # Only time, center it
+                time_bbox = draw.textbbox((0, 0), current_time, font=time_font)
+                time_width = time_bbox[2] - time_bbox[0]
+                time_x = (self.width - time_width) // 2
+                draw.text((time_x, header_y), current_time, fill=0, font=time_font)
+            elif self.title_font:
+                # Only book title, center it
+                title_bbox = draw.textbbox((0, 0), book_title, font=self.title_font)
+                title_width = title_bbox[2] - title_bbox[0]
+                title_x = (self.width - title_width) // 2
                 draw.text((title_x, header_y), book_title, fill=0, font=self.title_font)
             
             # Start content after the header with a reasonable gap

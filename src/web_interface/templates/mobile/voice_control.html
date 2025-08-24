@@ -565,6 +565,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Mobile Features Functions
 function setupMobileFeatures() {
+    console.log('setupMobileFeatures called');
     // Voice control toggle
     document.getElementById('mobile-voice-control-toggle').addEventListener('change', function() {
         const enabled = this.checked;
@@ -643,10 +644,15 @@ function setupMobileFeatures() {
     });
     
     // Text input functionality
-    document.getElementById('mobile-send-button').addEventListener('click', function() {
+    console.log('Setting up mobile send button event listener');
+    const sendButton = document.getElementById('mobile-send-button');
+    console.log('Send button element:', sendButton);
+    sendButton.addEventListener('click', function() {
+        console.log('Mobile send button clicked!');
         const input = document.getElementById('mobile-text-input');
         const button = this;
         const query = input.value.trim();
+        console.log('Query value:', query);
         
         if (!query) {
             showStatus('⚠️ Please enter a biblical question', 'error');
@@ -673,6 +679,7 @@ function setupMobileFeatures() {
         addVoiceLogEntry(`Text query: "${query}"`, 'user');
         
         // Send to API
+        console.log('Making fetch request to /api/text-query');
         fetch('/api/text-query', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

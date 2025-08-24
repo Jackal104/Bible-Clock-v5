@@ -11,5 +11,50 @@
     ],
     "created_at": "2025-08-24T15:18:48.557875",
     "last_activity": "2025-08-24T15:18:48.558041"
+  },
+  "8897e601-8e07-42bd-8b16-5064dec02cb8": {
+    "session_id": "8897e601-8e07-42bd-8b16-5064dec02cb8",
+    "turns": [
+      {
+        "question": "What does John 3:16 mean?",
+        "response": "John 3:16 is a famous verse that highlights the core message of the Christian faith. It states, \"For God so loved the world that he gave his one and o...",
+        "timestamp": "2025-08-24T15:25:22.046996",
+        "category": "general"
+      }
+    ],
+    "created_at": "2025-08-24T15:25:22.046845",
+    "last_activity": "2025-08-24T15:25:22.047015"
+  },
+  "fa5d012f-f2c1-4f50-9b8c-7992d4bfd06e": {
+    "session_id": "fa5d012f-f2c1-4f50-9b8c-7992d4bfd06e",
+    "turns": [
+      {
+        "question": "What is faith?",
+        "response": "Faith is a central concept in Christianity, often defined as a strong belief in God or in the doctrines of a religion, based on spiritual apprehension...",
+        "timestamp": "2025-08-24T15:36:34.849301",
+        "category": "theology"
+      },
+      {
+        "question": "test mobile interface",
+        "response": "It looks like you are testing the mobile interface. How can I assist you further today?",
+        "timestamp": "2025-08-24T15:43:27.967605",
+        "category": "general"
+      }
+    ],
+    "created_at": "2025-08-24T15:36:34.849103",
+    "last_activity": "2025-08-24T15:43:27.967646"
+  },
+  "89abaf49-0925-4be0-b6a1-c535d5cb797f": {
+    "session_id": "89abaf49-0925-4be0-b6a1-c535d5cb797f",
+    "turns": [
+      {
+        "question": "What is love?",
+        "response": "Love is a complex and multifaceted concept that is central to Christian belief. In the Bible, love is often described as sacrificial, unconditional, a...",
+        "timestamp": "2025-08-24T15:48:54.741086",
+        "category": "general"
+      }
+    ],
+    "created_at": "2025-08-24T15:48:54.740861",
+    "last_activity": "2025-08-24T15:48:54.741111"
   }
 }

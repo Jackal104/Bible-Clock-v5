@@ -1292,6 +1292,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             # Handle TTS playback mode setting
             if 'tts_playback_mode' in data:
+                import os
                 try:
                     playback_mode = data['tts_playback_mode']
                     if playback_mode in ['audio', 'visual']:
@@ -1344,16 +1345,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 if hasattr(voice_control, 'set_chatgpt_enabled'):
                     voice_control.set_chatgpt_enabled(data['chatgpt_enabled'])
                 else:
-                    # For VoiceAssistant class, we need to set enabled property
-                    # ChatGPT will be enabled if both enabled=True and API key exists
-                    if data['chatgpt_enabled']:
-                        # Enable chatgpt by ensuring voice control is enabled and has API key
-                        if hasattr(voice_control, 'openai_api_key') and voice_control.openai_api_key:
-                            voice_control.enabled = True
-                        else:
-                            current_app.logger.warning("Cannot enable ChatGPT: No API key configured")
-                    # Note: We don't disable voice_control.enabled when ChatGPT is disabled
-                    # as it may be used for other voice functions
+                    # For VoiceAssistant class, use the new chatgpt_enabled property
+                    voice_control.chatgpt_enabled = data['chatgpt_enabled']
             
             if 'help_enabled' in data:
                 voice_control.help_enabled = data['help_enabled']
@@ -2621,13 +2614,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             voice_control = current_app.service_manager.voice_control
             
             # Check if ChatGPT is enabled
-            # For VoiceAssistant, chatgpt_enabled is computed as enabled && has_api_key
-            chatgpt_enabled = False
-            if hasattr(voice_control, 'chatgpt_enabled'):
-                chatgpt_enabled = voice_control.chatgpt_enabled
-            else:
-                # For VoiceAssistant, check enabled status and API key
-                chatgpt_enabled = voice_control.enabled and bool(getattr(voice_control, 'openai_api_key', None))
+            chatgpt_enabled = voice_control.chatgpt_enabled
                 
             if not chatgpt_enabled:
                 return jsonify({'success': False, 'error': 'ChatGPT is not enabled. Please enable it in voice settings.'}), 400

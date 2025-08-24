@@ -47,8 +47,10 @@
     "categories": {
       "general": 1
     },
-    "keywords": {},
-    "avg_response_time": 29.44,
+    "keywords": {
+      "love": 1
+    },
+    "avg_response_time": 6.24,
     "success_rate": 100.0,
     "hourly_distribution": {
       "15": 1
