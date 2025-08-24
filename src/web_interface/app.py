@@ -757,6 +757,9 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             except Exception as ai_error:
                 current_app.logger.debug(f"AI statistics not available: {ai_error}")
             
+            # Add recent activities to statistics
+            stats['recent_activities'] = getattr(current_app, 'recent_activities', [])
+            
             return jsonify({'success': True, 'data': stats})
         except Exception as e:
             current_app.logger.error(f"Statistics API error: {e}")
@@ -803,6 +806,20 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             return jsonify({'success': True, 'data': visualization_data})
         except Exception as e:
             current_app.logger.error(f"Visualization statistics API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/statistics/clean-random', methods=['POST'])
+    def clean_random_statistics():
+        """Remove 'random' entries from translation usage statistics."""
+        try:
+            removed_count = current_app.verse_manager.clean_random_from_statistics()
+            if removed_count > 0:
+                current_app.logger.info(f"Cleaned up {removed_count} random translation statistics")
+                return jsonify({'success': True, 'message': f'Removed {removed_count} random translation entries'})
+            else:
+                return jsonify({'success': True, 'message': 'No random translation entries found to clean'})
+        except Exception as e:
+            current_app.logger.error(f"Clean random statistics API error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
     
     @app.route('/api/refresh', methods=['POST'])

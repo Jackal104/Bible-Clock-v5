@@ -422,15 +422,21 @@ class VerseManager:
         original_translation = self.translation
         original_secondary_translation = getattr(self, 'secondary_translation', 'amp')
         
+        # Initialize resolved translation variables with current values (in case of exceptions)
+        resolved_translation = self.translation
+        resolved_secondary_translation = getattr(self, 'secondary_translation', 'amp')
+        
         # Select random translations if needed
         if self.translation == 'random':
             self.translation = self._get_random_translation()
+            resolved_translation = self.translation  # Update resolved value after random selection
         
         if hasattr(self, 'secondary_translation') and self.secondary_translation == 'random':
             # Ensure secondary translation is different from primary when both are random
             import random
             secondary_options = [t for t in self.get_available_translations() if t != 'random' and t != self.translation]
             self.secondary_translation = random.choice(secondary_options) if secondary_options else 'amp'
+            resolved_secondary_translation = self.secondary_translation  # Update resolved value after random selection
         
         try:
             if self.display_mode == 'date':
@@ -445,6 +451,11 @@ class VerseManager:
                 verse_data = self._get_news_data()
             else:  # time mode
                 verse_data = self._get_time_based_verse()
+            
+            # Add parallel translation if enabled (for all modes except date events) - BEFORE restoring translations
+            if self.parallel_mode and verse_data and not verse_data.get('is_date_event'):
+                verse_data = self._add_parallel_translation(verse_data)
+            
         finally:
             # Restore original translation settings
             self.translation = original_translation
@@ -468,9 +479,6 @@ class VerseManager:
                     hour_12 = 12
                 verse_data['current_time'] = f"{hour_12:02d}:{now.minute:02d} {now.strftime('%p')}"
         
-        # Add parallel translation if enabled (for all modes except date events)
-        if self.parallel_mode and verse_data and not verse_data.get('is_date_event'):
-            verse_data = self._add_parallel_translation(verse_data)
         
         # Update statistics with rotation
         self.statistics['mode_usage'][self.display_mode] += 1
@@ -484,13 +492,13 @@ class VerseManager:
             # Limit books_accessed set size to prevent memory growth
             self._rotate_books_accessed()
         
-        # Track primary translation
-        translation = getattr(self, 'translation', 'kjv')
+        # Track primary translation using resolved value
+        translation = resolved_translation
         self.statistics['translation_usage'][translation] = self.statistics['translation_usage'].get(translation, 0) + 1
         
-        # Track secondary translation when in parallel mode
+        # Track secondary translation when in parallel mode using resolved value
         if self.parallel_mode and verse_data and verse_data.get('parallel_mode'):
-            secondary_translation = getattr(self, 'secondary_translation', 'amp')
+            secondary_translation = resolved_secondary_translation
             self.statistics['translation_usage'][secondary_translation] = self.statistics['translation_usage'].get(secondary_translation, 0) + 1
         
         # Limit translation_usage dict size
@@ -2259,6 +2267,14 @@ getVerse();
             self.statistics['translation_usage'] = dict(sorted_translations[:self.MAX_TRANSLATION_USAGE])
             removed_count = len(sorted_translations) - self.MAX_TRANSLATION_USAGE
             self.logger.debug(f"Rotated translation usage: removed {removed_count} entries")
+    
+    def clean_random_from_statistics(self):
+        """Remove 'random' entries from translation usage statistics."""
+        if 'random' in self.statistics['translation_usage']:
+            random_count = self.statistics['translation_usage'].pop('random')
+            self.logger.info(f"Cleaned up random translation statistics: removed {random_count} entries")
+            return random_count
+        return 0
 
     def _fetch_from_local_cache(self, book: str, chapter: int, verse: int, translation: str) -> Optional[Dict]:
         """Fetch verse from local translation cache."""
