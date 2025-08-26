@@ -112,6 +112,14 @@ class DisplayManager:
             except Exception as cleanup_error:
                 self.logger.debug(f"GPIO cleanup warning (non-critical): {cleanup_error}")
             
+            # Set GPIO mode explicitly before initializing the display
+            try:
+                GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering
+                GPIO.setwarnings(False)  # Disable warnings for already configured pins
+                self.logger.debug("GPIO mode set to BCM")
+            except Exception as gpio_error:
+                self.logger.warning(f"GPIO mode setup warning: {gpio_error}")
+            
             self.display_device = AutoEPDDisplay(
                 vcom=self.vcom_voltage,  # VCOM voltage from display ribbon
                 rotate=self.rotation,
