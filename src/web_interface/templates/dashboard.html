@@ -143,30 +143,6 @@
                             </div>
                         </div>
                         
-                        <!-- Volume Control -->
-                        <!-- Speaker Volume Control -->
-                        <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg mb-2">
-                            <svg class="w-4 h-4 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M6.343 6.343a9 9 0 000 12.728m2.828-2.828a5 5 0 000-7.072M9 21a3.001 3.001 0 006 0l-6 0z"></path>
-                            </svg>
-                            <span class="text-sm font-medium text-gray-700 mr-2">Speakers:</span>
-                            <input type="range" id="speaker-volume-slider" min="0" max="100" value="80" 
-                                   class="w-20 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                                   onchange="updateSpeakerVolume(this.value)" oninput="updateSpeakerVolumeDisplay(this.value)">
-                            <span id="speaker-volume-display" class="text-sm text-gray-600 ml-2 w-8">80%</span>
-                        </div>
-                        
-                        <!-- Microphone Volume Control -->
-                        <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                            <svg class="w-4 h-4 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                            </svg>
-                            <span class="text-sm font-medium text-gray-700 mr-2">Microphone:</span>
-                            <input type="range" id="mic-volume-slider" min="0" max="100" value="75" 
-                                   class="w-20 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                                   onchange="updateMicVolume(this.value)" oninput="updateMicVolumeDisplay(this.value)">
-                            <span id="mic-volume-display" class="text-sm text-gray-600 ml-2 w-8">75%</span>
-                        </div>
                         
                         <!-- Control Buttons -->
                         <button onclick="refreshDisplay()" class="btn-primary">
@@ -444,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadCurrentVerse();
     loadSystemStatus();
     loadSettings();
-    loadCurrentVolume();
     loadActivities();
     loadTranslationCompletion();
     startAutoRefresh();
@@ -1275,83 +1250,6 @@ function refreshPage() {
     }, 500);
 }
 
-// Separate Volume Control Functions
-function updateSpeakerVolumeDisplay(value) {
-    document.getElementById('speaker-volume-display').textContent = value + '%';
-}
-
-function updateMicVolumeDisplay(value) {
-    document.getElementById('mic-volume-display').textContent = value + '%';
-}
-
-function updateSpeakerVolume(value) {
-    const data = {
-        speaker_volume: parseInt(value)
-    };
-    
-    fetch('/api/audio/volume', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            showSuccess(`Speaker volume set to ${value}%`);
-        } else {
-            showError('Failed to update speaker volume: ' + (result.error || 'Unknown error'));
-        }
-    })
-    .catch(error => {
-        console.error('Speaker volume update error:', error);
-        showError('Failed to update speaker volume');
-    });
-}
-
-function updateMicVolume(value) {
-    const data = {
-        mic_volume: parseInt(value)
-    };
-    
-    fetch('/api/audio/volume', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            showSuccess(`Microphone volume set to ${value}%`);
-        } else {
-            showError('Failed to update microphone volume: ' + (result.error || 'Unknown error'));
-        }
-    })
-    .catch(error => {
-        console.error('Microphone volume update error:', error);
-        showError('Failed to update microphone volume');
-    });
-}
-
-// Load current volume levels on page load
-function loadCurrentVolume() {
-    // Load voice settings for speaker volume
-    fetch('/api/voice/status')
-        .then(response => response.json())
-        .then(result => {
-            if (result.success && result.data.voice_volume !== undefined) {
-                const volumePercent = Math.round(result.data.voice_volume * 100);
-                document.getElementById('speaker-volume-slider').value = volumePercent;
-                document.getElementById('speaker-volume-display').textContent = volumePercent + '%';
-            }
-        })
-        .catch(error => {
-            console.error('Failed to load speaker volume:', error);
-        });
-    
-    // Set default microphone volume to 75% (static for optimal recording quality)
-    document.getElementById('mic-volume-slider').value = 75;
-    document.getElementById('mic-volume-display').textContent = '75%';
-}
 
 function loadActivities() {
     fetch('/api/activities')

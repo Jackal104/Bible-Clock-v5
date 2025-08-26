@@ -9,10 +9,37 @@
         <h2 class="text-xl font-semibold mb-4 text-gray-800">Display Settings</h2>
         <div class="space-y-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Translation</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Primary Translation</label>
                 <select id="translation-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateTranslation()">
                     <option value="kjv">King James Version (KJV)</option>
                     <option value="amp">Amplified Bible (AMP)</option>
+                    <option value="nlt">New Living Translation (NLT)</option>
+                    <option value="esv">English Standard Version (ESV)</option>
+                    <option value="msg">The Message (MSG)</option>
+                    <option value="nasb">New American Standard Bible (NASB)</option>
+                    <option value="cev">Contemporary English Version (CEV)</option>
+                    <option value="random">Random (Changes Each Interval)</option>
+                </select>
+            </div>
+            
+            <!-- Parallel Mode Toggle -->
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-sm font-medium text-gray-700">Enable Parallel Mode</div>
+                    <div class="text-xs text-gray-500">Show two translations side by side</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="parallel-toggle" class="sr-only peer" onchange="toggleParallel()">
+                    <div class="w-14 h-8 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            
+            <!-- Secondary Translation (shown when parallel mode is enabled) -->
+            <div id="secondary-translation-select-container" class="hidden">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Translation</label>
+                <select id="secondary-translation-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateSecondaryTranslation()">
+                    <option value="amp">Amplified Bible (AMP)</option>
+                    <option value="kjv">King James Version (KJV)</option>
                     <option value="nlt">New Living Translation (NLT)</option>
                     <option value="esv">English Standard Version (ESV)</option>
                     <option value="msg">The Message (MSG)</option>
@@ -122,36 +149,6 @@
         </div>
     </div>
 
-    <!-- Parallel Translation -->
-    <div class="mobile-card bg-white p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Parallel Translation</h2>
-        <div class="space-y-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <div class="text-lg font-medium text-gray-800">Enable Parallel Mode</div>
-                    <div class="text-sm text-gray-500">Show two translations side by side</div>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="parallel-toggle" class="sr-only peer" onchange="toggleParallel()">
-                    <div class="w-14 h-8 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
-            </div>
-            
-            <div id="secondary-translation-select-container" class="hidden">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Translation</label>
-                <select id="secondary-translation-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="updateSecondaryTranslation()">
-                    <option value="amp">Amplified Bible (AMP)</option>
-                    <option value="kjv">King James Version (KJV)</option>
-                    <option value="nlt">New Living Translation (NLT)</option>
-                    <option value="esv">English Standard Version (ESV)</option>
-                    <option value="msg">The Message (MSG)</option>
-                    <option value="nasb">New American Standard Bible (NASB)</option>
-                    <option value="cev">Contemporary English Version (CEV)</option>
-                    <option value="random">Random (Changes Each Interval)</option>
-                </select>
-            </div>
-        </div>
-    </div>
 
     <!-- Weather Settings -->
     <div class="mobile-card bg-white p-6">

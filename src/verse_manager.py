@@ -62,6 +62,10 @@ class VerseManager:
             self.display_mode = default_mode if default_mode in valid_modes else 'time'
             self.parallel_mode = False  # Parallel mode off by default - user can enable
         self.secondary_translation = 'amp'  # Default secondary translation when parallel mode enabled
+        
+        # Track configured translations (may include "random") separately from working translations
+        self._configured_translation = self.translation  # User's configured primary translation
+        self._configured_secondary_translation = self.secondary_translation  # User's configured secondary translation
         self.time_format = '12'  # '12' for 12-hour format, '24' for 24-hour format
         # Memory optimization settings
         self.MAX_DAILY_ACTIVITY_DAYS = 30  # Keep only last 30 days
@@ -509,6 +513,13 @@ class VerseManager:
         
         # Rotate enhanced statistics to prevent storage issues
         self._rotate_enhanced_statistics()
+        
+        # IMPORTANT: Restore original translation settings for UI persistence
+        # This ensures that if the user selected "random", the UI dropdown stays on "random"
+        # instead of changing to whatever translation was randomly selected
+        self.translation = original_translation
+        if hasattr(self, 'secondary_translation'):
+            self.secondary_translation = original_secondary_translation
         
         return verse_data
     
@@ -2201,6 +2212,24 @@ getVerse();
             'verse': verse,
             'translation': f"{translation.upper()} (unavailable)"
         }
+    
+    def get_configured_translation(self) -> str:
+        """Get the user's configured primary translation (may be 'random')."""
+        return getattr(self, '_configured_translation', self.translation)
+    
+    def get_configured_secondary_translation(self) -> str:
+        """Get the user's configured secondary translation (may be 'random')."""
+        return getattr(self, '_configured_secondary_translation', self.secondary_translation)
+    
+    def set_configured_translation(self, translation: str):
+        """Set both the configured and working primary translation."""
+        self._configured_translation = translation
+        self.translation = translation
+    
+    def set_configured_secondary_translation(self, translation: str):
+        """Set both the configured and working secondary translation."""
+        self._configured_secondary_translation = translation
+        self.secondary_translation = translation
     
     def get_available_translations(self) -> List[str]:
         """Get list of available translations."""

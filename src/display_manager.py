@@ -25,6 +25,12 @@ class DisplayManager:
         self._ai_display_active = False  # Flag to prevent interruptions during AI display
         self._display_locked = False  # Lock to prevent any display updates during AI responses
         self._lock_timer = None  # Timer to unlock display after AI response completes
+        
+        # Hardware recovery system for 24/7 reliability
+        self.timeout_count = 0
+        self.last_successful_update = time.time()
+        self.max_consecutive_timeouts = 3
+        self.service_manager = None  # Will be set by main.py
         # Convert rotation to IT8951 expected format
         rotation_setting = os.getenv('DISPLAY_ROTATION', '0')
         if rotation_setting == '0':
@@ -88,11 +94,23 @@ class DisplayManager:
         """Check if display is currently locked."""
         return self._display_locked
     
+    def set_service_manager(self, service_manager):
+        """Set service manager reference for hardware recovery system."""
+        self.service_manager = service_manager
+    
     def _initialize_hardware(self):
         """Initialize the IT8951 e-ink display."""
         try:
             # Import hardware-specific modules
             from IT8951.display import AutoEPDDisplay
+            import RPi.GPIO as GPIO
+            
+            # Clean up any previous GPIO state to prevent conflicts
+            try:
+                GPIO.cleanup()
+                self.logger.debug("GPIO cleanup completed")
+            except Exception as cleanup_error:
+                self.logger.debug(f"GPIO cleanup warning (non-critical): {cleanup_error}")
             
             self.display_device = AutoEPDDisplay(
                 vcom=self.vcom_voltage,  # VCOM voltage from display ribbon
@@ -146,8 +164,80 @@ class DisplayManager:
             self.last_image_hash = image_hash
             self._check_memory_usage()
             
+            # Reset timeout counter on successful update
+            self.timeout_count = 0
+            self.last_successful_update = time.time()
+            
         except Exception as e:
             self.logger.error(f"Display update failed: {e}")
+            
+            # Check for timeout errors and implement recovery
+            if "timed out" in str(e).lower() or "timeout" in str(e).lower():
+                self.timeout_count += 1
+                self.logger.warning(f"Display timeout detected (count: {self.timeout_count}/{self.max_consecutive_timeouts})")
+                
+                if self.timeout_count >= self.max_consecutive_timeouts:
+                    self.logger.error("Multiple consecutive timeouts detected, attempting hardware recovery")
+                    self._attempt_hardware_recovery()
+    
+    def _attempt_hardware_recovery(self):
+        """Attempt to recover from hardware timeout by reinitializing display device."""
+        try:
+            self.logger.warning("🔧 Starting hardware recovery process...")
+            
+            # Step 1: Clean shutdown of current display device
+            if self.display_device:
+                try:
+                    self.display_device.close()
+                    self.logger.info("Display device closed successfully")
+                except Exception as e:
+                    self.logger.warning(f"Error closing display device: {e}")
+                finally:
+                    self.display_device = None
+            
+            # Step 2: Wait for hardware to reset
+            time.sleep(2)
+            
+            # Step 3: Reinitialize hardware
+            self._initialize_hardware()
+            
+            if self.display_device:
+                self.logger.info("✅ Hardware recovery successful - display reinitialized")
+                
+                # Step 4: Reset timeout counters
+                self.timeout_count = 0
+                self.last_successful_update = time.time()
+                
+                # Step 5: Restore previous display state if possible
+                if self.service_manager and hasattr(self.service_manager, 'restore_display_state'):
+                    try:
+                        self.logger.info("🔄 Attempting to restore previous display state...")
+                        self.service_manager.restore_display_state()
+                        self.logger.info("✅ Display state restored successfully")
+                    except Exception as e:
+                        self.logger.warning(f"Could not restore display state: {e}")
+                        # Fallback: just clear the display
+                        try:
+                            self.clear_display()
+                        except Exception as clear_error:
+                            self.logger.error(f"Fallback clear display failed: {clear_error}")
+                else:
+                    self.logger.info("🔄 Service manager not available, clearing display as fallback")
+                    try:
+                        self.clear_display()
+                    except Exception as clear_error:
+                        self.logger.error(f"Recovery clear display failed: {clear_error}")
+            else:
+                self.logger.error("❌ Hardware recovery failed - display device still not available")
+                # Fall back to simulation mode
+                self.simulation_mode = True
+                self.logger.warning("Falling back to simulation mode due to hardware recovery failure")
+        
+        except Exception as e:
+            self.logger.error(f"❌ Hardware recovery process failed: {e}")
+            # Last resort: enable simulation mode
+            self.simulation_mode = True
+            self.timeout_count = 0  # Reset counters to prevent recovery loops
     
     def _simulate_display(self, image: Image.Image):
         """Simulate display by saving image to file."""

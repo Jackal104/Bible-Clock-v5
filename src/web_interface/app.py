@@ -197,11 +197,11 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             status = {
                 'timestamp': datetime.now().isoformat(),
-                'translation': current_app.verse_manager.translation,
+                'translation': current_app.verse_manager.get_configured_translation(),
                 'api_url': current_app.verse_manager.api_url,
                 'display_mode': getattr(current_app.verse_manager, 'display_mode', 'time'),
                 'parallel_mode': getattr(current_app.verse_manager, 'parallel_mode', False),
-                'secondary_translation': getattr(current_app.verse_manager, 'secondary_translation', 'amp'),
+                'secondary_translation': current_app.verse_manager.get_configured_secondary_translation(),
                 'simulation_mode': simulation_mode,
                 'hardware_mode': 'Simulation' if simulation_mode else 'Hardware',
                 'current_background': current_app.image_generator.get_current_background_info(),
@@ -331,7 +331,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         """Get current settings."""
         try:
             settings = {
-                'translation': current_app.verse_manager.translation,
+                'translation': current_app.verse_manager.get_configured_translation(),
                 'display_mode': getattr(current_app.verse_manager, 'display_mode', 'time'),
                 'time_format': getattr(current_app.verse_manager, 'time_format', '12'),
                 'background_index': current_app.image_generator.current_background_index,
@@ -339,7 +339,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 'available_translations': current_app.verse_manager.get_available_translations(),
                 'translation_display_names': current_app.verse_manager.get_translation_display_names(),
                 'parallel_mode': getattr(current_app.verse_manager, 'parallel_mode', False),
-                'secondary_translation': getattr(current_app.verse_manager, 'secondary_translation', 'amp'),
+                'secondary_translation': current_app.verse_manager.get_configured_secondary_translation(),
                 'available_fonts': current_app.image_generator.get_available_fonts(),
                 'current_font': current_app.image_generator.get_current_font(),
                 'font_sizes': current_app.image_generator.get_font_sizes(),
@@ -379,7 +379,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 try:
                     available_translations = current_app.verse_manager.get_available_translations()
                     if translation in available_translations:
-                        current_app.verse_manager.translation = translation
+                        current_app.verse_manager.set_configured_translation(translation)
                         current_app.logger.info(f"Translation changed to: {translation}")
                         needs_display_update = True
                     else:
@@ -437,7 +437,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             # Update secondary translation
             if 'secondary_translation' in data:
-                current_app.verse_manager.secondary_translation = data['secondary_translation']
+                current_app.verse_manager.set_configured_secondary_translation(data['secondary_translation'])
                 current_app.logger.info(f"Secondary translation: {data['secondary_translation']}")
             
             # Update background with smart refresh detection
