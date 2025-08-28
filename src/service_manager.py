@@ -16,6 +16,9 @@ from config_validator import ConfigValidator
 from scheduler import AdvancedScheduler
 from performance_monitor import PerformanceMonitor
 from error_log_manager import error_log_manager
+from conversation_manager import ConversationManager
+from bible_clock_metrics import BibleClockMetrics
+from display_schedule_manager import DisplayScheduleManager
 
 class ServiceManager:
     def __init__(self, verse_manager, image_generator, display_manager, voice_control=None, web_interface=None):
@@ -24,6 +27,10 @@ class ServiceManager:
         self.display_manager = display_manager
         self.voice_control = voice_control
         self.web_interface = web_interface
+        
+        # Set service_manager reference for metrics tracking
+        if self.voice_control:
+            self.voice_control.service_manager = self
         
         self.logger = logging.getLogger(__name__)
         self.running = False
@@ -39,6 +46,18 @@ class ServiceManager:
         self.config_validator = ConfigValidator()
         self.scheduler = AdvancedScheduler()
         self.performance_monitor = PerformanceMonitor()
+        self.conversation_manager = ConversationManager()
+        self.bible_metrics = BibleClockMetrics()
+        
+        # Initialize display schedule manager
+        self.display_schedule_manager = DisplayScheduleManager()
+        self.display_schedule_manager.set_display_callbacks(
+            self._scheduled_display_on,
+            self._scheduled_display_off
+        )
+        
+        # Track system startup
+        self.bible_metrics.track_hardware_event('system_start')
         
         # Validate configuration on startup
         if not self.config_validator.validate_all():
@@ -72,11 +91,17 @@ class ServiceManager:
         self.scheduler.schedule_custom('garbage_collect', f'every_{self.gc_interval//60}_minutes', self._garbage_collect)
         self.scheduler.schedule_custom('force_refresh', 'hourly', self._force_refresh)
         
+        # Add failsafe verse update check every 30 seconds
+        self.scheduler.schedule_custom('verse_update_failsafe', 'every_30_seconds', self._failsafe_verse_update)
+        
         # Schedule frequent pagination checks for book summaries
         self.scheduler.schedule_custom('pagination_check', 'every_10_seconds', self._check_pagination)
         
         # Schedule weather page rotation checks (30-second page flips)
         self.scheduler.schedule_custom('weather_page_rotation', 'every_15_seconds', self._check_weather_page_rotation)
+        
+        # Schedule metrics aggregation refresh
+        self.scheduler.schedule_custom('metrics_aggregation', 'every_5_minutes', self._refresh_metrics_aggregation)
         
         self.logger.info("Advanced update schedule configured")
     
@@ -89,6 +114,12 @@ class ServiceManager:
         
         # Start advanced scheduler
         self.scheduler.start()
+        
+        # Start display schedule manager
+        self.display_schedule_manager.start_scheduler()
+        
+        # Start simple update thread as backup to complex scheduler
+        self._start_simple_updater()
         
         # Start web interface FIRST (before voice control blocks)
         if self.web_interface:
@@ -107,7 +138,9 @@ class ServiceManager:
                 self.voice_control = BibleClockVoiceControl(
                     self.verse_manager, self.image_generator, self.display_manager
                 )
-                if self.voice_control.enabled:
+                # Set service_manager reference for metrics tracking
+                self.voice_control.service_manager = self
+                if hasattr(self.voice_control, 'enabled') and self.voice_control.enabled:
                     # Mark voice control as initialized to enable visual feedback
                     if hasattr(self.voice_control, 'mark_initialized'):
                         self.voice_control.mark_initialized()
@@ -139,11 +172,18 @@ class ServiceManager:
         self.scheduler.stop()
         self.performance_monitor.stop_monitoring()
         
+        # Stop display schedule manager
+        if hasattr(self, 'display_schedule_manager'):
+            self.display_schedule_manager.stop_scheduler()
+        
         if self.voice_control:
             self.voice_control.stop_listening()
         
         if self.web_interface:
             self._stop_web_interface()
+        
+        # Track system shutdown
+        self.bible_metrics.track_hardware_event('system_stop')
         
         self.logger.info("Bible Clock service stopped")
     
@@ -154,6 +194,20 @@ class ServiceManager:
         if hasattr(self.display_manager, 'is_display_locked') and self.display_manager.is_display_locked():
             self.logger.debug("Skipping verse update - display locked for AI response")
             return
+        
+        # Check if display should be on according to schedule
+        if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
+            if not self.display_schedule_manager.is_display_scheduled_on():
+                self.logger.debug("Skipping verse update - display scheduled to be off")
+                # Clear display if it's not already clear
+                if not hasattr(self, '_display_cleared_by_schedule') or not self._display_cleared_by_schedule:
+                    self.display_manager.clear_display()
+                    self._display_cleared_by_schedule = True
+                    self.logger.info("Display cleared due to schedule")
+                return
+            else:
+                # Reset the flag when display should be on
+                self._display_cleared_by_schedule = False
             
         now = datetime.now()
         
@@ -205,9 +259,16 @@ class ServiceManager:
                 
                 # Check if parallel mode changed (to prevent artifacts)
                 current_parallel_mode = verse_data.get('parallel_mode', False)
-                parallel_mode_changed = getattr(self, 'last_parallel_mode', None) != current_parallel_mode
+                # Initialize last_parallel_mode on first run to avoid false positive changes
+                if not hasattr(self, 'last_parallel_mode'):
+                    self.last_parallel_mode = current_parallel_mode
+                    parallel_mode_changed = False  # Don't trigger on first initialization
+                    self.logger.debug(f"Initialized parallel mode tracking: {current_parallel_mode}")
+                else:
+                    parallel_mode_changed = self.last_parallel_mode != current_parallel_mode
+                    
                 if parallel_mode_changed:
-                    self.logger.info(f"Parallel mode changed to {current_parallel_mode} - forcing full refresh to prevent artifacts")
+                    self.logger.info(f"Parallel mode changed from {self.last_parallel_mode} to {current_parallel_mode} - forcing full refresh to prevent artifacts")
                     self.last_parallel_mode = current_parallel_mode
                 
                 # Display image with smart refresh logic
@@ -257,6 +318,13 @@ class ServiceManager:
                 self._last_update_time = time.time()  # Track for pagination timing
                 self.error_count = 0
                 
+                # Track verse display in real-time metrics system
+                try:
+                    self.bible_metrics.track_verse_displayed(verse_data)
+                except Exception as e:
+                    self.logger.debug(f"Failed to track verse metrics: {e}")  # Debug level to avoid spam
+                
+                self._last_verse_update_time = time.time()  # Track for failsafe
                 self.logger.info(f"Verse updated: {verse_data['reference']} at {now.strftime('%H:%M:%S')}")
         else:
             self.logger.debug(f"Skipping verse update at {now.strftime('%H:%M:%S')} - not at minute boundary")
@@ -268,6 +336,7 @@ class ServiceManager:
             memory_percent = psutil.virtual_memory().percent
             if memory_percent > self.memory_threshold:
                 self.logger.warning(f"High memory usage: {memory_percent}%")
+                self.bible_metrics.track_hardware_event('low_memory', f"Memory usage at {memory_percent:.1f}%")
             
             # Check last update time
             if self.last_update:
@@ -454,6 +523,124 @@ class ServiceManager:
         except Exception as e:
             self.logger.error(f"Daily maintenance failed: {e}")
     
+    def _update_aggregated_metrics(self):
+        """Update aggregated metrics from verse manager statistics."""
+        try:
+            # Get current verse manager statistics
+            vm_stats = self.verse_manager.statistics
+            now = datetime.now()
+            today_str = now.strftime('%Y-%m-%d')
+            
+            # Create aggregated metrics entry using real verse statistics
+            from conversation_manager import AggregatedMetrics
+            
+            # Get books accessed as dict with counts (instead of just set)
+            books_accessed = {}
+            if hasattr(self.verse_manager, 'get_book_chapter_breakdown'):
+                book_breakdown = self.verse_manager.get_book_chapter_breakdown()
+                for book_data in book_breakdown.get('book_totals', []):
+                    books_accessed[book_data['book']] = book_data['total_verses']
+            else:
+                # Fallback: convert set to dict with count 1
+                for book in vm_stats.get('books_accessed', []):
+                    books_accessed[book] = books_accessed.get(book, 0) + 1
+            
+            # Create daily aggregated metrics
+            aggregated_metrics = AggregatedMetrics(
+                date=today_str,
+                total_conversations=vm_stats.get('verses_today', 0),  # Total verses displayed today
+                categories={'verses_displayed': vm_stats.get('verses_today', 0)},  # Store as verses_displayed category
+                keywords={},  # We don't have keyword tracking in verse manager yet
+                avg_response_time=0.1,  # Placeholder for verse generation time
+                success_rate=100.0,  # Assume all verse displays are successful
+                hourly_distribution=self._get_hourly_distribution(vm_stats)
+            )
+            
+            # Save to conversation manager's aggregated data
+            self.conversation_manager.aggregated_data[today_str] = aggregated_metrics
+            
+            # Also update the aggregated_metrics.json file directly
+            self._save_daily_metrics(today_str, aggregated_metrics, books_accessed, vm_stats.get('translation_usage', {}))
+            
+        except Exception as e:
+            self.logger.debug(f"Failed to update aggregated metrics: {e}")
+    
+    def _get_hourly_distribution(self, vm_stats):
+        """Extract hourly distribution from verse manager statistics."""
+        # For now, just put current hour with count of verses today
+        current_hour = datetime.now().hour
+        verses_today = vm_stats.get('verses_today', 0)
+        if verses_today > 0:
+            return {str(current_hour): verses_today}
+        return {}
+    
+    def _calculate_mode_usage_hours(self, mode_usage_counts):
+        """Convert mode usage counts (minutes/verses) to hours."""
+        mode_hours = {}
+        for mode, count in mode_usage_counts.items():
+            # Assume each verse display takes 1 minute, so count = minutes
+            # Convert to hours (rounded to 1 decimal place)
+            hours = round(count / 60.0, 1)
+            mode_hours[mode] = hours
+        return mode_hours
+    
+    def _save_daily_metrics(self, date_str, aggregated_metrics, books_accessed, translation_usage):
+        """Save daily metrics to aggregated_metrics.json file."""
+        try:
+            import json
+            from pathlib import Path
+            
+            metrics_file = Path('data/aggregated_metrics.json')
+            
+            # Load existing data
+            if metrics_file.exists():
+                with open(metrics_file, 'r') as f:
+                    all_data = json.load(f)
+            else:
+                all_data = {}
+            
+            # Get the current mode usage in hours (not verse count)
+            vm_stats = self.verse_manager.statistics
+            mode_usage_hours = self._calculate_mode_usage_hours(vm_stats.get('mode_usage', {}))
+            
+            # Create the entry
+            all_data[date_str] = {
+                'date': date_str,
+                'total_conversations': aggregated_metrics.total_conversations,  # This is actually verses displayed
+                'categories': {'verses_displayed': aggregated_metrics.total_conversations},
+                'keywords': aggregated_metrics.keywords,
+                'avg_response_time': aggregated_metrics.avg_response_time,
+                'success_rate': aggregated_metrics.success_rate,
+                'hourly_distribution': aggregated_metrics.hourly_distribution,
+                'translation_usage': translation_usage,
+                'bible_books_accessed': books_accessed,
+                'mode_usage_hours': mode_usage_hours  # Store hours separately
+            }
+            
+            # Save back to file
+            with open(metrics_file, 'w') as f:
+                json.dump(all_data, f, indent=2)
+                
+        except Exception as e:
+            self.logger.debug(f"Failed to save daily metrics: {e}")
+
+    def _refresh_metrics_aggregation(self):
+        """Refresh metrics aggregation data from daily conversation logs."""
+        try:
+            # Import time aggregator here to avoid circular imports
+            from time_aggregator import TimeAggregator
+            
+            # Create time aggregator instance and refresh data
+            time_aggregator = TimeAggregator()
+            time_aggregator.refresh_aggregations()
+            
+            self.logger.debug("Metrics aggregation refreshed successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Metrics aggregation refresh failed: {e}")
+            error_log_manager.log_error('service_manager', 'metrics_aggregation_failure',
+                                      f"Metrics aggregation refresh failed: {e}", exception=e)
+    
     def _start_web_interface(self):
         """Start the web interface in a separate thread."""
         try:
@@ -472,7 +659,7 @@ class ServiceManager:
             # Get web interface configuration
             display_host = os.getenv('WEB_HOST', 'bible-clock')
             bind_host = '0.0.0.0'  # Flask must bind to IP, not hostname
-            port = int(os.getenv('WEB_PORT', '5000'))
+            port = int(os.getenv('WEB_PORT', '7777'))
             debug = os.getenv('WEB_DEBUG', 'false').lower() == 'true'
             
             # Start Flask app in a separate thread
@@ -497,6 +684,96 @@ class ServiceManager:
         except Exception as e:
             self.logger.error(f"Error stopping web interface: {e}")
     
+    def _scheduled_display_on(self):
+        """Callback when display is turned on by schedule."""
+        try:
+            self.logger.info("Display turned ON by schedule - resuming normal operation")
+            # Reset the cleared flag and force an immediate verse update
+            self._display_cleared_by_schedule = False
+            self._update_verse()
+            # Track the event
+            self.bible_metrics.track_hardware_event('scheduled_display_on', 'Display resumed by schedule')
+        except Exception as e:
+            self.logger.error(f"Failed to handle scheduled display on: {e}")
+    
+    def _scheduled_display_off(self):
+        """Callback when display is turned off by schedule."""
+        try:
+            self.logger.info("Display turned OFF by schedule - clearing display")
+            # Set the flag and clear the display
+            self._display_cleared_by_schedule = True
+            self.display_manager.clear_display()
+            # Track the event
+            self.bible_metrics.track_hardware_event('scheduled_display_off', 'Display cleared by schedule')
+        except Exception as e:
+            self.logger.error(f"Failed to handle scheduled display off: {e}")
+    
+    def _failsafe_verse_update(self):
+        """Failsafe method to ensure verse updates happen even if scheduler fails."""
+        try:
+            now = datetime.now()
+            
+            # Skip if display is scheduled to be off
+            if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
+                if not self.display_schedule_manager.is_display_scheduled_on():
+                    return
+            
+            # Check if it's been too long since last update
+            if not hasattr(self, '_last_verse_update_time'):
+                self._last_verse_update_time = time.time()
+                self._update_verse()  # Force first update
+                return
+            
+            time_since_last_update = time.time() - self._last_verse_update_time
+            
+            # Force update if it's been more than 90 seconds (should be ~60 seconds normally)
+            # Or if we're at a minute boundary and it's been more than 30 seconds
+            minute_boundary = now.second <= 5
+            too_long_since_update = time_since_last_update > 90
+            minute_boundary_overdue = minute_boundary and time_since_last_update > 30
+            
+            if too_long_since_update or minute_boundary_overdue:
+                self.logger.info(f"Failsafe triggering verse update (last update: {time_since_last_update:.1f}s ago)")
+                self._last_verse_update_time = time.time()
+                self._update_verse()
+                
+        except Exception as e:
+            self.logger.error(f"Failsafe verse update failed: {e}")
+    
+    def _start_simple_updater(self):
+        """Start a simple backup updater thread."""
+        def simple_update_loop():
+            import time
+            last_update_minute = -1
+            
+            while self.running:
+                try:
+                    now = datetime.now()
+                    current_minute = now.minute
+                    
+                    # Update at the start of each new minute
+                    if current_minute != last_update_minute and now.second <= 10:
+                        # Check if display should be on
+                        should_update = True
+                        if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
+                            should_update = self.display_schedule_manager.is_display_scheduled_on()
+                        
+                        if should_update:
+                            self.logger.info(f"Simple updater triggering verse update at {now.strftime('%H:%M:%S')}")
+                            self._update_verse()
+                        
+                        last_update_minute = current_minute
+                    
+                    time.sleep(5)  # Check every 5 seconds
+                    
+                except Exception as e:
+                    self.logger.error(f"Simple updater error: {e}")
+                    time.sleep(10)
+        
+        self.simple_updater_thread = threading.Thread(target=simple_update_loop, daemon=True)
+        self.simple_updater_thread.start()
+        self.logger.info("Simple backup updater started")
+    
     def get_status(self) -> dict:
         """Get current service status."""
         status = {
@@ -513,5 +790,14 @@ class ServiceManager:
         # Add configuration validation report
         config_report = self.config_validator.get_report()
         status['configuration'] = config_report
+        
+        # Add display schedule status if available
+        if hasattr(self, 'display_schedule_manager'):
+            schedule_info = self.display_schedule_manager.get_schedule()
+            status['display_schedule'] = {
+                'enabled': True,
+                'current_status': schedule_info.get('current_status', {}),
+                'next_event': self.display_schedule_manager.get_next_schedule_event()
+            }
         
         return status

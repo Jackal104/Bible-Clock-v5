@@ -37,6 +37,17 @@ class AggregatedMetrics:
     avg_response_time: float
     success_rate: float
     hourly_distribution: Dict[int, int]  # hour -> count
+    translation_usage: Dict[str, int] = None  # translation -> count
+    bible_books_accessed: Dict[str, int] = None  # book -> count
+    mode_usage_hours: Dict[str, float] = None  # mode -> hours
+    
+    def __post_init__(self):
+        if self.translation_usage is None:
+            self.translation_usage = {}
+        if self.bible_books_accessed is None:
+            self.bible_books_accessed = {}
+        if self.mode_usage_hours is None:
+            self.mode_usage_hours = {}
     
 @dataclass
 class ConversationMetrics:
