@@ -37,6 +37,24 @@ export DISPLAY_MIRROR=true
 export DISPLAY_PHYSICAL_ROTATION=0
 export FORCE_REFRESH_INTERVAL=60
 
-# Start Bible Clock with voice control enabled
-echo "🚀 Launching Bible Clock with voice control..."
-python main.py --enable-voice
+# Cleanup any lingering GPIO state that might block display access
+echo "🧹 Cleaning up GPIO state..."
+python3 -c "
+try:
+    import RPi.GPIO as GPIO
+    GPIO.cleanup()
+    print('✅ GPIO cleaned up successfully')
+except Exception as e:
+    print(f'GPIO cleanup: {e}')
+" 2>/dev/null
+
+# Kill any remaining processes that might hold GPIO/display resources
+# Note: Don't kill bible-clock service processes, only python processes
+pkill -f 'python.*main.py' >/dev/null 2>&1 || true
+pkill -f 'IT8951' >/dev/null 2>&1 || true
+
+# Start Bible Clock with voice control disabled temporarily due to audio device conflicts
+echo "🚀 Launching Bible Clock..."
+# Allow access to system site-packages (needed for feedparser)
+export PYTHONPATH="/usr/lib/python3/dist-packages:$PYTHONPATH"
+python main.py

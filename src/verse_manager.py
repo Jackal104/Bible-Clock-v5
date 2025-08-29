@@ -87,6 +87,7 @@ class VerseManager:
             'verses_today': 0,
             'books_accessed': set(),
             'translation_usage': {},
+            'translation_failures': {},  # Track failed translation attempts
             'mode_usage': {'time': 0, 'date': 0, 'random': 0, 'devotional': 0, 'news': 0, 'parallel': 0},
             'daily_activity': {},  # Date -> count mapping for rotation
             # Enhanced statistics for detailed tracking
@@ -1400,6 +1401,12 @@ class VerseManager:
         
         # Final fallback to default verses
         self.logger.warning(f"All API sources failed for {translation} {book} {chapter}:{verse}")
+        
+        # Track translation failures for statistics
+        if 'translation_failures' not in self.statistics:
+            self.statistics['translation_failures'] = {}
+        self.statistics['translation_failures'][translation] = self.statistics['translation_failures'].get(translation, 0) + 1
+        
         return self._get_final_fallback_verse(book, chapter, verse, translation)
     
     def _fetch_from_local_amp(self, book: str, chapter: int, verse: int) -> Optional[Dict]:
@@ -2251,10 +2258,12 @@ getVerse();
         }
     
     def _get_random_translation(self) -> str:
-        """Get a random translation from available translations."""
+        """Get a truly random translation from available translations."""
         import random
         available_translations = [t for t in self.get_available_translations() if t != 'random']
-        return random.choice(available_translations) if available_translations else 'kjv'
+        selected = random.choice(available_translations) if available_translations else 'kjv'
+        self.logger.debug(f"Selected truly random translation: {selected}")
+        return selected
     
     def _rotate_daily_activity(self):
         """Rotate daily activity data to keep only recent days."""

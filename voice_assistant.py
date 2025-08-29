@@ -65,6 +65,10 @@ class VoiceAssistant:
         self.voice_volume = float(os.getenv('TTS_VOLUME', os.getenv('VOICE_VOLUME', '0.8')))
         self.piper_volume = float(os.getenv('PIPER_VOICE_VOLUME', '0.9'))
         
+        # Ensure both volumes are synchronized on startup
+        if 'TTS_VOLUME' in os.environ:
+            self.piper_volume = self.voice_volume
+        
         # Log settings for debugging
         logger.info(f"🔊 Volume settings - TTS: {self.voice_volume}, Piper: {self.piper_volume}")
         logger.info(f"🎯 Playback mode: {self.tts_playback_mode}")
@@ -538,6 +542,8 @@ class VoiceAssistant:
                 if result.returncode != 0:
                     logger.error(f"Recording failed: {result.stderr}")
                     os.unlink(temp_path)
+                    # Add delay to prevent error flooding when audio device is busy
+                    time_module.sleep(1.0)  # Wait 1 second before retrying
                     continue
                 
                 try:
@@ -779,6 +785,15 @@ class VoiceAssistant:
         """Set ChatGPT enabled state."""
         self._chatgpt_enabled = value
 
+    def update_volume_settings(self, volume):
+        """Update volume settings from web interface."""
+        try:
+            self.voice_volume = float(volume)
+            self.piper_volume = float(volume)
+            logger.info(f"🔊 Volume updated to {volume} (TTS: {self.voice_volume}, Piper: {self.piper_volume})")
+        except Exception as e:
+            logger.error(f"Failed to update volume settings: {e}")
+
     def get_voice_status(self):
         """Get comprehensive voice control status for web interface compatibility."""
         return {
@@ -789,7 +804,7 @@ class VoiceAssistant:
             'help_enabled': True,  # Basic help is always available
             'respeaker_enabled': False,  # VoiceAssistant doesn't use ReSpeaker
             'voice_rate': 150,  # Default rate for compatibility
-            'voice_volume': 0.8,  # Default volume for compatibility
+            'voice_volume': self.voice_volume,  # Use actual current volume
             'voice_selection': getattr(self, 'voice_selection', self.tts_voice),
             'tts_voice': self.tts_voice,
             'tts_engine': self.tts_engine,

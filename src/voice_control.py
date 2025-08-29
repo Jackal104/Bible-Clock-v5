@@ -1072,6 +1072,13 @@ class BibleClockVoiceControl:
             
             self.verse_manager.display_mode = next_mode
             
+            # Track mode change in Bible Clock metrics
+            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'bible_metrics'):
+                try:
+                    self.service_manager.bible_metrics.track_mode_change(next_mode)
+                except Exception as e:
+                    self.logger.debug(f"Failed to track mode change: {e}")
+            
             description = mode_descriptions[next_mode]
             self._speak(f"Switched to {description}")
             self.logger.info(f"Display mode changed to: {next_mode}")
@@ -1092,6 +1099,14 @@ class BibleClockVoiceControl:
         
         try:
             self.verse_manager.display_mode = mode
+            
+            # Track mode change in Bible Clock metrics
+            if hasattr(self, 'service_manager') and hasattr(self.service_manager, 'bible_metrics'):
+                try:
+                    self.service_manager.bible_metrics.track_mode_change(mode)
+                except Exception as e:
+                    self.logger.debug(f"Failed to track mode change: {e}")
+            
             description = mode_descriptions.get(mode, mode)
             self._speak(f"Switched to {description}")
             self.logger.info(f"Display mode set to: {mode}")

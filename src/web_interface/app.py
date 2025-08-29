@@ -11,6 +11,7 @@ from pathlib import Path
 import psutil
 from src.conversation_manager import ConversationManager
 from src.error_log_manager import error_log_manager
+from src.time_aggregator import TimeAggregator
 
 def create_app(verse_manager, image_generator, display_manager, service_manager, performance_monitor):
     """Create enhanced Flask application."""
@@ -28,6 +29,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
     app.service_manager = service_manager
     app.performance_monitor = performance_monitor
     app.conversation_manager = ConversationManager()
+    app.time_aggregator = TimeAggregator()
+    app.bible_metrics = service_manager.bible_metrics  # Use the same instance
     
     # Initialize display mode manager
     try:
@@ -42,6 +45,25 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
     except Exception as e:
         app.logger.warning(f"Could not initialize DisplayModeManager: {e}")
         app.display_mode_manager = None
+        
+    # Initialize display schedule manager
+    try:
+        # Try different import paths
+        try:
+            from display_schedule_manager import DisplayScheduleManager
+        except ImportError:
+            from src.display_schedule_manager import DisplayScheduleManager
+        
+        app.display_schedule_manager = DisplayScheduleManager()
+        # Set up callbacks for display control
+        app.display_schedule_manager.set_display_callbacks(
+            lambda: _turn_display_on(app),
+            lambda: _turn_display_off(app)
+        )
+        app.logger.info("DisplayScheduleManager initialized successfully")
+    except Exception as e:
+        app.logger.warning(f"Could not initialize DisplayScheduleManager: {e}")
+        app.display_schedule_manager = None
     
     # Activity tracking for recent activity log
     app.recent_activities = []
@@ -91,6 +113,27 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
     _track_activity("System startup", "Bible Clock system started successfully")
     _track_activity("Display initialized", "E-ink display ready for verse display")
     
+    def _turn_display_on(app_context):
+        """Turn display on - callback for display schedule manager."""
+        try:
+            app_context.logger.info("Display turned ON via schedule - resuming verse updates")
+            # Force an immediate verse update to show the display is active
+            if hasattr(app_context.service_manager, '_update_verse'):
+                app_context.service_manager._update_verse()
+            _track_activity("Display ON", "Display turned on by schedule - services resumed")
+        except Exception as e:
+            app_context.logger.error(f"Failed to turn display on: {e}")
+    
+    def _turn_display_off(app_context):
+        """Turn display off - callback for display schedule manager."""
+        try:
+            # Clear the display and keep it blank - this stops regular updates
+            app_context.display_manager.clear_display()
+            app_context.logger.info("Display turned OFF via schedule - display cleared")
+            _track_activity("Display OFF", "Display turned off by schedule - display cleared")
+        except Exception as e:
+            app_context.logger.error(f"Failed to turn display off: {e}")
+    
     def _is_mobile_device(request):
         """Detect if the request is from a mobile device."""
         user_agent = request.headers.get('User-Agent', '').lower()
@@ -126,6 +169,11 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             return render_template('mobile/settings.html')
         else:
             return render_template('settings.html')
+    
+    # @app.route('/display-schedule')
+    # def display_schedule_page():
+    #     """Display schedule configuration page."""
+    #     return render_template('display_schedule.html')
     
     @app.route('/backgrounds')
     def backgrounds():
@@ -171,6 +219,11 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         else:
             return render_template('voice_control.html')
     
+    @app.route('/health')
+    def health_status():
+        """Simple health status page for gift recipient."""
+        return render_template('health.html')
+    
     # === API Endpoints ===
     
     @app.route('/api/verse', methods=['GET'])
@@ -205,7 +258,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 'simulation_mode': simulation_mode,
                 'hardware_mode': 'Simulation' if simulation_mode else 'Hardware',
                 'current_background': current_app.image_generator.get_current_background_info(),
-                'verses_today': getattr(current_app.verse_manager, 'statistics', {}).get('verses_today', 0),
+                'verses_today': _get_accurate_verses_today(),
                 'system': {
                     'cpu_percent': psutil.cpu_percent(),
                     'memory_percent': psutil.virtual_memory().percent,
@@ -251,7 +304,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             # If no completion data, calculate basic completion based on file existence (excluding WEB)
             if not translation_completion:
                 translation_completion = {}
-                for translation in ['kjv', 'amp', 'esv', 'nlt', 'msg', 'nasb', 'ylt']:
+                # Include CEV and all available translations
+                for translation in ['kjv', 'amp', 'esv', 'nlt', 'msg', 'nasb', 'ylt', 'cev']:
                     # Handle special case for NASB which uses nasb1995 file
                     file_name = translation
                     if translation == 'nasb':
@@ -259,19 +313,25 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                     
                     file_path = Path(f'data/translations/bible_{file_name}.json')
                     if file_path.exists():
-                        # Estimate completion based on file size (rough approximation)
+                        # Better completion calculation based on actual file size
                         size_bytes = file_path.stat().st_size
-                        if size_bytes > 4000000:  # > 4MB likely complete
+                        if size_bytes > 3500000:  # > 3.5MB likely complete (adjusted threshold)
                             translation_completion[translation] = 100.0
-                        elif size_bytes > 100000:  # > 100KB partially complete
-                            translation_completion[translation] = (size_bytes / 4500000) * 100
+                        elif size_bytes > 2500000:  # > 2.5MB very high completion
+                            translation_completion[translation] = 95.0
+                        elif size_bytes > 1500000:  # > 1.5MB high completion  
+                            translation_completion[translation] = 85.0
+                        elif size_bytes > 800000:  # > 800KB medium completion
+                            translation_completion[translation] = 65.0
+                        elif size_bytes > 100000:  # > 100KB some completion
+                            translation_completion[translation] = 35.0
                         else:
-                            translation_completion[translation] = 1.0
+                            translation_completion[translation] = 5.0
                     else:
                         translation_completion[translation] = 0.0
             
             # Calculate Bible storage statistics (excluding WEB)
-            total_translations = len(['kjv', 'amp', 'esv', 'nlt', 'msg', 'nasb', 'ylt'])
+            total_translations = len(['kjv', 'amp', 'esv', 'nlt', 'msg', 'nasb', 'ylt', 'cev'])
             completed_translations = sum(1 for completion in translation_completion.values() if completion >= 99.0)
             overall_completion = sum(translation_completion.values()) / len(translation_completion) if translation_completion else 0
             
@@ -397,6 +457,13 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                     if mode in valid_modes:
                         current_app.verse_manager.display_mode = mode
                         current_app.logger.info(f"Display mode changed to: {mode}")
+                        
+                        # Track mode change in Bible Clock metrics
+                        if hasattr(current_app, 'service_manager') and hasattr(current_app.service_manager, 'bible_metrics'):
+                            try:
+                                current_app.service_manager.bible_metrics.track_mode_change(mode)
+                            except Exception as e:
+                                current_app.logger.debug(f"Failed to track mode change: {e}")
                         
                         # Reset news service to start from article 1 when entering news mode
                         if mode == 'news':
@@ -770,21 +837,90 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         """Get filtered statistics with time period and visualization support."""
         try:
             # Get filter parameters
-            filter_type = request.args.get('filter', 'all')  # today, weekly, monthly, yearly, custom
-            start_date = request.args.get('start_date')
-            end_date = request.args.get('end_date')
+            time_filter = request.args.get('filter', 'today')  # today, weekly, monthly, yearly, all_time
+            date_reference = request.args.get('date_reference')
             
-            if hasattr(current_app.verse_manager, 'get_filtered_statistics'):
-                stats = current_app.verse_manager.get_filtered_statistics(
-                    filter_type=filter_type,
-                    start_date=start_date,
-                    end_date=end_date
-                )
+            # Only refresh if needed (not on every request to prevent data inconsistency)
+            # current_app.time_aggregator.refresh_aggregations()
+            
+            # Get filtered data from time aggregator
+            filtered_data = current_app.time_aggregator.get_filtered_data(time_filter, date_reference)
+            
+            # If no data found, return empty structure
+            if not filtered_data:
+                filtered_data = {
+                    'total_conversations': 0,
+                    'categories': {},
+                    'keywords': {},
+                    'avg_response_time': 0.0,
+                    'success_rate': 100.0,
+                    'hourly_distribution': {},
+                    'daily_breakdown': {}
+                }
+            
+            # Calculate total verses for time periods by summing from daily data
+            total_verses = 0
+            if time_filter in ['today', 'weekly', 'monthly', 'yearly'] and filtered_data:
+                start_date = filtered_data.get('start_date')
+                end_date = filtered_data.get('end_date')
+                
+                # For 'today', get today's date if not provided
+                if time_filter == 'today' and not start_date:
+                    today = datetime.now().date().isoformat()
+                    start_date = today
+                    end_date = today
+                
+                if start_date and end_date:
+                    # Load daily metrics to get verse counts
+                    try:
+                        daily_metrics_file = Path('data/daily_metrics.json')
+                        if daily_metrics_file.exists():
+                            with open(daily_metrics_file, 'r') as f:
+                                daily_metrics = json.load(f)
+                            
+                            # Sum verses for the date range
+                            start_dt = datetime.fromisoformat(start_date).date()
+                            end_dt = datetime.fromisoformat(end_date).date()
+                            current_dt = start_dt
+                            
+                            while current_dt <= end_dt:
+                                date_key = current_dt.isoformat()
+                                day_data = daily_metrics.get(date_key, {})
+                                total_verses += day_data.get('verses_displayed_today', 0)
+                                current_dt += timedelta(days=1)
+                                
+                    except Exception as e:
+                        current_app.logger.warning(f"Could not calculate verses for {time_filter}: {e}")
+                        # Fallback to conversation count if verses calculation fails
+                        total_verses = filtered_data.get('total_conversations', 0)
             else:
-                # Fallback for older implementations
-                stats = current_app.verse_manager.get_statistics()
+                # For 'all_time', use existing logic
+                total_verses = filtered_data.get('total_conversations', 0)
+
+            # Format data for frontend consumption
+            formatted_data = {
+                'period_info': {
+                    'filter': time_filter,
+                    'period_key': filtered_data.get('period_key', time_filter),
+                    'start_date': filtered_data.get('start_date'),
+                    'end_date': filtered_data.get('end_date')
+                },
+                'conversations': {
+                    'total': total_verses,  # Now correctly shows verse count
+                    'categories': filtered_data.get('categories', {}),
+                    'success_rate': filtered_data.get('success_rate', 100.0)
+                },
+                'performance': {
+                    'avg_response_time': filtered_data.get('avg_response_time', 0.0)
+                },
+                'keywords': filtered_data.get('keywords', {}),
+                'hourly_distribution': filtered_data.get('hourly_distribution', {}),
+                'daily_breakdown': filtered_data.get('daily_breakdown', {}),
+                'mode_usage_hours': filtered_data.get('mode_usage_hours', {}),
+                'total_verses': total_verses  # Add explicit field for verses
+            }
             
-            return jsonify({'success': True, 'data': stats})
+            return jsonify({'success': True, 'data': formatted_data})
         except Exception as e:
             current_app.logger.error(f"Filtered statistics API error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
@@ -806,6 +942,92 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             return jsonify({'success': True, 'data': visualization_data})
         except Exception as e:
             current_app.logger.error(f"Visualization statistics API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/statistics/charts', methods=['GET'])
+    def get_chart_data():
+        """Get chart data for specific time filter and chart type."""
+        try:
+            time_filter = request.args.get('filter', 'today')
+            chart_type = request.args.get('type', 'categories')
+            date_reference = request.args.get('date_reference')
+            
+            # Only refresh if needed (not on every request to prevent data inconsistency)
+            # current_app.time_aggregator.refresh_aggregations()
+            
+            # For mobile compatibility, return full filtered data instead of specific chart data
+            if not chart_type or chart_type == 'categories':
+                # Get full filtered data for mobile charts
+                filtered_data = current_app.time_aggregator.get_filtered_data(time_filter, date_reference)
+                
+                # Map the fields to what mobile expects
+                chart_data = {
+                    'mode_usage': filtered_data.get('categories', {}),
+                    'translation_usage': filtered_data.get('translation_usage', {}),
+                    'bible_books_accessed': filtered_data.get('bible_books_accessed', {})
+                }
+                
+                return jsonify({'success': True, 'data': chart_data})
+            else:
+                # Get specific chart data from time aggregator
+                chart_data = current_app.time_aggregator.get_chart_data(time_filter, chart_type, date_reference)
+                return jsonify({'success': True, 'data': chart_data})
+                
+        except Exception as e:
+            current_app.logger.error(f"Chart data API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/statistics/books', methods=['GET'])
+    def get_books_paginated():
+        """Get paginated Bible books accessed data."""
+        try:
+            page = int(request.args.get('page', 1))
+            per_page = int(request.args.get('per_page', 10))
+            time_filter = request.args.get('filter', 'today')
+            view_type = request.args.get('view', 'data')  # 'data' or 'chart'
+            
+            # Get statistics data
+            stats = current_app.verse_manager.get_statistics()
+            books_accessed = stats.get('books_accessed', [])
+            
+            # Convert to book data with counts (mock data for now until we have actual counts)
+            book_data = []
+            for i, book in enumerate(books_accessed):
+                book_data.append({
+                    'name': book,
+                    'count': max(len(books_accessed) - i, 1),  # Mock decreasing count
+                    'percentage': round((max(len(books_accessed) - i, 1) / len(books_accessed)) * 100, 1) if books_accessed else 0
+                })
+            
+            # Sort by count (descending order as requested)
+            book_data.sort(key=lambda x: x['count'], reverse=True)
+            
+            # Calculate pagination
+            total_books = len(book_data)
+            total_pages = max(1, (total_books + per_page - 1) // per_page)
+            start_idx = (page - 1) * per_page
+            end_idx = min(start_idx + per_page, total_books)
+            
+            paginated_books = book_data[start_idx:end_idx]
+            
+            return jsonify({
+                'success': True,
+                'data': {
+                    'books': paginated_books,
+                    'pagination': {
+                        'current_page': page,
+                        'per_page': per_page,
+                        'total_pages': total_pages,
+                        'total_books': total_books,
+                        'has_next': page < total_pages,
+                        'has_prev': page > 1,
+                        'next_page': page + 1 if page < total_pages else None,
+                        'prev_page': page - 1 if page > 1 else None
+                    }
+                }
+            })
+        except Exception as e:
+            current_app.logger.error(f"Books pagination API error: {e}")
             return jsonify({'success': False, 'error': str(e)}), 500
     
     @app.route('/api/statistics/clean-random', methods=['POST'])
@@ -1260,6 +1482,8 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 try:
                     # Update TTS_VOLUME for the current session
                     os.environ['TTS_VOLUME'] = str(data['voice_volume'])
+                    # Also update PIPER_VOICE_VOLUME for Piper TTS
+                    os.environ['PIPER_VOICE_VOLUME'] = str(data['voice_volume'])
                     
                     # Update .env file to persist the setting
                     env_path = '.env'
@@ -1267,25 +1491,37 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                         with open(env_path, 'r') as f:
                             lines = f.readlines()
                         
-                        # Update or add TTS_VOLUME line
+                        # Update or add TTS_VOLUME and PIPER_VOICE_VOLUME lines
                         tts_volume_updated = False
+                        piper_volume_updated = False
+                        
                         for i, line in enumerate(lines):
                             if line.startswith('TTS_VOLUME='):
                                 lines[i] = f'TTS_VOLUME={data["voice_volume"]}\n'
                                 tts_volume_updated = True
-                                break
+                            elif line.startswith('PIPER_VOICE_VOLUME='):
+                                lines[i] = f'PIPER_VOICE_VOLUME={data["voice_volume"]}\n'
+                                piper_volume_updated = True
                         
-                        if not tts_volume_updated:
-                            # Add TTS_VOLUME line after TTS settings
+                        # Add missing volume settings
+                        if not tts_volume_updated or not piper_volume_updated:
                             for i, line in enumerate(lines):
                                 if line.startswith('TTS_AUDIO_FORMAT='):
-                                    lines.insert(i + 1, f'TTS_VOLUME={data["voice_volume"]}\n')
+                                    if not tts_volume_updated:
+                                        lines.insert(i + 1, f'TTS_VOLUME={data["voice_volume"]}\n')
+                                        i += 1
+                                    if not piper_volume_updated:
+                                        lines.insert(i + 1, f'PIPER_VOICE_VOLUME={data["voice_volume"]}\n')
                                     break
                         
                         with open(env_path, 'w') as f:
                             f.writelines(lines)
                         
                         current_app.logger.info(f"Updated TTS_VOLUME to {data['voice_volume']} in .env file")
+                    
+                    # Update VoiceAssistant volume settings if available
+                    if hasattr(current_app.service_manager, 'voice_control') and hasattr(current_app.service_manager.voice_control, 'update_volume_settings'):
+                        current_app.service_manager.voice_control.update_volume_settings(data['voice_volume'])
                     
                 except Exception as env_error:
                     current_app.logger.error(f"Failed to update TTS_VOLUME in .env: {env_error}")
@@ -2089,16 +2325,55 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 except Exception:
                     issues.append("Voice control not responding")
             
-            # Return status
+            # Check for scheduler conflicts
+            import subprocess
+            try:
+                result = subprocess.run(['pgrep', '-f', 'bible.*clock'], capture_output=True, text=True)
+                processes = result.stdout.strip().split('\n') if result.stdout.strip() else []
+                if len(processes) > 3:  # Main process, health monitor, and one extra allowed
+                    issues.append("Multiple scheduler processes detected")
+            except:
+                pass
+            
+            # Check display update frequency (should update regularly)
+            if hasattr(current_app.display_manager, 'last_update_time'):
+                from datetime import datetime, timedelta
+                if datetime.now() - getattr(current_app.display_manager, 'last_update_time', datetime.now()) > timedelta(minutes=10):
+                    issues.append("Display updates stalled")
+            
+            # Return status with more granular levels
             if not issues:
-                return "healthy"
-            elif len(issues) == 1:
-                return "warning"
+                return "excellent"  # No issues at all
+            elif len(issues) == 1 and any(x in issues[0] for x in ["Voice control", "warning"]):
+                return "good"  # Minor non-critical issues
+            elif len(issues) <= 2:
+                return "warning"  # Some issues but functioning
             else:
-                return "critical"
+                return "critical"  # Multiple serious issues
                 
         except Exception:
             return "unknown"
+    
+    def _get_accurate_verses_today():
+        """Get accurate verse count from daily metrics file."""
+        try:
+            from datetime import datetime
+            import json
+            
+            today = datetime.now().strftime('%Y-%m-%d')
+            daily_file = Path('data/daily_metrics.json')
+            
+            if daily_file.exists():
+                with open(daily_file, 'r') as f:
+                    daily_data = json.load(f)
+                
+                today_data = daily_data.get(today, {})
+                return today_data.get('verses_displayed_today', 0)
+            
+            # Fallback to in-memory count if file not available
+            return getattr(current_app.verse_manager, 'statistics', {}).get('verses_today', 0)
+        except Exception:
+            return 0
     
     def _get_health_details():
         """Get detailed health information."""
@@ -2110,6 +2385,13 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             
             details = {
                 "purpose": "System health monitoring helps ensure optimal Bible Clock performance",
+                "health_status_levels": {
+                    "excellent": "No issues detected - system running optimally",
+                    "good": "Minor non-critical issues - system functioning well",
+                    "warning": "Some issues detected - system functioning but may need attention",
+                    "critical": "Multiple serious issues - immediate attention recommended",
+                    "unknown": "Unable to determine system status"
+                },
                 "metrics": {
                     "cpu": {
                         "value": cpu_percent,
@@ -2677,4 +2959,137 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             logger.error(f"Text query processing error: {e}")
             return jsonify({'success': False, 'error': f'Server error: {str(e)}'})
     
+    @app.route('/api/bible-clock-metrics', methods=['GET'])
+    def get_bible_clock_metrics():
+        """Get real-time Bible Clock metrics according to requirements."""
+        try:
+            period = request.args.get('period', 'today')  # today, week, month, year, alltime
+            
+            # Get aggregated metrics for the period
+            metrics = current_app.bible_metrics.get_aggregated_metrics(period)
+            
+            return jsonify({
+                'success': True,
+                'data': metrics
+            })
+        except Exception as e:
+            current_app.logger.error(f"Bible Clock metrics API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/bible-clock-metrics/current', methods=['GET'])
+    def get_current_bible_clock_metrics():
+        """Get current real-time snapshot of Bible Clock metrics."""
+        try:
+            # Get current snapshot
+            snapshot = current_app.bible_metrics.get_current_metrics()
+            
+            return jsonify({
+                'success': True,
+                'data': {
+                    'verses_displayed_today': snapshot.verses_displayed_today,
+                    'uptime_hours': round(snapshot.uptime_hours, 1),
+                    'mode_usage_hours': {
+                        mode: round(seconds / 3600.0, 1) 
+                        for mode, seconds in snapshot.mode_usage_seconds.items()
+                    },
+                    'translation_usage_count': snapshot.translation_usage_count,
+                    'bible_books_accessed_count': len(snapshot.bible_books_accessed),
+                    'bible_books_accessed': snapshot.bible_books_accessed,
+                    'recent_activities': snapshot.recent_activities,
+                    'translation_completion_percentages': snapshot.translation_completion_percentages,
+                    'timestamp': snapshot.timestamp
+                }
+            })
+        except Exception as e:
+            current_app.logger.error(f"Current Bible Clock metrics API error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    # Display Schedule API Endpoints
+    @app.route('/api/display-schedule', methods=['GET'])
+    def get_display_schedule():
+        """Get current display schedule configuration."""
+        try:
+            if not current_app.display_schedule_manager:
+                return jsonify({'success': False, 'error': 'Display schedule not available'}), 404
+                
+            schedule_data = current_app.display_schedule_manager.get_schedule()
+            return jsonify({
+                'success': True,
+                'data': schedule_data
+            })
+        except Exception as e:
+            current_app.logger.error(f"Get display schedule error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/display-schedule', methods=['POST'])
+    def update_display_schedule():
+        """Update display schedule configuration."""
+        try:
+            if not current_app.display_schedule_manager:
+                return jsonify({'success': False, 'error': 'Display schedule not available'}), 404
+                
+            data = request.json
+            if not data or 'schedule' not in data:
+                return jsonify({'success': False, 'error': 'Invalid request data'}), 400
+                
+            success = current_app.display_schedule_manager.update_schedule(data['schedule'])
+            if success:
+                return jsonify({'success': True, 'message': 'Schedule updated successfully'})
+            else:
+                return jsonify({'success': False, 'error': 'Failed to update schedule'}), 500
+                
+        except Exception as e:
+            current_app.logger.error(f"Update display schedule error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/display-schedule/status', methods=['GET'])
+    def get_display_schedule_status():
+        """Get current display schedule status."""
+        try:
+            if not current_app.display_schedule_manager:
+                return jsonify({'success': False, 'error': 'Display schedule not available'}), 404
+                
+            from datetime import datetime
+            now = datetime.now()
+            schedule_info = current_app.display_schedule_manager.get_schedule()
+            next_event = current_app.display_schedule_manager.get_next_schedule_event()
+            
+            return jsonify({
+                'success': True,
+                'data': {
+                    'current_status': schedule_info.get('current_status', {}),
+                    'next_event': next_event,
+                    'current_time': now.isoformat(),
+                    'schedule': schedule_info
+                }
+            })
+        except Exception as e:
+            current_app.logger.error(f"Get display schedule status error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/display-schedule/control', methods=['POST'])
+    def control_display_schedule():
+        """Manual control for display on/off."""
+        try:
+            if not current_app.display_schedule_manager:
+                return jsonify({'success': False, 'error': 'Display schedule not available'}), 404
+                
+            data = request.json
+            if not data or 'action' not in data:
+                return jsonify({'success': False, 'error': 'Invalid request data'}), 400
+                
+            action = data['action']
+            if action == 'turn_on':
+                current_app.display_schedule_manager.turn_display_on(scheduled=False)
+                return jsonify({'success': True, 'message': 'Display turned on manually'})
+            elif action == 'turn_off':
+                current_app.display_schedule_manager.turn_display_off(scheduled=False)
+                return jsonify({'success': True, 'message': 'Display turned off manually'})
+            else:
+                return jsonify({'success': False, 'error': 'Invalid action'}), 400
+                
+        except Exception as e:
+            current_app.logger.error(f"Display schedule control error: {e}")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
     return app

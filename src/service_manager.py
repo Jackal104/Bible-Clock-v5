@@ -44,17 +44,13 @@ class ServiceManager:
         
         # Initialize new components
         self.config_validator = ConfigValidator()
-        self.scheduler = AdvancedScheduler()
+        # DISABLED: self.scheduler = AdvancedScheduler()  # Causes display conflicts
+        self.scheduler = None
         self.performance_monitor = PerformanceMonitor()
         self.conversation_manager = ConversationManager()
         self.bible_metrics = BibleClockMetrics()
         
-        # Initialize display schedule manager
-        self.display_schedule_manager = DisplayScheduleManager()
-        self.display_schedule_manager.set_display_callbacks(
-            self._scheduled_display_on,
-            self._scheduled_display_off
-        )
+        # Display schedule manager removed for maximum reliability
         
         # Track system startup
         self.bible_metrics.track_hardware_event('system_start')
@@ -76,34 +72,10 @@ class ServiceManager:
         self._schedule_updates()
     
     def _schedule_updates(self):
-        """Schedule regular verse updates using advanced scheduler."""
-        # Use advanced scheduler for verse updates
-        self.scheduler.schedule_verse_updates(self._update_verse)
-        
-        # Schedule background cycling
-        self.scheduler.schedule_background_cycling(self._cycle_background, interval_hours=4)
-        
-        # Schedule maintenance tasks
-        self.scheduler.schedule_maintenance(self._daily_maintenance)
-        
-        # Schedule performance monitoring
-        self.scheduler.schedule_custom('health_check', 'every_5_minutes', self._health_check)
-        self.scheduler.schedule_custom('garbage_collect', f'every_{self.gc_interval//60}_minutes', self._garbage_collect)
-        self.scheduler.schedule_custom('force_refresh', 'hourly', self._force_refresh)
-        
-        # Add failsafe verse update check every 30 seconds
-        self.scheduler.schedule_custom('verse_update_failsafe', 'every_30_seconds', self._failsafe_verse_update)
-        
-        # Schedule frequent pagination checks for book summaries
-        self.scheduler.schedule_custom('pagination_check', 'every_10_seconds', self._check_pagination)
-        
-        # Schedule weather page rotation checks (30-second page flips)
-        self.scheduler.schedule_custom('weather_page_rotation', 'every_15_seconds', self._check_weather_page_rotation)
-        
-        # Schedule metrics aggregation refresh
-        self.scheduler.schedule_custom('metrics_aggregation', 'every_5_minutes', self._refresh_metrics_aggregation)
-        
-        self.logger.info("Advanced update schedule configured")
+        """DISABLED: Schedule regular verse updates using advanced scheduler."""
+        # DISABLED: Advanced scheduler causes display conflicts
+        # Relying on simple updater thread instead
+        self.logger.info("Advanced scheduler disabled - using simple updater only")
     
     def run(self):
         """Main service loop."""
@@ -112,11 +84,10 @@ class ServiceManager:
         # Start performance monitoring
         self.performance_monitor.start_monitoring()
         
-        # Start advanced scheduler
-        self.scheduler.start()
+        # DISABLED: Start advanced scheduler (causes display conflicts)
+        # self.scheduler.start()
         
-        # Start display schedule manager
-        self.display_schedule_manager.start_scheduler()
+        # Display schedule manager startup removed for maximum reliability
         
         # Start simple update thread as backup to complex scheduler
         self._start_simple_updater()
@@ -169,12 +140,11 @@ class ServiceManager:
         self.running = False
         
         # Stop all components
-        self.scheduler.stop()
+        if self.scheduler:
+            self.scheduler.stop()
         self.performance_monitor.stop_monitoring()
         
-        # Stop display schedule manager
-        if hasattr(self, 'display_schedule_manager'):
-            self.display_schedule_manager.stop_scheduler()
+        # Display schedule manager shutdown removed for maximum reliability
         
         if self.voice_control:
             self.voice_control.stop_listening()
@@ -195,19 +165,7 @@ class ServiceManager:
             self.logger.debug("Skipping verse update - display locked for AI response")
             return
         
-        # Check if display should be on according to schedule
-        if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
-            if not self.display_schedule_manager.is_display_scheduled_on():
-                self.logger.debug("Skipping verse update - display scheduled to be off")
-                # Clear display if it's not already clear
-                if not hasattr(self, '_display_cleared_by_schedule') or not self._display_cleared_by_schedule:
-                    self.display_manager.clear_display()
-                    self._display_cleared_by_schedule = True
-                    self.logger.info("Display cleared due to schedule")
-                return
-            else:
-                # Reset the flag when display should be on
-                self._display_cleared_by_schedule = False
+        # SCHEDULING LOGIC REMOVED - Display always updates for maximum reliability
             
         now = datetime.now()
         
@@ -709,15 +667,8 @@ class ServiceManager:
             self.logger.error(f"Failed to handle scheduled display off: {e}")
     
     def _failsafe_verse_update(self):
-        """Failsafe method to ensure verse updates happen even if scheduler fails."""
+        """Simplified failsafe method - no scheduling checks."""
         try:
-            now = datetime.now()
-            
-            # Skip if display is scheduled to be off
-            if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
-                if not self.display_schedule_manager.is_display_scheduled_on():
-                    return
-            
             # Check if it's been too long since last update
             if not hasattr(self, '_last_verse_update_time'):
                 self._last_verse_update_time = time.time()
@@ -727,12 +678,7 @@ class ServiceManager:
             time_since_last_update = time.time() - self._last_verse_update_time
             
             # Force update if it's been more than 90 seconds (should be ~60 seconds normally)
-            # Or if we're at a minute boundary and it's been more than 30 seconds
-            minute_boundary = now.second <= 5
-            too_long_since_update = time_since_last_update > 90
-            minute_boundary_overdue = minute_boundary and time_since_last_update > 30
-            
-            if too_long_since_update or minute_boundary_overdue:
+            if time_since_last_update > 90:
                 self.logger.info(f"Failsafe triggering verse update (last update: {time_since_last_update:.1f}s ago)")
                 self._last_verse_update_time = time.time()
                 self._update_verse()
@@ -741,10 +687,12 @@ class ServiceManager:
             self.logger.error(f"Failsafe verse update failed: {e}")
     
     def _start_simple_updater(self):
-        """Start a simple backup updater thread."""
+        """Start a simple, reliable updater thread - primary update mechanism."""
         def simple_update_loop():
             import time
             last_update_minute = -1
+            
+            self.logger.info("Simple updater thread started - checking every 2 seconds")
             
             while self.running:
                 try:
@@ -752,27 +700,20 @@ class ServiceManager:
                     current_minute = now.minute
                     
                     # Update at the start of each new minute
-                    if current_minute != last_update_minute and now.second <= 10:
-                        # Check if display should be on
-                        should_update = True
-                        if hasattr(self, 'display_schedule_manager') and self.display_schedule_manager:
-                            should_update = self.display_schedule_manager.is_display_scheduled_on()
-                        
-                        if should_update:
-                            self.logger.info(f"Simple updater triggering verse update at {now.strftime('%H:%M:%S')}")
-                            self._update_verse()
-                        
+                    if current_minute != last_update_minute and now.second <= 15:
+                        self.logger.info(f"Simple updater triggering verse update at {now.strftime('%H:%M:%S')}")
+                        self._update_verse()
                         last_update_minute = current_minute
                     
-                    time.sleep(5)  # Check every 5 seconds
+                    time.sleep(2)  # Check every 2 seconds for more responsive updates
                     
                 except Exception as e:
                     self.logger.error(f"Simple updater error: {e}")
-                    time.sleep(10)
+                    time.sleep(5)  # Shorter error recovery time
         
         self.simple_updater_thread = threading.Thread(target=simple_update_loop, daemon=True)
         self.simple_updater_thread.start()
-        self.logger.info("Simple backup updater started")
+        self.logger.info("Simple primary updater started - no scheduling interference")
     
     def get_status(self) -> dict:
         """Get current service status."""
@@ -783,7 +724,7 @@ class ServiceManager:
             'memory_usage': psutil.virtual_memory().percent,
             'display_info': self.display_manager.get_display_info(),
             'background_info': self.image_generator.get_current_background_info(),
-            'scheduler_jobs': self.scheduler.get_job_status(),
+            'scheduler_jobs': self.scheduler.get_job_status() if self.scheduler else {},
             'performance_summary': self.performance_monitor.get_performance_summary()
         }
         

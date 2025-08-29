@@ -128,12 +128,31 @@ class DisplayManager:
             
             self.logger.info(f"E-ink display initialized: {self.width}x{self.height}")
             
+            
         except ImportError:
             self.logger.warning("IT8951 library not available, falling back to simulation")
-            self.simulation_mode = True
+            # Only enable simulation if explicitly requested
+            if os.getenv('SIMULATION_MODE', 'false').lower() != 'false':
+                self.simulation_mode = True
+            else:
+                self.logger.error("❌ CRITICAL: IT8951 library missing but simulation disabled!")
+                raise ImportError("IT8951 library required for hardware mode")
         except Exception as e:
             self.logger.error(f"Display initialization failed: {e}")
-            self.simulation_mode = True
+            # Only enable simulation if explicitly requested
+            if os.getenv('SIMULATION_MODE', 'false').lower() != 'false':
+                self.simulation_mode = True
+            else:
+                self.logger.error("❌ CRITICAL: Display init failed but simulation disabled!")
+                # Try one more time with explicit initialization
+                try:
+                    self.logger.info("🔧 Attempting display recovery...")
+                    from IT8951.display import AutoEPDDisplay
+                    self.display_device = AutoEPDDisplay(vcom=-1.5)
+                    self.logger.info("✅ Display recovery successful!")
+                except Exception as recovery_error:
+                    self.logger.error(f"❌ Display recovery failed: {recovery_error}")
+                    raise Exception(f"Hardware mode required but display unavailable: {e}")
     
     def display_image(self, image: Image.Image, force_refresh: bool = False, preserve_border: bool = False, bypass_lock: bool = False):
         """Display image on e-ink screen or save for simulation."""
@@ -237,15 +256,21 @@ class DisplayManager:
                         self.logger.error(f"Recovery clear display failed: {clear_error}")
             else:
                 self.logger.error("❌ Hardware recovery failed - display device still not available")
-                # Fall back to simulation mode
-                self.simulation_mode = True
-                self.logger.warning("Falling back to simulation mode due to hardware recovery failure")
+                # Only fall back to simulation if explicitly allowed
+                if os.getenv('SIMULATION_MODE', 'false').lower() != 'false':
+                    self.simulation_mode = True
+                    self.logger.warning("Falling back to simulation mode due to hardware recovery failure")
+                else:
+                    self.logger.error("❌ CRITICAL: Hardware recovery failed but simulation disabled!")
         
         except Exception as e:
             self.logger.error(f"❌ Hardware recovery process failed: {e}")
-            # Last resort: enable simulation mode
-            self.simulation_mode = True
-            self.timeout_count = 0  # Reset counters to prevent recovery loops
+            # Only enable simulation if explicitly allowed
+            if os.getenv('SIMULATION_MODE', 'false').lower() != 'false':
+                self.simulation_mode = True
+                self.timeout_count = 0  # Reset counters to prevent recovery loops
+            else:
+                self.logger.error("❌ CRITICAL: Recovery failed but simulation disabled!")
     
     def _simulate_display(self, image: Image.Image):
         """Simulate display by saving image to file."""
@@ -273,23 +298,6 @@ class DisplayManager:
         if os.getenv('DISPLAY_PHYSICAL_ROTATION', '180') == '180':
             image = image.rotate(180)
         
-        # Use our local display constants instead of IT8951 constants
-        # Aggressively clear frame buffer to prevent overlapping artifacts
-        white_image = Image.new('L', (self.width, self.height), 255)
-        
-        # Triple clear with additional safety measures for stubborn artifacts
-        for i in range(3):
-            self.display_device.frame_buf.paste(white_image, (0, 0))
-        
-        # Additional aggressive clear: completely recreate frame buffer if possible
-        try:
-            # Clear any potential memory artifacts by forcing a complete buffer refresh
-            self.display_device.frame_buf = Image.new('L', (self.width, self.height), 255)
-        except Exception as e:
-            self.logger.debug(f"Could not recreate frame buffer: {e}")
-            # Fallback to additional paste clears
-            self.display_device.frame_buf.paste(white_image, (0, 0))
-        
         # Smart refresh mode - full refresh only when needed
         if force_refresh or self._should_force_refresh():
             if preserve_border:
@@ -302,7 +310,7 @@ class DisplayManager:
                 content_image = image.crop(content_area)
                 self.display_device.frame_buf.paste(content_image, content_area[:2])
                 
-                # Use partial refresh for the content area to avoid jarring border flash
+                # Use partial refresh for faster updates when preserving borders
                 self.display_device.draw_partial(DisplayModes.DU)
                 self.partial_refresh_count += 1
                 self.logger.debug("Border-preserving refresh (content area only)")
@@ -314,13 +322,20 @@ class DisplayManager:
                 self.partial_refresh_count = 0  # Reset counter after full refresh
                 self.logger.debug("Full display refresh (background change or scheduled)")
         else:
-            # Use higher quality refresh for regular verse updates to prevent overlapping
-            # DU mode is too fast and doesn't clear properly - use GC16 for clean text
+            # Use partial refresh for regular verse updates (faster, preserves display longevity)
             self.display_device.frame_buf.paste(image, (0, 0))
-            self.display_device.draw_full(DisplayModes.GC16)  # Use full refresh instead of partial
-            self.partial_refresh_count = 0  # Reset since we're doing full refresh
-            self.last_full_refresh = time.time()  # Update last full refresh time
-            self.logger.debug("Full display refresh (verse update) - using GC16 for clean text")
+            
+            # Check if we should use partial or full refresh
+            if self.partial_refresh_count < self.max_partial_refreshes:
+                self.display_device.draw_partial(DisplayModes.DU)
+                self.partial_refresh_count += 1
+                self.logger.debug(f"Partial display refresh ({self.partial_refresh_count}/{self.max_partial_refreshes})")
+            else:
+                # Force full refresh to clear ghosting
+                self.display_device.draw_full(DisplayModes.GC16)
+                self.last_full_refresh = time.time()
+                self.partial_refresh_count = 0
+                self.logger.debug("Full display refresh (ghosting prevention)")
     
     def _should_force_refresh(self) -> bool:
         """Check if a full refresh is needed based on time interval or partial refresh count."""

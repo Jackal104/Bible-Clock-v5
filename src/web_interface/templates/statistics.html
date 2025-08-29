@@ -28,14 +28,36 @@
         </div>
     </div>
 
-    <!-- Time Filter Buttons -->
+    <!-- Time Filter and View Toggle -->
     <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex flex-wrap gap-3">
-            <button onclick="setTimeFilter('today')" class="filter-btn px-4 py-2 bg-bible-accent text-white rounded-lg hover:bg-bible-dark transition-colors" data-filter="today">Today</button>
-            <button onclick="setTimeFilter('weekly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="weekly">This Week</button>
-            <button onclick="setTimeFilter('monthly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="monthly">This Month</button>
-            <button onclick="setTimeFilter('yearly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="yearly">This Year</button>
-            <button onclick="setTimeFilter('all')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="all">All Time</button>
+        <div class="flex flex-col space-y-4">
+            <!-- Time Filter Buttons -->
+            <div class="flex flex-wrap gap-3">
+                <button onclick="setTimeFilter('today')" class="filter-btn px-4 py-2 bg-bible-accent text-white rounded-lg hover:bg-bible-dark transition-colors" data-filter="today">Today</button>
+                <button onclick="setTimeFilter('weekly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="weekly">This Week</button>
+                <button onclick="setTimeFilter('monthly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="monthly">This Month</button>
+                <button onclick="setTimeFilter('yearly')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="yearly">This Year</button>
+                <button onclick="setTimeFilter('all')" class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-filter="all">All Time</button>
+            </div>
+            
+            <!-- Data/Chart Toggle -->
+            <div class="flex items-center space-x-4">
+                <span class="text-sm text-gray-600 font-medium">View Mode:</span>
+                <div class="flex bg-gray-100 rounded-lg p-1">
+                    <button onclick="setViewMode('data')" id="data-view-btn" class="view-btn px-3 py-1 text-sm rounded-md bg-white text-gray-700 shadow-sm transition-colors" data-view="data">
+                        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10V9a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Data
+                    </button>
+                    <button onclick="setViewMode('charts')" id="charts-view-btn" class="view-btn px-3 py-1 text-sm rounded-md text-gray-500 hover:text-gray-700 transition-colors" data-view="charts">
+                        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Charts
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -318,6 +340,22 @@
                     <p>Loading book statistics...</p>
                 </div>
             </div>
+            <!-- Pagination Controls -->
+            <div id="books-pagination" class="mt-4 flex justify-between items-center" style="display: none;">
+                <div class="text-sm text-gray-500">
+                    <span id="books-page-info"></span>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="books-prev-btn" onclick="changeBooksPage(-1)" 
+                            class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Previous
+                    </button>
+                    <button id="books-next-btn" onclick="changeBooksPage(1)" 
+                            class="px-3 py-1 text-sm bg-bible-accent text-white rounded hover:bg-bible-dark disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Recent Verses -->
@@ -491,9 +529,9 @@ function updateStatistics(generalStats, filteredStats, visualStats) {
         const totalVersesEl = document.getElementById('total-verses');
         const booksAccessedEl = document.getElementById('books-accessed');
         
-        if (versesTodayEl) versesTodayEl.textContent = versesToday || 0;
-        if (totalVersesEl) totalVersesEl.textContent = generalStats.verses_displayed || 0;
-        if (booksAccessedEl) booksAccessedEl.textContent = (generalStats.books_accessed || []).length;
+        if (versesTodayEl) versesTodayEl.textContent = formatNumber(versesToday || 0);
+        if (totalVersesEl) totalVersesEl.textContent = formatNumber(generalStats.verses_displayed || 0);
+        if (booksAccessedEl) booksAccessedEl.textContent = formatNumber((generalStats.books_accessed || []).length);
         
         const apiSuccessEl = document.getElementById('api-success');
         if (apiSuccessEl) apiSuccessEl.textContent = Math.round(generalStats.api_success_rate || 98.5) + '%';
@@ -506,7 +544,15 @@ function updateStatistics(generalStats, filteredStats, visualStats) {
         const avgResponseTimeEl = document.getElementById('avg-response-time');
         const aiSuccessRateEl = document.getElementById('ai-success-rate');
 
-        if (chatgptTokensEl) chatgptTokensEl.textContent = (aiStats.total_tokens || 0).toLocaleString();
+        if (chatgptTokensEl) chatgptTokensEl.textContent = formatNumber(aiStats.total_tokens || 0);
+        
+        // Store data for charts
+        if (generalStats.translation_usage) {
+            currentTranslationData = generalStats.translation_usage;
+        }
+        if (generalStats.mode_usage) {
+            currentModeData = generalStats.mode_usage;
+        }
 
         // Estimate cost (roughly $0.002 per 1K tokens for GPT-3.5-turbo)
         const estimatedCost = ((aiStats.total_tokens || 0) / 1000) * 0.002;
@@ -558,7 +604,15 @@ function updateBasicStatistics(stats) {
         const avgResponseTimeEl = document.getElementById('avg-response-time');
         const aiSuccessRateEl = document.getElementById('ai-success-rate');
         
-        if (chatgptTokensEl) chatgptTokensEl.textContent = (aiStats.total_tokens || 0).toLocaleString();
+        if (chatgptTokensEl) chatgptTokensEl.textContent = formatNumber(aiStats.total_tokens || 0);
+        
+        // Store data for charts
+        if (generalStats.translation_usage) {
+            currentTranslationData = generalStats.translation_usage;
+        }
+        if (generalStats.mode_usage) {
+            currentModeData = generalStats.mode_usage;
+        }
         const estimatedCost = ((aiStats.total_tokens || 0) / 1000) * 0.002;
         if (tokenCostEl) tokenCostEl.textContent = `Est. cost: $${estimatedCost.toFixed(4)}`;
         if (totalQuestionsEl) totalQuestionsEl.textContent = aiStats.total_questions || 0;
@@ -577,10 +631,19 @@ function updateBasicStatistics(stats) {
 }
 
 function getVersesToday(generalStats, filteredStats) {
-    // Try to get verses today from various sources
+    // Try to get verses from filtered data first (prioritize explicit total_verses field)
     if (filteredStats && filteredStats.total_verses !== undefined) {
         return filteredStats.total_verses;
     }
+    // Then try the conversations.total field (weekly, monthly, etc.)
+    if (filteredStats && filteredStats.conversations && filteredStats.conversations.total !== undefined) {
+        return filteredStats.conversations.total;
+    }
+    // Check for direct total_conversations field in filtered data
+    if (filteredStats && filteredStats.total_conversations !== undefined) {
+        return filteredStats.total_conversations;
+    }
+    // Fallback to general stats
     if (generalStats.verses_today !== undefined) {
         return generalStats.verses_today;
     }
@@ -929,7 +992,9 @@ function initializeCharts() {
 
 function updateBookChart(bookTotals) {
     if (charts.books && bookTotals.length > 0) {
-        const topBooks = bookTotals.slice(0, 10); // Show top 10
+        // Sort in descending order as requested
+        const sortedBooks = bookTotals.sort((a, b) => b.total_verses - a.total_verses);
+        const topBooks = sortedBooks.slice(0, 10); // Show top 10
         const values = topBooks.map(book => book.total_verses);
         const maxValue = Math.max(...values);
         
@@ -963,7 +1028,9 @@ function updateBookChart(bookTotals) {
 
 function updateChapterChart(chapterDetails) {
     if (charts.chapters && chapterDetails.length > 0) {
-        const topChapters = chapterDetails.slice(0, 10); // Show top 10
+        // Sort in descending order as requested
+        const sortedChapters = chapterDetails.sort((a, b) => b.verse_count - a.verse_count);
+        const topChapters = sortedChapters.slice(0, 10); // Show top 10
         const values = topChapters.map(ch => ch.verse_count);
         const maxValue = Math.max(...values);
         
@@ -1115,8 +1182,12 @@ function updateModeChart(modeUsage) {
 
 function updateTranslationChart(translationUsage) {
     if (charts.translation) {
-        charts.translation.data.labels = Object.keys(translationUsage);
-        charts.translation.data.datasets[0].data = Object.values(translationUsage);
+        // Sort by usage count in descending order
+        const sortedEntries = Object.entries(translationUsage)
+            .sort((a, b) => b[1] - a[1]);
+        
+        charts.translation.data.labels = sortedEntries.map(entry => entry[0]);
+        charts.translation.data.datasets[0].data = sortedEntries.map(entry => entry[1]);
         charts.translation.update();
     }
 }
@@ -1139,33 +1210,117 @@ function updatePerformanceChart(cpu, memory) {
     }
 }
 
+// Pagination state for books
+let currentBooksPage = 1;
+let booksPerPage = 5;
+
 function updatePopularBooks(booksAccessed) {
+    // Load paginated books data
+    loadPaginatedBooks(1); // Start with page 1
+}
+
+function loadPaginatedBooks(page = 1) {
+    const container = document.getElementById('popular-books');
+    const paginationContainer = document.getElementById('books-pagination');
+    
+    // Show loading state
+    container.innerHTML = `
+        <div class="text-center text-gray-500 py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-bible-accent mx-auto mb-2"></div>
+            <p>Loading books...</p>
+        </div>
+    `;
+    
+    fetch(`/api/statistics/books?page=${page}&per_page=${booksPerPage}&filter=${currentFilter}&view=${currentViewMode}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.books) {
+                displayPaginatedBooks(data.data.books, data.data.pagination);
+                updateBooksPaginationControls(data.data.pagination);
+                paginationContainer.style.display = data.data.pagination.total_pages > 1 ? 'flex' : 'none';
+            } else {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <p>No book data available yet</p>
+                    </div>
+                `;
+                paginationContainer.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading paginated books:', error);
+            container.innerHTML = `
+                <div class="text-center text-red-500 py-8">
+                    <p>Error loading book data</p>
+                </div>
+            `;
+            paginationContainer.style.display = 'none';
+        });
+}
+
+function displayPaginatedBooks(books, pagination) {
     const container = document.getElementById('popular-books');
     
-    if (!booksAccessed || booksAccessed.length === 0) {
+    if (!books || books.length === 0) {
         container.innerHTML = `
             <div class="text-center text-gray-500 py-8">
                 <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
-                <p>No book data available yet</p>
+                <p>No books found for this period</p>
             </div>
         `;
         return;
     }
     
-    // Sort books by usage frequency (mock data for now)
-    const bookData = booksAccessed.slice(0, 10).map((book, index) => ({
-        name: book,
-        count: Math.max(10 - index, 1)
-    }));
-    
-    container.innerHTML = bookData.map(book => `
+    container.innerHTML = books.map(book => `
         <div class="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
             <span class="font-medium text-gray-900">${book.name}</span>
-            <span class="text-sm text-gray-500">${book.count} verses</span>
+            <span class="text-sm text-gray-500">${book.count} verses (${book.percentage}%)</span>
         </div>
     `).join('');
+    
+    currentBooksPage = pagination.current_page;
+}
+
+function updateBooksPaginationControls(pagination) {
+    const pageInfo = document.getElementById('books-page-info');
+    const prevBtn = document.getElementById('books-prev-btn');
+    const nextBtn = document.getElementById('books-next-btn');
+    
+    if (pageInfo) {
+        const startRecord = ((pagination.current_page - 1) * pagination.per_page) + 1;
+        const endRecord = Math.min(pagination.current_page * pagination.per_page, pagination.total_books);
+        pageInfo.textContent = `Showing ${startRecord}-${endRecord} of ${pagination.total_books} books`;
+    }
+    
+    if (prevBtn) {
+        prevBtn.disabled = !pagination.has_prev;
+        if (pagination.has_prev) {
+            prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    }
+    
+    if (nextBtn) {
+        nextBtn.disabled = !pagination.has_next;
+        if (pagination.has_next) {
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    }
+}
+
+function changeBooksPage(direction) {
+    const newPage = currentBooksPage + direction;
+    if (newPage >= 1) {
+        loadPaginatedBooks(newPage);
+    }
 }
 
 function refreshStats() {
@@ -1217,6 +1372,155 @@ function showSuccess(message) {
 function showError(message) {
     console.error('Error:', message);
     // Could implement toast notifications here
+}
+
+// Number formatting with commas
+function formatNumber(num) {
+    if (typeof num === 'string') {
+        // Try to parse if it's a string
+        const parsed = parseFloat(num.replace(/,/g, ''));
+        if (isNaN(parsed)) return num;
+        num = parsed;
+    }
+    if (typeof num === 'number') {
+        return num.toLocaleString();
+    }
+    return num;
+}
+
+// View mode management
+let currentViewMode = 'data';
+
+function setViewMode(mode) {
+    currentViewMode = mode;
+    
+    // Update button appearance
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        const btnView = btn.getAttribute('data-view');
+        if (btnView === mode) {
+            btn.classList.remove('text-gray-500');
+            btn.classList.add('bg-white', 'text-gray-700', 'shadow-sm');
+        } else {
+            btn.classList.remove('bg-white', 'text-gray-700', 'shadow-sm');
+            btn.classList.add('text-gray-500');
+        }
+    });
+    
+    // Toggle between data tables and charts
+    if (mode === 'data') {
+        showDataView();
+    } else {
+        showChartsView();
+    }
+}
+
+function showDataView() {
+    // Hide chart containers and show data tables
+    const chartContainers = document.querySelectorAll('.chart-container');
+    const dataContainers = document.querySelectorAll('.data-container');
+    
+    chartContainers.forEach(container => {
+        container.style.display = 'none';
+    });
+    
+    dataContainers.forEach(container => {
+        container.style.display = 'block';
+    });
+}
+
+function showChartsView() {
+    // Show chart containers and hide data tables
+    const chartContainers = document.querySelectorAll('.chart-container');
+    const dataContainers = document.querySelectorAll('.data-container');
+    
+    chartContainers.forEach(container => {
+        container.style.display = 'block';
+    });
+    
+    dataContainers.forEach(container => {
+        container.style.display = 'none';
+    });
+    
+    // Generate charts if they don't exist yet
+    generateCharts();
+}
+
+function generateCharts() {
+    // Simple chart generation using ASCII or basic canvas
+    generateTranslationUsageChart();
+    generateModeUsageChart();
+}
+
+function generateTranslationUsageChart() {
+    const chartContainer = document.getElementById('translation-usage-chart');
+    if (!chartContainer) return;
+    
+    // Simple bar chart using divs
+    const translationData = getCurrentTranslationData();
+    if (!translationData || Object.keys(translationData).length === 0) return;
+    
+    const total = Object.values(translationData).reduce((sum, count) => sum + count, 0);
+    let chartHTML = '<div class="space-y-2">';
+    
+    Object.entries(translationData)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([translation, count]) => {
+            const percentage = total > 0 ? (count / total) * 100 : 0;
+            chartHTML += `
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 text-xs font-medium">${translation.toUpperCase()}</div>
+                    <div class="flex-1 bg-gray-200 rounded-full h-4">
+                        <div class="bg-blue-600 h-4 rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="w-16 text-xs text-gray-600">${formatNumber(count)} (${percentage.toFixed(1)}%)</div>
+                </div>
+            `;
+        });
+    
+    chartHTML += '</div>';
+    chartContainer.innerHTML = chartHTML;
+}
+
+function generateModeUsageChart() {
+    const chartContainer = document.getElementById('mode-usage-chart');
+    if (!chartContainer) return;
+    
+    // Generate mode usage chart
+    const modeData = getCurrentModeData();
+    if (!modeData || Object.keys(modeData).length === 0) return;
+    
+    const total = Object.values(modeData).reduce((sum, count) => sum + count, 0);
+    let chartHTML = '<div class="space-y-2">';
+    
+    Object.entries(modeData)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([mode, count]) => {
+            const percentage = total > 0 ? (count / total) * 100 : 0;
+            chartHTML += `
+                <div class="flex items-center space-x-3">
+                    <div class="w-16 text-xs font-medium capitalize">${mode.replace('_', ' ')}</div>
+                    <div class="flex-1 bg-gray-200 rounded-full h-4">
+                        <div class="bg-green-600 h-4 rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="w-16 text-xs text-gray-600">${formatNumber(count)} (${percentage.toFixed(1)}%)</div>
+                </div>
+            `;
+        });
+    
+    chartHTML += '</div>';
+    chartContainer.innerHTML = chartHTML;
+}
+
+// Helper functions to get current data
+let currentTranslationData = {};
+let currentModeData = {};
+
+function getCurrentTranslationData() {
+    return currentTranslationData;
+}
+
+function getCurrentModeData() {
+    return currentModeData;
 }
 
 // Cleanup on page unload

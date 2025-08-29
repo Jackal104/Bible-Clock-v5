@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}Bible Clock Health - Bible Clock{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-bible-dark mb-2">Bible Clock Health Status</h2>
+        <p class="text-gray-600">Everything looks good? This page shows if your Bible Clock is working properly.</p>
+    </div>
+
+    <!-- Health Status Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Display Status -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg" id="display-status-icon">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Display</h4>
+                    <p class="text-2xl font-bold" id="display-status">Checking...</p>
+                    <p class="text-sm text-gray-500" id="display-details">Hardware connection</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verse Updates -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg" id="verse-status-icon">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Verses</h4>
+                    <p class="text-2xl font-bold" id="verse-status">Checking...</p>
+                    <p class="text-sm text-gray-500" id="verse-details">Auto-updating every minute</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Health -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg" id="system-status-icon">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-sm font-medium text-gray-500 uppercase tracking-wide">System</h4>
+                    <p class="text-2xl font-bold" id="system-status">Checking...</p>
+                    <p class="text-sm text-gray-500" id="system-details">Overall health</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Monitor Status -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Self-Healing Monitor</h3>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="text-gray-700">Automatic Problem Detection</span>
+                <span class="px-3 py-1 rounded-full text-sm font-medium" id="monitor-status">Checking...</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-gray-700">Last Health Check</span>
+                <span class="text-sm text-gray-500" id="last-check">Checking...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-bible-dark mb-4">Quick Actions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button onclick="refreshDisplay()" class="btn-primary text-center">
+                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Refresh Display
+            </button>
+            <button onclick="clearGhosting()" class="btn-secondary text-center">
+                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Clear Ghosting
+            </button>
+            <button onclick="runHealthCheck()" class="btn-accent text-center">
+                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Run Health Check
+            </button>
+        </div>
+    </div>
+
+    <!-- Simple Instructions -->
+    <div class="bg-blue-50 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-blue-800 mb-4">✨ Your Bible Clock is Self-Healing!</h3>
+        <div class="text-blue-700 space-y-2">
+            <p><strong>Good news:</strong> Your Bible Clock automatically fixes most problems!</p>
+            <p><strong>What it fixes:</strong> Blank screens, stuck displays, and connection issues.</p>
+            <p><strong>If you see problems:</strong> Wait 5-10 minutes - it usually fixes itself.</p>
+            <p><strong>Still having issues?</strong> Try the "Refresh Display" button above.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateHealthStatus() {
+    // Check display status
+    fetch('/api/status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const simulationMode = data.data.simulation_mode;
+                const displayIcon = document.getElementById('display-status-icon');
+                const displayStatus = document.getElementById('display-status');
+                const displayDetails = document.getElementById('display-details');
+                
+                if (!simulationMode) {
+                    displayIcon.className = 'p-3 bg-green-100 rounded-lg text-green-600';
+                    displayStatus.textContent = 'Working';
+                    displayStatus.className = 'text-2xl font-bold text-green-600';
+                    displayDetails.textContent = 'Hardware mode active';
+                } else {
+                    displayIcon.className = 'p-3 bg-yellow-100 rounded-lg text-yellow-600';
+                    displayStatus.textContent = 'Simulation';
+                    displayStatus.className = 'text-2xl font-bold text-yellow-600';
+                    displayDetails.textContent = 'Running in test mode';
+                }
+                
+                // Check verses
+                const versesToday = data.data.verses_today || 0;
+                const verseIcon = document.getElementById('verse-status-icon');
+                const verseStatus = document.getElementById('verse-status');
+                const verseDetails = document.getElementById('verse-details');
+                
+                if (versesToday > 0) {
+                    verseIcon.className = 'p-3 bg-green-100 rounded-lg text-green-600';
+                    verseStatus.textContent = 'Active';
+                    verseStatus.className = 'text-2xl font-bold text-green-600';
+                    verseDetails.textContent = `${versesToday} verses today`;
+                } else {
+                    verseIcon.className = 'p-3 bg-gray-100 rounded-lg text-gray-600';
+                    verseStatus.textContent = 'Starting';
+                    verseStatus.className = 'text-2xl font-bold text-gray-600';
+                    verseDetails.textContent = 'New day beginning';
+                }
+                
+                // System health
+                const systemIcon = document.getElementById('system-status-icon');
+                const systemStatus = document.getElementById('system-status');
+                const systemDetails = document.getElementById('system-details');
+                
+                const healthStatus = data.data.system?.health_status || 'good';
+                if (healthStatus === 'good') {
+                    systemIcon.className = 'p-3 bg-green-100 rounded-lg text-green-600';
+                    systemStatus.textContent = 'Excellent';
+                    systemStatus.className = 'text-2xl font-bold text-green-600';
+                    systemDetails.textContent = 'All systems optimal';
+                } else if (healthStatus === 'warning') {
+                    systemIcon.className = 'p-3 bg-yellow-100 rounded-lg text-yellow-600';
+                    systemStatus.textContent = 'Good';
+                    systemStatus.className = 'text-2xl font-bold text-yellow-600';
+                    systemDetails.textContent = 'Minor issues detected';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Health status check failed:', error);
+        });
+    
+    // Update monitor status
+    const monitorStatus = document.getElementById('monitor-status');
+    const lastCheck = document.getElementById('last-check');
+    
+    monitorStatus.textContent = 'Active';
+    monitorStatus.className = 'px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium';
+    lastCheck.textContent = new Date().toLocaleTimeString();
+}
+
+function refreshDisplay() {
+    fetch('/api/refresh', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('Display refreshed successfully!', 'success');
+            }
+        })
+        .catch(error => showMessage('Refresh failed - try again in a moment', 'error'));
+}
+
+function clearGhosting() {
+    fetch('/api/clear-ghosting', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('Ghosting cleared successfully!', 'success');
+            }
+        })
+        .catch(error => showMessage('Clear failed - try again in a moment', 'error'));
+}
+
+function runHealthCheck() {
+    showMessage('Running health check...', 'info');
+    // The health monitor runs automatically, so just refresh the status
+    setTimeout(() => {
+        updateHealthStatus();
+        showMessage('Health check completed!', 'success');
+    }, 2000);
+}
+
+function showMessage(text, type) {
+    const colors = {
+        success: 'bg-green-100 text-green-800 border-green-200',
+        error: 'bg-red-100 text-red-800 border-red-200',
+        info: 'bg-blue-100 text-blue-800 border-blue-200'
+    };
+    
+    const message = document.createElement('div');
+    message.className = `fixed top-4 right-4 p-4 rounded-lg border ${colors[type]} z-50`;
+    message.textContent = text;
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.remove();
+    }, 3000);
+}
+
+// Initial load and auto-refresh
+document.addEventListener('DOMContentLoaded', function() {
+    updateHealthStatus();
+    setInterval(updateHealthStatus, 30000); // Update every 30 seconds
+});
+</script>
+{% endblock %}

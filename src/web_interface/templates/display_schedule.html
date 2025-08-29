@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}Display Schedule - Bible Clock{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    <!-- Navigation -->
+    <div class="bg-white shadow-sm border-b border-gray-200 mb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-semibold text-gray-900">Display Schedule</h1>
+                    <div id="schedule-status" class="px-3 py-1 rounded-full text-sm font-medium">
+                        <!-- Status will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="save-schedule-btn" onclick="saveSchedule()" 
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">
+                        Save Schedule
+                    </button>
+                    <button onclick="resetToDefaults()" 
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
+                        Reset to Defaults
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Current Status Card -->
+        <div class="bg-white rounded-lg shadow mb-6 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Current Status</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold" id="current-status-indicator">●</div>
+                    <div class="text-sm text-gray-600">Display Status</div>
+                    <div class="font-medium" id="current-status-text">Loading...</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600" id="current-time">--:--</div>
+                    <div class="text-sm text-gray-600">Current Time</div>
+                    <div class="font-medium" id="current-day">Loading...</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-lg font-bold text-gray-700" id="next-event-time">--:--</div>
+                    <div class="text-sm text-gray-600">Next Event</div>
+                    <div class="font-medium text-sm" id="next-event-desc">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manual Controls Card -->
+        <div class="bg-white rounded-lg shadow mb-6 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Manual Controls</h2>
+            <div class="flex items-center space-x-4">
+                <button onclick="manualDisplayOn()" 
+                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium">
+                    Turn Display ON
+                </button>
+                <button onclick="manualDisplayOff()" 
+                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium">
+                    Turn Display OFF
+                </button>
+                <div class="text-sm text-gray-500">
+                    Note: Manual controls override the schedule until the next scheduled event.
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Configuration -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Weekly Schedule</h2>
+            <div class="space-y-4">
+                <!-- Days of the week -->
+                <div id="schedule-days" class="space-y-3">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification for save status -->
+<div id="notification" class="fixed top-4 right-4 z-50 hidden">
+    <div class="bg-white border border-gray-300 rounded-lg shadow-lg p-4 max-w-sm">
+        <div class="flex items-center">
+            <div id="notification-icon" class="flex-shrink-0 mr-3">
+                <!-- Icon will be set by JavaScript -->
+            </div>
+            <div id="notification-message" class="text-sm font-medium text-gray-900">
+                <!-- Message will be set by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentSchedule = {};
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    loadSchedule();
+    updateCurrentTime();
+    setInterval(updateCurrentTime, 1000);
+    setInterval(loadScheduleStatus, 30000); // Update status every 30 seconds
+});
+
+function updateCurrentTime() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { 
+        hour12: false, 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
+    const dayStr = now.toLocaleDateString('en-US', { weekday: 'long' });
+    
+    document.getElementById('current-time').textContent = timeStr;
+    document.getElementById('current-day').textContent = dayStr;
+}
+
+function loadSchedule() {
+    fetch('/api/display-schedule')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                currentSchedule = data.data.schedule;
+                renderSchedule();
+                updateStatusDisplay(data.data);
+            } else {
+                showNotification('Failed to load schedule: ' + (data.error || 'Unknown error'), 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading schedule:', error);
+            showNotification('Failed to load schedule', 'error');
+        });
+}
+
+function loadScheduleStatus() {
+    fetch('/api/display-schedule/status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateStatusDisplay(data.data);
+            }
+        })
+        .catch(error => {
+            console.error('Error loading schedule status:', error);
+        });
+}
+
+function renderSchedule() {
+    const daysContainer = document.getElementById('schedule-days');
+    daysContainer.innerHTML = '';
+    
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    days.forEach((day, index) => {
+        const dayConfig = currentSchedule[day] || { enabled: true, time_on: '07:00', time_off: '23:00' };
+        
+        const dayElement = document.createElement('div');
+        dayElement.className = 'border border-gray-200 rounded-lg p-4';
+        dayElement.innerHTML = `
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="enabled-${day}" ${dayConfig.enabled ? 'checked' : ''} 
+                               onchange="updateDayConfig('${day}', 'enabled', this.checked)"
+                               class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="enabled-${day}" class="ml-2 text-sm font-medium text-gray-900">
+                            ${dayLabels[index]}
+                        </label>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 ${dayConfig.enabled ? '' : 'opacity-50'}">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm text-gray-600">ON:</label>
+                        <input type="time" id="time-on-${day}" value="${dayConfig.time_on}" 
+                               onchange="updateDayConfig('${day}', 'time_on', this.value)"
+                               ${dayConfig.enabled ? '' : 'disabled'}
+                               class="border border-gray-300 rounded px-2 py-1 text-sm">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm text-gray-600">OFF:</label>
+                        <input type="time" id="time-off-${day}" value="${dayConfig.time_off}" 
+                               onchange="updateDayConfig('${day}', 'time_off', this.value)"
+                               ${dayConfig.enabled ? '' : 'disabled'}
+                               class="border border-gray-300 rounded px-2 py-1 text-sm">
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        daysContainer.appendChild(dayElement);
+    });
+}
+
+function updateDayConfig(day, field, value) {
+    if (!currentSchedule[day]) {
+        currentSchedule[day] = { enabled: true, time_on: '07:00', time_off: '23:00' };
+    }
+    
+    currentSchedule[day][field] = value;
+    
+    // Re-render to update enabled/disabled state
+    renderSchedule();
+}
+
+function updateStatusDisplay(statusData) {
+    const currentStatus = statusData.current_status;
+    const indicator = document.getElementById('current-status-indicator');
+    const statusText = document.getElementById('current-status-text');
+    const statusCard = document.getElementById('schedule-status');
+    
+    if (currentStatus.display_enabled && currentStatus.should_be_on) {
+        indicator.textContent = '●';
+        indicator.className = 'text-2xl font-bold text-green-500';
+        statusText.textContent = 'ON (Scheduled)';
+        statusCard.className = 'px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
+        statusCard.textContent = 'Active';
+    } else if (currentStatus.display_enabled && !currentStatus.should_be_on) {
+        indicator.textContent = '●';
+        indicator.className = 'text-2xl font-bold text-orange-500';
+        statusText.textContent = 'ON (Manual Override)';
+        statusCard.className = 'px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800';
+        statusCard.textContent = 'Manual Override';
+    } else {
+        indicator.textContent = '●';
+        indicator.className = 'text-2xl font-bold text-red-500';
+        statusText.textContent = 'OFF';
+        statusCard.className = 'px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
+        statusCard.textContent = 'Inactive';
+    }
+    
+    // Update next event
+    if (statusData.next_event) {
+        document.getElementById('next-event-time').textContent = statusData.next_event.time_until || 'Soon';
+        document.getElementById('next-event-desc').textContent = statusData.next_event.description || 'No upcoming events';
+    } else {
+        document.getElementById('next-event-time').textContent = 'None';
+        document.getElementById('next-event-desc').textContent = 'No scheduled events';
+    }
+}
+
+function saveSchedule() {
+    const saveButton = document.getElementById('save-schedule-btn');
+    saveButton.disabled = true;
+    saveButton.textContent = 'Saving...';
+    
+    fetch('/api/display-schedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ schedule: currentSchedule })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Schedule saved successfully', 'success');
+            loadScheduleStatus(); // Refresh status
+        } else {
+            showNotification('Failed to save schedule: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving schedule:', error);
+        showNotification('Failed to save schedule', 'error');
+    })
+    .finally(() => {
+        saveButton.disabled = false;
+        saveButton.textContent = 'Save Schedule';
+    });
+}
+
+function resetToDefaults() {
+    if (confirm('Are you sure you want to reset all days to default settings (7 AM to 11 PM, all enabled)?')) {
+        const defaultSchedule = {
+            monday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            tuesday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            wednesday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            thursday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            friday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            saturday: { enabled: true, time_on: '07:00', time_off: '23:00' },
+            sunday: { enabled: true, time_on: '07:00', time_off: '23:00' }
+        };
+        
+        currentSchedule = defaultSchedule;
+        renderSchedule();
+    }
+}
+
+function manualDisplayOn() {
+    fetch('/api/display-schedule/control', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'turn_on' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Display turned ON manually', 'success');
+            setTimeout(loadScheduleStatus, 1000); // Refresh status after a delay
+        } else {
+            showNotification('Failed to turn display ON: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error turning display on:', error);
+        showNotification('Failed to turn display ON', 'error');
+    });
+}
+
+function manualDisplayOff() {
+    fetch('/api/display-schedule/control', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'turn_off' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Display turned OFF manually', 'success');
+            setTimeout(loadScheduleStatus, 1000); // Refresh status after a delay
+        } else {
+            showNotification('Failed to turn display OFF: ' + (data.error || 'Unknown error'), 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error turning display off:', error);
+        showNotification('Failed to turn display OFF', 'error');
+    });
+}
+
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    const messageEl = document.getElementById('notification-message');
+    const iconEl = document.getElementById('notification-icon');
+    
+    messageEl.textContent = message;
+    
+    // Set icon and color based on type
+    if (type === 'success') {
+        iconEl.innerHTML = '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+    } else {
+        iconEl.innerHTML = '<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
+    }
+    
+    // Show notification
+    notification.classList.remove('hidden');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.classList.add('hidden');
+    }, 3000);
+}
+</script>
+{% endblock %}

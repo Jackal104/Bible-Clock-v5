@@ -2078,8 +2078,9 @@ class ImageGenerator:
             separator_end_y = self.height - margin - 70  # Increased standard bottom margin
         
         # Only draw the separator if we have valid coordinates and sufficient space
-        if separator_end_y > separator_start_y + 120:  # Ensure minimum 120px line length for better visibility
-            draw.line([(separator_x, separator_start_y), (separator_x, separator_end_y)], fill=64, width=2)
+        if separator_end_y > separator_start_y + 50:  # Reduced minimum from 120px to 50px
+            # Draw a more prominent vertical separator line
+            draw.line([(separator_x, separator_start_y), (separator_x, separator_end_y)], fill=32, width=3)
         
         # Calculate translation label position with proper spacing
         verse_content_end_y = max(text_start_y + total_text_height, secondary_end_y)

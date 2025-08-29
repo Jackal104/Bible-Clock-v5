@@ -259,51 +259,48 @@
             </svg>
             <div>
                 <div class="font-medium text-blue-800">Auto-Refresh Enabled</div>
-                <div class="text-sm text-blue-700">Statistics update every 60 seconds</div>
+                <div class="text-sm text-blue-700">Statistics update every 30 seconds</div>
             </div>
         </div>
     </div>
     </div>
     
     <!-- Charts View -->
-    <div id="charts-view" class="charts-view bg-gray-50 min-h-screen p-4" style="display: none;">
-        <div class="mobile-card bg-white p-6 mb-6">
+    <div id="charts-view" class="charts-view" style="display: none;">
+        <div class="mobile-card bg-white p-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Display Mode Usage Chart</h2>
             <div id="mode-chart" class="chart-container" style="height: 250px;">
                 <div class="text-gray-500 text-center py-8">Chart will be generated from current data</div>
             </div>
         </div>
         
-        <div class="mobile-card bg-white p-6 mb-6">
+        <div class="mobile-card bg-white p-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Translation Usage Chart</h2>
             <div id="translation-chart" class="chart-container" style="height: 250px;">
                 <div class="text-gray-500 text-center py-8">Chart will be generated from current data</div>
             </div>
         </div>
         
-        <div class="mobile-card bg-white p-6 mb-6">
+        <div class="mobile-card bg-white p-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Translation Completion Chart</h2>
             <div id="completion-chart" class="chart-container" style="height: 250px;">
                 <div class="text-gray-500 text-center py-8">Chart will be generated from current data</div>
             </div>
         </div>
         
-        <div class="mobile-card bg-white p-6 mb-6">
+        <div class="mobile-card bg-white p-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Bible Books Accessed Chart</h2>
             <div id="books-chart" class="chart-container" style="height: 250px;">
                 <div class="text-gray-500 text-center py-8">Chart will be generated from current data</div>
             </div>
         </div>
         
-        <div class="mobile-card bg-white p-6 mb-6">
+        <div class="mobile-card bg-white p-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">System Performance Chart</h2>
             <div id="performance-chart" class="chart-container" style="height: 250px;">
                 <div class="text-gray-500 text-center py-8">Chart will be generated from current data</div>
             </div>
         </div>
-        
-        <!-- Extra spacing at bottom -->
-        <div class="h-6"></div>
     </div>
 </div>
 
@@ -319,10 +316,10 @@ let allBooksData = [];
 function updateStatistics() {
     console.log('📊 Updating mobile statistics at:', new Date().toLocaleTimeString());
     
-    // Update Bible Clock metrics using new real-time API
-    fetch(`/api/bible-clock-metrics?period=${currentTimeFilter}`)
+    // Update filtered statistics using new API, fallback to basic API if needed
+    fetch(`/api/statistics/filtered?filter=${currentTimeFilter}`)
         .then(response => {
-            console.log('📊 Bible Clock Metrics API response status:', response.status);
+            console.log('📊 Filtered Statistics API response status:', response.status);
             return response.json();
         })
         .then(data => {
@@ -330,35 +327,28 @@ function updateStatistics() {
             if (data.success) {
                 const stats = data.data;
                 
-                // Update verses today with real data from Bible Clock metrics
+                // Update verses today with filtered data
                 const versesToday = document.getElementById('verses-today');
                 if (versesToday) {
-                    const total = stats.verses_displayed || 0;
+                    const total = (stats.conversations && stats.conversations.total !== undefined) 
+                        ? stats.conversations.total : 0;
                     versesToday.textContent = total;
-                    console.log('✅ Updated verses displayed:', total);
+                    console.log('✅ Updated conversations:', total);
                 }
                 
-                // Update uptime hours
-                const uptimeHours = document.getElementById('uptime-hours');
-                if (uptimeHours) {
-                    const hours = stats.uptime_hours || 0;
-                    uptimeHours.textContent = hours.toFixed(1) + 'h';
-                    console.log('✅ Updated uptime hours:', hours);
-                }
-                
-                // Update mode usage with actual hours data
-                if (stats.mode_usage_hours) {
-                    updateModeUsage(stats.mode_usage_hours);
+                // Update mode usage with category data
+                if (stats.conversations && stats.conversations.categories) {
+                    updateModeUsage(stats.conversations.categories);
                 }
                 
                 // Update translation usage
-                if (stats.translation_usage_count) {
-                    updateTranslationUsage(stats.translation_usage_count);
+                if (stats.translation_usage) {
+                    updateTranslationUsage(stats.translation_usage);
                 }
                 
                 // Update books accessed with pagination
-                if (stats.bible_books_accessed_count) {
-                    updateBooksAccessedWithPagination(stats.bible_books_accessed_count);
+                if (stats.bible_books_accessed) {
+                    updateBooksAccessedWithPagination(stats.bible_books_accessed);
                 }
                 
                 // Update recent activity
@@ -366,9 +356,11 @@ function updateStatistics() {
                     updateRecentActivity(stats.recent_activities);
                 }
                 
-                // Don't fallback to basic API when filtered data is properly returned with zero values
-                // This was causing random verse count additions when switching filters
-                console.log('📊 Filtered data loaded successfully for', currentTimeFilter);
+                // If no data, try to fallback to basic statistics API
+                if (stats.conversations && stats.conversations.total === 0) {
+                    console.log('⚠️ No filtered data, falling back to basic statistics API');
+                    updateBasicStatistics();
+                }
             } else {
                 console.error('Filtered statistics API failed, falling back to basic API');
                 updateBasicStatistics();
@@ -465,41 +457,34 @@ function loadTranslationCompletion() {
 function updateBasicStatistics() {
     console.log('📊 Fallback: Updating basic statistics');
     
-    // Fallback to current Bible Clock metrics API
-    fetch('/api/bible-clock-metrics/current')
+    // Fallback to basic statistics API
+    fetch('/api/statistics')
         .then(response => response.json())
         .then(data => {
-            console.log('📊 Current Bible Clock metrics data:', data);
+            console.log('📊 Basic Statistics data:', data);
             if (data.success) {
                 const stats = data.data;
                 
                 // Update verses today
                 const versesToday = document.getElementById('verses-today');
-                if (versesToday && stats.verses_displayed_today !== undefined) {
-                    versesToday.textContent = stats.verses_displayed_today;
-                    console.log('✅ Updated verses today (fallback):', stats.verses_displayed_today);
+                if (versesToday && stats.verses_today !== undefined) {
+                    versesToday.textContent = stats.verses_today;
+                    console.log('✅ Updated verses today (fallback):', stats.verses_today);
                 }
                 
-                // Update uptime hours
-                const uptimeHours = document.getElementById('uptime-hours');
-                if (uptimeHours && stats.uptime_hours !== undefined) {
-                    uptimeHours.textContent = stats.uptime_hours.toFixed(1) + 'h';
-                    console.log('✅ Updated uptime hours (fallback):', stats.uptime_hours);
-                }
-                
-                // Update mode usage (convert from seconds to hours)
-                if (stats.mode_usage_hours) {
-                    updateModeUsage(stats.mode_usage_hours);
+                // Update mode usage
+                if (stats.mode_usage) {
+                    updateModeUsageBasic(stats.mode_usage);
                 }
                 
                 // Update translation usage
-                if (stats.translation_usage_count) {
-                    updateTranslationUsage(stats.translation_usage_count);
+                if (stats.translation_usage) {
+                    updateTranslationUsage(stats.translation_usage);
                 }
                 
                 // Update books accessed
-                if (stats.bible_books_accessed_count) {
-                    updateBooksAccessedWithPagination(stats.bible_books_accessed_count);
+                if (stats.books_accessed) {
+                    updateBooksAccessedWithPagination(stats.books_accessed);
                 }
                 
                 // Update recent activity
@@ -773,15 +758,6 @@ function changeBooksPage(direction) {
     }
 }
 
-function changeBooksChartPage(direction) {
-    const newPage = currentBooksPage + direction;
-    if (newPage >= 1 && newPage <= totalBooksPages) {
-        currentBooksPage = newPage;
-        // Regenerate chart with new page
-        updateChartsView();
-    }
-}
-
 // Keep the old function for backwards compatibility
 function updateBooksAccessed(booksAccessed) {
     updateBooksAccessedWithPagination(booksAccessed);
@@ -805,8 +781,8 @@ function updateRecentActivity(activities) {
             <div class="bg-gray-50 p-3 rounded-lg">
                 <div class="flex justify-between items-start">
                     <div>
-                        <div class="font-medium text-gray-800">${activity.description || 'Unknown activity'}</div>
-                        <div class="text-xs text-gray-500 mt-1">${activity.type || 'system'}</div>
+                        <div class="font-medium text-gray-800">${activity.action}</div>
+                        ${activity.details ? `<div class="text-sm text-gray-600">${activity.details}</div>` : ''}
                     </div>
                     <div class="text-xs text-gray-400">${timestamp}</div>
                 </div>
@@ -878,19 +854,18 @@ function setViewMode(mode) {
 
 // Chart generation function (updated to use filtered data)
 function generateCharts() {
-    // Fetch chart data from Bible Clock metrics with current filter
-    fetch(`/api/bible-clock-metrics?period=${currentTimeFilter}`)
+    // Fetch chart data with current filter
+    fetch(`/api/statistics/chart-data?filter=${currentTimeFilter}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                generateModeChart(data.data.mode_usage_hours || {});
-                generateTranslationChart(data.data.translation_usage_count || {});
-                generateBooksChart(data.data.bible_books_accessed_count || {});
+                generateModeChart(data.data.mode_usage || {});
+                generateTranslationChart(data.data.translation_usage || {});
+                generateBooksChart(data.data.bible_books_accessed || {});
             }
         })
         .catch(console.error);
     
-    // Generate completion chart with real data (independent API call)
     generateCompletionChart();
     generatePerformanceChart();
 }
@@ -984,51 +959,34 @@ function generateCompletionChart() {
     const container = document.getElementById('completion-chart');
     if (!container) return;
     
-    // Fetch real translation completion data
-    fetch('/api/translation-completion')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.data && data.data.translations) {
-                const translations = Object.entries(data.data.translations);
-                if (translations.length === 0) {
-                    container.innerHTML = '<div class="p-4 text-center text-gray-500">No translation completion data available</div>';
-                    return;
-                }
-                
-                // Sort by completion percentage in descending order
-                const sortedTranslations = translations.sort((a, b) => b[1].completion_percentage - a[1].completion_percentage);
-                
-                const html = sortedTranslations.map(([key, trans]) => {
-                    const percentage = trans.completion_percentage || 0;
-                    const barColor = percentage > 90 ? 'bg-green-500' : percentage > 50 ? 'bg-orange-500' : 'bg-gray-400';
-                    
-                    return `
-                        <div class="flex justify-between items-center">
-                            <span>${trans.display_name || key.toUpperCase()}</span>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs">${percentage.toFixed(1)}%</span>
-                                <div class="w-24 bg-gray-200 rounded h-4">
-                                    <div class="${barColor} h-4 rounded" style="width: ${Math.min(percentage, 100)}%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                container.innerHTML = `
-                    <div class="p-4 text-center text-gray-500">
-                        <div class="mb-4">📊 Translation Completion Status</div>
-                        <div class="space-y-2 text-sm">${html}</div>
+    container.innerHTML = `
+        <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">📊 Cache Completion Status</div>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center">
+                    <span>CEV</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-green-500 h-4 rounded" style="width: 85%"></div>
                     </div>
-                `;
-            } else {
-                container.innerHTML = '<div class="p-4 text-center text-gray-500">Unable to load translation completion data</div>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching translation completion chart data:', error);
-            container.innerHTML = '<div class="p-4 text-center text-gray-500">Error loading completion data</div>';
-        });
+                    <span class="text-xs">85%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>AMP</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-green-500 h-4 rounded" style="width: 82%"></div>
+                    </div>
+                    <span class="text-xs">82%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>NLT</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-orange-500 h-4 rounded" style="width: 15%"></div>
+                    </div>
+                    <span class="text-xs">15%</span>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function generateBooksChart(booksData = {}) {
@@ -1042,16 +1000,12 @@ function generateBooksChart(booksData = {}) {
     }
     
     const sortedBooks = books.sort((a, b) => b[1] - a[1]); // Descending order as requested
-    
-    // Pagination for charts
-    const startIndex = (currentBooksPage - 1) * booksPerPage;
-    const endIndex = startIndex + booksPerPage;
-    const paginatedBooks = sortedBooks.slice(startIndex, endIndex);
-    const maxCount = paginatedBooks[0] ? paginatedBooks[0][1] : 1;
+    const topBooks = sortedBooks.slice(0, 10);
+    const maxCount = topBooks[0] ? topBooks[0][1] : 1;
     
     const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-yellow-500', 'bg-red-500', 'bg-indigo-500', 'bg-pink-500', 'bg-cyan-500', 'bg-orange-500', 'bg-gray-500'];
     
-    const html = paginatedBooks.map(([book, count], index) => {
+    const html = topBooks.map(([book, count], index) => {
         const percentage = (count / maxCount) * 100;
         const colorClass = colors[index] || 'bg-gray-500';
         return `
@@ -1067,35 +1021,10 @@ function generateBooksChart(booksData = {}) {
         `;
     }).join('');
     
-    // Calculate total pages
-    totalBooksPages = Math.ceil(books.length / booksPerPage);
-    
-    // Pagination controls
-    const paginationHtml = books.length > booksPerPage ? `
-        <div class="flex justify-between items-center mt-4">
-            <div class="text-sm text-gray-500">
-                Page ${currentBooksPage} of ${totalBooksPages} (${books.length} books)
-            </div>
-            <div class="flex space-x-2">
-                <button onclick="changeBooksChartPage(-1)" 
-                        class="px-3 py-1 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-                        ${currentBooksPage <= 1 ? 'disabled style="opacity: 0.5;"' : ''}>
-                    Previous
-                </button>
-                <button onclick="changeBooksChartPage(1)" 
-                        class="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
-                        ${currentBooksPage >= totalBooksPages ? 'disabled style="opacity: 0.5;"' : ''}>
-                    Next
-                </button>
-            </div>
-        </div>
-    ` : '';
-    
     container.innerHTML = `
         <div class="p-4 text-center text-gray-500">
             <div class="mb-4">📖 Bible Books Accessed</div>
             <div class="space-y-2 text-sm">${html}</div>
-            ${paginationHtml}
         </div>
     `;
 }
@@ -1104,119 +1033,45 @@ function generatePerformanceChart() {
     const container = document.getElementById('performance-chart');
     if (!container) return;
     
-    // Generate mock time-series data based on current time filter
-    const generateTimeSeriesData = () => {
-        const now = new Date();
-        let dataPoints = [];
-        let labels = [];
-        
-        switch(currentTimeFilter) {
-            case 'today':
-                // Last 24 hours, hourly data
-                for (let i = 23; i >= 0; i--) {
-                    const time = new Date(now.getTime() - (i * 60 * 60 * 1000));
-                    labels.push(time.getHours().toString().padStart(2, '0') + ':00');
-                    // Simulate realistic performance data
-                    dataPoints.push({
-                        cpu: Math.max(10, Math.min(90, 25 + Math.random() * 30 + Math.sin(i * 0.5) * 10)),
-                        memory: Math.max(20, Math.min(85, 45 + Math.random() * 15 + Math.cos(i * 0.3) * 8)),
-                        temp: Math.max(35, Math.min(75, 48 + Math.random() * 12 + Math.sin(i * 0.8) * 5))
-                    });
-                }
-                break;
-            case 'week':
-                // Last 7 days, daily data
-                for (let i = 6; i >= 0; i--) {
-                    const time = new Date(now.getTime() - (i * 24 * 60 * 60 * 1000));
-                    labels.push(time.toLocaleDateString('en-US', {weekday: 'short'}));
-                    dataPoints.push({
-                        cpu: Math.max(15, Math.min(80, 30 + Math.random() * 25)),
-                        memory: Math.max(25, Math.min(80, 50 + Math.random() * 20)),
-                        temp: Math.max(40, Math.min(70, 50 + Math.random() * 15))
-                    });
-                }
-                break;
-            case 'month':
-                // Last 30 days, weekly data
-                for (let i = 4; i >= 0; i--) {
-                    labels.push(`Week ${5-i}`);
-                    dataPoints.push({
-                        cpu: Math.max(20, Math.min(75, 35 + Math.random() * 20)),
-                        memory: Math.max(30, Math.min(75, 55 + Math.random() * 15)),
-                        temp: Math.max(42, Math.min(68, 52 + Math.random() * 10))
-                    });
-                }
-                break;
-            default:
-                // Default to today's data
-                for (let i = 11; i >= 0; i--) {
-                    const time = new Date(now.getTime() - (i * 2 * 60 * 60 * 1000));
-                    labels.push(time.getHours().toString().padStart(2, '0') + ':00');
-                    dataPoints.push({
-                        cpu: Math.max(10, Math.min(90, 25 + Math.random() * 30)),
-                        memory: Math.max(20, Math.min(85, 45 + Math.random() * 15)),
-                        temp: Math.max(35, Math.min(75, 48 + Math.random() * 12))
-                    });
-                }
-                break;
-        }
-        
-        return { labels, dataPoints };
-    };
-    
-    const { labels, dataPoints } = generateTimeSeriesData();
-    
-    // Create SVG line chart
-    const createLineChart = (data, color, label, unit = '%') => {
-        const maxVal = Math.max(...data);
-        const minVal = Math.min(...data);
-        const range = maxVal - minVal || 1;
-        
-        const points = data.map((val, i) => {
-            const x = (i / (data.length - 1)) * 280; // Chart width 280px
-            const y = 60 - ((val - minVal) / range) * 50; // Chart height 60px, with 10px padding
-            return `${x},${y}`;
-        }).join(' ');
-        
-        return `
-            <div class="mb-4">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-medium">${label}</span>
-                    <span class="text-sm ${color.replace('stroke-', 'text-')}">${data[data.length-1].toFixed(1)}${unit}</span>
-                </div>
-                <svg viewBox="0 0 300 70" class="w-full h-16 bg-gray-50 rounded">
-                    <polyline fill="none" stroke="currentColor" stroke-width="2" 
-                              points="${points}" 
-                              class="${color}"/>
-                    ${data.map((val, i) => {
-                        const x = (i / (data.length - 1)) * 280;
-                        const y = 60 - ((val - minVal) / range) * 50;
-                        return `<circle cx="${x}" cy="${y}" r="2" fill="currentColor" class="${color}"/>`;
-                    }).join('')}
-                </svg>
-                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>${labels[0]}</span>
-                    <span>${labels[Math.floor(labels.length/2)]}</span>
-                    <span>${labels[labels.length-1]}</span>
-                </div>
-            </div>
-        `;
-    };
-    
-    const cpuData = dataPoints.map(d => d.cpu);
-    const memoryData = dataPoints.map(d => d.memory);
-    const tempData = dataPoints.map(d => d.temp);
-    
     container.innerHTML = `
-        <div class="bg-white p-4 rounded-lg shadow-sm">
-            <div class="mb-6 text-center">
-                <span class="text-lg font-semibold text-gray-800">📈 System Performance Over Time</span>
-                <div class="text-sm text-gray-500 mt-1">${currentTimeFilter.charAt(0).toUpperCase() + currentTimeFilter.slice(1)} View</div>
-            </div>
-            <div class="space-y-6">
-                ${createLineChart(cpuData, 'stroke-blue-500 text-blue-500', '🖥️ CPU Usage', '%')}
-                ${createLineChart(memoryData, 'stroke-yellow-500 text-yellow-500', '💾 Memory Usage', '%')}
-                ${createLineChart(tempData, 'stroke-red-500 text-red-500', '🌡️ CPU Temperature', '°C')}
+        <div class="p-4 text-center text-gray-500">
+            <div class="mb-4">⚡ System Performance</div>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center">
+                    <span>CPU Usage</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-blue-500 h-4 rounded" style="width: 35%"></div>
+                    </div>
+                    <span class="text-xs">35%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Memory Usage</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-yellow-500 h-4 rounded" style="width: 68%"></div>
+                    </div>
+                    <span class="text-xs">68%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>CPU Temperature</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-orange-500 h-4 rounded" style="width: 45%"></div>
+                    </div>
+                    <span class="text-xs">45°C</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Disk Usage</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-green-500 h-4 rounded" style="width: 22%"></div>
+                    </div>
+                    <span class="text-xs">22%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Network Activity</span>
+                    <div class="w-24 bg-gray-200 rounded h-4">
+                        <div class="bg-purple-500 h-4 rounded" style="width: 12%"></div>
+                    </div>
+                    <span class="text-xs">Low</span>
+                </div>
             </div>
         </div>
     `;
@@ -1229,8 +1084,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set initial filter tab state
     setTimeFilter('today');
     
-    // Auto-refresh every 60 seconds
-    setInterval(updateStatistics, 60000);
+    // Auto-refresh every 30 seconds
+    setInterval(updateStatistics, 30000);
 });
 </script>
 {% endblock %}
