@@ -1,118 +1,8 @@
 {
   "date": "2025-08-30",
   "created_at": "2025-08-30T00:23:09.379697",
-  "error_count": 90,
+  "error_count": 101,
   "errors": [
-    {
-      "timestamp": "2025-08-30T00:48:02.267503",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Hardware/GPIO error detected (count: 2/2): You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 219,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:48:02.281162",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "\ud83d\udea8 Hardware error threshold reached - initiating automatic recovery for gift recipient",
-      "function": "display_image",
-      "line": 228,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:49:02.420080",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 202,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:49:02.431419",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Hardware/GPIO error detected (count: 1/2): You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 219,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:50:01.013841",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 202,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:50:01.024847",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Hardware/GPIO error detected (count: 2/2): You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 219,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:50:01.036264",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "\ud83d\udea8 Hardware error threshold reached - initiating automatic recovery for gift recipient",
-      "function": "display_image",
-      "line": 228,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:51:01.324915",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 202,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:51:01.336462",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Hardware/GPIO error detected (count: 1/2): You must setup() the GPIO channel first",
-      "function": "display_image",
-      "line": 219,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:52:03.918843",
-      "service": "service_manager",
-      "logger": "service_manager",
-      "level": "ERROR",
-      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
-      "function": "run",
-      "line": 121,
-      "filename": "service_manager.py"
-    },
-    {
-      "timestamp": "2025-08-30T00:52:55.824440",
-      "service": "web_interface",
-      "logger": "web_interface.app",
-      "level": "ERROR",
-      "message": "Invalid display mode: verse. Valid modes: ['time', 'date', 'random', 'devotional', 'weather', 'news']",
-      "function": "update_settings",
-      "line": 482,
-      "filename": "app.py"
-    },
     {
       "timestamp": "2025-08-30T00:59:12.033852",
       "service": "service_manager",
@@ -252,10 +142,120 @@
       "function": "run",
       "line": 121,
       "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:56:15.146738",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:57:09.455577",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 210,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:57:09.473764",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 210,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:57:22.282572",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: Timed out waiting for display to respond",
+      "function": "display_image",
+      "line": 210,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:57:22.299395",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "\ud83d\udea8 Hardware error threshold reached - initiating automatic recovery for gift recipient",
+      "function": "display_image",
+      "line": 236,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:58:01.876443",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 210,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:58:01.888457",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Hardware/GPIO error detected (count: 1/2): You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 227,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:58:11.623921",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:58:49.728388",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T02:01:15.202166",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T02:02:56.569838",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     }
   ],
   "error_summary": {
-    "ERROR": 90
+    "ERROR": 101
   },
   "services": {
     "verse_manager": {
@@ -267,16 +267,16 @@
       "last_error": null
     },
     "display_manager": {
-      "errors": 72,
-      "last_error": "2025-08-30T00:51:01.336462"
+      "errors": 78,
+      "last_error": "2025-08-30T01:58:01.888457"
     },
     "scheduler": {
       "errors": 0,
       "last_error": null
     },
     "service_manager": {
-      "errors": 13,
-      "last_error": "2025-08-30T01:43:33.395423"
+      "errors": 18,
+      "last_error": "2025-08-30T02:02:56.569838"
     },
     "web_interface": {
       "errors": 1,

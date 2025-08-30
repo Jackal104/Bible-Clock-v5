@@ -182,7 +182,7 @@ class NewsDisplayGenerator:
         
         # Create header components with date and time
         israel_time_text = f"Israel: {israel_time}\n{israel_date}"
-        main_title = "🇮🇱 ISRAEL NEWS"
+        main_title = "✡️ ISRAEL NEWS ✡️"
         local_time_text = f"Local: {local_time}\n{local_date}"
         
         # Calculate positions for three-part layout

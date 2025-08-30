@@ -34,7 +34,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
     
     # Rate limiting for display mode changes to prevent GPIO errors
     app.last_mode_change = 0
-    app.mode_change_cooldown = 5  # 5 seconds between mode changes for GPIO stability
+    app.mode_change_cooldown = 10  # 10 seconds between mode changes for GPIO stability
     
     # Initialize display mode manager
     try:

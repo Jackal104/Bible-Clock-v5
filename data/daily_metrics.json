@@ -980,19 +980,21 @@
   },
   "2025-08-30": {
     "date": "2025-08-30",
-    "verses_displayed_today": 85,
+    "verses_displayed_today": 105,
     "mode_usage_seconds": {
-      "time": 851.1134340763092,
-      "news": 283.56832933425903
+      "time": 1089.2821497917175,
+      "news": 509.3605296611786
     },
     "translation_usage_count": {
-      "kjv": 23,
-      "news": 62
+      "kjv": 28,
+      "news": 76,
+      "weather": 1,
+      "amp": 1
     },
     "bible_books_accessed": {
       "John": 3,
       "Luke": 1,
-      "News": 62,
+      "News": 76,
       "Nehemiah": 2,
       "Psalms": 1,
       "Proverbs": 1,
@@ -1003,37 +1005,15 @@
       "Galatians": 1,
       "Colossians": 2,
       "Job": 1,
-      "1 Samuel": 2,
+      "1 Samuel": 3,
       "1 Chronicles": 1,
-      "Numbers": 1,
-      "Deuteronomy": 2
+      "Numbers": 2,
+      "Deuteronomy": 3,
+      "Weather": 1,
+      "Mark": 1,
+      "Leviticus": 1
     },
     "recent_activities": [
-      {
-        "timestamp": "2025-08-30T00:23:08.099955",
-        "type": "hardware",
-        "description": "Bible Clock service started"
-      },
-      {
-        "timestamp": "2025-08-30T00:25:46.281348",
-        "type": "mode_change",
-        "description": "Switched to News mode"
-      },
-      {
-        "timestamp": "2025-08-30T00:31:25.645092",
-        "type": "hardware",
-        "description": "Bible Clock service started"
-      },
-      {
-        "timestamp": "2025-08-30T00:33:01.065329",
-        "type": "verse_milestone",
-        "description": "Displayed 10 verses today"
-      },
-      {
-        "timestamp": "2025-08-30T00:34:00.642823",
-        "type": "mode_change",
-        "description": "Switched to News mode"
-      },
       {
         "timestamp": "2025-08-30T00:34:02.703811",
         "type": "mode_change",
@@ -1213,8 +1193,78 @@
         "timestamp": "2025-08-30T01:46:33.925105",
         "type": "mode_change",
         "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:53:02.710073",
+        "type": "verse_milestone",
+        "description": "Displayed 90 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:56:13.522990",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:56:52.785864",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:57:00.127732",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:57:15.202254",
+        "type": "mode_change",
+        "description": "Switched to Weather mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:58:10.058681",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:58:47.831202",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:59:37.834479",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T02:01:13.501882",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T02:02:14.820871",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T02:02:55.098169",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T02:03:03.338026",
+        "type": "verse_milestone",
+        "description": "Displayed 100 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T02:04:15.328884",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T02:07:46.046564",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
       }
     ],
-    "last_updated": "2025-08-30T01:48:02.892415"
+    "last_updated": "2025-08-30T02:08:04.319185"
   }
 }
