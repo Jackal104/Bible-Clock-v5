@@ -158,7 +158,7 @@ class ServiceManager:
         self.logger.info("Bible Clock service stopped")
     
     @error_handler.with_retry(max_retries=2)
-    def _update_verse(self):
+    def _update_verse(self, force_refresh_param=False):
         """Update the displayed verse at precise minute boundaries."""
         # Check if display is locked for AI responses
         if hasattr(self.display_manager, 'is_display_locked') and self.display_manager.is_display_locked():
@@ -255,6 +255,11 @@ class ServiceManager:
                     force_refresh = background_changed or parallel_mode_changed or should_refresh_by_interval
                     if should_refresh_by_interval:
                         self.logger.debug("Book summary page rotation - refreshing display")
+                elif is_news_mode:
+                    # For news mode, force refresh on every article cycle to prevent artifacts
+                    # News mode cycles articles every 30 seconds, so we need clean refreshes
+                    force_refresh = True  # Always force refresh for news article cycling
+                    self.logger.debug("News mode article cycling - forcing full refresh to prevent artifacts")
                 else:
                     # For parallel mode, only force refresh based on display manager's interval, not every minute
                     if current_parallel_mode:
@@ -267,9 +272,14 @@ class ServiceManager:
                         # For non-parallel modes, only refresh on changes
                         force_refresh = background_changed or parallel_mode_changed
                 
+                # Override force_refresh if explicitly requested (for periodic maintenance)
+                if force_refresh_param:  # Parameter passed to method
+                    force_refresh = True
+                    self.logger.debug("Force refresh requested for periodic maintenance")
+                
                 # Use border-preserving refresh for date mode to reduce visual jarring
                 preserve_border = is_date_mode and force_refresh
-                self.display_manager.display_image(image, force_refresh=force_refresh, preserve_border=preserve_border)
+                self.display_manager.display_image(image, force_refresh=force_refresh, preserve_border=preserve_border, is_news_mode=is_news_mode)
                 
                 # Update tracking
                 self.last_update = datetime.now()
@@ -368,7 +378,9 @@ class ServiceManager:
                 self._last_verse_data = verse_data
                 
                 image = self.image_generator.create_verse_image(verse_data)
-                self.display_manager.display_image(image, force_refresh=False)
+                # Check if this is news mode to ensure proper clearing
+                is_news_mode = verse_data and verse_data.get('is_news_mode', False) if verse_data else False
+                self.display_manager.display_image(image, force_refresh=False, is_news_mode=is_news_mode)
                 
                 # Update timing
                 self._last_update_time = time.time()
@@ -403,7 +415,9 @@ class ServiceManager:
                 self._last_verse_data = verse_data
                 
                 image = self.image_generator.create_verse_image(verse_data)
-                self.display_manager.display_image(image, force_refresh=False)
+                # Check if this is news mode to ensure proper clearing
+                is_news_mode = verse_data and verse_data.get('is_news_mode', False) if verse_data else False
+                self.display_manager.display_image(image, force_refresh=False, is_news_mode=is_news_mode)
                 
                 # Update timing
                 self._last_update_time = time.time()
@@ -433,7 +447,9 @@ class ServiceManager:
             
             # Generate new image (weather mode will automatically refresh data if needed)
             image = self.image_generator.create_verse_image(verse_data)
-            self.display_manager.display_image(image, force_refresh=True)
+            # Check if this is news mode for proper clearing
+            is_news_mode = verse_data and verse_data.get('is_news_mode', False) if verse_data else False
+            self.display_manager.display_image(image, force_refresh=True, is_news_mode=is_news_mode)
             
             if needs_weather_refresh:
                 self.logger.info("Weather display refreshed with updated data")
@@ -449,7 +465,9 @@ class ServiceManager:
             self.logger.info("Restoring normal display after transient message")
             verse_data = self.verse_manager.get_current_verse()
             image = self.image_generator.create_verse_image(verse_data)
-            self.display_manager.display_image(image, force_refresh=True)
+            # Check if this is news mode for proper clearing
+            is_news_mode = verse_data and verse_data.get('is_news_mode', False) if verse_data else False
+            self.display_manager.display_image(image, force_refresh=True, is_news_mode=is_news_mode)
         except Exception as e:
             self.logger.error(f"Failed to restore normal display: {e}")
             # Fallback to clearing display
@@ -691,12 +709,15 @@ class ServiceManager:
         def simple_update_loop():
             import time
             last_update_minute = -1
+            last_health_check = time.time()
+            last_forced_refresh = time.time()
             
             self.logger.info("Simple updater thread started - checking every 2 seconds")
             
             while self.running:
                 try:
                     now = datetime.now()
+                    current_time = time.time()
                     current_minute = now.minute
                     
                     # Update at the start of each new minute
@@ -704,6 +725,21 @@ class ServiceManager:
                         self.logger.info(f"Simple updater triggering verse update at {now.strftime('%H:%M:%S')}")
                         self._update_verse()
                         last_update_minute = current_minute
+                    
+                    # Periodic health check every 5 minutes
+                    if current_time - last_health_check > 300:  # 5 minutes
+                        if hasattr(self.display_manager, 'perform_health_check'):
+                            health_ok = self.display_manager.perform_health_check()
+                            if not health_ok:
+                                self.logger.warning("Display health check failed - attempting recovery")
+                        last_health_check = current_time
+                    
+                    # Periodic forced refresh every 30 minutes to prevent stuck displays
+                    if current_time - last_forced_refresh > 1800:  # 30 minutes
+                        if not self.display_manager.is_display_locked():
+                            self.logger.info("Performing periodic forced refresh for display reliability")
+                            self._update_verse(force_refresh_param=True)
+                        last_forced_refresh = current_time
                     
                     time.sleep(2)  # Check every 2 seconds for more responsive updates
                     

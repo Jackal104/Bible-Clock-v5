@@ -28,8 +28,14 @@ class DisplayManager:
         
         # Hardware recovery system for 24/7 reliability
         self.timeout_count = 0
+        self.gpio_error_count = 0
         self.last_successful_update = time.time()
+        self.last_health_check = time.time()
         self.max_consecutive_timeouts = 3
+        self.max_consecutive_gpio_errors = 2  # More aggressive recovery for GPIO errors
+        self.health_check_interval = 300  # 5 minutes
+        self.display_test_interval = 1800  # 30 minutes
+        self.last_display_test = time.time()
         self.service_manager = None  # Will be set by main.py
         # Convert rotation to IT8951 expected format
         rotation_setting = os.getenv('DISPLAY_ROTATION', '0')
@@ -154,9 +160,13 @@ class DisplayManager:
                     self.logger.error(f"❌ Display recovery failed: {recovery_error}")
                     raise Exception(f"Hardware mode required but display unavailable: {e}")
     
-    def display_image(self, image: Image.Image, force_refresh: bool = False, preserve_border: bool = False, bypass_lock: bool = False):
+    def display_image(self, image: Image.Image, force_refresh: bool = False, preserve_border: bool = False, bypass_lock: bool = False, is_news_mode: bool = False):
         """Display image on e-ink screen or save for simulation."""
         try:
+            # Perform periodic health check to ensure hardware is functioning
+            if not bypass_lock:  # Skip health check for AI responses to avoid delays
+                self.perform_health_check()
+            
             # Check if display is locked (unless this is an AI response bypassing the lock)
             if self._display_locked and not bypass_lock:
                 self.logger.debug("Display update skipped - display is locked for AI response")
@@ -185,32 +195,51 @@ class DisplayManager:
                 self._simulate_display(image)
                 self.logger.info("Display updated (simulation mode)")
             else:
-                self._display_on_hardware(image, force_refresh, preserve_border)
+                self._display_on_hardware(image, force_refresh, preserve_border, is_news_mode)
                 self.logger.info("Display updated (hardware mode)")
             
             self.last_image_hash = image_hash
             self._check_memory_usage()
             
-            # Reset timeout counter on successful update
+            # Reset all error counters on successful update
             self.timeout_count = 0
+            self.gpio_error_count = 0
             self.last_successful_update = time.time()
             
         except Exception as e:
             self.logger.error(f"Display update failed: {e}")
             
-            # Check for timeout errors and implement recovery
-            if "timed out" in str(e).lower() or "timeout" in str(e).lower():
+            # Check for various hardware errors and implement recovery
+            error_msg = str(e).lower()
+            needs_recovery = False
+            
+            if "timed out" in error_msg or "timeout" in error_msg:
                 self.timeout_count += 1
+                self.gpio_error_count = 0  # Reset GPIO counter on different error type
                 self.logger.warning(f"Display timeout detected (count: {self.timeout_count}/{self.max_consecutive_timeouts})")
-                
                 if self.timeout_count >= self.max_consecutive_timeouts:
-                    self.logger.error("Multiple consecutive timeouts detected, attempting hardware recovery")
-                    self._attempt_hardware_recovery()
+                    needs_recovery = True
+                    
+            elif ("gpio" in error_msg or "must setup" in error_msg or 
+                  "device not initialized" in error_msg or "spi" in error_msg):
+                self.gpio_error_count += 1
+                self.timeout_count = 0  # Reset timeout counter on different error type
+                self.logger.error(f"Hardware/GPIO error detected (count: {self.gpio_error_count}/{self.max_consecutive_gpio_errors}): {e}")
+                if self.gpio_error_count >= self.max_consecutive_gpio_errors:
+                    needs_recovery = True
+            else:
+                # Reset both counters on successful operation or different error types
+                self.timeout_count = 0
+                self.gpio_error_count = 0
+                
+            if needs_recovery:
+                self.logger.error("🚨 Hardware error threshold reached - initiating automatic recovery for gift recipient")
+                self._attempt_hardware_recovery()
     
     def _attempt_hardware_recovery(self):
-        """Attempt to recover from hardware timeout by reinitializing display device."""
+        """Attempt to recover from hardware errors by reinitializing display device and cleaning GPIO."""
         try:
-            self.logger.warning("🔧 Starting hardware recovery process...")
+            self.logger.warning("🔧 Starting comprehensive hardware recovery process...")
             
             # Step 1: Clean shutdown of current display device
             if self.display_device:
@@ -222,18 +251,28 @@ class DisplayManager:
                 finally:
                     self.display_device = None
             
-            # Step 2: Wait for hardware to reset
-            time.sleep(2)
+            # Step 2: Clean up GPIO state (essential for IT8951 HAT)
+            try:
+                import RPi.GPIO as GPIO
+                GPIO.cleanup()
+                self.logger.info("✅ GPIO state cleaned up successfully")
+            except Exception as gpio_error:
+                self.logger.warning(f"GPIO cleanup warning: {gpio_error}")
             
-            # Step 3: Reinitialize hardware
+            # Step 3: Wait for hardware to reset
+            time.sleep(3)  # Increased wait time for full GPIO reset
+            
+            # Step 4: Reinitialize hardware
             self._initialize_hardware()
             
             if self.display_device:
                 self.logger.info("✅ Hardware recovery successful - display reinitialized")
                 
-                # Step 4: Reset timeout counters
+                # Step 5: Reset all error counters after successful recovery
                 self.timeout_count = 0
+                self.gpio_error_count = 0
                 self.last_successful_update = time.time()
+                self.logger.info("🎯 All error counters reset - system ready for gift recipient")
                 
                 # Step 5: Restore previous display state if possible
                 if self.service_manager and hasattr(self.service_manager, 'restore_display_state'):
@@ -272,13 +311,74 @@ class DisplayManager:
             else:
                 self.logger.error("❌ CRITICAL: Recovery failed but simulation disabled!")
     
+    def perform_health_check(self):
+        """Perform periodic health check on display hardware."""
+        current_time = time.time()
+        
+        # Check if health check is due
+        if current_time - self.last_health_check < self.health_check_interval:
+            return True
+            
+        self.last_health_check = current_time
+        
+        if self.simulation_mode:
+            self.logger.debug("Health check: Simulation mode - skipping hardware checks")
+            return True
+            
+        try:
+            # Check if display device is still available
+            if not self.display_device:
+                self.logger.warning("Health check: Display device not initialized")
+                self._attempt_hardware_recovery()
+                return self.display_device is not None
+                
+            # Check if we haven't had a successful update in too long
+            time_since_update = current_time - self.last_successful_update
+            if time_since_update > 900:  # 15 minutes
+                self.logger.warning(f"Health check: No successful display update for {time_since_update:.1f} seconds")
+                
+            # Perform display test if due
+            if current_time - self.last_display_test > self.display_test_interval:
+                self._perform_display_test()
+                
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Health check failed: {e}")
+            return False
+    
+    def _perform_display_test(self):
+        """Perform a minimal display test to verify GPIO connection."""
+        if self.simulation_mode or not self.display_device:
+            return
+            
+        try:
+            self.logger.info("Performing display health test...")
+            
+            # Create a minimal test image
+            test_image = Image.new('L', (100, 100), 255)  # Small white square
+            
+            # Try to write to frame buffer without updating display
+            self.display_device.frame_buf.paste(test_image, (0, 0))
+            
+            self.last_display_test = time.time()
+            self.logger.info("✅ Display health test passed")
+            
+        except Exception as e:
+            self.logger.error(f"Display health test failed: {e}")
+            # This indicates a GPIO issue, trigger recovery
+            self.gpio_error_count += 1
+            if self.gpio_error_count >= self.max_consecutive_gpio_errors:
+                self.logger.warning("Health test failure triggered recovery")
+                self._attempt_hardware_recovery()
+    
     def _simulate_display(self, image: Image.Image):
         """Simulate display by saving image to file."""
         simulation_path = 'current_display.png'
         image.save(simulation_path)
         self.logger.info(f"Display simulated - image saved to {simulation_path}")
     
-    def _display_on_hardware(self, image: Image.Image, force_refresh: bool, preserve_border: bool = False):
+    def _display_on_hardware(self, image: Image.Image, force_refresh: bool, preserve_border: bool = False, is_news_mode: bool = False):
         """Display image on actual e-ink hardware."""
         if not self.display_device:
             raise RuntimeError("Display device not initialized")
@@ -298,8 +398,19 @@ class DisplayManager:
         if os.getenv('DISPLAY_PHYSICAL_ROTATION', '180') == '180':
             image = image.rotate(180)
         
+        # Special handling for news mode - aggressive clearing to prevent artifacts
+        if is_news_mode and not self.simulation_mode:
+            self.logger.debug("News mode detected - performing aggressive display clearing")
+            # Clear frame buffer completely with white
+            white_image = Image.new('L', (self.width, self.height), 255)
+            for i in range(3):  # Multiple clears for stubborn artifacts
+                self.display_device.frame_buf.paste(white_image, (0, 0))
+            # Force a full refresh to ensure clean slate
+            force_refresh = True
+        
         # Smart refresh mode - full refresh only when needed
-        if force_refresh or self._should_force_refresh():
+        # News mode always needs full refresh to prevent fading
+        if force_refresh or self._should_force_refresh() or is_news_mode:
             if preserve_border:
                 # Border-preserving refresh: only refresh the content area, not the borders
                 border_width = 40  # Match decorative border width
@@ -326,7 +437,13 @@ class DisplayManager:
             self.display_device.frame_buf.paste(image, (0, 0))
             
             # Check if we should use partial or full refresh
-            if self.partial_refresh_count < self.max_partial_refreshes:
+            # NEVER use partial refresh for news mode - always full refresh to prevent fading
+            if is_news_mode:
+                self.display_device.draw_full(DisplayModes.GC16)
+                self.last_full_refresh = time.time()
+                self.partial_refresh_count = 0
+                self.logger.debug("News mode - forced full display refresh to prevent fading")
+            elif self.partial_refresh_count < self.max_partial_refreshes:
                 self.display_device.draw_partial(DisplayModes.DU)
                 self.partial_refresh_count += 1
                 self.logger.debug(f"Partial display refresh ({self.partial_refresh_count}/{self.max_partial_refreshes})")
@@ -360,7 +477,7 @@ class DisplayManager:
     def clear_display(self):
         """Clear the display to white."""
         white_image = Image.new('L', (self.width, self.height), 255)
-        self.display_image(white_image, force_refresh=True)
+        self.display_image(white_image, force_refresh=True, is_news_mode=False)
     
     def clear_ghosting(self):
         """Aggressive ghosting removal with multiple refresh cycles."""
@@ -561,7 +678,7 @@ class DisplayManager:
                     draw.text((x, y), display_text, font=font, fill=0)
             
             # Display the overlay (transforms will be applied in _display_on_hardware)
-            self.display_image(overlay, force_refresh=True)
+            self.display_image(overlay, force_refresh=True, is_news_mode=False)
             
             self.logger.info(f"Showing visual feedback: {state} -> {display_text}")
             

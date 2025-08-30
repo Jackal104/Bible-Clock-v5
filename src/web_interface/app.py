@@ -32,6 +32,10 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
     app.time_aggregator = TimeAggregator()
     app.bible_metrics = service_manager.bible_metrics  # Use the same instance
     
+    # Rate limiting for display mode changes to prevent GPIO errors
+    app.last_mode_change = 0
+    app.mode_change_cooldown = 5  # 5 seconds between mode changes for GPIO stability
+    
     # Initialize display mode manager
     try:
         # Try different import paths
@@ -449,10 +453,22 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                     current_app.logger.error(f"Translation validation error: {e}")
                     return jsonify({'success': False, 'error': f'Translation validation failed: {str(e)}'}), 500
             
-            # Update display mode with validation
+            # Update display mode with validation and rate limiting
             if 'display_mode' in data:
                 mode = data['display_mode']
                 valid_modes = ['time', 'date', 'random', 'devotional', 'weather', 'news']
+                
+                # Rate limiting to prevent rapid mode changes that cause GPIO errors
+                import time
+                current_time = time.time()
+                if current_time - current_app.last_mode_change < current_app.mode_change_cooldown:
+                    remaining_time = current_app.mode_change_cooldown - (current_time - current_app.last_mode_change)
+                    current_app.logger.warning(f"Display mode change rate limited - please wait {remaining_time:.1f} seconds")
+                    return jsonify({
+                        'success': False, 
+                        'error': f'Rate limited: Please wait {remaining_time:.1f} seconds before changing modes again'
+                    }), 429
+                
                 try:
                     if mode in valid_modes:
                         current_app.verse_manager.display_mode = mode
@@ -478,6 +494,9 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                                 current_app.logger.warning(f"Could not reset news service via web interface: {e}")
                         
                         needs_display_update = True
+                        
+                        # Update rate limiting timestamp after successful change
+                        current_app.last_mode_change = current_time
                     else:
                         current_app.logger.error(f"Invalid display mode: {mode}. Valid modes: {valid_modes}")
                         return jsonify({'success': False, 'error': f'Invalid display mode: {mode}. Valid modes: {", ".join(valid_modes)}'}), 400
@@ -592,7 +611,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                     
                     # Determine refresh type: full refresh for background changes and parallel mode changes, partial for other settings
                     force_refresh = 'background_index' in data or background_changed or 'parallel_mode' in data
-                    current_app.display_manager.display_image(image, force_refresh=force_refresh)
+                    current_app.display_manager.display_image(image, force_refresh=force_refresh, is_news_mode=False)
                     
                     if force_refresh:
                         if 'background_index' in data or background_changed:
@@ -1050,7 +1069,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
         try:
             verse_data = current_app.verse_manager.get_current_verse()
             image = current_app.image_generator.create_verse_image(verse_data)
-            current_app.display_manager.display_image(image, force_refresh=True)
+            current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
             
             _track_activity("Display refreshed", f"Manual refresh triggered for {verse_data.get('reference', 'Unknown')}")
             return jsonify({'success': True, 'message': 'Display refreshed'})
@@ -1071,7 +1090,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
                 for i in range(3):
                     verse_data = current_app.verse_manager.get_current_verse()
                     image = current_app.image_generator.create_verse_image(verse_data)
-                    current_app.display_manager.display_image(image, force_refresh=True)
+                    current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
                     if i < 2:  # Don't sleep after last refresh
                         import time
                         time.sleep(1)
@@ -1109,7 +1128,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if request.get_json() and request.get_json().get('update_display', False):
                 verse_data = current_app.verse_manager.get_current_verse()
                 image = current_app.image_generator.create_verse_image(verse_data)
-                current_app.display_manager.display_image(image, force_refresh=True)
+                current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
                 current_app.logger.info("Background cycled with full refresh")
                 _track_activity("Background cycled", f"Background changed to index {current_app.image_generator.current_background_index}")
             
@@ -1132,7 +1151,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if request.get_json() and request.get_json().get('update_display', False):
                 verse_data = current_app.verse_manager.get_current_verse()
                 image = current_app.image_generator.create_verse_image(verse_data)
-                current_app.display_manager.display_image(image, force_refresh=True)
+                current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
                 current_app.logger.info("Background randomized with full refresh")
             
             return jsonify({
@@ -1215,7 +1234,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if data.get('update_display', False):
                 verse_data = current_app.verse_manager.get_current_verse()
                 image = current_app.image_generator.create_verse_image(verse_data)
-                current_app.display_manager.display_image(image, force_refresh=True)
+                current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
                 current_app.logger.info("Display updated with new background")
             
             return jsonify({
@@ -1240,7 +1259,7 @@ def create_app(verse_manager, image_generator, display_manager, service_manager,
             if data.get('update_display', False):
                 verse_data = current_app.verse_manager.get_current_verse()
                 image = current_app.image_generator.create_verse_image(verse_data)
-                current_app.display_manager.display_image(image, force_refresh=True)
+                current_app.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
                 current_app.logger.info("Display updated with new border")
             
             return jsonify({
