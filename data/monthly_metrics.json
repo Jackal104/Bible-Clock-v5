@@ -1,0 +1,54 @@
+{
+  "2025-07": {
+    "period_type": "monthly",
+    "period_key": "2025-07",
+    "start_date": "2025-07-01",
+    "end_date": "2025-07-31",
+    "total_conversations": 1,
+    "categories": {
+      "bible_verse": 1
+    },
+    "keywords": {},
+    "avg_response_time": 80.66,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "21": 1
+    },
+    "daily_breakdown": {
+      "2025-07-11": 1
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  },
+  "2025-08": {
+    "period_type": "monthly",
+    "period_key": "2025-08",
+    "start_date": "2025-08-01",
+    "end_date": "2025-08-31",
+    "total_conversations": 1431,
+    "categories": {
+      "general": 3,
+      "verses_displayed": 1428
+    },
+    "keywords": {
+      "timothy": 1,
+      "timothy_verse": 1,
+      "joy": 1
+    },
+    "avg_response_time": 0.18,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "16": 2,
+      "17": 1,
+      "22": 1428
+    },
+    "daily_breakdown": {
+      "2025-08-17": 1,
+      "2025-08-23": 1,
+      "2025-08-24": 1,
+      "2025-08-27": 1428
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  }
+}

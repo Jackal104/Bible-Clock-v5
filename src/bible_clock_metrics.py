@@ -57,6 +57,7 @@ class BibleClockMetrics:
         
         # Thread safety
         self.lock = threading.Lock()
+        self._in_midnight_reset = False  # Prevent recursive saves during midnight reset
         
         # Load existing data
         self._load_daily_data()
@@ -175,7 +176,9 @@ class BibleClockMetrics:
             
         with self.lock:
             self._add_recent_activity('hardware', description)
-            self._save_daily_metrics()
+            # Skip save during midnight reset to prevent recursive blocking
+            if not self._in_midnight_reset:
+                self._save_daily_metrics()
             logger.info(f"Hardware event tracked: {description}")
     
     def track_performance_event(self, cpu_percent: float, memory_percent: float, temp_c: float):
@@ -242,6 +245,9 @@ class BibleClockMetrics:
         if current_midnight > self.last_midnight_reset:
             logger.info("Midnight reset: clearing daily counters")
             
+            # Set flag to prevent recursive saves
+            self._in_midnight_reset = True
+            
             # Save current day's data before reset in a separate thread to prevent blocking
             import threading
             def save_midnight_data():
@@ -266,6 +272,9 @@ class BibleClockMetrics:
             
             self.last_midnight_reset = current_midnight
             self.track_hardware_event('midnight_reset')
+            
+            # Clear flag after midnight reset is complete
+            self._in_midnight_reset = False
     
     def _add_recent_activity(self, activity_type: str, description: str):
         """Add an activity to recent activities list."""

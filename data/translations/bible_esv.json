@@ -31,11 +31,17 @@
   "Galatians": {
     "6": {
       "5": "For (A)each will have to bear his own load."
+    },
+    "4": {
+      "28": "Now you,[a] brothers, (A)like Isaac, (B)are children of promise."
     }
   },
   "Ephesians": {
     "6": {
       "6": "not by the way of eye-service, as (A)people-pleasers, but as bondservants of Christ, doing the will of God from the heart,"
+    },
+    "4": {
+      "29": "(A)Let no corrupting talk come out of your mouths, but only such as is good for building up, as fits the occasion, that it may give (B)grace to those who hear."
     }
   },
   "Mark": {
@@ -46,6 +52,17 @@
   "Nehemiah": {
     "12": {
       "12": "(A)And in the days of Joiakim were priests, heads of fathers' houses: of Seraiah, Meraiah; of Jeremiah, Hananiah;"
+    }
+  },
+  "Matthew": {
+    "11": {
+      "1": "Messengers from John the Baptist11 When Jesus had finished instructing his twelve disciples, he went on from there to teach and preach in their cities."
+    }
+  },
+  "Exodus": {
+    "4": {
+      "30": "(A)Aaron spoke all the words that the Lord had spoken to Moses and did the signs in the sight of the people.",
+      "31": "And the people (A)believed; and when they heard that the Lord had (B)visited the people of Israel and that he had (C)seen their affliction, (D)they bowed their heads and worshiped."
     }
   }
 }

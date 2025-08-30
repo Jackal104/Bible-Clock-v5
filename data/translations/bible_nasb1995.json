@@ -44,7 +44,8 @@
   "Luke": {
     "11": {
       "35": "Then watch out that the light in you is not darkness.",
-      "45": "One of the [a](A)lawyers *said to Him in reply, \u201cTeacher, when You say this, You insult us too.\u201d"
+      "45": "One of the [a](A)lawyers *said to Him in reply, \u201cTeacher, when You say this, You insult us too.\u201d",
+      "34": "(A)The eye is the lamp of your body; when your eye is [a]clear, your whole body also is full of light; but when it is [b]bad, your body also is full of darkness."
     },
     "12": {
       "32": "(A)Do not be afraid, (B)little flock, for (C)your Father has chosen gladly to give you the kingdom.",
@@ -223,7 +224,8 @@
       "27": "The (A)satraps, the prefects, the governors and the king\u2019s high officials gathered around and saw in regard to these men that the (B)fire had no [a]effect on [b]the bodies of these men nor was the hair of their head singed, nor were their [c](C)trousers [d]damaged, nor had the smell of fire even come upon them."
     },
     "4": {
-      "35": "\u201c(A)All the inhabitants of the earth are accounted as nothing,But (B)He does according to His will in the host of heavenAnd among the inhabitants of earth;And (C)no one can [a]ward off His handOr say to Him, \u2018(D)What have You done?\u2019"
+      "35": "\u201c(A)All the inhabitants of the earth are accounted as nothing,But (B)He does according to His will in the host of heavenAnd among the inhabitants of earth;And (C)no one can [a]ward off His handOr say to Him, \u2018(D)What have You done?\u2019",
+      "26": "And in that it was commanded to (A)leave the stump [a]with the roots of the tree, your kingdom will be [b]assured to you after you recognize that it is (B)Heaven that rules."
     }
   },
   "Mark": {
@@ -274,7 +276,8 @@
     "4": {
       "11": "The Lord said to him, \u201cWho has made man\u2019s mouth? Or (A)who makes him mute or deaf, or seeing or blind? Is it not I, the Lord?",
       "22": "Then you shall say to Pharaoh, \u2018Thus says the Lord, \u201c(A)Israel is My son, My firstborn.",
-      "30": "and (A)Aaron spoke all the words which the Lord had spoken to Moses. He then performed the (B)signs in the sight of the people."
+      "30": "and (A)Aaron spoke all the words which the Lord had spoken to Moses. He then performed the (B)signs in the sight of the people.",
+      "31": "So (A)the people believed; and when they heard that the Lord [a](B)was concerned about the sons of Israel and that He had seen their affliction, then (C)they bowed low and worshiped."
     }
   },
   "Matthew": {
@@ -345,7 +348,8 @@
       "41": "(A)Then Moses set apart three cities across the Jordan to the [a]east,",
       "43": "(A)Bezer in the wilderness on the plateau for the Reubenites, and Ramoth in Gilead for the Gadites, and Golan in Bashan for the Manassites.",
       "46": "across the Jordan, in the valley (A)opposite Beth-peor, in the land of (B)Sihon king of the Amorites who lived at Heshbon, whom Moses and the sons of Israel [a]defeated when they came out from Egypt.",
-      "49": "with all the Arabah across the Jordan to the east, even as far as the sea of the Arabah, [a]at the foot of the slopes of Pisgah."
+      "49": "with all the Arabah across the Jordan to the east, even as far as the sea of the Arabah, [a]at the foot of the slopes of Pisgah.",
+      "27": "The Lord will (A)scatter you among the peoples, and you will be left few in number among the nations where the Lord drives you."
     },
     "5": {
       "32": "So you shall observe to do just as the Lord your God has commanded you; (A)you shall not turn aside to the right or to the left."
@@ -604,6 +608,9 @@
     },
     "1": {
       "17": "Indeed, it is [a]useless to spread the baited netIn the sight of any [b]bird;"
+    },
+    "12": {
+      "28": "(A)In the way of righteousness is life,And in its pathway there is no death."
     }
   },
   "Colossians": {
@@ -625,6 +632,9 @@
       "20": "\u201cFor long ago [a](A)I broke your yokeAnd tore off your bonds;But you said, \u2018I will not serve!\u2019For on every (B)high hillAnd under every green treeYou have lain down as a harlot.",
       "29": "\u201cWhy do you contend with Me?You have (A)all transgressed against Me,\u201d declares the Lord.",
       "30": "\u201c(A)In vain I have struck your sons;They accepted no chastening.Your (B)sword has devoured your prophetsLike a destroying lion."
+    },
+    "4": {
+      "26": "I looked, and behold, [a]the (A)fruitful land was a wilderness,And all its cities were pulled downBefore the Lord, before His fierce anger."
     }
   },
   "1 John": {
@@ -734,7 +744,8 @@
   "Ephesians": {
     "4": {
       "25": "Therefore, (A)laying aside falsehood, (B)speak truth each one of you with his neighbor, for we are (C)members of one another.",
-      "29": "Let no [a](A)unwholesome word proceed from your mouth, but only such a word as is good for (B)edification [b]according to the need of the moment, so that it will give grace to those who hear."
+      "29": "Let no [a](A)unwholesome word proceed from your mouth, but only such a word as is good for (B)edification [b]according to the need of the moment, so that it will give grace to those who hear.",
+      "28": "He who steals must steal no longer; but rather (A)he must labor, (B)performing with his own hands what is good, (C)so that he will have something to share with [a]one who has need."
     }
   },
   "Psalms": {

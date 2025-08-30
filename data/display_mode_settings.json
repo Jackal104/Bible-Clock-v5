@@ -1,5 +1,5 @@
 {
-  "default_mode": "devotional",
+  "default_mode": "time",
   "mode_settings": {
     "time": {
       "name": "Time Mode",

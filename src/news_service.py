@@ -153,9 +153,9 @@ class NewsService:
                             
                         # Filter for Israel-related content if from general feeds
                         if self._is_israel_relevant(entry, rss_url):
-                            # Create minimal article object to save memory
-                            title = entry.get('title', 'No title')[:150]  # Limit title length
-                            description = entry.get('summary', entry.get('description', ''))[:200]  # Limit description
+                            # Create article object with adequate content for display
+                            title = entry.get('title', 'No title')[:200]  # Increased title length
+                            description = entry.get('summary', entry.get('description', ''))[:500]  # Much longer description
                             
                             article = {
                                 'title': title.strip(),
@@ -233,21 +233,64 @@ class NewsService:
         import gc
         processed = []
         
-        # Pre-compile regex for efficiency
-        html_tag_pattern = re.compile('<[^<]+?>')
+        # Pre-compile comprehensive regex patterns for HTML cleaning
+        html_tag_pattern = re.compile(r'<[^>]*>')  # Match complete HTML tags
+        incomplete_tag_pattern = re.compile(r'<[^<>]*$')  # Match incomplete HTML tags at end
+        html_entity_pattern = re.compile(r'&[a-zA-Z0-9#]+;')  # Match HTML entities
+        extra_whitespace_pattern = re.compile(r'\s+')  # Match multiple whitespace
+        rss_footer_pattern = re.compile(r'The post .+ appeared first on .+$', re.IGNORECASE)  # RSS footer text
+        bracket_remnants_pattern = re.compile(r'[<>]')  # Catch any remaining brackets
         
         for article in raw_articles[:self.max_cached_articles]:  # Limit cached articles
             try:
-                # Clean title with length limit
+                # Clean title with comprehensive HTML removal
                 title = article.get('title', 'No title')
-                title = title.strip()[:120]  # Slightly longer for better readability
+                if title:
+                    # Apply same HTML cleaning to title
+                    title = html_tag_pattern.sub('', title)
+                    title = incomplete_tag_pattern.sub('', title)
+                    title = html_entity_pattern.sub('', title)
+                    import html
+                    title = html.unescape(title)
+                    title = bracket_remnants_pattern.sub('', title)
+                    title = extra_whitespace_pattern.sub(' ', title)
+                    title = title.strip()[:200]  # Much longer for better readability
                 
-                # Clean description with HTML tag removal
+                # Clean description with comprehensive HTML tag removal and longer length
                 description = article.get('description', '')
                 if description:
-                    # Remove HTML tags efficiently
+                    # First pass: Remove complete HTML tags
                     description = html_tag_pattern.sub('', description)
-                    description = description.strip()[:150]  # Reasonable description length
+                    # Second pass: Remove incomplete HTML tags at end (like truncated tags)
+                    description = incomplete_tag_pattern.sub('', description)
+                    # Third pass: Remove HTML entities
+                    description = html_entity_pattern.sub('', description)
+                    # Fourth pass: Decode remaining HTML entities
+                    import html
+                    description = html.unescape(description)
+                    # Fifth pass: Clean up RSS footer text
+                    description = rss_footer_pattern.sub('', description)
+                    # Sixth pass: Remove any remaining bracket remnants
+                    description = bracket_remnants_pattern.sub('', description)
+                    # Seventh pass: Clean up extra whitespace and normalize
+                    description = extra_whitespace_pattern.sub(' ', description)
+                    description = description.strip()
+                    
+                    # Final length check - ensure we have complete sentences
+                    if len(description) > 400:
+                        # Find the last complete sentence within 400 chars
+                        truncated = description[:400]
+                        last_period = truncated.rfind('.')
+                        last_exclamation = truncated.rfind('!')
+                        last_question = truncated.rfind('?')
+                        last_sentence_end = max(last_period, last_exclamation, last_question)
+                        
+                        if last_sentence_end > 300:  # Only if we have a reasonable amount of content
+                            description = description[:last_sentence_end + 1]
+                        else:
+                            description = description[:400].rstrip() + "..."
+                    else:
+                        description = description
                 
                 # Parse published date
                 published_str = article.get('published', '')

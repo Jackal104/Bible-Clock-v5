@@ -1189,7 +1189,7 @@ class BibleClockVoiceControl:
         try:
             verse_data = self.verse_manager.get_current_verse()
             image = self.image_generator.create_verse_image(verse_data)
-            self.display_manager.display_image(image, force_refresh=True)
+            self.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
             
             self._speak("Display has been refreshed")
             
@@ -1666,7 +1666,7 @@ class BibleClockVoiceControl:
         try:
             verse_data = self.verse_manager.get_current_verse()
             image = self.image_generator.create_verse_image(verse_data)
-            self.display_manager.display_image(image, force_refresh=True)
+            self.display_manager.display_image(image, force_refresh=True, is_news_mode=False)
             self.logger.info("Display silently refreshed after speech")
             
         except Exception as e:

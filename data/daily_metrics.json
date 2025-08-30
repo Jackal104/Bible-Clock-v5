@@ -1,0 +1,1220 @@
+{
+  "2025-08-27": {
+    "date": "2025-08-27",
+    "verses_displayed_today": 114,
+    "mode_usage_seconds": {
+      "time": 920.5894243717194,
+      "random": 40.99827980995178
+    },
+    "translation_usage_count": {
+      "kjv": 88,
+      "amp": 21,
+      "esv": 1,
+      "nlt": 26,
+      "cev": 25
+    },
+    "bible_books_accessed": {
+      "Daniel": 3,
+      "Hosea": 1,
+      "Zechariah": 1,
+      "Matthew": 4,
+      "Mark": 8,
+      "Luke": 5,
+      "Exodus": 3,
+      "2 Kings": 2,
+      "1 Chronicles": 12,
+      "Ezekiel": 1,
+      "2 Corinthians": 3,
+      "Hebrews": 5,
+      "Genesis": 5,
+      "John": 7,
+      "Acts": 6,
+      "Proverbs": 3,
+      "Isaiah": 2,
+      "Numbers": 2,
+      "Ezra": 2,
+      "Nehemiah": 7,
+      "Joshua": 2,
+      "Micah": 1,
+      "Lamentations": 2,
+      "1 Kings": 2,
+      "Ecclesiastes": 1,
+      "Jonah": 1,
+      "Nahum": 1,
+      "Ephesians": 1,
+      "Amos": 1,
+      "2 Thessalonians": 1,
+      "Romans": 4,
+      "1 Corinthians": 2,
+      "Judges": 3,
+      "1 Samuel": 2,
+      "2 Samuel": 2,
+      "Revelation": 1,
+      "2 Chronicles": 1,
+      "1 John": 1,
+      "Galatians": 1,
+      "Jude": 1,
+      "Esther": 1
+    },
+    "recent_activities": [
+      {
+        "timestamp": "2025-08-27T22:16:02.454380",
+        "type": "verse_displayed",
+        "description": "Displayed 2 Corinthians 10:16 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:17:02.107133",
+        "type": "verse_displayed",
+        "description": "Displayed Hebrews 10:17 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:18:02.318883",
+        "type": "verse_displayed",
+        "description": "Displayed Genesis 10:18 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:19:02.436195",
+        "type": "verse_displayed",
+        "description": "Displayed Genesis 10:19 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:20:02.190276",
+        "type": "verse_displayed",
+        "description": "Displayed John 10:20 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:21:02.415965",
+        "type": "verse_displayed",
+        "description": "Displayed Luke 10:21 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:22:02.514808",
+        "type": "verse_displayed",
+        "description": "Displayed Acts 10:22 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:23:02.135652",
+        "type": "verse_displayed",
+        "description": "Displayed Hebrews 10:23 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:24:02.230535",
+        "type": "verse_displayed",
+        "description": "Displayed Genesis 10:24 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:24:18.432097",
+        "type": "mode_change",
+        "description": "Switched to Random mode"
+      },
+      {
+        "timestamp": "2025-08-27T22:24:59.430380",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-27T22:25:02.944183",
+        "type": "verse_displayed",
+        "description": "Displayed Exodus 10:25 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:26:02.515510",
+        "type": "verse_displayed",
+        "description": "Displayed Hebrews 10:26 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:27:02.308110",
+        "type": "verse_displayed",
+        "description": "Displayed Genesis 10:27 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:28:01.979199",
+        "type": "verse_displayed",
+        "description": "Displayed Genesis 10:28 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:29:02.063837",
+        "type": "verse_displayed",
+        "description": "Displayed Exodus 10:29 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:30:02.038650",
+        "type": "verse_displayed",
+        "description": "Displayed Proverbs 10:30 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:31:02.093979",
+        "type": "verse_displayed",
+        "description": "Displayed Isaiah 10:31 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:32:02.156814",
+        "type": "verse_displayed",
+        "description": "Displayed Matthew 10:32 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:33:02.069894",
+        "type": "verse_displayed",
+        "description": "Displayed Luke 10:33 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:34:02.209231",
+        "type": "verse_displayed",
+        "description": "Displayed Mark 10:34 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:35:02.077182",
+        "type": "verse_displayed",
+        "description": "Displayed Hebrews 10:35 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:36:02.164772",
+        "type": "verse_displayed",
+        "description": "Displayed Numbers 10:36 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:37:02.108577",
+        "type": "verse_displayed",
+        "description": "Displayed Ezra 10:37 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:38:02.561586",
+        "type": "verse_displayed",
+        "description": "Displayed Nehemiah 10:38 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:39:02.139370",
+        "type": "verse_displayed",
+        "description": "Displayed Matthew 10:39 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:40:02.268997",
+        "type": "verse_displayed",
+        "description": "Displayed Joshua 10:40 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:41:01.993237",
+        "type": "verse_displayed",
+        "description": "Displayed Ezra 10:41 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:42:02.315207",
+        "type": "verse_displayed",
+        "description": "Displayed Matthew 10:42 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:43:02.072062",
+        "type": "verse_displayed",
+        "description": "Displayed Joshua 10:43 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:44:02.199077",
+        "type": "verse_displayed",
+        "description": "Displayed Acts 10:44 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:45:02.182226",
+        "type": "verse_displayed",
+        "description": "Displayed Mark 10:45 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:46:02.027853",
+        "type": "verse_displayed",
+        "description": "Displayed Acts 10:46 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:47:02.210474",
+        "type": "verse_displayed",
+        "description": "Displayed Mark 10:47 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:48:02.216227",
+        "type": "verse_displayed",
+        "description": "Displayed Acts 10:48 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:49:02.324965",
+        "type": "verse_displayed",
+        "description": "Displayed Mark 10:49 (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:50:01.539298",
+        "type": "verse_displayed",
+        "description": "Displayed 10:50 PM (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:51:01.898279",
+        "type": "verse_displayed",
+        "description": "Displayed 10:51 PM (KJV)"
+      },
+      {
+        "timestamp": "2025-08-27T22:51:18.903242",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-27T22:55:01.289451",
+        "type": "verse_milestone",
+        "description": "Displayed 50 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T22:57:20.727611",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-27T23:00:09.734146",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-27T23:05:02.416388",
+        "type": "verse_milestone",
+        "description": "Displayed 60 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T23:07:31.774182",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-27T23:11:00.600064",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-27T23:15:04.600182",
+        "type": "verse_milestone",
+        "description": "Displayed 70 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T23:25:03.857571",
+        "type": "verse_milestone",
+        "description": "Displayed 80 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T23:35:02.846469",
+        "type": "verse_milestone",
+        "description": "Displayed 90 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T23:45:03.654366",
+        "type": "verse_milestone",
+        "description": "Displayed 100 verses today"
+      },
+      {
+        "timestamp": "2025-08-27T23:55:01.762578",
+        "type": "verse_milestone",
+        "description": "Displayed 110 verses today"
+      }
+    ],
+    "last_updated": "2025-08-27T23:59:01.438159"
+  },
+  "2025-08-28": {
+    "date": "2025-08-28",
+    "verses_displayed_today": 429,
+    "mode_usage_seconds": {
+      "time": 3465.218156814575,
+      "random": 40.99827980995178
+    },
+    "translation_usage_count": {
+      "kjv": 403,
+      "amp": 143,
+      "esv": 1,
+      "nlt": 26,
+      "cev": 25
+    },
+    "bible_books_accessed": {
+      "Daniel": 13,
+      "Hosea": 3,
+      "Zechariah": 5,
+      "Matthew": 18,
+      "Mark": 30,
+      "Luke": 29,
+      "Exodus": 13,
+      "2 Kings": 7,
+      "1 Chronicles": 26,
+      "Ezekiel": 3,
+      "2 Corinthians": 7,
+      "Hebrews": 15,
+      "Genesis": 13,
+      "John": 28,
+      "Acts": 22,
+      "Proverbs": 8,
+      "Isaiah": 6,
+      "Numbers": 8,
+      "Ezra": 10,
+      "Nehemiah": 16,
+      "Joshua": 8,
+      "Micah": 5,
+      "Lamentations": 3,
+      "1 Kings": 9,
+      "Ecclesiastes": 1,
+      "Jonah": 3,
+      "Nahum": 3,
+      "Ephesians": 3,
+      "Amos": 1,
+      "2 Thessalonians": 3,
+      "Romans": 11,
+      "1 Corinthians": 14,
+      "Judges": 16,
+      "1 Samuel": 7,
+      "2 Samuel": 7,
+      "Revelation": 3,
+      "2 Chronicles": 5,
+      "1 John": 1,
+      "Galatians": 1,
+      "Jude": 1,
+      "Esther": 1,
+      "Deuteronomy": 5,
+      "Habakkuk": 1,
+      "James": 2,
+      "Leviticus": 6,
+      "1 Timothy": 2,
+      "Job": 6,
+      "2 Peter": 4,
+      "Zephaniah": 2,
+      "Philemon": 4,
+      "Psalms": 2,
+      "Obadiah": 2,
+      "1 Peter": 3,
+      "Joel": 2,
+      "Philippians": 2
+    },
+    "recent_activities": [
+      {
+        "timestamp": "2025-08-28T18:30:29.869723",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T18:44:27.626985",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T20:45:08.823578",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:11:17.451262",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:17:23.556387",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:27:09.348498",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:28:08.036493",
+        "type": "verse_milestone",
+        "description": "Displayed 130 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:33:02.944597",
+        "type": "verse_milestone",
+        "description": "Displayed 140 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:38:01.753754",
+        "type": "verse_milestone",
+        "description": "Displayed 150 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:39:58.372021",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:43:03.485381",
+        "type": "verse_milestone",
+        "description": "Displayed 160 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:45:51.529496",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:48:02.901185",
+        "type": "verse_milestone",
+        "description": "Displayed 170 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:52:41.144382",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T21:53:02.741463",
+        "type": "verse_milestone",
+        "description": "Displayed 180 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T21:58:01.494136",
+        "type": "verse_milestone",
+        "description": "Displayed 190 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:03:08.324195",
+        "type": "verse_milestone",
+        "description": "Displayed 200 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:08:01.464883",
+        "type": "verse_milestone",
+        "description": "Displayed 210 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:09:15.200211",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T22:13:03.005897",
+        "type": "verse_milestone",
+        "description": "Displayed 220 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:18:01.662977",
+        "type": "verse_milestone",
+        "description": "Displayed 230 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:23:02.438769",
+        "type": "verse_milestone",
+        "description": "Displayed 240 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:24:39.024947",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T22:30:00.183346",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T22:30:04.157144",
+        "type": "verse_milestone",
+        "description": "Displayed 250 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:35:03.659474",
+        "type": "verse_milestone",
+        "description": "Displayed 260 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:40:02.416621",
+        "type": "verse_milestone",
+        "description": "Displayed 270 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:40:10.334011",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T22:45:02.622682",
+        "type": "verse_milestone",
+        "description": "Displayed 280 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:49:51.857791",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T22:50:07.612133",
+        "type": "verse_milestone",
+        "description": "Displayed 290 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:55:01.573208",
+        "type": "verse_milestone",
+        "description": "Displayed 300 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T22:59:19.816804",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T23:00:00.679072",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T23:00:14.528227",
+        "type": "verse_milestone",
+        "description": "Displayed 310 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:05:00.477240",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-28T23:05:03.279013",
+        "type": "verse_milestone",
+        "description": "Displayed 320 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:10:02.380914",
+        "type": "verse_milestone",
+        "description": "Displayed 330 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:15:01.105122",
+        "type": "verse_milestone",
+        "description": "Displayed 340 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:15:08.220619",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T23:15:13.405367",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T23:15:15.412595",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-28T23:20:03.493917",
+        "type": "verse_milestone",
+        "description": "Displayed 350 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:25:03.713167",
+        "type": "verse_milestone",
+        "description": "Displayed 360 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:30:03.189060",
+        "type": "verse_milestone",
+        "description": "Displayed 370 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:35:03.061526",
+        "type": "verse_milestone",
+        "description": "Displayed 380 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:40:02.165890",
+        "type": "verse_milestone",
+        "description": "Displayed 390 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:45:01.942378",
+        "type": "verse_milestone",
+        "description": "Displayed 400 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:50:00.449114",
+        "type": "verse_milestone",
+        "description": "Displayed 410 verses today"
+      },
+      {
+        "timestamp": "2025-08-28T23:55:00.513092",
+        "type": "verse_milestone",
+        "description": "Displayed 420 verses today"
+      }
+    ],
+    "last_updated": "2025-08-28T23:59:00.808190"
+  },
+  "2025-08-29": {
+    "date": "2025-08-29",
+    "verses_displayed_today": 1545,
+    "mode_usage_seconds": {
+      "time": 36262.80967617035,
+      "random": 158.51417541503906,
+      "devotional": 138.33111310005188,
+      "date": 368.1132571697235,
+      "weather": 110.97289681434631,
+      "news": 3266.3395597934723
+    },
+    "translation_usage_count": {
+      "kjv": 1349,
+      "amp": 67,
+      "weather": 2,
+      "news": 194
+    },
+    "bible_books_accessed": {
+      "1 John": 12,
+      "Revelation": 12,
+      "Job": 26,
+      "Ezekiel": 14,
+      "Judges": 33,
+      "1 Corinthians": 27,
+      "Exodus": 27,
+      "2 Samuel": 23,
+      "Luke": 90,
+      "Acts": 54,
+      "1 Kings": 54,
+      "Galatians": 7,
+      "Proverbs": 31,
+      "Numbers": 55,
+      "Romans": 34,
+      "Lamentations": 18,
+      "Mark": 71,
+      "John": 89,
+      "1 Thessalonians": 14,
+      "Jonah": 4,
+      "Hosea": 21,
+      "Leviticus": 32,
+      "1 Peter": 8,
+      "Amos": 15,
+      "1 Chronicles": 57,
+      "2 Corinthians": 21,
+      "Deuteronomy": 26,
+      "Joshua": 23,
+      "Daniel": 27,
+      "Hebrews": 18,
+      "James": 7,
+      "2 Kings": 32,
+      "Ephesians": 14,
+      "Philippians": 7,
+      "1 Timothy": 11,
+      "Genesis": 20,
+      "Joel": 8,
+      "2 Peter": 8,
+      "Matthew": 48,
+      "Jude": 4,
+      "2 Chronicles": 22,
+      "Ezra": 12,
+      "Nehemiah": 41,
+      "Esther": 14,
+      "Psalms": 12,
+      "Ecclesiastes": 13,
+      "Song of Solomon": 12,
+      "Isaiah": 17,
+      "Jeremiah": 32,
+      "Micah": 4,
+      "Zephaniah": 5,
+      "Haggai": 5,
+      "Nahum": 6,
+      "Colossians": 7,
+      "1 Samuel": 6,
+      "Zechariah": 10,
+      "Philemon": 2,
+      "Ruth": 3,
+      "Habakkuk": 4,
+      "2 John": 3,
+      "Titus": 3,
+      "3 John": 1,
+      "2 Thessalonians": 3,
+      "Obadiah": 1,
+      "1": 2,
+      "Weather": 2,
+      "News": 195,
+      "Devotional": 2,
+      "Malachi": 3,
+      "2 Timothy": 1
+    },
+    "recent_activities": [
+      {
+        "timestamp": "2025-08-29T18:43:47.885055",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T18:52:00.995806",
+        "type": "verse_milestone",
+        "description": "Displayed 1240 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:02:01.224504",
+        "type": "verse_milestone",
+        "description": "Displayed 1250 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:04:20.050932",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T19:12:02.571967",
+        "type": "verse_milestone",
+        "description": "Displayed 1260 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:13:55.216494",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T19:22:02.385405",
+        "type": "verse_milestone",
+        "description": "Displayed 1270 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:32:01.767328",
+        "type": "verse_milestone",
+        "description": "Displayed 1280 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:42:01.765289",
+        "type": "verse_milestone",
+        "description": "Displayed 1290 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T19:52:01.390254",
+        "type": "verse_milestone",
+        "description": "Displayed 1300 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:02:03.014806",
+        "type": "verse_milestone",
+        "description": "Displayed 1310 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:12:02.371259",
+        "type": "verse_milestone",
+        "description": "Displayed 1320 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:22:02.027879",
+        "type": "verse_milestone",
+        "description": "Displayed 1330 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:32:01.781715",
+        "type": "verse_milestone",
+        "description": "Displayed 1340 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:42:02.963082",
+        "type": "verse_milestone",
+        "description": "Displayed 1350 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T20:52:01.871687",
+        "type": "verse_milestone",
+        "description": "Displayed 1360 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:02:01.688399",
+        "type": "verse_milestone",
+        "description": "Displayed 1370 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:12:01.804350",
+        "type": "verse_milestone",
+        "description": "Displayed 1380 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:22:03.133250",
+        "type": "verse_milestone",
+        "description": "Displayed 1390 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:32:01.993163",
+        "type": "verse_milestone",
+        "description": "Displayed 1400 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:42:02.984562",
+        "type": "verse_milestone",
+        "description": "Displayed 1410 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T21:52:02.553949",
+        "type": "verse_milestone",
+        "description": "Displayed 1420 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:02:01.867062",
+        "type": "verse_milestone",
+        "description": "Displayed 1430 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:02:22.334725",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:12:01.698683",
+        "type": "verse_milestone",
+        "description": "Displayed 1440 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:22:01.994497",
+        "type": "verse_milestone",
+        "description": "Displayed 1450 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:27:21.188644",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T22:30:58.475402",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:31:03.462874",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:31:10.432832",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:31:21.326731",
+        "type": "mode_change",
+        "description": "Switched to Weather mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:31:34.202497",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:32:02.568540",
+        "type": "verse_milestone",
+        "description": "Displayed 1460 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:34:21.497846",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T22:35:10.400997",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T22:43:01.064113",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T22:43:01.873858",
+        "type": "verse_milestone",
+        "description": "Displayed 1470 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:53:02.108643",
+        "type": "verse_milestone",
+        "description": "Displayed 1480 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T22:58:04.880230",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T23:04:03.149952",
+        "type": "verse_milestone",
+        "description": "Displayed 1490 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:14:02.580825",
+        "type": "verse_milestone",
+        "description": "Displayed 1500 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:14:42.770838",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T23:18:53.059889",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T23:24:01.679968",
+        "type": "verse_milestone",
+        "description": "Displayed 1510 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:32:37.980928",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-29T23:34:01.938995",
+        "type": "verse_milestone",
+        "description": "Displayed 1520 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:37:29.909131",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-29T23:44:02.412085",
+        "type": "verse_milestone",
+        "description": "Displayed 1530 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:54:02.634322",
+        "type": "verse_milestone",
+        "description": "Displayed 1540 verses today"
+      },
+      {
+        "timestamp": "2025-08-29T23:57:43.968529",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      }
+    ],
+    "last_updated": "2025-08-29T23:59:02.592806"
+  },
+  "2025-08-30": {
+    "date": "2025-08-30",
+    "verses_displayed_today": 85,
+    "mode_usage_seconds": {
+      "time": 851.1134340763092,
+      "news": 283.56832933425903
+    },
+    "translation_usage_count": {
+      "kjv": 23,
+      "news": 62
+    },
+    "bible_books_accessed": {
+      "John": 3,
+      "Luke": 1,
+      "News": 62,
+      "Nehemiah": 2,
+      "Psalms": 1,
+      "Proverbs": 1,
+      "1 John": 2,
+      "Philippians": 1,
+      "Genesis": 1,
+      "2 Corinthians": 1,
+      "Galatians": 1,
+      "Colossians": 2,
+      "Job": 1,
+      "1 Samuel": 2,
+      "1 Chronicles": 1,
+      "Numbers": 1,
+      "Deuteronomy": 2
+    },
+    "recent_activities": [
+      {
+        "timestamp": "2025-08-30T00:23:08.099955",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T00:25:46.281348",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:31:25.645092",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T00:33:01.065329",
+        "type": "verse_milestone",
+        "description": "Displayed 10 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:00.642823",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:02.703811",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:07.639156",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:23.305180",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:25.232525",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:34:26.895835",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:38:46.138474",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:43:02.069935",
+        "type": "verse_milestone",
+        "description": "Displayed 20 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T00:52:02.342937",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T00:52:59.541518",
+        "type": "mode_change",
+        "description": "Switched to Random mode"
+      },
+      {
+        "timestamp": "2025-08-30T00:54:02.191197",
+        "type": "verse_milestone",
+        "description": "Displayed 30 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T00:59:10.262272",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:02:15.458316",
+        "type": "mode_change",
+        "description": "Switched to Time mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:02:27.166484",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:04:02.906687",
+        "type": "verse_milestone",
+        "description": "Displayed 40 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:04:57.860289",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:05:09.588792",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:11:57.381062",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:12:09.070599",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:14:02.556431",
+        "type": "verse_milestone",
+        "description": "Displayed 50 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:17:49.025338",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:18:01.984287",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:22:34.076030",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:22:47.802747",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:24:02.992469",
+        "type": "verse_milestone",
+        "description": "Displayed 60 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:26:58.377619",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:27:11.106523",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:30:17.320479",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:30:30.373550",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:33:03.118149",
+        "type": "verse_milestone",
+        "description": "Displayed 70 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:36:39.566310",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:36:54.080008",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:39:52.993217",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:40:02.276689",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      },
+      {
+        "timestamp": "2025-08-30T01:43:01.252850",
+        "type": "verse_milestone",
+        "description": "Displayed 80 verses today"
+      },
+      {
+        "timestamp": "2025-08-30T01:43:31.735921",
+        "type": "hardware",
+        "description": "Bible Clock service started"
+      },
+      {
+        "timestamp": "2025-08-30T01:46:33.925105",
+        "type": "mode_change",
+        "description": "Switched to News mode"
+      }
+    ],
+    "last_updated": "2025-08-30T01:48:02.892415"
+  }
+}

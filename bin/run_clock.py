@@ -40,7 +40,7 @@ def display_splash_screen(display_manager, image_generator):
     try:
         splash_text = "Welcome to your Bible Clock\n\nWith all my love,\nMatt"
         image = image_generator.create_splash_image(splash_text)
-        display_manager.display_image(image)
+        display_manager.display_image(image, is_news_mode=False)
         time.sleep(3)  # Show splash for 3 seconds
     except Exception as e:
         logging.error(f"Error displaying splash screen: {e}")

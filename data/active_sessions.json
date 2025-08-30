@@ -1,73 +1,40 @@
 {
-  "8897e601-8e07-42bd-8b16-5064dec02cb8": {
-    "session_id": "8897e601-8e07-42bd-8b16-5064dec02cb8",
+  "872a7048-9f2f-4441-a100-00cef5bd9214": {
+    "session_id": "872a7048-9f2f-4441-a100-00cef5bd9214",
     "turns": [
       {
-        "question": "What does John 3:16 mean?",
-        "response": "John 3:16 is a famous verse that highlights the core message of the Christian faith. It states, \"For God so loved the world that he gave his one and o...",
-        "timestamp": "2025-08-24T15:25:22.046996",
-        "category": "general"
+        "question": "Bible verse display: Luke 08:15",
+        "response": "But that on the good ground are they, which in an honest and good heart, having heard the word, keep\nit, and bring forth fruit with patience.",
+        "timestamp": "2025-08-27T20:15:02.323490",
+        "category": "bible_verse"
       }
     ],
-    "created_at": "2025-08-24T15:25:22.046845",
-    "last_activity": "2025-08-24T15:25:22.047015"
+    "created_at": "2025-08-27T20:15:02.323336",
+    "last_activity": "2025-08-27T20:15:02.323517"
   },
-  "fa5d012f-f2c1-4f50-9b8c-7992d4bfd06e": {
-    "session_id": "fa5d012f-f2c1-4f50-9b8c-7992d4bfd06e",
+  "e8a5baaa-534d-445a-9831-e80f40e65b77": {
+    "session_id": "e8a5baaa-534d-445a-9831-e80f40e65b77",
     "turns": [
       {
-        "question": "What is faith?",
-        "response": "Faith is a central concept in Christianity, often defined as a strong belief in God or in the doctrines of a religion, based on spiritual apprehension...",
-        "timestamp": "2025-08-24T15:36:34.849301",
-        "category": "theology"
+        "question": "Bible verse display: Zechariah 08:21",
+        "response": "And the inhabitants of one\ncity shall go to another, saying, Let us go speedily to pray before the LORD, and to seek the LORD of hosts: I will go also...",
+        "timestamp": "2025-08-27T20:21:02.170791",
+        "category": "bible_verse"
       },
       {
-        "question": "test mobile interface",
-        "response": "It looks like you are testing the mobile interface. How can I assist you further today?",
-        "timestamp": "2025-08-24T15:43:27.967605",
-        "category": "general"
-      }
-    ],
-    "created_at": "2025-08-24T15:36:34.849103",
-    "last_activity": "2025-08-24T15:43:27.967646"
-  },
-  "89abaf49-0925-4be0-b6a1-c535d5cb797f": {
-    "session_id": "89abaf49-0925-4be0-b6a1-c535d5cb797f",
-    "turns": [
+        "question": "Bible verse display: Matthew 08:22",
+        "response": "But Jesus said unto him,\nFollow me; and let the dead bury their dead.",
+        "timestamp": "2025-08-27T20:22:02.148964",
+        "category": "bible_verse"
+      },
       {
-        "question": "What is love?",
-        "response": "Love is a complex and multifaceted concept that is central to Christian belief. In the Bible, love is often described as sacrificial, unconditional, a...",
-        "timestamp": "2025-08-24T15:48:54.741086",
-        "category": "general"
+        "question": "Bible verse display: Acts 08:23",
+        "response": "For I perceive that thou art in the gall of bitterness, and\nin\n the bond of iniquity.",
+        "timestamp": "2025-08-27T20:23:02.142149",
+        "category": "bible_verse"
       }
     ],
-    "created_at": "2025-08-24T15:48:54.740861",
-    "last_activity": "2025-08-24T15:48:54.741111"
-  },
-  "44897926-be25-43e2-8f50-3f293896ecea": {
-    "session_id": "44897926-be25-43e2-8f50-3f293896ecea",
-    "turns": [
-      {
-        "question": "Where can Joy be found?",
-        "response": "In the Bible, joy is often associated with God's presence, His blessings, and the hope of salvation. Joy can be found in various places, including in ...",
-        "timestamp": "2025-08-24T16:05:37.288581",
-        "category": "general"
-      }
-    ],
-    "created_at": "2025-08-24T16:05:37.288380",
-    "last_activity": "2025-08-24T16:05:37.288605"
-  },
-  "abd3e80d-8649-4fc8-aa3d-8e15b95184ce": {
-    "session_id": "abd3e80d-8649-4fc8-aa3d-8e15b95184ce",
-    "turns": [
-      {
-        "question": "Where does Joy come from?",
-        "response": "Joy can come from various sources, but as Christians, we believe that true and lasting joy comes from our relationship with God. The Bible teaches us ...",
-        "timestamp": "2025-08-24T16:19:48.831880",
-        "category": "general"
-      }
-    ],
-    "created_at": "2025-08-24T16:19:48.831733",
-    "last_activity": "2025-08-24T16:19:48.831895"
+    "created_at": "2025-08-27T20:16:04.744585",
+    "last_activity": "2025-08-27T20:23:02.142165"
   }
 }

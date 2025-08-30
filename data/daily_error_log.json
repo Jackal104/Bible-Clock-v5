@@ -1,261 +1,261 @@
 {
-  "date": "2025-08-24",
-  "created_at": "2025-08-24T02:07:17.433363",
-  "error_count": 74,
+  "date": "2025-08-30",
+  "created_at": "2025-08-30T00:23:09.379697",
+  "error_count": 90,
   "errors": [
     {
-      "timestamp": "2025-08-24T15:11:00.072843",
+      "timestamp": "2025-08-30T00:48:02.267503",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Hardware/GPIO error detected (count: 2/2): You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 219,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:48:02.281162",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "\ud83d\udea8 Hardware error threshold reached - initiating automatic recovery for gift recipient",
+      "function": "display_image",
+      "line": 228,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:49:02.420080",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 202,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:49:02.431419",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Hardware/GPIO error detected (count: 1/2): You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 219,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:50:01.013841",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 202,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:50:01.024847",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Hardware/GPIO error detected (count: 2/2): You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 219,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:50:01.036264",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "\ud83d\udea8 Hardware error threshold reached - initiating automatic recovery for gift recipient",
+      "function": "display_image",
+      "line": 228,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:51:01.324915",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Display update failed: You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 202,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:51:01.336462",
+      "service": "display_manager",
+      "logger": "display_manager",
+      "level": "ERROR",
+      "message": "Hardware/GPIO error detected (count: 1/2): You must setup() the GPIO channel first",
+      "function": "display_image",
+      "line": 219,
+      "filename": "display_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:52:03.918843",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:52:55.824440",
+      "service": "web_interface",
+      "logger": "web_interface.app",
+      "level": "ERROR",
+      "message": "Invalid display mode: verse. Valid modes: ['time', 'date', 'random', 'devotional', 'weather', 'news']",
+      "function": "update_settings",
+      "line": 482,
+      "filename": "app.py"
+    },
+    {
+      "timestamp": "2025-08-30T00:59:12.033852",
+      "service": "service_manager",
+      "logger": "service_manager",
+      "level": "ERROR",
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
+    },
+    {
+      "timestamp": "2025-08-30T01:02:11.946965",
       "service": "other",
       "logger": "werkzeug",
       "level": "ERROR",
-      "message": "192.168.68.11 - - [24/Aug/2025 15:11:00] code 400, message Bad request version (\"'\u00bd8a&VE\u00fd/`\u00c4`feX\u00a9hs\u00c4\u00e4sUl4\u00a6\\x14S\u00fb+m\u00e9`\\x00*JJ\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0\")",
+      "message": "192.168.68.31 - - [30/Aug/2025 01:02:11] code 400, message Bad request version ('\u00b3a\u00fa\\x1b\u00e8.\\x0e+{N?#i\u00c1;\u00e0\\x92\u00e8\u00e6\u00afD\\x9br\u00d4\\x7f\u00e6\u00c3^\u00e2k)V\\x00***\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
       "function": "_log",
       "line": 97,
       "filename": "_internal.py"
     },
     {
-      "timestamp": "2025-08-24T15:11:00.126265",
+      "timestamp": "2025-08-30T01:02:12.039676",
       "service": "other",
       "logger": "werkzeug",
       "level": "ERROR",
-      "message": "192.168.68.11 - - [24/Aug/2025 15:11:00] code 400, message Bad request version ('\u00e8;\u00b3\u00e8\u00b1\u00f7@s\u00a8\u00aeb\u00cep\u00ee\\x16\u00b3\\x11\u00c5\\x9a\u00a8\\x17\u00a4\u00e2\\x9b\u00c5\\x12nl\\x00*JJ\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
+      "message": "192.168.68.31 - - [30/Aug/2025 01:02:12] code 400, message Bad request version ('\u00f9\\x18\u00f1L\\x1b\u00c7Qg?E\u00a9)5\\x81\u00f4PBlG2\u00ea\\x00*\u00ca\u00ca\\x13\\x02\\x13\\x03\\x13\\x01\u00c0,\u00c0+\u00cc\u00a9\u00c00\u00c0/\u00cc\u00a8\u00c0')",
       "function": "_log",
       "line": 97,
       "filename": "_internal.py"
     },
     {
-      "timestamp": "2025-08-24T15:11:17.579646",
-      "service": "web_interface",
-      "logger": "web_interface.app",
+      "timestamp": "2025-08-30T01:02:12.131379",
+      "service": "other",
+      "logger": "werkzeug",
       "level": "ERROR",
-      "message": "Voice settings API error: name 'logger' is not defined",
-      "function": "update_voice_settings",
-      "line": 1448,
-      "filename": "app.py"
+      "message": "192.168.68.31 - - [30/Aug/2025 01:02:12] code 400, message Bad HTTP/0.9 request type ('\\x16\\x03\\x01\\x05\u00ff\\x01\\x00\\x05\u00fb\\x03\\x03\u00a3')",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
     },
     {
-      "timestamp": "2025-08-24T15:14:30.491275",
-      "service": "web_interface",
-      "logger": "web_interface.app",
+      "timestamp": "2025-08-30T01:02:12.224230",
+      "service": "other",
+      "logger": "werkzeug",
       "level": "ERROR",
-      "message": "Voice settings API error: 'VoiceAssistant' object has no attribute 'set_chatgpt_enabled'",
-      "function": "update_voice_settings",
-      "line": 1448,
-      "filename": "app.py"
+      "message": "192.168.68.31 - - [30/Aug/2025 01:02:12] code 400, message Bad request syntax ('\\x16\\x03\\x01\\x05\u00ff\\x01\\x00\\x05\u00fb\\x03\\x03\\x15\u00aa\\x0e\\x9d\u00b6D\\x8e\\x91\u00aem\u00a4')",
+      "function": "_log",
+      "line": 97,
+      "filename": "_internal.py"
     },
     {
-      "timestamp": "2025-08-24T15:19:01.195893",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:04:59.608451",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:19:06.995748",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:11:59.030526",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:19:10.833431",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:17:50.780466",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:20:07.116468",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:22:35.687189",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:21:07.270418",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:27:00.086370",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:22:55.085009",
-      "service": "web_interface",
-      "logger": "web_interface.app",
+      "timestamp": "2025-08-30T01:30:18.943341",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Failed to update TTS_PLAYBACK_MODE in .env: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1328,
-      "filename": "app.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:23:19.463909",
-      "service": "web_interface",
-      "logger": "web_interface.app",
+      "timestamp": "2025-08-30T01:36:41.313281",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Failed to update TTS_PLAYBACK_MODE in .env: cannot access local variable 'os' where it is not associated with a value",
-      "function": "update_voice_settings",
-      "line": 1328,
-      "filename": "app.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:25:34.165551",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:39:54.649190",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     },
     {
-      "timestamp": "2025-08-24T15:25:44.713670",
-      "service": "display_manager",
-      "logger": "display_manager",
+      "timestamp": "2025-08-30T01:43:33.395423",
+      "service": "service_manager",
+      "logger": "service_manager",
       "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T15:26:07.730357",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:06:06.091292",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:06:06.103340",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:06:07.297182",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:07:06.745404",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:08:07.273963",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:09:06.802318",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:10:07.266150",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:11:06.819969",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:12:07.181934",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:13:06.627941",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Display update failed: Timed out waiting for display to respond",
-      "function": "display_image",
-      "line": 108,
-      "filename": "display_manager.py"
-    },
-    {
-      "timestamp": "2025-08-24T16:19:48.842054",
-      "service": "display_manager",
-      "logger": "display_manager",
-      "level": "ERROR",
-      "message": "Image generator not available for AI response",
-      "function": "_show_ai_response_page",
-      "line": 472,
-      "filename": "display_manager.py"
+      "message": "Voice control auto-initialization failed: name 'enabled' is not defined",
+      "function": "run",
+      "line": 121,
+      "filename": "service_manager.py"
     }
   ],
   "error_summary": {
-    "ERROR": 74
+    "ERROR": 90
   },
   "services": {
     "verse_manager": {
@@ -267,20 +267,20 @@
       "last_error": null
     },
     "display_manager": {
-      "errors": 41,
-      "last_error": "2025-08-24T16:19:48.842054"
+      "errors": 72,
+      "last_error": "2025-08-30T00:51:01.336462"
     },
     "scheduler": {
       "errors": 0,
       "last_error": null
     },
     "service_manager": {
-      "errors": 0,
-      "last_error": null
+      "errors": 13,
+      "last_error": "2025-08-30T01:43:33.395423"
     },
     "web_interface": {
-      "errors": 16,
-      "last_error": "2025-08-24T15:23:19.463909"
+      "errors": 1,
+      "last_error": "2025-08-30T00:52:55.824440"
     },
     "voice_control": {
       "errors": 0,
@@ -295,8 +295,8 @@
       "last_error": null
     },
     "other": {
-      "errors": 17,
-      "last_error": "2025-08-24T15:11:00.126265"
+      "errors": 4,
+      "last_error": "2025-08-30T01:02:12.224230"
     }
   }
 }

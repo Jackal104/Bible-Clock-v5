@@ -33,7 +33,7 @@ def main():
     image = image_generator.create_verse_image(current_verse)
     
     # Force display update with full refresh
-    display_manager.display_image(image, force_refresh=True)
+    display_manager.display_image(image, force_refresh=True, is_news_mode=False)
     print("Fresh verse displayed!")
 
 if __name__ == "__main__":

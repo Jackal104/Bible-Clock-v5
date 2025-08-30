@@ -1,0 +1,92 @@
+{
+  "2025-W28": {
+    "period_type": "weekly",
+    "period_key": "2025-W28",
+    "start_date": "2025-07-07",
+    "end_date": "2025-07-13",
+    "total_conversations": 1,
+    "categories": {
+      "bible_verse": 1
+    },
+    "keywords": {},
+    "avg_response_time": 80.66,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "21": 1
+    },
+    "daily_breakdown": {
+      "2025-07-11": 1
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  },
+  "2025-W33": {
+    "period_type": "weekly",
+    "period_key": "2025-W33",
+    "start_date": "2025-08-11",
+    "end_date": "2025-08-17",
+    "total_conversations": 1,
+    "categories": {
+      "general": 1
+    },
+    "keywords": {},
+    "avg_response_time": 54.85,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "16": 1
+    },
+    "daily_breakdown": {
+      "2025-08-17": 1
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  },
+  "2025-W34": {
+    "period_type": "weekly",
+    "period_key": "2025-W34",
+    "start_date": "2025-08-18",
+    "end_date": "2025-08-24",
+    "total_conversations": 2,
+    "categories": {
+      "general": 2
+    },
+    "keywords": {
+      "timothy": 1,
+      "timothy_verse": 1,
+      "joy": 1
+    },
+    "avg_response_time": 33.39,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "17": 1,
+      "16": 1
+    },
+    "daily_breakdown": {
+      "2025-08-23": 1,
+      "2025-08-24": 1
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  },
+  "2025-W35": {
+    "period_type": "weekly",
+    "period_key": "2025-W35",
+    "start_date": "2025-08-25",
+    "end_date": "2025-08-31",
+    "total_conversations": 1428,
+    "categories": {
+      "verses_displayed": 1428
+    },
+    "keywords": {},
+    "avg_response_time": 0.1,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "22": 1428
+    },
+    "daily_breakdown": {
+      "2025-08-27": 1428
+    },
+    "translation_usage": null,
+    "bible_books_accessed": null
+  }
+}

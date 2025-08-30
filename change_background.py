@@ -46,7 +46,7 @@ def main():
         print(f"Background changed: {background_changed}")
         
         # Display with appropriate refresh mode
-        dm.display_image(image, force_refresh=background_changed)
+        dm.display_image(image, force_refresh=background_changed, is_news_mode=False)
         
         if background_changed:
             print("✅ Full refresh applied for background change")

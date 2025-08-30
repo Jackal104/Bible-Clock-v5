@@ -39,7 +39,7 @@ def main():
         print(f"Generated image: {image.size}")
         
         # Test display (simulation)
-        display_manager.display_image(image)
+        display_manager.display_image(image, is_news_mode=False)
         print("✅ Fallback mode test successful!")
         
         # Save test image

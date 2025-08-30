@@ -55,5 +55,75 @@
     "hourly_distribution": {
       "16": 1
     }
+  },
+  "2025-08-27": {
+    "date": "2025-08-27",
+    "total_conversations": 1428,
+    "categories": {
+      "verses_displayed": 1428
+    },
+    "keywords": {},
+    "avg_response_time": 0.1,
+    "success_rate": 100.0,
+    "hourly_distribution": {
+      "22": 1428
+    },
+    "translation_usage": {
+      "kjv": 238,
+      "esv": 1190,
+      "amp": 1190
+    },
+    "bible_books_accessed": {
+      "Judges": 1,
+      "2 Corinthians": 1,
+      "Psalms": 1,
+      "Micah": 1,
+      "Matthew": 1,
+      "2 Kings": 1,
+      "Isaiah": 1,
+      "Luke": 1,
+      "Acts": 1,
+      "1 Kings": 1,
+      "Romans": 1,
+      "Ezra": 1,
+      "Hosea": 1,
+      "2 John": 1,
+      "Esther": 1,
+      "Malachi": 1,
+      "Jude": 1,
+      "2 Samuel": 1,
+      "Leviticus": 1,
+      "1 Samuel": 1,
+      "Deuteronomy": 1,
+      "2 Chronicles": 1,
+      "Ezekiel": 1,
+      "Genesis": 1,
+      "John": 1,
+      "Mark": 1,
+      "Daniel": 1,
+      "1 Chronicles": 1,
+      "Nehemiah": 1,
+      "Job": 1,
+      "1 Peter": 1,
+      "Colossians": 1,
+      "Amos": 1,
+      "Zechariah": 1,
+      "Hebrews": 1,
+      "Jonah": 1,
+      "Proverbs": 1,
+      "Joshua": 1,
+      "Exodus": 1,
+      "Ecclesiastes": 1,
+      "Habakkuk": 1,
+      "Jeremiah": 1
+    },
+    "mode_usage_hours": {
+      "time": 23.8,
+      "date": 0.0,
+      "random": 0.0,
+      "devotional": 0.0,
+      "news": 0.0,
+      "parallel": 19.8
+    }
   }
 }
