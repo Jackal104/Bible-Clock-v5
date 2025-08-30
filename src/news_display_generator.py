@@ -22,12 +22,12 @@ class NewsDisplayGenerator:
         # Scale factor for different display sizes
         self.scale_factor = min(self.width / 1872, self.height / 1404)
         
-        # Colors optimized for e-ink
+        # Colors optimized for e-ink - use pure black for better contrast
         self.colors = {
-            'black': 0,           # Pure black for headers
-            'dark': 32,           # Dark gray for primary text
-            'medium': 64,         # Medium gray for secondary text
-            'light': 128,         # Light gray for subtle elements
+            'black': 0,           # Pure black for all text (better e-ink contrast)
+            'dark': 0,            # Use pure black instead of gray for better readability
+            'medium': 0,          # Use pure black instead of gray for better readability  
+            'light': 128,         # Light gray for subtle elements only
             'lighter': 192,       # Very light gray for backgrounds
             'white': 255          # Pure white for backgrounds
         }
@@ -42,26 +42,32 @@ class NewsDisplayGenerator:
             verse_size = 80
             reference_size = 84
         
-        # Font configuration - use reasonable sizes based on verse/reference settings
+        # Font configuration - Large, readable news layout with bigger time display
         self.fonts = {
-            'hero': self._load_font(int(reference_size * 0.8)),      # Article indicator
-            'h1': self._load_font(int(verse_size * 0.9)),            # Main headline  
-            'h2': self._load_font(int(reference_size * 0.7)),        # Source and time
-            'h3': self._load_font(int(title_size * 1.1)),            # Section headers
-            'body': self._load_font(int(verse_size * 0.6)),          # Article text
-            'caption': self._load_font(int(title_size * 0.9)),       # Metadata
+            'hero': self._load_font(int(reference_size * 0.7)),      # Article indicator
+            'h1': self._load_font(int(verse_size * 1.2)),            # Main headline - MUCH LARGER
+            'h2': self._load_font(int(reference_size * 0.9)),        # Time display - LARGER
+            'h3': self._load_font(int(title_size * 0.9)),            # Section headers
+            'body': self._load_font(int(verse_size * 1.0)),          # Article text - MUCH LARGER
+            'caption': self._load_font(int(title_size * 0.8)),       # Metadata
             'micro': self._load_font(int(title_size * 0.7))          # Small details
         }
     
     def _load_font(self, size: int) -> ImageFont.FreeTypeFont:
-        """Load system font with fallback."""
+        """Load system font with fallback and better hinting for sharper text."""
         try:
-            return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
+            # Use the regular DejaVu Sans font for better e-ink rendering
+            # Bold fonts can appear fuzzy on e-ink displays
+            return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
         except:
             try:
-                return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
+                # Try system font alternatives
+                return ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf", size)
             except:
-                return ImageFont.load_default()
+                try:
+                    return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
+                except:
+                    return ImageFont.load_default()
     
     def generate_news_display(self) -> Image.Image:
         """Generate the main news display with memory management."""
@@ -103,20 +109,20 @@ class NewsDisplayGenerator:
         image = self._create_background()
         draw = ImageDraw.Draw(image)
         
-        current_y = 60
-        margin = 80
-        content_width = self.width - (2 * margin)
+        current_y = 55  # Start even lower for better positioning
+        margin = 15  # Even smaller margin for maximum text width  
+        content_width = self.width - (2 * margin)  # Maximum usable width
         
         # Header with Israel News title
         current_y = self._draw_header(draw, current_y, margin, content_width)
-        current_y += 40
+        current_y += 40  # Even more spacing after header
         
         # Article indicator (which article of total)
         all_articles = news_service.get_israel_news()
         article_num = news_service.current_article_index + 1
         total_articles = len(all_articles)
         current_y = self._draw_article_indicator(draw, current_y, margin, content_width, article_num, total_articles)
-        current_y += 60
+        current_y += 45  # Much more spacing after indicator to push content down much further
         
         # Main article content
         current_y = self._draw_article_content(draw, article, current_y, margin, content_width)
@@ -213,11 +219,11 @@ class NewsDisplayGenerator:
         line_height = single_line_bbox[3] - single_line_bbox[1] + 5
         for i, line in enumerate(israel_lines):
             current_y = israel_y + (i * line_height)
-            draw.text((israel_x + 1, current_y + 1), line, fill=self.colors['light'], font=self.fonts['h2'])
-            draw.text((israel_x, current_y), line, fill=self.colors['medium'], font=self.fonts['h2'])
+            # Use pure black text without shadow for better e-ink contrast
+            draw.text((israel_x, current_y), line, fill=self.colors['black'], font=self.fonts['h2'])
         
         # Draw main title (center) with shadow effect
-        draw.text((title_x + 2, title_y + 2), main_title, fill=self.colors['light'], font=self.fonts['h1'])
+        # Use pure black text without shadow for better e-ink contrast
         draw.text((title_x, title_y), main_title, fill=self.colors['black'], font=self.fonts['h1'])
         
         # Draw local time and date (right side, right-aligned)
@@ -226,8 +232,8 @@ class NewsDisplayGenerator:
             line_width = line_bbox[2] - line_bbox[0]
             line_x = x + width - line_width - 20  # Right align each line individually
             current_y = local_y + (i * line_height)
-            draw.text((line_x + 1, current_y + 1), line, fill=self.colors['light'], font=self.fonts['h2'])
-            draw.text((line_x, current_y), line, fill=self.colors['medium'], font=self.fonts['h2'])
+            # Use pure black text without shadow for better e-ink contrast
+            draw.text((line_x, current_y), line, fill=self.colors['black'], font=self.fonts['h2'])
         
         # Underline
         header_bottom = y + max(side_text_height, title_height)
@@ -252,16 +258,39 @@ class NewsDisplayGenerator:
         return y + indicator_bbox[3] - indicator_bbox[1]
     
     def _draw_article_content(self, draw: ImageDraw.Draw, article: Dict, y: int, x: int, width: int) -> int:
-        """Draw the main article content."""
+        """Draw the main article content with full-width title, content, and bottom metadata."""
         current_y = y
         
-        # Article title (headline)
+        # 1. Article title (headline) - CENTERED with optimized wrapping and spacing
         title = article.get('title', 'No title')
-        current_y = self._draw_wrapped_text(draw, title, x, current_y, width, 
-                                          self.fonts['h1'], self.colors['black'], line_spacing=20)
-        current_y += 60
+        current_y = self._draw_optimized_title(draw, title, x, current_y, width)
+        current_y += 50  # Even more space after title for better visual separation
         
-        # Source and time info
+        # 2. Article description/content - FULL WIDTH under title with optimized padding
+        description = article.get('description', '')
+        if description:
+            # Add subtle border around content with minimal padding
+            content_start_y = current_y
+            border_margin = 10  # Minimal border margins
+            border_x = x - border_margin
+            border_width = width + (2 * border_margin)
+            
+            content_y = current_y + 25  # Increased padding for more vertical space
+            
+            content_end_y = self._draw_wrapped_text(draw, description, x, content_y, width,
+                                              self.fonts['body'], self.colors['black'], line_spacing=18)
+            content_end_y += 25  # Increased bottom padding for more vertical space
+            
+            # Draw subtle border around content
+            border_height = content_end_y - content_start_y
+            draw.rectangle([border_x, content_start_y, border_x + border_width, content_start_y + border_height],
+                          outline=self.colors['light'], width=2)
+            
+            current_y = content_end_y + 60  # Extra space since no metadata box
+        else:
+            current_y += 60  # Extra space since no metadata box
+        
+        # 3. Publication metadata - FULL WIDTH at bottom
         source = article.get('source', 'Unknown Source')
         published = article.get('published_str', '')
         age_hours = article.get('age_hours', 0)
@@ -273,70 +302,104 @@ class NewsDisplayGenerator:
         else:
             age_text = f"{age_hours // 24}d ago"
         
-        meta_text = f"{source} • {published} • {age_text}"
-        current_y = self._draw_wrapped_text(draw, meta_text, x, current_y, width,
-                                          self.fonts['h2'], self.colors['medium'])
-        current_y += 80
+        # Store metadata for footer - remove the prominent metadata box
+        # Metadata will be integrated into the footer instead
+        self.current_source = source
+        self.current_published = published
+        self.current_age_text = age_text
         
-        # Article description/content
-        description = article.get('description', '')
-        if description:
-            # Add border around content
-            content_start_y = current_y
-            border_margin = 30
-            border_x = x - border_margin
-            border_width = width + (2 * border_margin)
+        return current_y
+    
+    def _draw_optimized_title(self, draw: ImageDraw.Draw, title: str, x: int, y: int, width: int) -> int:
+        """Draw title with optimized text wrapping to fit maximum words per line."""
+        if not title.strip():
+            return y
             
-            current_y += 30  # Padding inside border
+        font = self.fonts['h1']
+        color = self.colors['black']
+        line_spacing = 25
+        
+        # Use the same optimized character width calculation as body text
+        sample_text = "The quick brown fox jumps over lazy dogs with 1234567890"
+        test_bbox = draw.textbbox((0, 0), sample_text, font=font)
+        char_width = (test_bbox[2] - test_bbox[0]) / len(sample_text)
+        chars_per_line = int(width / char_width * 0.96)  # 96% - aggressive fitting
+        
+        # Use optimized text wrapping for maximum words per line
+        wrapped_lines = textwrap.wrap(title, width=chars_per_line, break_long_words=False, 
+                                     break_on_hyphens=False, expand_tabs=False)
+        
+        current_y = y
+        for line in wrapped_lines:
+            # Center the title text
+            line_bbox = draw.textbbox((0, 0), line, font=font)
+            line_width = line_bbox[2] - line_bbox[0]
+            line_x = x + (width - line_width) // 2  # Center horizontally
             
-            current_y = self._draw_wrapped_text(draw, description, x, current_y, width,
-                                              self.fonts['body'], self.colors['dark'], line_spacing=15)
-            current_y += 30  # Bottom padding
+            # Draw centered title text
+            draw.text((line_x, current_y), line, fill=color, font=font)
             
-            # Draw border around content
-            border_height = current_y - content_start_y
-            draw.rectangle([border_x, content_start_y, border_x + border_width, content_start_y + border_height],
-                          outline=self.colors['medium'], width=2)
+            # Get actual line height from the specific text
+            line_height = line_bbox[3] - line_bbox[1]
+            current_y += line_height + line_spacing
         
         return current_y
     
     def _draw_wrapped_text(self, draw: ImageDraw.Draw, text: str, x: int, y: int, width: int,
                           font: ImageFont.FreeTypeFont, color: int, line_spacing: int = 10) -> int:
-        """Draw text with word wrapping."""
+        """Draw text with word wrapping and better character estimation for sharp rendering."""
         if not text.strip():
             return y
         
-        # Calculate approximate characters per line
-        test_bbox = draw.textbbox((0, 0), "A" * 50, font=font)
-        char_width = (test_bbox[2] - test_bbox[0]) / 50
-        chars_per_line = int(width / char_width * 0.9)  # 90% to be safe
+        # Optimized character width calculation to fit maximum words per line
+        # Use a more representative sample for accurate width calculation
+        sample_text = "The quick brown fox jumps over lazy dogs with 1234567890"
+        test_bbox = draw.textbbox((0, 0), sample_text, font=font)
+        char_width = (test_bbox[2] - test_bbox[0]) / len(sample_text)
+        chars_per_line = int(width / char_width * 0.96)  # 96% - more aggressive to fit more words
         
-        # Wrap text
-        wrapped_lines = textwrap.wrap(text, width=chars_per_line)
+        # Use optimized text wrapping to maximize words per line
+        wrapped_lines = textwrap.wrap(text, width=chars_per_line, break_long_words=False, 
+                                     break_on_hyphens=False, expand_tabs=False)
         
         current_y = y
         for line in wrapped_lines:
-            draw.text((x, current_y), line, fill=color, font=font)
+            # Center the body text
             line_bbox = draw.textbbox((0, 0), line, font=font)
+            line_width = line_bbox[2] - line_bbox[0]
+            line_x = x + (width - line_width) // 2  # Center horizontally
+            
+            # Draw centered text
+            draw.text((line_x, current_y), line, fill=color, font=font)
+            
+            # Get actual line height from the specific text
             line_height = line_bbox[3] - line_bbox[1]
             current_y += line_height + line_spacing
         
         return current_y
     
     def _draw_footer(self, draw: ImageDraw.Draw, last_update: str):
-        """Draw footer with update information."""
-        footer_y = self.height - 120
-        footer_text = f"Israel News • Articles cycle every 30s • Fresh news every 30min"
-        if last_update:
-            footer_text += f" • Last article: {last_update}"
+        """Draw footer with update and metadata information."""
+        footer_y = self.height - 140  # Move up slightly to accommodate more info
+        
+        # Combine metadata with refresh information
+        source = getattr(self, 'current_source', 'Unknown Source')
+        published = getattr(self, 'current_published', '')
+        age_text = getattr(self, 'current_age_text', '')
+        
+        # Create comprehensive footer with metadata and refresh info
+        footer_text = f"📰 {source}  •  📅 {published}  •  ⏰ {age_text}  •  Articles cycle every 30s  •  Fresh news every 30min"
+        
+        # Use larger font for better readability in footer
+        footer_font = self.fonts['h3']  # Larger than caption
         
         # Center footer text
-        footer_bbox = draw.textbbox((0, 0), footer_text, font=self.fonts['caption'])
+        footer_bbox = draw.textbbox((0, 0), footer_text, font=footer_font)
         footer_width = footer_bbox[2] - footer_bbox[0]
         footer_x = (self.width - footer_width) // 2
         
         draw.text((footer_x, footer_y), footer_text, 
-                 fill=self.colors['light'], font=self.fonts['caption'])
+                 fill=self.colors['medium'], font=footer_font)
     
     def _create_background(self) -> Image.Image:
         """Create background with minimal gradient for memory efficiency."""
